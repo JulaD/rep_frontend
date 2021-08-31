@@ -1,0 +1,73 @@
+mat-sidenav-container {
+  width: 100%;
+  position: absolute;
+  top: 4rem;
+  bottom: 5rem;
+  overflow: unset;
+}
+
+mat-sidenav {
+  background-color:#3f51b5;
+  box-shadow: inset 0 0 1px #000000;
+}
+
+mat-sidenav-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 500px;
+  height: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidenav {
+  padding: 20px;
+}
+
+.first-footer {
+  position: absolute;
+  bottom: 2.5rem;
+  height: 2.5rem;
+}
+
+.second-footer {
+  position: absolute;
+  bottom: 0;
+  height: 2.5rem;
+}
+
+.footer {
+  width: 100%;
+  background-color:#3f51b5;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.mat-divider {
+  position: absolute;
+  bottom: 2.5rem;
+  width: 100%;
+}
+
+h2 {
+  margin: 0;
+}
+
+@media (max-width: 65vh) {
+  mat-sidenav-content {
+    overflow-x: auto;
+  }
+}
+

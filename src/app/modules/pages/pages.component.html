@@ -1,0 +1,24 @@
+<app-tool-bar (toogle)="sideBarToggle()"></app-tool-bar>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <app-side-bar></app-side-bar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<div class="footer first-footer">
+  <button mat-icon-button>
+    <mat-icon>history</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>place</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<div class="footer second-footer">
+  <h2>Escuela de Nutrición UdelaR 2021</h2>
+</div>

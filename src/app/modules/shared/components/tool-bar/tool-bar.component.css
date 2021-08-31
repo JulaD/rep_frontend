@@ -1,0 +1,21 @@
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  box-shadow: inset 0 0 1px #000000;
+  height: 4rem;
+}
+
+.toolbar {
+  margin: 0;
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+}
+
+.req {
+  margin-left: 1rem;
+  font-weight: 500;
+}
