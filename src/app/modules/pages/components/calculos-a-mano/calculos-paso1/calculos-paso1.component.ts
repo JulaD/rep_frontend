@@ -62,11 +62,6 @@ export class CalculosPaso1Component implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 }
 
 const FEMENINO_DATA: EdadCantMediana[] = [
