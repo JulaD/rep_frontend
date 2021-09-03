@@ -1,0 +1,77 @@
+<mat-stepper #stepper>
+  <mat-step class="paso-1">
+    <form>
+      <div class="box-with-shadow">
+        <div class="step1-titulo">
+          <ng-template matStepLabel>
+            Edad y cantidad de personas por sexo
+            <mat-icon
+              aria-hidden="false"
+              aria-label="More info"
+              matTooltip="Explicación sobre el paso"
+              matTooltipPosition="above">
+              help_outline
+            </mat-icon>
+          </ng-template>
+        </div>
+        <div class="container">
+          <div class="step1-edad-select">
+            <mat-form-field appearance="standard">
+              <mat-label>Edad</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let edad of edades" [value]="edad.value">
+                  {{edad.viewValue}}
+                </mat-option>
+              </mat-select>
+              <mat-hint>Seleccione una edad</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step1-cant-femenino">
+            <mat-form-field appearance="standard">
+              <mat-label>Cantidad de personas del sexo femenino</mat-label>
+              <input matInput>
+              <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step1-cant-masculino">
+            <mat-form-field appearance="standard">
+              <mat-label>Cantidad de personas del sexo masculino</mat-label>
+              <input matInput>
+              <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step1-mediana-femenino">
+            <mat-form-field appearance="standard">
+              <mat-label>Mediana</mat-label>
+              <input matInput>
+              <mat-hint>
+                Ingrese la mediana de los pesos para las personas de
+                sexo femenino para la edad seleccionada
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step1-mediana-masculino">
+            <mat-form-field appearance="standard">
+              <mat-label>Mediana</mat-label>
+              <input matInput>
+              <mat-hint>
+                Ingrese la mediana de los pesos para las personas de
+                sexo masculino para la edad seleccionada
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="div-boton">
+          <button class="boton-agregar" mat-flat-button color="primary"
+            matTooltip="Los datos ingresados se listaran abajo."
+            matTooltipPosition="above">
+            Agregar
+          </button>
+        </div>
+      </div>
+      <div class="tablas">
+        
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>

@@ -1,0 +1,54 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.step4-num-embarazos {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+.step4-check-box {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  align-self: center;
+}
+
+.step4-pob-total {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 3/4;
+}
+
+.step4-cant-mujeres {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 4/5;
+}
+
+.step4-num-amamantando {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.step4-tasa-natalidad {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 3/4;
+}
+
+.step4-mediana {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 4/5;
+}
+
+mat-form-field {
+  width: 100%; 
+}
