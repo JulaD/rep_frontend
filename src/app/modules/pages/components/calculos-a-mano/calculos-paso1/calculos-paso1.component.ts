@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { Component, AfterViewInit, ViewChild } from "@angular/core";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -18,7 +18,7 @@ interface EdadCantMediana {
   templateUrl: './calculos-paso1.component.html',
   styleUrls: ['./calculos-paso1.component.css']
 })
-export class CalculosPaso1Component implements OnInit, AfterViewInit {
+export class CalculosPaso1Component implements AfterViewInit {
   edades: Edad[] = [
     {value: 'meses-0', viewValue: '0 Meses'},
     {value: 'meses-1', viewValue: '1 Meses'},
@@ -44,11 +44,6 @@ export class CalculosPaso1Component implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-  }
-  
-  constructor() { }
-
-  ngOnInit(): void {
   }
 }
 
