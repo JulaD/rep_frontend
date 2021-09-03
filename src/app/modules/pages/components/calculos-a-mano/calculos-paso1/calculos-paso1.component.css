@@ -55,3 +55,19 @@ mat-form-field {
 .boton-agregar {
   margin-right: 10px;
 }
+
+.tablas-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+}
+
+.botones-finales-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
