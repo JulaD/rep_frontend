@@ -4,7 +4,21 @@
       <button mat-icon-button (click)="toggle.emit('')">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class="req">REP!</span>
+      <button mat-button class="req-button" color="primary" routerLink="dashboard">
+        REQ!
+      </button>
+      <button mat-button color="primary">
+        Cálculos
+      </button>
+      <button mat-button color="primary" routerLink="templates" routerLinkActive="templates">
+        Plantillas
+      </button>
+      <button mat-button color="primary" routerLink="manuals" routerLinkActive="manuals">
+        Manual FAQ
+      </button>
+      <button mat-button color="primary">
+        Administración
+      </button>
     </div>
     <div>
       <button mat-icon-button>

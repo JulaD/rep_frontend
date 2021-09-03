@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AngularMaterialModule } from '../../material/angular-material.module';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
@@ -15,7 +16,8 @@ import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
   imports: [
     CommonModule,
     AngularMaterialModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    RouterModule
   ],
   exports: [
     AngularMaterialModule,
