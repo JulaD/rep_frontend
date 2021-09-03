@@ -15,6 +15,7 @@ const routes: Routes = [{
     pathMatch: 'full'
   }]
 }];
+
 @NgModule({
   imports: [
     RouterModule.forChild(routes)
