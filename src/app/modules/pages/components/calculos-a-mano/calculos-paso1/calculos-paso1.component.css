@@ -4,6 +4,7 @@
   grid-template-columns: 1fr 2fr 2fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 10px;
+  float:left;
 }
 
 .step1-edad-select {
