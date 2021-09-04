@@ -13,6 +13,7 @@ import { CalculosPaso3Component } from './components/calculos-a-mano/calculos-pa
 import { CalculosPaso4Component } from './components/calculos-a-mano/calculos-paso4/calculos-paso4.component';
 import { ResultComponent } from './components/result/result.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
+import { CalculosComponent } from './components/calculos/calculos.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UploadTemplateComponent } from './components/upload-template/upload-tem
     CalculosPaso3Component,
     CalculosPaso4Component,
     ResultComponent,
-    UploadTemplateComponent
+    UploadTemplateComponent,
+    CalculosComponent
   ],
   imports: [
     CommonModule,
