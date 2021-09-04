@@ -7,6 +7,7 @@ import { UploadTemplateComponent } from './components/upload-template/upload-tem
 import { PagesComponent } from './pages.component';
 import { ResultComponent } from './components/result/result.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
+import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,9 @@ const routes: Routes = [{
   children: [{
     path: 'dashboard',
     component: DashboardComponent
+  }, {
+    path: 'by-hand',
+    component: StepperComponent
   }, {
     path: 'manuals',
     component: ManualsComponent

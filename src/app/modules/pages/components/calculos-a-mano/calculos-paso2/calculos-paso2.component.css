@@ -3,6 +3,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px;
+  float:left;
+  height: 7rem;
 }
 
 .step2-af-liviana {

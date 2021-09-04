@@ -14,6 +14,7 @@ import { CalculosPaso4Component } from './components/calculos-a-mano/calculos-pa
 import { ResultComponent } from './components/result/result.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
+import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CalculosComponent } from './components/calculos/calculos.component';
     CalculosPaso4Component,
     ResultComponent,
     UploadTemplateComponent,
-    CalculosComponent
+    CalculosComponent,
+    StepperComponent
   ],
   imports: [
     CommonModule,
