@@ -7,6 +7,7 @@ import { CalculosPaso4Component } from './components/calculos-a-mano/calculos-pa
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ManualsComponent } from './components/manuals/manuals.component';
 import { TemplatesComponent } from './components/templates/templates.component';
+import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { PagesComponent } from './pages.component';
 import { ResultComponent } from './components/result/result.component';
 
@@ -37,6 +38,9 @@ const routes: Routes = [{
   }, {
     path: 'result',
     component: ResultComponent
+  }, {
+    path: 'upload-template',
+    component: UploadTemplateComponent
   }, {
     path: '',
     redirectTo: 'dashboard',

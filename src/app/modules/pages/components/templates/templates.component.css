@@ -1,10 +1,15 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
 .first-div {
   height: 75%;
 }
 
 .first-illustration {
   height: 100%;
-  width: 80%;
+  width: 60%;
 }
 
 .first-title {
@@ -53,7 +58,7 @@
 }
 
 .second-div {
-  margin: 4rem 0 0 4rem;
+  margin: 2rem 0 0 2rem;
 }
 
 .left-column-2 {
