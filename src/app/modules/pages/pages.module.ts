@@ -11,6 +11,7 @@ import { CalculosPaso1Component } from './components/calculos-a-mano/calculos-pa
 import { CalculosPaso2Component } from './components/calculos-a-mano/calculos-paso2/calculos-paso2.component';
 import { CalculosPaso3Component } from './components/calculos-a-mano/calculos-paso3/calculos-paso3.component';
 import { CalculosPaso4Component } from './components/calculos-a-mano/calculos-paso4/calculos-paso4.component';
+import { ResultComponent } from './components/result/result.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CalculosPaso4Component } from './components/calculos-a-mano/calculos-pa
     CalculosPaso1Component,
     CalculosPaso2Component,
     CalculosPaso3Component,
-    CalculosPaso4Component
+    CalculosPaso4Component,
+    ResultComponent
   ],
   imports: [
     CommonModule,

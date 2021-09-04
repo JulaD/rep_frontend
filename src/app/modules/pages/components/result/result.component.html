@@ -1,0 +1,96 @@
+<div class="row first-div">
+    <div class="col-md-6">
+        <div class="row">
+            <img class="first-illustration" src="../../../../../assets/ilustrations/resultImg1.svg">
+        </div>
+        <div class="row download-row">
+            <p class="download-title">Descargar resultados</p>
+        </div>
+        <div class="row download-row">
+            <div class="col-md-1">
+                <img src="../../../../../assets/ilustrations/PDF.png">
+            </div>
+            <div class="col-md-3">
+                <a class="download-text" href="#">Descargar PDF</a>
+            </div>
+            <div class="col-md-1">
+                <img src="../../../../../assets/ilustrations/XLS.png">
+            </div>
+            <div class="col-md-4">
+                <a class="download-text" href="#">Descargar XLS</a>
+            </div>
+        </div>
+    </div> 
+    <div class="col-md-6">
+        <div class="row primary-result">
+            <div class="col-md-6">
+                <p class="rep-title">Requerimiento energético per cápita</p>
+                <div class="display-flex">
+                    <p class="rep-subtitle">Población total ingresada</p>
+                    <p class="rep-subtitle-quantity">80</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <p class="rep-result">1374</p>
+                <p class="rep-result-subtitle">Kcal por día</p>
+            </div>
+        </div>
+        <div class="row secondary-result">
+            <div class="col-md-2">
+                <p class="age-group">4 años</p>
+                <p class="age-group-quantity">32 personas</p>
+            </div>
+            <div class="col-md-9"> 
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="texto">
+                      <th mat-header-cell *matHeaderCellDef> </th>
+                      <td mat-cell *matCellDef="let element"> {{element.texto}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="femenino">
+                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>15 personas</strong></th>
+                      <td mat-cell *matCellDef="let element"> {{element.femenino}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="masculino">
+                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>17 personas</strong></th>
+                      <td mat-cell *matCellDef="let element"> {{element.masculino}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>              
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <p class="age-group">5 años</p>
+                <p class="age-group-quantity">48 personas</p>
+            </div>
+            <div class="col-md-9"> 
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="texto">
+                      <th mat-header-cell *matHeaderCellDef> </th>
+                      <td mat-cell *matCellDef="let element"> {{element.texto}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="femenino">
+                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>27 personas</strong></th>
+                      <td mat-cell *matCellDef="let element"> {{element.femenino}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="masculino">
+                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>21 personas</strong></th>
+                      <td mat-cell *matCellDef="let element"> {{element.masculino}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>              
+            </div>
+        </div>
+    </div>
+</div>
+  

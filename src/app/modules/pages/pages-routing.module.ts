@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ManualsComponent } from './components/manuals/manuals.component';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { PagesComponent } from './pages.component';
+import { ResultComponent } from './components/result/result.component';
 
 const routes: Routes = [{
   path: '',
@@ -33,6 +34,9 @@ const routes: Routes = [{
   }, {
     path: 'calculos4',
     component: CalculosPaso4Component
+  }, {
+    path: 'result',
+    component: ResultComponent
   }, {
     path: '',
     redirectTo: 'dashboard',
