@@ -28,6 +28,7 @@ section .tituloBx {
 section .tituloBx .titulo {
   position: relative;
   color: #3f51b5;
+  pointer-events: none;
   font-size: 200px;
   transition: 0.3s;
   animation: animate 5s infinite;
