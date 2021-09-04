@@ -21,12 +21,21 @@
 }
 
 .req-button {
-  font-size: 1.5rem !important;
-}
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4rem !important;
+  line-height: 2rem;
+  }
 
 ::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
   color: white;
   font-size: 1rem;
   font-weight: 500;
   margin-left: 1rem;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 2rem;
 }
