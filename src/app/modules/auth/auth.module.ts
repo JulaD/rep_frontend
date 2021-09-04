@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
+import { LoginRegistroComponent } from './login-registro/login-registro.component';
 
 @NgModule({
   schemas: [
@@ -13,7 +14,8 @@ import { LoginComponent } from './login/login.component';
   ],
   declarations: [
     AuthComponent,
-    LoginComponent
+    LoginComponent,
+    LoginRegistroComponent
   ],
   imports: [
     CommonModule,

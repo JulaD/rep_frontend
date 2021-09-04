@@ -1,5 +1,6 @@
 import {
   IAuth,
+  IRegister,
   IUser
 } from '../interfaces/user.interface';
 
@@ -23,3 +24,10 @@ export class User implements IUser {
   updatedAt: Date;
   deletedAt?: Date;
 };
+
+export class Register implements IRegister {
+  name: string;
+  email: string;
+  organization: string;
+  password: string;
+}
