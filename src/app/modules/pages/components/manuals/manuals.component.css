@@ -93,7 +93,7 @@
 
 .download {
   width: 90%;
-  height: 6rem;
+  height: 7rem;
   background: #C4C4C4;
   border-radius: 0.5rem;
 }
@@ -131,6 +131,45 @@
 
 @media (max-width: 1325px) {
   .col-md-6 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .first-title {
+    height: 20vw;
+    font-size: 20vw;
+  }
+
+  .first-div {
+    height: unset;
+    width: fit-content;
+  }
+
+  .left-column-2 {
+    margin: 0;
+  }
+
+  .second-div {
+    margin: 0;
+    height: unset;
+    width: fit-content;
+  }
+
+  .download {
+    height: unset;
+  }
+
+  .second-title {
+    height: unset;
+    font-size: 12vw;
+  }
+
+  .third-title {
+    height: unset;
+  }
+
+  .second-illustration {
     width: 100%;
   }
 }
