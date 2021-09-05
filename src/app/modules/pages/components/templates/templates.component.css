@@ -16,8 +16,8 @@
   font-family: Montserrat;
   font-style: normal;
   font-weight: bold;
-  font-size: 8rem;
-  height: 8rem;
+  font-size: 12vh;
+  height: 12vh;
   display: flex;
   align-items: center;  
   color: #C2A5F9;
@@ -40,8 +40,8 @@
   font-family: Montserrat;
   font-style: normal;
   font-weight: 500;
-  font-size: 5rem;
-  height: 5rem;
+  font-size: 6vh;
+  height: 6vh;
   display: flex;
   align-items: center;
   color: #3F51B5;
@@ -58,11 +58,11 @@
 }
 
 .second-div {
-  margin: 2rem 0 0 2rem;
+  margin: 2vh 0 0 2vh;
 }
 
 .left-column-2 {
-  margin: 3rem 0 0 3rem;
+  margin: 3vh 0 0 3vh;
 }
 
 .under-title {
@@ -123,8 +123,24 @@
   align-items: center;
 }
 
+.second-illustration {
+  width: 100%;
+}
+
 @media (max-width: 1325px) {
   .col-md-6 {
     width: 100%;
+  }
+
+  .col-md-4 {
+    width: 100%;
+  }
+
+  .left-column-2 {
+    margin: 0;
+  }
+
+  .right-column {
+    align-items: center;
   }
 }
