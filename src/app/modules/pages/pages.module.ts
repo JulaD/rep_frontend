@@ -15,6 +15,7 @@ import { ResultComponent } from './components/result/result.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
+import { ByHandComponent } from './components/by-hand/by-hand.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.c
     ResultComponent,
     UploadTemplateComponent,
     CalculosComponent,
-    StepperComponent
+    StepperComponent,
+    ByHandComponent
   ],
   imports: [
     CommonModule,

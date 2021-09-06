@@ -1,3 +1,31 @@
+.mat-card {
+  margin: 1rem;
+}
+
+.step-title {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.number {
+  margin: 0 1rem 0 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  background-color: #3F51B5;
+  color: white;
+  text-align: center;
+  padding-top: 0.3rem;
+}
+
+.title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24.1487px;
+  line-height: 36px;
+}
+
 .container {
   width: 100%;
   display: grid;
@@ -74,4 +102,9 @@ table {
   display: flex;
   justify-content: space-around;
   margin-top: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
 }

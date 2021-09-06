@@ -8,6 +8,7 @@ import { PagesComponent } from './pages.component';
 import { ResultComponent } from './components/result/result.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
+import { ByHandComponent } from './components/by-hand/by-hand.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +18,9 @@ const routes: Routes = [{
     component: DashboardComponent
   }, {
     path: 'by-hand',
+    component: ByHandComponent
+  },  {
+    path: 'with-template',
     component: StepperComponent
   }, {
     path: 'manuals',
