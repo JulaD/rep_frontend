@@ -1,0 +1,210 @@
+<section>
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="color"></div>
+    <div class="fijo">
+        <div class="titulo">
+            <h1>CONTROL DE</h1>
+            <h1>AUTORIZACION</h1>
+        </div>
+        <div class="botones">
+            <a class="btnPendientes" (click)="mostrarPendientes()" >
+                <span>PENDIENTES</span>
+                <span style="color: black">PENDIENTES</span>
+            </a>
+            <a class="btnAceptados" (click)="mostrarAceptados()" >
+                <span>ACEPTADOS</span>
+                <span style="color: black">ACEPTADOS</span>
+            </a>
+        </div>
+    </div>
+    <div class="usuarios pendientes">
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar por nombre o email">
+            <a>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                </span>
+            </a>
+        </div>
+        <ul class="listaUsuarios">
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton aceptar">
+                            ACEPTAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton aceptar">
+                            ACEPTAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton aceptar">
+                            ACEPTAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton aceptar">
+                            ACEPTAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton aceptar">
+                            ACEPTAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class ="paginado">
+            <li>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                  </svg></span>
+            </li>
+            <li>
+                <span>1</span>
+            </li>
+            <li>
+                <span>2</span>
+            </li>
+            <li>
+                <span>3</span>
+            </li>
+            <li>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg></span>
+            </li>
+        </ul>
+    </div>
+    <div class="usuarios aceptados">
+        <div class="busqueda">
+            <input type="text" placeholder="Buscar por nombre o email">
+            <a>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                </span>
+            </a>
+        </div>
+        <ul class="listaUsuarios">
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton cancelar">
+                            CANCELAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton cancelar">
+                            CANCELAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton cancelar">
+                            CANCELAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton cancelar">
+                            CANCELAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+                <div class="info">
+                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
+                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <a>
+                        <span class="boton cancelar">
+                            CANCELAR
+                        </span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <ul class ="paginado">
+            <li>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                  </svg></span>
+            </li>
+            <li>
+                <span>1</span>
+            </li>
+            <li>
+                <span>2</span>
+            </li>
+            <li>
+                <span>3</span>
+            </li>
+            <li>
+                <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  </svg></span>
+            </li>
+        </ul>
+    </div>
+
+</section>

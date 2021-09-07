@@ -1,0 +1,491 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+section {
+  position: relative;
+  min-height: 100vh;
+  background: #ccfdff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+section.active {
+  background: #ca98a0;
+}
+section .color {
+  position: absolute;
+  filter: blur(100px);
+  border-radius: 50%;
+}
+section .color:nth-child(1) {
+  top: -160px;
+  right: 50px;
+  width: 450px;
+  height: 450px;
+  background: #78b1c7;
+}
+section.active .color:nth-child(1) {
+  background: #d88383;
+}
+section .color:nth-child(2) {
+  top: 50px;
+  left: -150px;
+  width: 600px;
+  height: 600px;
+  background: #5fced6;
+}
+section.active .color:nth-child(2) {
+  background: #d67a7a;
+}
+section .color:nth-child(3) {
+  bottom: -120px;
+  right: 300px;
+  width: 500px;
+  height: 500px;
+  background: #64c4f0;
+}
+section.active .color:nth-child(3) {
+  background: #cc6969;
+}
+section .fijo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #3fb1b5;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  width: 90vw;
+  max-width: 1000px;
+  top: 130px;
+}
+section.active .fijo {
+  background: rgb(168, 96, 108);
+}
+section .usuarios {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #3fb1b5;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 80vw;
+  max-width: 800px;
+  top: 330px;
+  transition: 0.6s;
+}
+section.active .usuarios {
+  background: rgb(168, 96, 108);
+}
+section.active .usuarios.pendientes {
+  transform: translateX(-100vw);
+}
+section .usuarios.aceptados {
+  transform: translateX(100vw);
+}
+section.active .usuarios.aceptados {
+  transform: translateX(0vw);
+}
+section .fijo .titulo {
+  width: 100%;
+  text-align: center;
+  line-height: 50px;
+  top: 0;
+}
+section .fijo .titulo h1:nth-child(1) {
+  position: relative;
+  top: -46px;
+  left: -120px;
+  font-size: 80px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.3);
+}
+section .fijo .titulo h1:nth-child(2) {
+  font-size: 100px;
+  position: relative;
+  top: -26px;
+  left: 0px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #ccfdff;
+  transition: 0.5s;
+}
+section.active .fijo .titulo h1:nth-child(2) {
+  color: #ca98a0;
+}
+section .usuarios .busqueda {
+  margin: 20px;
+  display: flex;
+  position: relative;
+  top: 0;
+}
+section .usuarios .busqueda input[type="text"] {
+  width: 0px;
+  height: 40px;
+  border-radius: 20px;
+  background: #ccfdff;
+  color: black;
+  font-weight: 300;
+  outline: none;
+  font-size: 16px;
+  padding-left: 14px;
+  max-width: 500px;
+  border: 2px solid #ccfdff;
+  transition: 1s;
+}
+section.active .usuarios .busqueda input[type="text"] {
+  background: #ca98a0;
+  border: 2px solid #ca98a0;
+}
+section .usuarios .busqueda:hover input[type="text"] {
+  width: 70vw;
+  max-width: 500px;
+}
+section .usuarios .busqueda input[type="text"]:focus {
+  width: 70vw;
+  max-width: 500px;
+}
+section .usuarios .busqueda input[type="text"]::placeholder {
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+}
+section .usuarios .busqueda a span {
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: #ccfdff;
+  border-radius: 50%;
+  border: 3px solid #3fb1b565;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+  cursor: pointer;
+  transition: 0.5s;
+}
+section.active .usuarios .busqueda a span {
+  background: #ca98a0;
+  border: 3px solid rgba(168, 96, 108, 0.623);
+}
+section .usuarios .busqueda a span:hover {
+  transform: scale(1.15);
+}
+section .usuarios .busqueda a span svg {
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 10px;
+}
+section .fijo .botones {
+  position: relative;
+  top: -10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+section .fijo .botones a.btnAceptados {
+  position: relative;
+  width: 150px;
+  height: 55px;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #191919;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+}
+section.active .fijo .botones a.btnAceptados {
+  width: 170px;
+  height: 60px;
+  border: 3px solid rgba(168, 96, 108, 0.623);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section .fijo .botones a.btnPendientes {
+  position: relative;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #191919;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 2px;
+  overflow: hidden;
+  width: 170px;
+  height: 60px;
+  border: 3px solid #3fb1b5ab;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnPendientes {
+  width: 150px;
+  height: 55px;
+  border: none;
+  box-shadow: none;
+}
+section .fijo .botones a span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transition: 0s;
+}
+section .fijo .botones a:hover span {
+  transition: 0.4s;
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnAceptados span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a.btnPendientes span {
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnPendientes span {
+  transform: translateY(0%);
+}
+section.active .fijo .botones a.btnPendientes:hover span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a:before {
+  content: "";
+  position: absolute;
+  bottom: -250px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
+  background: #ccfdff;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+section .fijo .botones a.btnPendientes:before {
+  animation: animPendientes 8s infinite linear;
+}
+@keyframes animPendientes {
+  0%,
+  100% {
+    background: #ccfdff;
+  }
+  20% {
+    background: #87d5d8;
+  }
+  40% {
+    background: rgb(167, 227, 228);
+  }
+  60% {
+    background: #a9feff;
+  }
+  80% {
+    background: #91d2d3;
+  }
+}
+section .fijo .botones a.btnAceptados:before {
+  background: #ca98a0;
+}
+section.active .fijo .botones a.btnAceptados:before {
+  animation: animAceptados 8s infinite linear;
+}
+@keyframes animAceptados {
+  0%,
+  100% {
+    background: #ca98a0;
+  }
+  20% {
+    background: #cc8895;
+  }
+  40% {
+    background: #e698a4;
+  }
+  60% {
+    background: #d17c8b;
+  }
+  80% {
+    background: #e799a6;
+  }
+}
+section .fijo .botones a:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnAceptados:before {
+  bottom: -150px;
+}
+section .fijo .botones a.btnPendientes:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnPendientes:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnPendientes:before {
+  bottom: -250px;
+}
+ul.listaUsuarios {
+  position: relative;
+  width: 100%;
+  margin: 10px auto 0;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+ul.listaUsuarios li {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  width: 95%;
+  height: 50px;
+  background: #ccfdff;
+  padding: 10px 20px;
+  color: black;
+  margin: 5px 0;
+  overflow: hidden;
+  transition: width 0.15s 0.15s, height 0.25s 0s, background 0.15s 0.15s;
+}
+ul.listaUsuarios li .UsuarioEmail {
+  font-size: 18px;
+  transition: 0.2s 0.1s;
+}
+ul.listaUsuarios li:hover .UsuarioEmail {
+  font-size: 25px;
+}
+ul.listaUsuarios li .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 0px;
+  margin-top: 0px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(150px);
+  transition: 0.6s;
+}
+ul.listaUsuarios li .info .Organizacion {
+  font-size: 16px;
+}
+ul.listaUsuarios li .info .Fecha {
+  font-size: 16px;
+}
+ul.listaUsuarios li:hover .info {
+  height: 30px;
+  margin-top: 25px;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+}
+ul.listaUsuarios li a {
+  text-decoration: none;
+  margin-top: 10px;
+}
+ul.listaUsuarios li a .boton {
+  padding: 6px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 400;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+ul.listaUsuarios li a .boton.aceptar {
+  background: rgb(166, 230, 106);
+}
+ul.listaUsuarios li a .boton.cancelar {
+  background: rgb(250, 195, 78);
+}
+section.active ul.listaUsuarios li {
+  background: #ca98a0;
+}
+ul.listaUsuarios li:hover {
+  width: 100%;
+  height: 180px;
+  transition: width 0.2s 0s, height 0.35s 0.1s;
+}
+ul.paginado {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+ul.paginado li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #ccfdff;
+  border: 2px solid #3fb1b5ab;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+  color: black;
+  margin: 5px 10px;
+  cursor: pointer;
+  transition: 0.15s 0.15s;
+}
+ul.paginado li svg {
+  position: relative;
+  display: flex;
+}
+section.active ul.paginado li {
+  background: #ca98a0;
+  border: 2px solid rgba(168, 96, 108, 0.623);
+}
+@media (max-width: 850px) {
+  section .fijo .titulo h1:nth-child(1) {
+    position: relative;
+    top: -32px;
+    left: -80px;
+    font-size: 45px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+  section .fijo .titulo h1:nth-child(2) {
+    font-size: 58px;
+    position: relative;
+    top: -41px;
+    left: 0px;
+    color: #ccfdff;
+    transition: 0.5s;
+  }
+}
+@media (max-width: 520px) {
+  section .fijo .titulo h1:nth-child(1) {
+    position: relative;
+    top: -26px;
+    left: -40px;
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+  section .fijo .titulo h1:nth-child(2) {
+    font-size: 35px;
+    position: relative;
+    top: -50px;
+    left: 0px;
+    color: #ccfdff;
+    transition: 0.5s;
+  }
+}
