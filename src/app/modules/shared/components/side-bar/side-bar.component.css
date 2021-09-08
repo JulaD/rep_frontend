@@ -1,0 +1,19 @@
+.content {
+  background-color: #3f51b5;
+}
+
+.mat-list-option {
+  height: 4rem !important;
+}
+
+.mat-icon {
+  margin-right: 1rem !important;
+}
+
+::ng-deep .mat-list-text {
+  color: white;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  font-size: 1.2rem;
+}

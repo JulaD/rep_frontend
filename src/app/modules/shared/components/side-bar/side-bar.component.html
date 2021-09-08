@@ -1,0 +1,6 @@
+<mat-selection-list #shoes [multiple]="false">
+  <mat-list-option *ngFor="let option of sidebarOptions" [value]="option">
+    <mat-icon>account_box</mat-icon> {{option}}
+    <mat-divider></mat-divider>
+  </mat-list-option>
+</mat-selection-list>
