@@ -3,7 +3,7 @@
     <p class="number">1</p>
     <p class="title">Edad y cantidad de personas por sexo</p>
   </div>
-  <form>
+  <form (ngSubmit)="onSubmit(step1Form)" #step1Form="ngForm">
     <div class="step1-titulo">
       <ng-template matStepLabel>
         Edad y cantidad de personas por sexo
@@ -20,9 +20,9 @@
       <div class="step1-edad-select">
         <mat-form-field appearance="standard">
           <mat-label>Edad</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let edad of edades" [value]="edad.value">
-              {{edad.viewValue}}
+          <mat-select name="edad" [(ngModel)]="enteredEdad">
+            <mat-option *ngFor="let edad of edades" [value]="edad">
+              {{edad}}
             </mat-option>
           </mat-select>
           <mat-hint>Seleccione una edad</mat-hint>
@@ -31,21 +31,21 @@
       <div class="step1-cant-femenino">
         <mat-form-field appearance="standard">
           <mat-label>Cantidad de personas del sexo femenino</mat-label>
-          <input matInput>
+          <input matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino">
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
       </div>
       <div class="step1-cant-masculino">
         <mat-form-field appearance="standard">
           <mat-label>Cantidad de personas del sexo masculino</mat-label>
-          <input matInput>
+          <input matInput name="cantMasculino" [(ngModel)]="enteredCantMasculino">
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
       </div>
       <div class="step1-mediana-femenino">
         <mat-form-field appearance="standard">
           <mat-label>Mediana</mat-label>
-          <input matInput>
+          <input matInput name="medianaFemenino" [(ngModel)]="enteredMedianaFemenino">
           <mat-hint>
             Ingrese la mediana de los pesos para las personas de
             sexo femenino para la edad seleccionada
@@ -55,7 +55,7 @@
       <div class="step1-mediana-masculino">
         <mat-form-field appearance="standard">
           <mat-label>Mediana</mat-label>
-          <input matInput>
+          <input matInput name="medianaMasculino" [(ngModel)]="enteredMedianaMasculino">
           <mat-hint>
             Ingrese la mediana de los pesos para las personas de
             sexo masculino para la edad seleccionada
@@ -64,105 +64,107 @@
       </div>
     </div>
     <div class="div-boton">
-      <!-- <button class="boton-agregar" mat-flat-button color="primary"
+      <button class="boton-agregar"
+        type="submit"
+        mat-flat-button color="primary"
         matTooltip="Los datos ingresados se listaran abajo."
         matTooltipPosition="above">
         Agregar
-      </button> -->
-    </div>
-    <div class="tablas-container">
-      <div class="tabla-femenino">
-        Femenino
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
-        
-            <!-- Edad Column -->
-            <ng-container matColumnDef="edad">
-              <th mat-header-cell *matHeaderCellDef> Edad </th>
-              <td mat-cell *matCellDef="let element"> {{element.edad}} </td>
-            </ng-container>
-        
-            <!-- Name Column -->
-            <ng-container matColumnDef="cantidad">
-              <th mat-header-cell *matHeaderCellDef> Cantidad de personas</th>
-              <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
-            </ng-container>
-        
-            <!-- Weight Column -->
-            <ng-container matColumnDef="mediana">
-              <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
-              <td mat-cell *matCellDef="let element"> {{element.mediana}} </td>
-            </ng-container>
-        
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                          showFirstLastButtons 
-                          aria-label="Select page of periodic elements">
-          </mat-paginator>
-        </div>          
-      </div>
-      <div class="tabla-masculino">
-        Masculino
-        <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource">
-        
-            <!-- Edad Column -->
-            <ng-container matColumnDef="edad">
-              <th mat-header-cell *matHeaderCellDef> Edad (años) </th>
-              <td mat-cell *matCellDef="let element"> {{element.edad}} </td>
-            </ng-container>
-        
-            <!-- Name Column -->
-            <ng-container matColumnDef="cantidad">
-              <th mat-header-cell *matHeaderCellDef> Cantidad de personas</th>
-              <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
-            </ng-container>
-        
-            <!-- Weight Column -->
-            <ng-container matColumnDef="mediana">
-              <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
-              <td mat-cell *matCellDef="let element"> {{element.mediana}} </td>
-            </ng-container>
-        
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                          showFirstLastButtons 
-                          aria-label="Select page of periodic elements">
-          </mat-paginator>
-        </div>
-      </div>
-    </div>
-    <div class="botones-finales-container">
-      <div class="boton-ver-resultados">
-        Ver resultados
-        <mat-icon
-          aria-hidden="false"
-          aria-label="More info"
-          color="primary">
-          arrow_circle_right
-        </mat-icon>
-        <p>
-          Se mostrarán los resultados en base a los datos ingresados hasta el momento
-        </p>
-      </div>
-      <div class="descargar-planilla">
-        Descargar como plantilla estandarizada
-        <mat-icon
-          aria-hidden="false"
-          aria-label="More info"
-          color="primary">
-          file_present
-        </mat-icon>
-      </div>
+      </button>
     </div>
   </form>
-  <div class="buttons">
-    <button mat-raised-button color="primary">Agregar</button>
+  <div class="tablas-container">
+    <div class="tabla-femenino">
+      Femenino
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceF">
+      
+          <!-- Edad Column -->
+          <ng-container matColumnDef="edad">
+            <th mat-header-cell *matHeaderCellDef> Edad </th>
+            <td mat-cell *matCellDef="let element"> {{element.edad}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad de personas</th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="mediana">
+            <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
+            <td mat-cell *matCellDef="let element"> {{element.pesoMediano}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                        showFirstLastButtons 
+                        aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>          
+    </div>
+    <div class="tabla-masculino">
+      Masculino
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceM">
+      
+          <!-- Edad Column -->
+          <ng-container matColumnDef="edad">
+            <th mat-header-cell *matHeaderCellDef> Edad </th>
+            <td mat-cell *matCellDef="let element"> {{element.edad}} </td>
+          </ng-container>
+      
+          <!-- Name Column -->
+          <ng-container matColumnDef="cantidad">
+            <th mat-header-cell *matHeaderCellDef> Cantidad de personas</th>
+            <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+          </ng-container>
+      
+          <!-- Weight Column -->
+          <ng-container matColumnDef="mediana">
+            <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
+            <td mat-cell *matCellDef="let element"> {{element.pesoMediano}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                        showFirstLastButtons 
+                        aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+    </div>
   </div>
+  <div class="botones-finales-container">
+    <div class="boton-ver-resultados">
+      Ver resultados
+      <mat-icon
+        aria-hidden="false"
+        aria-label="More info"
+        color="primary">
+        arrow_circle_right
+      </mat-icon>
+      <p>
+        Se mostrarán los resultados en base a los datos ingresados hasta el momento
+      </p>
+    </div>
+    <div class="descargar-planilla">
+      Descargar como plantilla estandarizada
+      <mat-icon
+        aria-hidden="false"
+        aria-label="More info"
+        color="primary">
+        file_present
+      </mat-icon>
+    </div>
+  </div>
+  <!-- <div class="buttons">
+    <button mat-raised-button color="primary">Agregar</button>
+  </div> -->
 </mat-card>
