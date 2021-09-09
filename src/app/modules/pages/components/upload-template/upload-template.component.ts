@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParamsOptions, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/internal/operators/catchError';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { catchError, last, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-upload-template',
@@ -13,12 +13,12 @@ export class UploadTemplateComponent implements OnInit {
 
   //Archivo
   requiredFileType: string;
-  fileName:         string = '';
+  fileName: string = '';
   fileToUpload:     File;
 
   //Progreso
   uploadProgress: number;
-  uploadSub:      Subscription;
+  uploading: boolean;
   readyToUpload:  boolean = false;
   
   //Error carga archivo
@@ -27,42 +27,91 @@ export class UploadTemplateComponent implements OnInit {
 
   //Request
   headers: Headers = new Headers();
+  httpClient: HttpClient;
   
-  constructor(){//private _http: HttpClient) {    
+  constructor(private http : HttpClient) {    
     this.requiredFileType = '.xlsx';
-    this.fileName         = '';
     this.uploadProgress   = 0;
-    this.uploadSub        = new Subscription;
   }
 
   ngOnInit(): void {
   }
 
-  onFileSelected(event: Event) {
-    const element = event.target as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+  onFileSelected(event: any) {
+    let fileList: FileList = event.files;
     if (fileList && fileList[0]) {
       this.fileToUpload   = fileList[0];
-      this.fileName       = this.fileToUpload.name;
       this.readyToUpload  = true;
     }
   }
 
-  proccessFile(file: File) {//: Observable<Response> {
-      let headers = new HttpHeaders({
-        'Content-Type':  'application/octet-stream',
-      })
-     /*return this._http.post<File>('Renzo', file, {headers})
-        .pipe(
-          catchError(this.handleError())
-        );*/
+  proccessFile() {
+    this.uploadFile()
+      .pipe(
+        catchError(err => {
+          console.log('Handling error locally and rethrowing it...', err);
+          return throwError(err);
+        })
+      )
+      .subscribe(
+        event => {
+          if (event.type == HttpEventType.UploadProgress && event) {
+            if (event.total) {
+              this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            } else {
+              this.uploadProgress = 0;
+            }
+          } else if (event instanceof HttpResponse) {
+            console.log('File is completely loaded!');
+          }
+        },
+        (err) => {
+          console.log("Upload Error:", err);
+        }, () => {
+          console.log("Upload done");
+        }
+      )
+
+      /*this.postFile(this.fileToUpload).subscribe(data => {
+        //cargar pagina cálculos step1
+      }, error => {
+        console.log(error);
+      });*/
+  }
+  
+  uploadFile(): Observable<HttpEvent<any>> {
+    const endpoint = 'localhost:8000/sheetParser';
+    let reqHeaders            = new HttpHeaders({
+      'Content-Type':  'application/octet-stream',
+    })
+
+    let params = new HttpParams();
+    const options = {
+      params: params,
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', endpoint, this.fileToUpload, options);
+    
+    return this.http.request(req);
   }
 
-  handleError(): (err: any, caught: Observable<File>) => import("rxjs").ObservableInput<any> {
-    throw new Error('Method not implemented.');
+  getEventMessage(event: HttpEvent<unknown>) {
+    switch (event.type) {
+      case HttpEventType.Sent:
+        this.uploading = true;
+        break;
+      case HttpEventType.UploadProgress:
+        // Computa y despliega el % subido:
+        this.uploadProgress = Math.round(100 * event.loaded / (event.total ?? 0));
+        break;
+      case HttpEventType.Response:
+        this.uploading = false;
+        break;
+    }
   }
 
-  /*private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -75,6 +124,7 @@ export class UploadTemplateComponent implements OnInit {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
-  }*/
+  }
 
 }
+
