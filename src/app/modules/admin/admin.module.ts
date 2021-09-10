@@ -6,6 +6,7 @@ import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizac
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { AdminComponent } from './admin.component';
+import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { AdminComponent } from './admin.component';
   ],
   declarations: [
     AdminComponent,
-    AutorizacionUsuariosComponent
+    AutorizacionUsuariosComponent,
+    PermisosUsuariosComponent
   ],
   imports: [
     RouterModule,

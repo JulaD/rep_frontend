@@ -3,13 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
 import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizacion-usuarios.component';
+import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 
 const routes: Routes = [{
   path: 'admin',
   component: AdminComponent,
   children: [{
-    path: 'autorizacion-usuarios',
+    path: 'autorizacion',
     component: AutorizacionUsuariosComponent
+  }, {
+    path: 'permisos',
+    component: PermisosUsuariosComponent
   }, {
     path: '',
     redirectTo: 'autorizacion-usuarios',
