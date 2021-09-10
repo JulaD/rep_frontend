@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { catchError, last, map, tap } from 'rxjs/operators';
@@ -12,7 +12,9 @@ import { catchError, last, map, tap } from 'rxjs/operators';
 export class UploadTemplateComponent implements OnInit {
 
   //Archivo
-  requiredFileType: string;
+  @Input()
+  requiredFileType: string = '.xls';
+  
   fileName: string = '';
   fileToUpload:     File;
 
@@ -30,22 +32,26 @@ export class UploadTemplateComponent implements OnInit {
   httpClient: HttpClient;
   
   constructor(private http : HttpClient) {    
-    this.requiredFileType = '.xlsx';
+    this.requiredFileType = '.xlsx,.xls,.odt';
     this.uploadProgress   = 0;
   }
 
   ngOnInit(): void {
   }
 
-  onFileSelected(event: any) {
-    let fileList: FileList = event.files;
-    if (fileList && fileList[0]) {
+  onFileSelected(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList) {
+      console.log("fileList");
       this.fileToUpload   = fileList[0];
+      this.fileName       = fileList[0].name;
       this.readyToUpload  = true;
     }
   }
 
   proccessFile() {
+    console.log("proccessFile");
     this.uploadFile()
       .pipe(
         catchError(err => {
@@ -55,32 +61,30 @@ export class UploadTemplateComponent implements OnInit {
       )
       .subscribe(
         event => {
-          if (event.type == HttpEventType.UploadProgress && event) {
-            if (event.total) {
-              this.uploadProgress = Math.round(100 * event.loaded / event.total);
-            } else {
-              this.uploadProgress = 0;
-            }
-          } else if (event instanceof HttpResponse) {
-            console.log('File is completely loaded!');
+          switch (event.type) {
+            case HttpEventType.Sent:
+              this.uploading = true;
+              break;
+            case HttpEventType.UploadProgress:
+              // Computa y despliega el % subido:
+              this.uploadProgress = Math.round(100 * event.loaded / (event.total ?? 0));
+              break;
+            case HttpEventType.Response:
+              this.uploading = false;
+              break;
           }
         },
         (err) => {
-          console.log("Upload Error:", err);
-        }, () => {
-          console.log("Upload done");
+          this.error        = true;
+          this.errorMessage = err;
         }
       )
-
-      /*this.postFile(this.fileToUpload).subscribe(data => {
-        //cargar pagina cálculos step1
-      }, error => {
-        console.log(error);
-      });*/
   }
   
   uploadFile(): Observable<HttpEvent<any>> {
-    const endpoint = 'localhost:8000/sheetParser';
+    console.log("uploadFile, sending req");
+
+    const endpoint = 'http://localhost:8000/sheetParser';
     let reqHeaders            = new HttpHeaders({
       'Content-Type':  'application/octet-stream',
     })
@@ -91,8 +95,7 @@ export class UploadTemplateComponent implements OnInit {
       reportProgress: true,
     };
 
-    const req = new HttpRequest('POST', endpoint, this.fileToUpload, options);
-    
+    const req = new HttpRequest('POST', endpoint, this.fileToUpload, {headers: reqHeaders});
     return this.http.request(req);
   }
 
@@ -107,6 +110,7 @@ export class UploadTemplateComponent implements OnInit {
         break;
       case HttpEventType.Response:
         this.uploading = false;
+        console.log(event.body);
         break;
     }
   }
