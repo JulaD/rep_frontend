@@ -13,6 +13,9 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'
+  }, {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then(m => m.AdminModule)
   }]
 }];
 

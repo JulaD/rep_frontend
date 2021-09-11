@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizacion-usuarios.component';
 import { RouterModule } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
+//import { SharedModule } from '../shared/shared.module';
 import { AdminComponent } from './admin.component';
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
+import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 
 
 @NgModule({
@@ -16,11 +17,12 @@ import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios
   declarations: [
     AdminComponent,
     AutorizacionUsuariosComponent,
-    PermisosUsuariosComponent
+    PermisosUsuariosComponent,
+    ConfiguracionValoresComponent
   ],
   imports: [
     RouterModule,
-    SharedModule,
+    //SharedModule,
     CommonModule,
     AdminRoutingModule
   ]

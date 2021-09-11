@@ -4,9 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizacion-usuarios.component';
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
+import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 
 const routes: Routes = [{
-  path: 'admin',
+  path: '',
   component: AdminComponent,
   children: [{
     path: 'autorizacion',
@@ -15,9 +16,8 @@ const routes: Routes = [{
     path: 'permisos',
     component: PermisosUsuariosComponent
   }, {
-    path: '',
-    redirectTo: 'autorizacion-usuarios',
-    pathMatch: 'full'
+    path: 'valores',
+    component: ConfiguracionValoresComponent
   }]
 }];
 

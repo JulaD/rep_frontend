@@ -11,16 +11,17 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
+  overflow: hidden;
   transition: 0.5s;
 }
 section.active {
-  background: #ca98a0;
+  background: #3fb1b5;
 }
 section .color {
   position: absolute;
   filter: blur(100px);
   border-radius: 50%;
+  transition: 0.3s;
 }
 section .color:nth-child(1) {
   top: -160px;
@@ -30,7 +31,7 @@ section .color:nth-child(1) {
   background: #78b1c7;
 }
 section.active .color:nth-child(1) {
-  background: #d88383;
+  background: #386db3;
 }
 section .color:nth-child(2) {
   top: 50px;
@@ -40,7 +41,7 @@ section .color:nth-child(2) {
   background: #5fced6;
 }
 section.active .color:nth-child(2) {
-  background: #d67a7a;
+  background: #1b69cf;
 }
 section .color:nth-child(3) {
   bottom: -120px;
@@ -50,7 +51,7 @@ section .color:nth-child(3) {
   background: #64c4f0;
 }
 section.active .color:nth-child(3) {
-  background: #cc6969;
+  background: #357ad3;
 }
 section .fijo {
   position: absolute;
@@ -58,14 +59,11 @@ section .fijo {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #3fb1b5;
+  background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   width: 90vw;
   max-width: 1000px;
-  top: 130px;
-}
-section.active .fijo {
-  background: rgb(168, 96, 108);
+  top: 90px;
 }
 section .usuarios {
   position: absolute;
@@ -73,16 +71,13 @@ section .usuarios {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #3fb1b5;
+  background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   width: 80vw;
   max-width: 800px;
-  top: 330px;
+  top: 290px;
   transition: 0.6s;
-}
-section.active .usuarios {
-  background: rgb(168, 96, 108);
 }
 section.active .usuarios.pendientes {
   transform: translateX(-100vw);
@@ -118,7 +113,7 @@ section .fijo .titulo h1:nth-child(2) {
   transition: 0.5s;
 }
 section.active .fijo .titulo h1:nth-child(2) {
-  color: #ca98a0;
+  color: #3fb1b5;
 }
 section .usuarios .busqueda {
   margin: 20px;
@@ -141,8 +136,8 @@ section .usuarios .busqueda input[type="text"] {
   transition: 1s;
 }
 section.active .usuarios .busqueda input[type="text"] {
-  background: #ca98a0;
-  border: 2px solid #ca98a0;
+  background: #3fb1b5;
+  border: 2px solid #3fb1b5;
 }
 section .usuarios .busqueda:hover input[type="text"] {
   width: 70vw;
@@ -175,8 +170,8 @@ section .usuarios .busqueda a span {
   transition: 0.5s;
 }
 section.active .usuarios .busqueda a span {
-  background: #ca98a0;
-  border: 3px solid rgba(168, 96, 108, 0.623);
+  background: #3fb1b5;
+  border: 3px solid rgba(133, 215, 226, 0.911);
 }
 section .usuarios .busqueda a span:hover {
   transform: scale(1.15);
@@ -196,7 +191,7 @@ section .fijo .botones {
 }
 section .fijo .botones a.btnAceptados {
   position: relative;
-  width: 220px;
+  width: 150px;
   height: 55px;
   text-align: center;
   line-height: 55px;
@@ -211,9 +206,9 @@ section .fijo .botones a.btnAceptados {
   overflow: hidden;
 }
 section.active .fijo .botones a.btnAceptados {
-  width: 240px;
+  width: 170px;
   height: 60px;
-  border: 3px solid rgba(168, 96, 108, 0.623);
+  border: 3px solid rgba(133, 215, 226, 0.911);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
 }
 section .fijo .botones a.btnPendientes {
@@ -228,7 +223,7 @@ section .fijo .botones a.btnPendientes {
   text-decoration: none;
   letter-spacing: 2px;
   overflow: hidden;
-  width: 240px;
+  width: 170px;
   height: 60px;
   border: 3px solid #3fb1b5ab;
   font-size: 18px;
@@ -236,7 +231,7 @@ section .fijo .botones a.btnPendientes {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
 }
 section.active .fijo .botones a.btnPendientes {
-  width: 220px;
+  width: 150px;
   height: 55px;
   border: none;
   box-shadow: none;
@@ -268,11 +263,11 @@ section.active .fijo .botones a.btnPendientes:hover span {
 section .fijo .botones a:before {
   content: "";
   position: absolute;
-  bottom: -270px;
+  bottom: -250px;
   left: 50%;
   transform: translateX(-50%);
-  width: 270px;
-  height: 270px;
+  width: 250px;
+  height: 250px;
   background: #ccfdff;
   border-radius: 50%;
   transition: 0.4s;
@@ -299,7 +294,7 @@ section .fijo .botones a.btnPendientes:before {
   }
 }
 section .fijo .botones a.btnAceptados:before {
-  background: #ca98a0;
+  background: #3fb1b5;
 }
 section.active .fijo .botones a.btnAceptados:before {
   animation: animAceptados 8s infinite linear;
@@ -307,19 +302,19 @@ section.active .fijo .botones a.btnAceptados:before {
 @keyframes animAceptados {
   0%,
   100% {
-    background: #ca98a0;
+    background: #3fb1b5;
   }
   20% {
-    background: #cc8895;
+    background: #44c4c9;
   }
   40% {
-    background: #e698a4;
+    background: #259da1;
   }
   60% {
-    background: #d17c8b;
+    background: #43a8ac;
   }
   80% {
-    background: #e799a6;
+    background: #4bd2d6;
   }
 }
 section .fijo .botones a:hover:before {
@@ -335,7 +330,7 @@ section.active .fijo .botones a.btnPendientes:hover:before {
   bottom: -150px;
 }
 section.active .fijo .botones a.btnPendientes:before {
-  bottom: -270px;
+  bottom: -250px;
 }
 ul.listaUsuarios {
   position: relative;
@@ -410,10 +405,11 @@ ul.listaUsuarios li a .boton.aceptar {
   background: rgb(166, 230, 106);
 }
 ul.listaUsuarios li a .boton.cancelar {
-  background: rgb(250, 195, 78);
+  background: rgb(241, 62, 62);
+  color: white;
 }
 section.active ul.listaUsuarios li {
-  background: #ca98a0;
+  background: #3fb1b5;
 }
 ul.listaUsuarios li:hover {
   width: 100%;
@@ -439,6 +435,8 @@ ul.paginado li {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  font-weight: 500;
+  font-size: 16px;
   background: #ccfdff;
   border: 2px solid #3fb1b5ab;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
@@ -452,21 +450,21 @@ ul.paginado li svg {
   display: flex;
 }
 section.active ul.paginado li {
-  background: #ca98a0;
-  border: 2px solid rgba(168, 96, 108, 0.623);
+  background: #3fb1b5;
+  border: 2px solid rgba(133, 215, 226, 0.911);
 }
-@media (max-width: 740px) {
+@media (max-width: 850px) {
   section .fijo .titulo h1:nth-child(1) {
     position: relative;
     top: -32px;
     left: -80px;
-    font-size: 50px;
+    font-size: 45px;
     color: rgba(0, 0, 0, 0.3);
   }
   section .fijo .titulo h1:nth-child(2) {
-    font-size: 80px;
+    font-size: 58px;
     position: relative;
-    top: -32px;
+    top: -41px;
     left: 0px;
     color: #ccfdff;
     transition: 0.5s;
@@ -475,23 +473,17 @@ section.active ul.paginado li {
 @media (max-width: 520px) {
   section .fijo .titulo h1:nth-child(1) {
     position: relative;
-    top: -28px;
+    top: -26px;
     left: -40px;
-    font-size: 32px;
+    font-size: 30px;
     color: rgba(0, 0, 0, 0.3);
   }
   section .fijo .titulo h1:nth-child(2) {
-    font-size: 46px;
+    font-size: 35px;
     position: relative;
-    top: -46px;
+    top: -50px;
     left: 0px;
     color: #ccfdff;
     transition: 0.5s;
-  }
-  section .fijo .botones {
-    flex-direction: column;
-  }
-  section .usuarios {
-    top: 400px;
   }
 }
