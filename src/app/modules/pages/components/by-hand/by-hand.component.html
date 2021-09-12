@@ -31,9 +31,11 @@
       <div class="step1-cant-femenino">
         <mat-form-field appearance="standard">
           <mat-label>Cantidad de personas del sexo femenino</mat-label>
-          <input matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino">
+          <input type="number" matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino" #cantFemenino="ngModel">
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
+        <div *ngIf="cantFemenino.invalid && (cantFemenino.dirty || cantFemenino.touched)" class="alert">
+        </div>
       </div>
       <div class="step1-cant-masculino">
         <mat-form-field appearance="standard">
@@ -101,9 +103,11 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                        showFirstLastButtons 
-                        aria-label="Select page of periodic elements">
+        <mat-paginator
+          #TablePaginatorF="matPaginator"
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons 
+          aria-label="Elija la pagina a visualizar">
         </mat-paginator>
       </div>          
     </div>
@@ -134,9 +138,11 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                        showFirstLastButtons 
-                        aria-label="Select page of periodic elements">
+        <mat-paginator
+          #TablePaginatorM="matPaginator"
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons 
+          aria-label="Elija la pagina a visualizar">
         </mat-paginator>
       </div>
     </div>

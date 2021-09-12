@@ -6,12 +6,6 @@ import { GrupoEtario } from "src/app/GrupoEtario"
 import { FranjaEtaria } from "src/app/FranjaEtaria"
 import { Sexo } from "src/app/Sexo";
 
-interface EdadCantMediana {
-  edad: string;
-  cantidad: number;
-  mediana: number;
-}
-
 @Component({
   selector: 'app-by-hand',
   templateUrl: './by-hand.component.html',
@@ -55,13 +49,14 @@ export class ByHandComponent implements AfterViewInit {
   ];
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
+  
   dataSourceF = new MatTableDataSource<GrupoEtario>(FEMENINO_DATA);
-
   dataSourceM = new MatTableDataSource<GrupoEtario>(MASCULINO_DATA);
 
-  @ViewChild(MatPaginator) paginatorF: MatPaginator;
+  //@ViewChildren(MatPaginator) ;
 
-  @ViewChild(MatPaginator) paginatorM: MatPaginator;
+  @ViewChild('TablePaginatorF') paginatorF: MatPaginator;
+  @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngAfterViewInit() {
     this.dataSourceF.paginator = this.paginatorF;
@@ -81,14 +76,14 @@ export class ByHandComponent implements AfterViewInit {
       Sexo.Femenino,
       this.enteredCantFemenino,
       this.enteredMedianaFemenino));
-    this.dataSourceF = new MatTableDataSource<GrupoEtario>(FEMENINO_DATA);
+    this.dataSourceF._updateChangeSubscription();
     
     MASCULINO_DATA.push(new GrupoEtario(
       this.enteredEdad,
       Sexo.Masculino,
       this.enteredCantMasculino,
       this.enteredMedianaMasculino));
-    this.dataSourceM = new MatTableDataSource<GrupoEtario>(MASCULINO_DATA);
+    this.dataSourceM._updateChangeSubscription();
   }
 }
 
