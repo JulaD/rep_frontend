@@ -16,6 +16,8 @@ sonarcloud-check:
     - master
     - develop
 
+image: node:9.11.1
+
 pages:
   cache:
     paths:
