@@ -16,21 +16,21 @@ sonarcloud-check:
     - master
     - develop
 
-image: node:9.11.1
+image: node:latest
 
 pages:
   cache:
     paths:
     - node_modules/
 
+  stage: deploy
   script:
   - npm install
-  - npm run build
-
+  - npm build
+  - mv dist/ public/
   artifacts:
     paths:
     - public
-  
   only:
-  - develop
+  - master
 
