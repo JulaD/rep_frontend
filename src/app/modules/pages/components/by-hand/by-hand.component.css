@@ -81,10 +81,14 @@ mat-form-field {
 .div-boton {
   width: 100%;
   display: flex;
-  justify-content: right;
+  justify-content:space-around;
 }
 
 .boton-agregar {
+  margin: 10px;
+}
+
+.boton-resultado {
   margin: 10px;
 }
 

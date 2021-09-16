@@ -31,10 +31,12 @@
       <div class="step1-cant-femenino">
         <mat-form-field appearance="standard">
           <mat-label>Cantidad de personas del sexo femenino</mat-label>
-          <input type="number" matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino" #cantFemenino="ngModel">
+          <input matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino"
+            #cantFemenino="ngModel" valOnlyNumbers="">
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
         <div *ngIf="cantFemenino.invalid && (cantFemenino.dirty || cantFemenino.touched)" class="alert">
+          Invalido!!
         </div>
       </div>
       <div class="step1-cant-masculino">
@@ -66,6 +68,11 @@
       </div>
     </div>
     <div class="div-boton">
+      <button class="boton-resultado"
+        mat-flat-button color="primary"
+        routerLink="/result">
+        Confirmar
+      </button>
       <button class="boton-agregar"
         type="submit"
         mat-flat-button color="primary"
