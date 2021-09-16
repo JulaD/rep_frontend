@@ -74,15 +74,16 @@ export class ByHandComponent implements AfterViewInit {
     FEMENINO_DATA.push(new GrupoEtario(
       this.enteredEdad,
       Sexo.Femenino,
-      this.enteredCantFemenino,
-      this.enteredMedianaFemenino));
+      this.enteredMedianaFemenino,
+      this.enteredCantFemenino));
     this.dataSourceF._updateChangeSubscription();
     
     MASCULINO_DATA.push(new GrupoEtario(
       this.enteredEdad,
       Sexo.Masculino,
-      this.enteredCantMasculino,
-      this.enteredMedianaMasculino));
+      this.enteredMedianaMasculino,
+      this.enteredCantMasculino
+      ));
     this.dataSourceM._updateChangeSubscription();
 
     console.log(form);
