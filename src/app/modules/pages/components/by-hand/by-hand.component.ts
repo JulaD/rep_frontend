@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GrupoEtario } from "src/app/GrupoEtario"
 import { FranjaEtaria } from "src/app/FranjaEtaria"
 import { Sexo } from "src/app/Sexo";
+import { AgeGroupJSON, RestService } from "src/app/rest.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-by-hand',
@@ -53,8 +55,6 @@ export class ByHandComponent implements AfterViewInit {
   dataSourceF = new MatTableDataSource<GrupoEtario>(FEMENINO_DATA);
   dataSourceM = new MatTableDataSource<GrupoEtario>(MASCULINO_DATA);
 
-  //@ViewChildren(MatPaginator) ;
-
   @ViewChild('TablePaginatorF') paginatorF: MatPaginator;
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
@@ -86,6 +86,43 @@ export class ByHandComponent implements AfterViewInit {
     this.dataSourceM._updateChangeSubscription();
 
     console.log(form);
+  }
+
+  constructor(public rest: RestService, private router: Router) { }
+
+  prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
+    const res: AgeGroupJSON[] =[];
+    
+    dataFem.forEach((group: GrupoEtario)=> {
+      let elem :AgeGroupJSON = {
+        edad: group.edad as string,
+        sexo: group.sexo as string,
+        pesoMediano: group.pesoMediano,
+        cantidad: group.cantidad };
+      res.push(elem);
+    });
+
+    dataMasc.forEach((group: GrupoEtario)=> {
+      let elem :AgeGroupJSON = {
+        edad: group.edad as string,
+        sexo: group.sexo as string,
+        pesoMediano: group.pesoMediano,
+        cantidad: group.cantidad };
+      res.push(elem);
+    });
+
+    return res;
+  }
+
+  addCalculation(): void {
+    this.rest.addCalculation(this.prepareData(FEMENINO_DATA, MASCULINO_DATA)).subscribe((result) => {
+      this.router.navigate(['/result']);
+
+      this.router.navigate(['/result'], {​​​​​​​​ queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
+
+    }, (err) => {
+      console.log(err);
+    });
   }
 }
 

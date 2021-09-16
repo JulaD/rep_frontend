@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CalculatorResponseDTO } from 'src/app/interfaces/CalculatorResponseDTO';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -24,12 +26,22 @@ const TABLA_DATA2: RequerimientoEnergetico[] = [
 })
 
 export class ResultComponent implements OnInit {
+  parsedObtainedResult :CalculatorResponseDTO;
+  requerimientoTotal: number = 0;
+  poblacionTotal: number = 0;
 
-  constructor() { }
+  constructor( private route: ActivatedRoute) {}
   displayedColumns: string[] = ['texto','femenino', 'masculino'];
   dataSource = TABLA_DATA;
   dataSource2 = TABLA_DATA2;
+  
   ngOnInit(): void {
+    const myObj: any = this.route.snapshot.queryParamMap.get('result');
+    if (myObj != null) {
+      this.parsedObtainedResult = JSON.parse(myObj);
+      this.requerimientoTotal = this.parsedObtainedResult.requerimientoTotal.requerimientoEnergeticoPerCapita;
+      this.poblacionTotal = this.parsedObtainedResult.requerimientoTotal.poblacionTotal;
+    }
   }
 
 }
