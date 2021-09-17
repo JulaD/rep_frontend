@@ -82,7 +82,8 @@ export class ByHandComponent implements AfterViewInit {
       this.enteredEdad,
       Sexo.Masculino,
       this.enteredMedianaMasculino,
-      this.enteredCantMasculino));
+      this.enteredCantMasculino
+      ));
     this.dataSourceM._updateChangeSubscription();
 
     console.log(form);
