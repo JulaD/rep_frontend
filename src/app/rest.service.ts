@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 export interface AgeGroupJSON {
   edad: string;
@@ -20,11 +19,6 @@ const serviceCalc = 'repCalculator';
 export class RestService {
 
   constructor(private http: HttpClient) { }
-
-  private extractData(res: Response): any {
-    const body = res;
-    return body || { };
-  }
 
   addCalculation(groups: AgeGroupJSON[]): Observable<any> {
     return this.http.post(endpoint + serviceCalc, groups).pipe(

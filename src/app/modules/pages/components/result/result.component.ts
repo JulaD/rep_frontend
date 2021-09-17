@@ -27,8 +27,8 @@ const TABLA_DATA2: RequerimientoEnergetico[] = [
 
 export class ResultComponent implements OnInit {
   parsedObtainedResult :CalculatorResponseDTO;
-  requerimientoTotal: number = 0;
-  poblacionTotal: number = 0;
+  requerimientoTotal: string = '';
+  poblacionTotal: string = '';
 
   constructor( private route: ActivatedRoute) {}
   displayedColumns: string[] = ['texto','femenino', 'masculino'];
@@ -39,8 +39,8 @@ export class ResultComponent implements OnInit {
     const myObj: any = this.route.snapshot.queryParamMap.get('result');
     if (myObj != null) {
       this.parsedObtainedResult = JSON.parse(myObj);
-      this.requerimientoTotal = this.parsedObtainedResult.requerimientoTotal.requerimientoEnergeticoPerCapita;
-      this.poblacionTotal = this.parsedObtainedResult.requerimientoTotal.poblacionTotal;
+      this.requerimientoTotal = this.parsedObtainedResult.requerimientoTotal.requerimientoEnergeticoPerCapita.toString();
+      this.poblacionTotal = this.parsedObtainedResult.requerimientoTotal.poblacionTotal.toFixed(2);
     }
   }
 

@@ -74,15 +74,15 @@ export class ByHandComponent implements AfterViewInit {
     FEMENINO_DATA.push(new GrupoEtario(
       this.enteredEdad,
       Sexo.Femenino,
-      this.enteredCantFemenino,
-      this.enteredMedianaFemenino));
+      this.enteredMedianaFemenino,
+      this.enteredCantFemenino));
     this.dataSourceF._updateChangeSubscription();
     
     MASCULINO_DATA.push(new GrupoEtario(
       this.enteredEdad,
       Sexo.Masculino,
-      this.enteredCantMasculino,
-      this.enteredMedianaMasculino));
+      this.enteredMedianaMasculino,
+      this.enteredCantMasculino));
     this.dataSourceM._updateChangeSubscription();
 
     console.log(form);
@@ -116,9 +116,8 @@ export class ByHandComponent implements AfterViewInit {
 
   addCalculation(): void {
     this.rest.addCalculation(this.prepareData(FEMENINO_DATA, MASCULINO_DATA)).subscribe((result) => {
-      this.router.navigate(['/result']);
-
-      this.router.navigate(['/result'], {​​​​​​​​ queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
+      
+      this.router.navigate(['/result'], { queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
 
     }, (err) => {
       console.log(err);
