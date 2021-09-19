@@ -32,11 +32,11 @@
         <mat-form-field appearance="standard">
           <mat-label>Cantidad de personas del sexo femenino</mat-label>
           <input matInput name="cantFemenino" [(ngModel)]="enteredCantFemenino"
-            #cantFemenino="ngModel" valOnlyNumbers="">
+            #cantFemenino="ngModel" pattern="\d+">
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
-        <div *ngIf="cantFemenino.invalid && (cantFemenino.dirty || cantFemenino.touched)" class="alert">
-          Invalido!!
+        <div *ngIf="cantFemenino.errors?.pattern" class="alert alert-danger">
+          La cantidad debe ser un numero entero
         </div>
       </div>
       <div class="step1-cant-masculino">
