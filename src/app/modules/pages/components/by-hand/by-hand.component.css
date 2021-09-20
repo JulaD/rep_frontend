@@ -81,7 +81,7 @@ mat-form-field {
 .div-boton {
   width: 100%;
   display: flex;
-  justify-content:space-around;
+  justify-content: right;
 }
 
 .boton-agregar {
@@ -111,4 +111,8 @@ table {
 .buttons {
   display: flex;
   justify-content: flex-end;
+}
+
+.mensaje-error {
+  font-size: small;
 }

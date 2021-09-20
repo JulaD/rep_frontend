@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild } from "@angular/core";
-import { NgForm } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GrupoEtario } from "src/app/GrupoEtario"
@@ -7,7 +7,16 @@ import { FranjaEtaria } from "src/app/FranjaEtaria"
 import { Sexo } from "src/app/Sexo";
 import { AgeGroupJSON, RestService } from "src/app/rest.service";
 import { Router } from "@angular/router";
+import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
+import { step1CantidadSinMedianaValidator } from
+  "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
 
+const FEMENINO_DATA: GrupoEtario[] = []
+const MASCULINO_DATA: GrupoEtario[] = []
+const numeroEnteroRe: RegExp = new RegExp('^[0-9]+$')
+// El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
+const numeroFloatRe: RegExp =
+  new RegExp('^(0*[1-9][0-9]*)|(0*[1-9][0-9]+.[0-9]+)|(0+.0*[1-9][0-9]*)$')
 @Component({
   selector: 'app-by-hand',
   templateUrl: './by-hand.component.html',
@@ -63,30 +72,47 @@ export class ByHandComponent implements AfterViewInit {
     this.dataSourceM.paginator = this.paginatorM;
   }
 
-  enteredEdad: FranjaEtaria;
-  enteredCantFemenino: number;
-  enteredCantMasculino: number;
-  enteredMedianaFemenino: number;
-  enteredMedianaMasculino: number;
+  // Aca pongo las cosas de Reactive Form
+  grupoEtarioForm = new FormGroup({
+    edad: new FormControl('', Validators.required),
+    cantFemenino: new FormControl('', Validators.pattern(numeroEnteroRe)),
+    cantMasculino: new FormControl('', Validators.pattern(numeroEnteroRe)),
+    medianaFemenino: new FormControl('', Validators.pattern(numeroFloatRe)),
+    medianaMasculino: new FormControl('', Validators.pattern(numeroFloatRe))
+  }, { validators: Validators.compose([step1TodoVacioValidator, step1CantidadSinMedianaValidator]) })
 
+  cantFemenino :number = 0;
+  cantMasculino :number = 0;
 
-  onSubmit(form: NgForm) {
-    FEMENINO_DATA.push(new GrupoEtario(
-      this.enteredEdad,
-      Sexo.Femenino,
-      this.enteredMedianaFemenino,
-      this.enteredCantFemenino));
-    this.dataSourceF._updateChangeSubscription();
-    
-    MASCULINO_DATA.push(new GrupoEtario(
-      this.enteredEdad,
-      Sexo.Masculino,
-      this.enteredMedianaMasculino,
-      this.enteredCantMasculino
-      ));
-    this.dataSourceM._updateChangeSubscription();
-
-    console.log(form);
+  onSubmit() {
+    // Datos Femenino
+    if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') {
+      if (this.grupoEtarioForm.get('cantFemenino')?.value === '') {
+        this.cantFemenino = 0;
+      } else {
+        this.cantFemenino = this.grupoEtarioForm.get('cantFemenino')?.value
+      }
+      FEMENINO_DATA.push(new GrupoEtario(
+        this.grupoEtarioForm.get('edad')?.value,
+        Sexo.Femenino,
+        this.grupoEtarioForm.get('medianaFemenino')?.value,
+        this.cantFemenino));
+      this.dataSourceF._updateChangeSubscription();
+    }
+    // Datos Masculino
+    if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') {
+      if (this.grupoEtarioForm.get('cantMasculino')?.value === '') {
+        this.cantMasculino = 0;
+      } else {
+        this.cantMasculino = this.grupoEtarioForm.get('cantMasculino')?.value
+      }
+      MASCULINO_DATA.push(new GrupoEtario(
+        this.grupoEtarioForm.get('edad')?.value,
+        Sexo.Masculino,
+        this.grupoEtarioForm.get('medianaMasculino')?.value,
+        this.cantMasculino));
+      this.dataSourceM._updateChangeSubscription();
+    }
   }
 
   constructor(public rest: RestService, private router: Router) { }
@@ -125,6 +151,3 @@ export class ByHandComponent implements AfterViewInit {
     });
   }
 }
-
-const FEMENINO_DATA: GrupoEtario[] = []
-const MASCULINO_DATA: GrupoEtario[] = []

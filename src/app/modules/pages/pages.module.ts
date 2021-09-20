@@ -16,7 +16,7 @@ import { UploadTemplateComponent } from './components/upload-template/upload-tem
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import { FormsModule } from '@angular/forms';
     PagesRoutingModule,
     SharedModule,
     AngularMaterialModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }
