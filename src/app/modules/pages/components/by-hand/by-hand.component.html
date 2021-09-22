@@ -27,6 +27,15 @@
           </mat-select>
           <mat-hint>Seleccione una edad</mat-hint>
         </mat-form-field>
+        <div *ngIf="grupoEtarioForm.get('edad')?.dirty" class="div-boton-borrar">
+          <button class="boton-borrar"
+            (click)="borrarEdad()"
+            mat-flat-button color="primary"
+            matTooltip="Borra los datos en la tabla asociados a esta edad."
+            matTooltipPosition="below">
+            Borrar Edad
+          </button>
+        </div>
         <div *ngIf="grupoEtarioForm.get('edad')?.errors?.required &&
           (grupoEtarioForm.get('edad')?.touched || grupoEtarioForm.get('edad')?.dirty)"
           class="alert alert-danger mensaje-error">

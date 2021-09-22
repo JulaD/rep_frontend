@@ -32,3 +32,9 @@ export enum FranjaEtaria {
   Anios_30_59 = "30-59 años",
   Anios_60_mas = "60+ años"
 }
+
+const franjaEtariaOrder = Object.values(FranjaEtaria);
+
+export function compareFranjaEtaria(a: FranjaEtaria, b: FranjaEtaria) {
+  return franjaEtariaOrder.indexOf(a) - franjaEtariaOrder.indexOf(b)
+}

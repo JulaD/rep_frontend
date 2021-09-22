@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GrupoEtario } from "src/app/GrupoEtario"
-import { FranjaEtaria } from "src/app/FranjaEtaria"
+import { compareFranjaEtaria, FranjaEtaria } from "src/app/FranjaEtaria"
 import { Sexo } from "src/app/Sexo";
 import { AgeGroupJSON, RestService } from "src/app/rest.service";
 import { Router } from "@angular/router";
@@ -74,7 +74,7 @@ export class ByHandComponent implements AfterViewInit {
     this.dataSourceM.paginator = this.paginatorM;
   }
 
-  // Aca pongo las cosas de Reactive Form
+  // Aca van los items relacionados a Reactive Form:
   grupoEtarioForm = new FormGroup({
     edad: new FormControl('', Validators.required),
     cantFemenino: new FormControl('', Validators.pattern(numeroEnteroRe)),
@@ -115,6 +115,9 @@ export class ByHandComponent implements AfterViewInit {
           Sexo.Femenino,
           this.grupoEtarioForm.get('medianaFemenino')?.value,
           cantFemenino));
+        femeninoData.sort((a,b) => {
+          return compareFranjaEtaria(a.edad, b.edad)
+        })
         this.dataSourceF._updateChangeSubscription();
       }
       // Datos Masculino
@@ -129,11 +132,38 @@ export class ByHandComponent implements AfterViewInit {
           Sexo.Masculino,
           this.grupoEtarioForm.get('medianaMasculino')?.value,
           cantMasculino));
+          masculinoData.sort((a,b) => {
+            return compareFranjaEtaria(a.edad, b.edad)
+          })
         this.dataSourceM._updateChangeSubscription();
       }
     }
   } // onSubmit
 
+  // Boton de borrar datos asociados a FranjaEtaria
+  borrarEdad() {
+    // la edad actualmente seleccionada en grupoEtarioForm
+    const edadSel: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+    
+    // Borro en la tabla femeninoData
+    const indexF = femeninoData.findIndex((element: GrupoEtario) => {
+      return element.edad === edadSel;
+    })
+    if (indexF > -1) {
+      femeninoData.splice(indexF, 1);
+      this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
+    }
+    // Borro en la tabla femeninoData
+    const indexM = masculinoData.findIndex((element: GrupoEtario) => {
+      return element.edad === edadSel;
+    })
+    if (indexM > -1) {
+      masculinoData.splice(indexM, 1);
+      this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
+    }
+  }
+
+  // Envio de datos al backend
   constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar) { }
 
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
