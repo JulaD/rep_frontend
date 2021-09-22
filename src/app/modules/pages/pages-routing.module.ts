@@ -38,6 +38,9 @@ const routes: Routes = [{
     path: 'upload-template',
     component: UploadTemplateComponent
   }, {
+    path: 'stepper',
+    component: StepperComponent
+  },{
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full'

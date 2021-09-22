@@ -10,13 +10,15 @@ import { Router } from "@angular/router";
 import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
 import { step1CantidadSinMedianaValidator } from
   "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
-const FEMENINO_DATA: GrupoEtario[] = []
-const MASCULINO_DATA: GrupoEtario[] = []
+const femeninoData: GrupoEtario[] = []
+const masculinoData: GrupoEtario[] = []
 const numeroEnteroRe: RegExp = new RegExp('^[0-9]+$')
 // El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
 const numeroFloatRe: RegExp =
   new RegExp('^(0*[1-9][0-9]*)|(0*[1-9][0-9]+.[0-9]+)|(0+.0*[1-9][0-9]*)$')
+
 @Component({
   selector: 'app-by-hand',
   templateUrl: './by-hand.component.html',
@@ -61,8 +63,8 @@ export class ByHandComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
   
-  dataSourceF = new MatTableDataSource<GrupoEtario>(FEMENINO_DATA);
-  dataSourceM = new MatTableDataSource<GrupoEtario>(MASCULINO_DATA);
+  dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
+  dataSourceM = new MatTableDataSource<GrupoEtario>(masculinoData);
 
   @ViewChild('TablePaginatorF') paginatorF: MatPaginator;
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
@@ -81,41 +83,58 @@ export class ByHandComponent implements AfterViewInit {
     medianaMasculino: new FormControl('', Validators.pattern(numeroFloatRe))
   }, { validators: Validators.compose([step1TodoVacioValidator, step1CantidadSinMedianaValidator]) })
 
-  cantFemenino :number = 0;
-  cantMasculino :number = 0;
-
   onSubmit() {
-    // Datos Femenino
-    if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') {
-      if (this.grupoEtarioForm.get('cantFemenino')?.value === '') {
-        this.cantFemenino = 0;
-      } else {
-        this.cantFemenino = this.grupoEtarioForm.get('cantFemenino')?.value
-      }
-      FEMENINO_DATA.push(new GrupoEtario(
-        this.grupoEtarioForm.get('edad')?.value,
-        Sexo.Femenino,
-        this.grupoEtarioForm.get('medianaFemenino')?.value,
-        this.cantFemenino));
-      this.dataSourceF._updateChangeSubscription();
-    }
-    // Datos Masculino
-    if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') {
-      if (this.grupoEtarioForm.get('cantMasculino')?.value === '') {
-        this.cantMasculino = 0;
-      } else {
-        this.cantMasculino = this.grupoEtarioForm.get('cantMasculino')?.value
-      }
-      MASCULINO_DATA.push(new GrupoEtario(
-        this.grupoEtarioForm.get('edad')?.value,
-        Sexo.Masculino,
-        this.grupoEtarioForm.get('medianaMasculino')?.value,
-        this.cantMasculino));
-      this.dataSourceM._updateChangeSubscription();
-    }
-  }
+    // Revisar si la la franja etaria ya tiene datos en la tabla
+    let repetido: Boolean = false;
+    const franja: string = this.grupoEtarioForm.get('edad')?.value;
 
-  constructor(public rest: RestService, private router: Router) { }
+    repetido = masculinoData.some((group: GrupoEtario)=> {
+      return group.edad === franja;
+    });
+    if (!repetido) {
+      repetido = femeninoData.some((group: GrupoEtario)=> {
+        return group.edad === franja;
+      });
+    }
+    if (repetido) {
+      // presento mensaje de error
+      this._snackBar.open(
+        "ERROR: Ya existen datos ingresados para esta franja etaria", "Aceptar")
+    } else {
+      let cantFemenino: number = 0;
+      let cantMasculino: number = 0;
+      // Datos Femenino
+      if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') { // hay datos para agregar a Femenino
+        if (this.grupoEtarioForm.get('cantFemenino')?.value === '') { // cantidad vacia equivale a 0
+          cantFemenino = 0;
+        } else {
+          cantFemenino = this.grupoEtarioForm.get('cantFemenino')?.value
+        }
+        femeninoData.push(new GrupoEtario(
+          this.grupoEtarioForm.get('edad')?.value,
+          Sexo.Femenino,
+          this.grupoEtarioForm.get('medianaFemenino')?.value,
+          cantFemenino));
+        this.dataSourceF._updateChangeSubscription();
+      }
+      // Datos Masculino
+      if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') { // hay datos para agregar a Femenino
+        if (this.grupoEtarioForm.get('cantMasculino')?.value === '') { // cantidad vacia equivale a 0
+          cantMasculino = 0;
+        } else {
+          cantMasculino = this.grupoEtarioForm.get('cantMasculino')?.value
+        }
+        masculinoData.push(new GrupoEtario(
+          this.grupoEtarioForm.get('edad')?.value,
+          Sexo.Masculino,
+          this.grupoEtarioForm.get('medianaMasculino')?.value,
+          cantMasculino));
+        this.dataSourceM._updateChangeSubscription();
+      }
+    }
+  } // onSubmit
+
+  constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar) { }
 
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
     const res: AgeGroupJSON[] =[];
@@ -142,7 +161,7 @@ export class ByHandComponent implements AfterViewInit {
   }
 
   addCalculation(): void {
-    this.rest.addCalculation(this.prepareData(FEMENINO_DATA, MASCULINO_DATA)).subscribe((result) => {
+    this.rest.addCalculation(this.prepareData(femeninoData, masculinoData)).subscribe((result) => {
       
       this.router.navigate(['/result'], { queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
 
