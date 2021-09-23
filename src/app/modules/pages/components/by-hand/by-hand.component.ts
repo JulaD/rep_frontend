@@ -161,7 +161,7 @@ export class ByHandComponent implements AfterViewInit {
       masculinoData.splice(indexM, 1);
       this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
     }
-  }
+  } // borrarEdad
 
   // Envio de datos al backend
   constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar) { }

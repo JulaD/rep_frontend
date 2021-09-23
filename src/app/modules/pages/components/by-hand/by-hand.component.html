@@ -149,7 +149,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-      
         <mat-paginator
           #TablePaginatorF="matPaginator"
           [pageSizeOptions]="[5, 10, 20]"
@@ -162,7 +161,7 @@
       Masculino
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSourceM">
-      
+
           <!-- Edad Column -->
           <ng-container matColumnDef="edad">
             <th mat-header-cell *matHeaderCellDef> Edad </th>
@@ -184,7 +183,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-      
         <mat-paginator
           #TablePaginatorM="matPaginator"
           [pageSizeOptions]="[5, 10, 20]"
@@ -217,7 +215,4 @@
       </mat-icon>
     </div>
   </div>
-  <!-- <div class="buttons">
-    <button mat-raised-button color="primary">Agregar</button>
-  </div> -->
 </mat-card>
