@@ -1,8 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { catchError, last, map, tap } from 'rxjs/operators';
+import { ParsedDataService } from 'src/app/services/parsed-data.service';
 
 @Component({
   selector: 'app-upload-template',
@@ -10,6 +11,11 @@ import { catchError, last, map, tap } from 'rxjs/operators';
   styleUrls: ['./upload-template.component.css']
 })
 export class UploadTemplateComponent implements OnInit {
+
+  data : string;
+
+  @Output() 
+  childToParent = new EventEmitter<String>();
 
   //Archivo
   @Input()
@@ -31,12 +37,13 @@ export class UploadTemplateComponent implements OnInit {
   headers: Headers = new Headers();
   httpClient: HttpClient;
   
-  constructor(private http : HttpClient) {    
+  constructor(private http : HttpClient, private dataService:ParsedDataService) {    
     this.requiredFileType = '.xlsx,.xls,.odt';
     this.uploadProgress   = 0;
   }
 
   ngOnInit(): void {
+    this.dataService.currentData.subscribe(data => this.data = data);
   }
 
   onFileSelected(event: Event) {
@@ -71,6 +78,7 @@ export class UploadTemplateComponent implements OnInit {
               break;
             case HttpEventType.Response:
               this.uploading = false;
+              //sendParsedSheet(event.body);
               break;
           }
         },
@@ -128,6 +136,10 @@ export class UploadTemplateComponent implements OnInit {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
+  }
+
+  sendToParent(name : String){
+    this.childToParent.emit(name);
   }
 
 }

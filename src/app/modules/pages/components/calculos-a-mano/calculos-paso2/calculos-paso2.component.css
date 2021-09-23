@@ -1,0 +1,28 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  float:left;
+  height: 7rem;
+  padding-bottom: 2rem;
+}
+
+.step2-af-liviana {
+  width: 100%;
+  grid-column: 1/2;
+}
+
+.step2-af-moderada {
+  width: 100%;
+  grid-column: 2/3;
+}
+
+.step2-af-intensa {
+  width: 100%;
+  grid-column: 3/4;
+}
+
+mat-form-field {
+  width: 100%; 
+}

@@ -5,22 +5,22 @@ import { PageNotFoundComponent } from './modules/shared/components/page-not-foun
 
 const routes: Routes = [{
   path: '',
-  loadChildren: () => import('./modules/pages/pages.module').then(m => m.PagesModule)
+  loadChildren: () => import('./modules/pages/pages.module').then((m) => m.PagesModule),
 }, {
   path: 'auth',
-  loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
+  loadChildren: () => import('./modules/auth/auth.module').then((m) => m.AuthModule),
 }, {
   path: '**',
-  component: PageNotFoundComponent
+  component: PageNotFoundComponent,
 }];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    AuthRoutingModule
+    AuthRoutingModule,
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 export class AppRoutingModule { }

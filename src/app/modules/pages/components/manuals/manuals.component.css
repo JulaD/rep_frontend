@@ -1,0 +1,175 @@
+.first-div {
+  height: 75%;
+}
+
+.first-illustration {
+  height: 100%;
+  width: 80%;
+}
+
+.first-title {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 8rem;
+  height: 8rem;
+  display: flex;
+  align-items: center;  
+  color: #FFFFFF;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.second-title {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  color: #3F51B5;
+  margin-bottom: 3rem;
+}
+
+.yellow {
+  background-color: #FFCF2D;
+}
+
+.col-md-6.yellow {
+  min-width: 65vh;
+  max-height: 100%;
+}
+
+.second-div {
+  margin: 2rem 0 0 3rem;
+}
+
+.left-column-2 {
+  margin: 3rem 0 0 3rem;
+}
+
+.under-title {
+  margin-left: 0.5rem;
+}
+
+.third-title {
+  color: #3F51B5;
+  font-size: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+}
+
+.question-title {
+  color: #3F51B5;
+  font-size: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+.manual-info {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 0.5px;
+  color: #000000;
+}
+
+.download {
+  width: 90%;
+  height: 7rem;
+  background: #C4C4C4;
+  border-radius: 0.5rem;
+}
+
+.download-title {
+  color: #3F51B5;
+  font-size: 1.2rem;
+  height: 1.2rem;
+  padding: 1rem 0 0 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.download-info {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: grey;
+}
+
+.question-info {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  font-size: 1.2rem;
+}
+
+.mat-icon {
+  margin-left: 0.5rem;
+}
+
+.second-column-right {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1325px) {
+  .col-md-6 {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .first-title {
+    height: 20vw;
+    font-size: 20vw;
+  }
+
+  .first-div {
+    height: unset;
+    width: fit-content;
+  }
+
+  .left-column-2 {
+    margin: 0;
+  }
+
+  .second-div {
+    margin: 0;
+    height: unset;
+    width: fit-content;
+  }
+
+  .download {
+    height: unset;
+  }
+
+  .second-title {
+    height: unset;
+    font-size: 12vw;
+  }
+
+  .third-title {
+    height: unset;
+  }
+
+  .second-illustration {
+    width: 100%;
+  }
+}

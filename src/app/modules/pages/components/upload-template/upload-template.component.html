@@ -5,29 +5,36 @@
     </button>
 </div>
 <div class="column first-div">
-    <div class="info-div">
-        <img class="illustration" src="../../../../../assets/ilustrations/illustrationUpload.png">
-    </div> 
+  <div class="info-div">
+      <img class="illustration" src="../../../../../assets/ilustrations/illustrationUpload.png">
+  </div> 
 
-    <div class="upload-div">
-        <input type="file" class="file-input"
-        [accept]="requiredFileType"
-        (change)="onFileSelected($event)" #fileUpload>
- 
-        <div class="row">
-            <div class="file-upload">
-                <button mat-flat-button color="primary" class="upload-btn"
-                (click)="fileUpload.click()">Subir archivo<mat-icon>attach_file</mat-icon>
-                </button>
-                {{fileName || "No se seleccionó un archivo aún"}}
-                <mat-spinner diameter="40" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress"></mat-spinner>
-            </div>
+  <div class="upload-div">
+      <input type="file" class="file-input"
+      [accept]="requiredFileType"
+      (change)="onFileSelected($event)" #fileUpload>
 
-        </div>
+      <div class="row">
+          <div class="file-upload">
+              <button mat-flat-button color="primary" class="upload-btn"
+              (click)="fileUpload.click()">Subir archivo<mat-icon>attach_file</mat-icon>
+              </button>
+              {{fileName || "No se seleccionó un archivo aún"}}
+              <mat-spinner diameter="40" mode="determinate" [value]="uploadProgress" *ngIf="uploadProgress"></mat-spinner>
+          </div>
 
-        <label class="upload-subtitle">El archivo debe utilizar la 
-            <a href="templates" target="_blank"> plantilla para procesamiento de datos.</a></label>
-        <p></p>
-        <button [disabled]="!readyToUpload" (click)="proccessFile()" class="upload-button" mat-flat-button color="primary">Calcular requerimiento energético</button>
-    </div>
+      </div>
+
+      <label class="upload-subtitle">El archivo debe utilizar la 
+          <a href="templates" target="_blank"> plantilla para procesamiento de datos.</a></label>
+      <p></p>
+      <button [disabled]="!readyToUpload" (click)="proccessFile()" class="upload-button" mat-flat-button color="primary">Calcular requerimiento energético</button>
+  </div>
+  <label class="upload-subtitle">El archivo debe utilizar la 
+    <a href="templates" target="_blank"> plantilla para procesamiento de datos.</a></label>
+  <p></p>
+  <button [disabled]="!readyToUpload" class="upload-button" 
+    mat-flat-button color="primary" routerLink="/with-template">
+    Calcular requerimiento energético
+  </button>
 </div>

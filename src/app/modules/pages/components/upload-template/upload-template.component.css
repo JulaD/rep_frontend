@@ -27,6 +27,18 @@
   display: none;
 }
 
+.file-upload {
+  margin-bottom: 1rem;
+}
+
+.upload-btn {
+  height: 3rem;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
 .upload-button {
   width: 399.92px;
+  height: 3rem;
+  font-size: 1rem;
 }
