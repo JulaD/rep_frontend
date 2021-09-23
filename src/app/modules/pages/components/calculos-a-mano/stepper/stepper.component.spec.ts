@@ -8,9 +8,9 @@ describe('StepperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StepperComponent ]
+      declarations: [StepperComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

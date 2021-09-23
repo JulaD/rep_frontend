@@ -9,11 +9,11 @@ import { LoginComponent } from './login/login.component';
 
 @NgModule({
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   declarations: [
     AuthComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +21,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
 export class AuthModule { }

@@ -1,38 +1,40 @@
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaders, HttpParamsOptions, HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/internal/operators/catchError';
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-upload-template',
   templateUrl: './upload-template.component.html',
-  styleUrls: ['./upload-template.component.css']
+  styleUrls: ['./upload-template.component.css'],
 })
 export class UploadTemplateComponent implements OnInit {
-
-  //Archivo
+  // Archivo
   requiredFileType: string;
-  fileName:         string = '';
-  fileToUpload:     File;
 
-  //Progreso
+  fileName: string = '';
+
+  fileToUpload: File;
+
+  // Progreso
   uploadProgress: number;
-  uploadSub:      Subscription;
-  readyToUpload:  boolean = false;
-  
-  //Error carga archivo
-  error:        boolean = false;
+
+  uploadSub: Subscription;
+
+  readyToUpload: boolean = false;
+
+  // Error carga archivo
+  error: boolean = false;
+
   errorMessage: string = '';
 
-  //Request
+  // Request
   headers: Headers = new Headers();
-  
-  constructor(){//private _http: HttpClient) {    
+
+  constructor() { // private _http: HttpClient) {
     this.requiredFileType = '.xlsx';
-    this.fileName         = '';
-    this.uploadProgress   = 0;
-    this.uploadSub        = new Subscription;
+    this.fileName = '';
+    this.uploadProgress = 0;
+    this.uploadSub = new Subscription();
   }
 
   ngOnInit(): void {
@@ -40,29 +42,29 @@ export class UploadTemplateComponent implements OnInit {
 
   onFileSelected(event: Event) {
     const element = event.target as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+    const fileList: FileList | null = element.files;
     if (fileList && fileList[0]) {
-      this.fileToUpload   = fileList[0];
-      this.fileName       = this.fileToUpload.name;
-      this.readyToUpload  = true;
+      this.fileToUpload = fileList[0];
+      this.fileName = this.fileToUpload.name;
+      this.readyToUpload = true;
     }
   }
 
-  proccessFile(file: File) {//: Observable<Response> {
+  /* proccessFile(file: File) {//: Observable<Response> {
       let headers = new HttpHeaders({
         'Content-Type':  'application/octet-stream',
       })
      /*return this._http.post<File>('Renzo', file, {headers})
         .pipe(
           catchError(this.handleError())
-        );*/
-  }
+        );
+  } */
 
-  handleError(): (err: any, caught: Observable<File>) => import("rxjs").ObservableInput<any> {
+  handleError(): (err: any, caught: Observable<File>) => import('rxjs').ObservableInput<any> {
     throw new Error('Method not implemented.');
   }
 
-  /*private handleError(error: HttpErrorResponse) {
+  /* private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -75,6 +77,5 @@ export class UploadTemplateComponent implements OnInit {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
-  }*/
-
+  } */
 }

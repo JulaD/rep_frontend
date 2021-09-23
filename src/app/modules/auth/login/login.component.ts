@@ -4,30 +4,31 @@ import { AuthService } from '../../../services';
 
 @Component({
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   error: boolean = false;
+
   submitted: boolean = false;
+
   hide: boolean = true;
 
   auth = new FormGroup({
     email: new FormControl('', Validators.compose([
       Validators.required,
-      Validators.email
+      Validators.email,
     ])),
     password: new FormControl('', Validators.compose([
-      Validators.required
-    ]))
+      Validators.required,
+    ])),
   });
 
   get emailFormControl() {
     return this.auth.get('email') as FormControl;
   }
-  
+
   constructor(
-    private service: AuthService
+    private service: AuthService,
   ) { }
 
   ngOnInit(): void {

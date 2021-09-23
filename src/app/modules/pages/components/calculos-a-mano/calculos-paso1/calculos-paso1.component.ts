@@ -21,7 +21,7 @@ const numeroFloatRe: RegExp =
 @Component({
   selector: 'app-calculos-paso1',
   templateUrl: './calculos-paso1.component.html',
-  styleUrls: ['./calculos-paso1.component.css']
+  styleUrls: ['./calculos-paso1.component.css'],
 })
 export class CalculosPaso1Component implements AfterViewInit {
 

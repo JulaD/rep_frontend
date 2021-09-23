@@ -15,3 +15,22 @@ sonarcloud-check:
     - merge_requests
     - master
     - develop
+
+image: node:latest
+
+pages:
+  cache:
+    paths:
+    - node_modules/
+
+  stage: deploy
+  script:
+  - npm install
+  - npm build
+  - mv dist/ public/
+  artifacts:
+    paths:
+    - public
+  only:
+  - develop
+

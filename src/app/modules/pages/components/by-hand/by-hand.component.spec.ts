@@ -8,9 +8,9 @@ describe('ByHandComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ByHandComponent ]
+      declarations: [ByHandComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

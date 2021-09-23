@@ -8,9 +8,9 @@ describe('CalculosPaso2Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CalculosPaso2Component ]
+      declarations: [CalculosPaso2Component],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

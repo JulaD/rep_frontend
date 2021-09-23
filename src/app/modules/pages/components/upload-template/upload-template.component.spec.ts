@@ -8,9 +8,9 @@ describe('UploadTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploadTemplateComponent ]
+      declarations: [UploadTemplateComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

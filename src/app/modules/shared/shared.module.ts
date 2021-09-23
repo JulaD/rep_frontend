@@ -11,20 +11,20 @@ import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
   declarations: [
     SideBarComponent,
     PageNotFoundComponent,
-    ToolBarComponent
+    ToolBarComponent,
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     NgxSpinnerModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     AngularMaterialModule,
     NgxSpinnerModule,
     SideBarComponent,
     PageNotFoundComponent,
-    ToolBarComponent
-  ]
+    ToolBarComponent,
+  ],
 })
 export class SharedModule { }

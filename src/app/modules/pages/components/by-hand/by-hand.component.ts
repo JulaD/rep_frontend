@@ -22,7 +22,7 @@ const numeroFloatRe: RegExp =
 @Component({
   selector: 'app-by-hand',
   templateUrl: './by-hand.component.html',
-  styleUrls: ['./by-hand.component.css']
+  styleUrls: ['./by-hand.component.css'],
 })
 export class ByHandComponent implements AfterViewInit {
 

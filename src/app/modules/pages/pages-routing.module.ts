@@ -15,44 +15,44 @@ const routes: Routes = [{
   component: PagesComponent,
   children: [{
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
   }, {
     path: 'by-hand',
-    component: ByHandComponent
-  },  {
+    component: ByHandComponent,
+  }, {
     path: 'with-template',
-    component: StepperComponent
+    component: StepperComponent,
   }, {
     path: 'manuals',
-    component: ManualsComponent
+    component: ManualsComponent,
   }, {
     path: 'templates',
-    component: TemplatesComponent
+    component: TemplatesComponent,
   }, {
     path: 'calculos',
-    component: CalculosComponent
+    component: CalculosComponent,
   }, {
     path: 'result',
-    component: ResultComponent
+    component: ResultComponent,
   }, {
     path: 'upload-template',
-    component: UploadTemplateComponent
+    component: UploadTemplateComponent,
   }, {
     path: 'stepper',
     component: StepperComponent
   },{
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
-  }]
+    pathMatch: 'full',
+  }],
 }];
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
   exports: [
-    RouterModule
-  ]
+    RouterModule,
+  ],
 })
 export class PagesRoutingModule { }
