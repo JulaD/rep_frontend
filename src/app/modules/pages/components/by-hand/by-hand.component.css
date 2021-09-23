@@ -30,7 +30,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 2fr 2fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   grid-gap: 10px;
   float:left;
   padding-bottom: 2rem;
@@ -115,4 +115,13 @@ table {
 
 .mensaje-error {
   font-size: small;
+}
+
+.alert {
+  /*Es una clase de bootstrap*/
+  padding: 0.5rem;
+}
+
+.boton-borrar {
+  margin-top: 10px;
 }
