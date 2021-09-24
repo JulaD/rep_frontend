@@ -37,14 +37,12 @@ export class UploadTemplateComponent implements OnInit {
   headers: Headers = new Headers();
   httpClient: HttpClient;
   
-  constructor(private http : HttpClient, private dataService:ParsedDataService) {    
+  constructor(private http : HttpClient, private dataService : ParsedDataService) {    
     this.requiredFileType = '.xlsx,.xls,.odt';
     this.uploadProgress   = 0;
   }
 
-  ngOnInit(): void {
-    this.dataService.currentData.subscribe(data => this.data = data);
-  }
+  ngOnInit(): void {  }
 
   onFileSelected(event: Event) {
     const element = event.currentTarget as HTMLInputElement;
@@ -78,7 +76,7 @@ export class UploadTemplateComponent implements OnInit {
               break;
             case HttpEventType.Response:
               this.uploading = false;
-              //sendParsedSheet(event.body);
+              this.dataService.parseData(event.body);
               break;
           }
         },
@@ -123,7 +121,7 @@ export class UploadTemplateComponent implements OnInit {
     }
   }
 
-  private handleError(error: HttpErrorResponse) {
+  /*private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
@@ -136,7 +134,7 @@ export class UploadTemplateComponent implements OnInit {
     // Return an observable with a user-facing error message.
     return throwError(
       'Something bad happened; please try again later.');
-  }
+  }*/
 
   sendToParent(name : String){
     this.childToParent.emit(name);

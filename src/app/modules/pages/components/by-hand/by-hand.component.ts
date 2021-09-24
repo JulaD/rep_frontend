@@ -11,6 +11,7 @@ import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1
 import { step1CantidadSinMedianaValidator } from
   "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { ParsedDataService } from "src/app/services/parsed-data.service";
 
 const femeninoData: GrupoEtario[] = []
 const masculinoData: GrupoEtario[] = []
@@ -164,7 +165,8 @@ export class ByHandComponent implements AfterViewInit {
   } // borrarEdad
 
   // Envio de datos al backend
-  constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar,
+    private dataService : ParsedDataService) { }
 
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
     const res: AgeGroupJSON[] =[];
@@ -199,4 +201,27 @@ export class ByHandComponent implements AfterViewInit {
       console.log(err);
     });
   }
+
+  //Desde planilla
+  ngOnInit(): void {
+    let grupos : GrupoEtario[] = this.dataService.getData();
+    for (let grupo of grupos) {
+      if (grupo.sexo === Sexo.Femenino) {
+        femeninoData.push(grupo);
+      } else {
+        masculinoData.push(grupo);
+      }
+    }
+    femeninoData.sort((a,b) => {
+      return compareFranjaEtaria(a.edad, b.edad)
+    })
+    this.dataSourceF._updateChangeSubscription();
+    masculinoData.sort((a,b) => {
+      return compareFranjaEtaria(a.edad, b.edad)
+    })
+    this.dataSourceM._updateChangeSubscription();
+  }
+
 }
+
+
