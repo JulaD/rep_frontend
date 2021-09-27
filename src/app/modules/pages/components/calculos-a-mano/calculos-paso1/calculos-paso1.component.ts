@@ -14,10 +14,10 @@ import { Sexo } from "src/app/Sexo";
 
 const femeninoData: GrupoEtario[] = []
 const masculinoData: GrupoEtario[] = []
-const numeroEnteroRe: RegExp = new RegExp('^[0-9]+$')
+const numeroEnteroRe: RegExp = new RegExp(/^[0-9]+$/)
 // El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
 const numeroFloatRe: RegExp =
-  new RegExp('^(0*[1-9][0-9]*)|(0*[1-9][0-9]+.[0-9]+)|(0+.0*[1-9][0-9]*)$')
+  new RegExp(/^((0*[1-9][0-9]*)|(0*[1-9][0-9]+\.[0-9]+)|(0+\.0*[1-9][0-9]*))$/)
 @Component({
   selector: 'app-calculos-paso1',
   templateUrl: './calculos-paso1.component.html',

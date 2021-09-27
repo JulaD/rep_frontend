@@ -1,61 +1,77 @@
-<form>
+<form [formGroup]="adultPALForm">
   <div class="step3-titulo">
     <ng-template matStepLabel>
       Estilo de vida por area
     </ng-template>
   </div>
   <div class="container">
-    <div class="step3-pob-rural">
-      <mat-form-field appearance="standard">
-        <mat-label>Población rural</mat-label>
-        <input matInput>
-      </mat-form-field>
+    <div class="row">
+      <div class="col-sm-3">
+        <div class="poblacion" formGroupName="population">
+          <div class="step3-pob-rural">
+            <mat-form-field appearance="standard">
+              <mat-label>Población rural</mat-label>
+              <input matInput formControlName="ruralPercentage">
+            </mat-form-field>
+          </div>
+          <div class="step3-pob-urbana">
+            <mat-form-field appearance="standard">
+              <mat-label>Población urbana</mat-label>
+              <input matInput formControlName="urbanPercentage">
+            </mat-form-field>
+          </div>
+        </div> <!--end poblacion-->
+      </div>
+      <div class="col">
+        <div class="ruralPAL row" formGroupName="ruralPAL">
+          <div class="step3-activos-rural col-6">
+            <mat-form-field appearance="standard">
+              <mat-label>Activos</mat-label>
+              <input matInput formControlName="activeRuralPAL">
+              <mat-hint>
+                Ingrese el porcentaje de esta población que tiene un
+                nivel de actividad física intensa o moderada
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step3-liviana-rural col-6">
+            <mat-form-field appearance="standard">
+              <mat-label>Actividad física liviana</mat-label>
+              <input matInput formControlName="lowRuralPAL">
+              <mat-hint>
+                Ingrese el porcentaje de esta población que realiza
+                actividad física liviana
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div> <!--end ruralPAL-->
+        <div class="urbanPAL row" formGroupName="urbanPAL">
+          <div class="step3-activos-urbana col-6">
+            <mat-form-field appearance="standard">
+              <mat-label>Activos</mat-label>
+              <input matInput formControlName="activeUrbanPAL">
+              <mat-hint>
+                Ingrese el porcentaje de esta población que tiene un
+                nivel de actividad física intensa o moderada
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="step3-liviana-urbana col-6">
+            <mat-form-field appearance="standard">
+              <mat-label>Actividad física liviana</mat-label>
+              <input matInput formControlName="lowUrbanPAL">
+              <mat-hint>
+                Ingrese el porcentaje de esta población que realiza
+                actividad física liviana
+              </mat-hint>
+            </mat-form-field>
+          </div>
+        </div> <!--end urbanPAL-->
+      </div>
     </div>
-    <div class="step3-pob-urbana">
-      <mat-form-field appearance="standard">
-        <mat-label>Población urbana</mat-label>
-        <input matInput>
-      </mat-form-field>
-    </div>
-    <div class="step3-activos-rural">
-      <mat-form-field appearance="standard">
-        <mat-label>Activos</mat-label>
-        <input matInput>
-        <mat-hint>
-          Ingrese el porcentaje de esta población que tiene un
-          nivel de actividad física intensa o moderada
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="step3-activos-urbana">
-      <mat-form-field appearance="standard">
-        <mat-label>Activos</mat-label>
-        <input matInput>
-        <mat-hint>
-          Ingrese el porcentaje de esta población que tiene un
-          nivel de actividad física intensa o moderada
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="step3-liviana-rural">
-      <mat-form-field appearance="standard">
-        <mat-label>Actividad física liviana</mat-label>
-        <input matInput>
-        <mat-hint>
-          Ingrese el porcentaje de esta población que realiza
-          actividad física liviana
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="step3-liviana-urbana">
-      <mat-form-field appearance="standard">
-        <mat-label>Actividad física liviana</mat-label>
-        <input matInput>
-        <mat-hint>
-          Ingrese el porcentaje de esta población que realiza
-          actividad física liviana
-        </mat-hint>
-      </mat-form-field>
-    </div>
-  </div>
+  </div> <!--end container-->
+  <!--
+  <p>{{this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.value}}</p>
+  <p>{{2}}</p>
+  -->
 </form>

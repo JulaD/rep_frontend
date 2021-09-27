@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="minorPALForm">
   <div class="step2-titulo">
     <ng-template matStepLabel>
       Prevalencia nivel de actividad física
@@ -18,29 +18,46 @@
     <div class="step2-af-liviana">
       <mat-form-field appearance="standard">
         <mat-label>Actividad fisica liviana</mat-label>
-        <input matInput>
+        <input matInput formControlName="lowPAL">
         <mat-hint>
           Ingrese el porcentaje de población que realiza actividad fisica liviana
         </mat-hint>
       </mat-form-field>
+      <div *ngIf="minorPALForm.get('lowPAL')?.errors"
+        class="mensaje-error">
+        Debe ingresar un numero entre 0 y 100
+      </div>
     </div>
     <div class="step2-af-moderada">
       <mat-form-field appearance="standard">
         <mat-label>Actividad fisica moderada</mat-label>
-        <input matInput>
+        <input matInput formControlName="moderatePAL">
         <mat-hint>
           Ingrese el porcentaje de población que realiza actividad fisica moderada
         </mat-hint>
       </mat-form-field>
+      <div *ngIf="minorPALForm.get('moderatePAL')?.errors"
+        class="mensaje-error">
+        Debe ingresar un numero entre 0 y 100
+      </div>
     </div>
     <div class="step2-af-intensa">
       <mat-form-field appearance="standard">
         <mat-label>Actividad fisica intensa</mat-label>
-        <input matInput>
+        <input matInput formControlName="intensePAL">
         <mat-hint>
           Ingrese el porcentaje de población que realiza actividad fisica intensa
         </mat-hint>
       </mat-form-field>
+      <div *ngIf="minorPALForm.get('intensePAL')?.errors"
+        class="mensaje-error">
+        Debe ingresar un numero entre 0 y 100
+      </div>
     </div>
+  </div>
+  <div *ngIf="minorPALForm.errors?.step2Suman100Validator &&
+    (minorPALForm.touched || minorPALForm.dirty)"
+    class="mensaje-error">
+    Los 3 porcentajes ingresados deben sumar 100
   </div>
 </form>

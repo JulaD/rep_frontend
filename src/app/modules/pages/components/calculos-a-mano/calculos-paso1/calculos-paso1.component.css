@@ -87,11 +87,8 @@ table {
 
 .mensaje-error {
   font-size: small;
-}
-
-.alert {
-  /*Es una clase de bootstrap*/
-  padding: 0.5rem;
+  padding: 0.7rem;
+  color: #dc3545;
 }
 
 .boton-borrar {

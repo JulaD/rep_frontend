@@ -2,6 +2,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
   grid-gap: 10px;
   float:left;
   height: 7rem;
@@ -24,5 +25,11 @@
 }
 
 mat-form-field {
-  width: 100%; 
+  width: 100%;
+}
+
+.mensaje-error {
+  font-size: small;
+  padding: 0.7rem;
+  color: #dc3545;
 }

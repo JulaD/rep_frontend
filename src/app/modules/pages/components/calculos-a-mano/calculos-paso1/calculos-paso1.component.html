@@ -27,7 +27,7 @@
           <button class="boton-borrar"
             type="button"
             (click)="borrarEdad()"
-            mat-flat-button color="primary"
+            mat-stroked-button color="warn"
             matTooltip="Borra los datos en la tabla asociados a esta edad."
             matTooltipPosition="below">
             Borrar Edad
@@ -35,7 +35,7 @@
         </div>
         <div *ngIf="grupoEtarioForm.get('edad')?.errors?.required &&
           (grupoEtarioForm.get('edad')?.touched || grupoEtarioForm.get('edad')?.dirty)"
-          class="alert alert-danger mensaje-error">
+          class="mensaje-error">
           Debe seleccionar una franja etaria
         </div>
       </div>
@@ -46,7 +46,7 @@
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
         <div *ngIf="grupoEtarioForm.get('cantFemenino')?.errors?.pattern"
-          class="alert alert-danger mensaje-error">
+          class="mensaje-error">
           La cantidad debe ser un número entero
         </div>
       </div>
@@ -57,7 +57,7 @@
           <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
         </mat-form-field>
         <div *ngIf="grupoEtarioForm.get('cantMasculino')?.errors?.pattern"
-          class="alert alert-danger mensaje-error">
+          class="mensaje-error">
           La cantidad debe ser un número entero
         </div>
       </div>
@@ -71,7 +71,7 @@
           </mat-hint>
         </mat-form-field>
         <div *ngIf="grupoEtarioForm.get('medianaFemenino')?.errors?.pattern"
-          class="alert alert-danger mensaje-error">
+          class="mensaje-error">
           La mediana debe ser un decimal mayor a cero
         </div>
       </div>
@@ -85,7 +85,7 @@
           </mat-hint>
         </mat-form-field>
         <div *ngIf="grupoEtarioForm.get('medianaMasculino')?.errors?.pattern"
-          class="alert alert-danger mensaje-error">
+          class="mensaje-error">
           La mediana debe ser un decimal mayor a cero
         </div>
       </div>
@@ -102,12 +102,12 @@
     </div>
     <div *ngIf="grupoEtarioForm.errors?.step1TodoVacio &&
       (grupoEtarioForm.touched || grupoEtarioForm.dirty)"
-      class="alert alert-danger mensaje-error">
+      class="mensaje-error">
       Ingrese algún dato
     </div>
     <div *ngIf="grupoEtarioForm.errors?.step1CantidadSinMediana &&
       (grupoEtarioForm.touched || grupoEtarioForm.dirty)"
-      class="alert alert-danger mensaje-error">
+      class="mensaje-error">
       Si ingresa una cantidad, tambien debe ingresar un valor de mediana
     </div>
   </div>
