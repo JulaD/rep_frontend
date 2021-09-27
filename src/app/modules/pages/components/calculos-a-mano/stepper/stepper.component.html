@@ -3,7 +3,7 @@
     <mat-step>
       <div class="container">
         <ng-template matStepLabel>Edad y cantidad de personas por sexo</ng-template>
-        <app-calculos-paso1 class="mb-4"></app-calculos-paso1>
+        <app-calculos-paso1 #step1Access class="mb-4"></app-calculos-paso1>
         <div class="containerButtons">
           <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
         </div>
@@ -12,7 +12,7 @@
     <mat-step>
       <div class="container">
         <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
-        <app-calculos-paso2 class="mb-4"></app-calculos-paso2>
+        <app-calculos-paso2 #step2Access class="mb-4"></app-calculos-paso2>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
           <button mat-flat-button color="primary" mat-button matStepperNext >Siguiente</button>

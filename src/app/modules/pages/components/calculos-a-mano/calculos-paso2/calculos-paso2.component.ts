@@ -25,4 +25,8 @@ export class CalculosPaso2Component {
     moderatePAL: new FormControl('', percentageValidators),
     intensePAL: new FormControl('', percentageValidators)
   }, {validators: groupSuman100Validator(3)});
+
+  testMethod() {
+    console.log("funciona")
+  }
 }
