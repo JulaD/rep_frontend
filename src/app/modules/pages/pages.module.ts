@@ -33,7 +33,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     UploadTemplateComponent,
     CalculosComponent,
     StepperComponent,
-    ByHandComponent,
+    ByHandComponent
   ],
   imports: [
     CommonModule,
