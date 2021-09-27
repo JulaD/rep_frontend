@@ -13,83 +13,95 @@
       </ng-template>
     </div>
     <div class="container">
-      <div class="step1-edad-select">
-        <mat-form-field appearance="standard">
-          <mat-label>Edad</mat-label>
-          <mat-select formControlName="edad">
-            <mat-option *ngFor="let edad of edades" [value]="edad">
-              {{edad}}
-            </mat-option>
-          </mat-select>
-          <mat-hint>Seleccione una edad</mat-hint>
-        </mat-form-field>
-        <div *ngIf="grupoEtarioForm.get('edad')?.dirty" class="div-boton-borrar">
-          <button class="boton-borrar"
-            type="button"
-            (click)="borrarEdad()"
-            mat-stroked-button color="warn"
-            matTooltip="Borra los datos en la tabla asociados a esta edad."
-            matTooltipPosition="below">
-            Borrar Edad
-          </button>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="step1-edad-select row">
+            <mat-form-field appearance="standard">
+              <mat-label>Edad</mat-label>
+              <mat-select formControlName="edad">
+                <mat-option *ngFor="let edad of edades" [value]="edad">
+                  {{edad}}
+                </mat-option>
+              </mat-select>
+              <mat-hint>Seleccione una edad</mat-hint>
+            </mat-form-field>
+            <div *ngIf="grupoEtarioForm.get('edad')?.dirty" class="div-boton-borrar">
+              <button class="boton-borrar"
+                type="button"
+                (click)="borrarEdad()"
+                mat-stroked-button color="warn"
+                matTooltip="Borra los datos en la tabla asociados a esta edad."
+                matTooltipPosition="below">
+                Borrar Edad
+              </button>
+            </div>
+            <div *ngIf="grupoEtarioForm.get('edad')?.errors?.required &&
+              (grupoEtarioForm.get('edad')?.touched || grupoEtarioForm.get('edad')?.dirty)"
+              class="mensaje-error">
+              Debe seleccionar una franja etaria
+            </div>
+          </div> <!--end step1-edad-select-->
         </div>
-        <div *ngIf="grupoEtarioForm.get('edad')?.errors?.required &&
-          (grupoEtarioForm.get('edad')?.touched || grupoEtarioForm.get('edad')?.dirty)"
-          class="mensaje-error">
-          Debe seleccionar una franja etaria
+        <div class="col-5">
+          <div class="row">
+            <div class="step1-cant-femenino">
+              <mat-form-field appearance="standard">
+                <mat-label>Cantidad de personas del sexo femenino</mat-label>
+                <input matInput formControlName="cantFemenino">
+                <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
+              </mat-form-field>
+              <div *ngIf="grupoEtarioForm.get('cantFemenino')?.errors?.pattern"
+                class="mensaje-error">
+                La cantidad debe ser un número entero
+              </div>
+            </div>
+            <div class="step1-cant-masculino">
+              <mat-form-field appearance="standard">
+                <mat-label>Cantidad de personas del sexo masculino</mat-label>
+                <input matInput formControlName="cantMasculino">
+                <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
+              </mat-form-field>
+              <div *ngIf="grupoEtarioForm.get('cantMasculino')?.errors?.pattern"
+                class="mensaje-error">
+                La cantidad debe ser un número entero
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="row">
+            <div class="step1-mediana-femenino">
+              <mat-form-field appearance="standard">
+                <mat-label>Mediana</mat-label>
+                <input matInput formControlName="medianaFemenino">
+                <mat-hint>
+                  Ingrese la mediana de los pesos para las personas de
+                  sexo femenino para la edad seleccionada
+                </mat-hint>
+              </mat-form-field>
+              <div *ngIf="grupoEtarioForm.get('medianaFemenino')?.errors?.pattern"
+                class="mensaje-error">
+                La mediana debe ser un decimal mayor a cero
+              </div>
+            </div>
+            <div class="step1-mediana-masculino">
+              <mat-form-field appearance="standard">
+                <mat-label>Mediana</mat-label>
+                <input matInput formControlName="medianaMasculino">
+                <mat-hint>
+                  Ingrese la mediana de los pesos para las personas de
+                  sexo masculino para la edad seleccionada
+                </mat-hint>
+              </mat-form-field>
+              <div *ngIf="grupoEtarioForm.get('medianaMasculino')?.errors?.pattern"
+                class="mensaje-error">
+                La mediana debe ser un decimal mayor a cero
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="step1-cant-femenino">
-        <mat-form-field appearance="standard">
-          <mat-label>Cantidad de personas del sexo femenino</mat-label>
-          <input matInput formControlName="cantFemenino">
-          <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
-        </mat-form-field>
-        <div *ngIf="grupoEtarioForm.get('cantFemenino')?.errors?.pattern"
-          class="mensaje-error">
-          La cantidad debe ser un número entero
-        </div>
-      </div>
-      <div class="step1-cant-masculino">
-        <mat-form-field appearance="standard">
-          <mat-label>Cantidad de personas del sexo masculino</mat-label>
-          <input matInput formControlName="cantMasculino">
-          <mat-hint>Si este campo esta vacio se asumira que la cantidad es cero</mat-hint>
-        </mat-form-field>
-        <div *ngIf="grupoEtarioForm.get('cantMasculino')?.errors?.pattern"
-          class="mensaje-error">
-          La cantidad debe ser un número entero
-        </div>
-      </div>
-      <div class="step1-mediana-femenino">
-        <mat-form-field appearance="standard">
-          <mat-label>Mediana</mat-label>
-          <input matInput formControlName="medianaFemenino">
-          <mat-hint>
-            Ingrese la mediana de los pesos para las personas de
-            sexo femenino para la edad seleccionada
-          </mat-hint>
-        </mat-form-field>
-        <div *ngIf="grupoEtarioForm.get('medianaFemenino')?.errors?.pattern"
-          class="mensaje-error">
-          La mediana debe ser un decimal mayor a cero
-        </div>
-      </div>
-      <div class="step1-mediana-masculino">
-        <mat-form-field appearance="standard">
-          <mat-label>Mediana</mat-label>
-          <input matInput formControlName="medianaMasculino">
-          <mat-hint>
-            Ingrese la mediana de los pesos para las personas de
-            sexo masculino para la edad seleccionada
-          </mat-hint>
-        </mat-form-field>
-        <div *ngIf="grupoEtarioForm.get('medianaMasculino')?.errors?.pattern"
-          class="mensaje-error">
-          La mediana debe ser un decimal mayor a cero
-        </div>
-      </div>
-    </div>
+    </div> <!--end container-->
     <div class="div-boton">
       <button class="boton-agregar"
         type="submit"
