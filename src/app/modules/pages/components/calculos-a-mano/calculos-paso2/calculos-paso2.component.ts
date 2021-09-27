@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { step2Suman100Validator } from 'src/app/modules/shared/validators/step2-suman-100.directive';
+import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
 
 // El regex es ^(un entero >= 0)|(un decimal >= 0)$
 const numeroFloatY0Re: RegExp =
   new RegExp(/^((\d*)|(\d*\.\d+))$/)
+
+const percentageValidators: ValidatorFn[] = [
+  Validators.pattern(numeroFloatY0Re),
+  Validators.min(0),
+  Validators.max(100)];
 
 @Component({
   selector: 'app-calculos-paso2',
@@ -16,14 +21,8 @@ export class CalculosPaso2Component {
   constructor() {}
 
   minorPALForm = new FormGroup({
-    lowPAL: new FormControl('', [Validators.pattern(numeroFloatY0Re),
-      Validators.min(0),
-      Validators.max(100)]),
-    moderatePAL: new FormControl('', [Validators.pattern(numeroFloatY0Re),
-      Validators.min(0),
-      Validators.max(100)]),
-    intensePAL: new FormControl('', [Validators.pattern(numeroFloatY0Re),
-      Validators.min(0),
-      Validators.max(100)])
-  }, {validators: step2Suman100Validator});
+    lowPAL: new FormControl('', percentageValidators),
+    moderatePAL: new FormControl('', percentageValidators),
+    intensePAL: new FormControl('', percentageValidators)
+  }, {validators: groupSuman100Validator(3)});
 }
