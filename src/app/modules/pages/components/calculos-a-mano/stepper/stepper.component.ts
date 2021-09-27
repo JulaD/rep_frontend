@@ -9,11 +9,5 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class StepperComponent implements OnInit {
   isLinear = false;
 
-  firstFormGroup: FormGroup;
-
-  secondFormGroup: FormGroup;
-
-  constructor(private _formBuilder: FormBuilder) {}
-
   ngOnInit() { }
 }
