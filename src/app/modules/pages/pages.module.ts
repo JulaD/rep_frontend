@@ -16,6 +16,8 @@ import { UploadTemplateComponent } from './components/upload-template/upload-tem
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -31,13 +33,16 @@ import { ByHandComponent } from './components/by-hand/by-hand.component';
     UploadTemplateComponent,
     CalculosComponent,
     StepperComponent,
-    ByHandComponent,
+    ByHandComponent
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     SharedModule,
     AngularMaterialModule,
-  ],
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
+  ]
 })
 export class PagesModule { }
