@@ -2,16 +2,17 @@ import { Component, AfterViewInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { GrupoEtario } from "src/app/GrupoEtario"
-import { compareFranjaEtaria, FranjaEtaria } from "src/app/FranjaEtaria"
-import { Sexo } from "src/app/Sexo";
-import { AgeGroupJSON, RestService } from "src/app/rest.service";
+import { GrupoEtario } from "src/app/models/grupo-etario"
+import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria"
+import { Sexo } from "src/app/enums/Sexo";
+import { AgeGroupJSON, RestService } from "src/app/services/rest/rest.service";
 import { Router } from "@angular/router";
+import { AgeGroupService } from "src/app/services/age-group.service";
+import { ResultsService } from "src/app/services/results.service";
 import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
 import { step1CantidadSinMedianaValidator } from
   "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { ParsedDataService } from "src/app/services/parsed-data.service";
 
 const femeninoData: GrupoEtario[] = []
 const masculinoData: GrupoEtario[] = []
@@ -19,7 +20,6 @@ const numeroEnteroRe: RegExp = new RegExp('^[0-9]+$')
 // El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
 const numeroFloatRe: RegExp =
   new RegExp('^(0*[1-9][0-9]*)|(0*[1-9][0-9]+.[0-9]+)|(0+.0*[1-9][0-9]*)$')
-
 @Component({
   selector: 'app-by-hand',
   templateUrl: './by-hand.component.html',
@@ -27,41 +27,7 @@ const numeroFloatRe: RegExp =
 })
 export class ByHandComponent implements AfterViewInit {
 
-  edades: FranjaEtaria[] = [
-    FranjaEtaria.Meses_0,
-    FranjaEtaria.Meses_1,
-    FranjaEtaria.Meses_2,
-    FranjaEtaria.Meses_3,
-    FranjaEtaria.Meses_4,
-    FranjaEtaria.Meses_5,
-    FranjaEtaria.Meses_6,
-    FranjaEtaria.Meses_7,
-    FranjaEtaria.Meses_8,
-    FranjaEtaria.Meses_9,
-    FranjaEtaria.Meses_10,
-    FranjaEtaria.Meses_11,
-    FranjaEtaria.Anios_1,
-    FranjaEtaria.Anios_2,
-    FranjaEtaria.Anios_3,
-    FranjaEtaria.Anios_4,
-    FranjaEtaria.Anios_5,
-    FranjaEtaria.Anios_6,
-    FranjaEtaria.Anios_7,
-    FranjaEtaria.Anios_8,
-    FranjaEtaria.Anios_9,
-    FranjaEtaria.Anios_10,
-    FranjaEtaria.Anios_11,
-    FranjaEtaria.Anios_12,
-    FranjaEtaria.Anios_13,
-    FranjaEtaria.Anios_14,
-    FranjaEtaria.Anios_15,
-    FranjaEtaria.Anios_16,
-    FranjaEtaria.Anios_17,
-    FranjaEtaria.Anios_18_29,
-    FranjaEtaria.Anios_30_59,
-    FranjaEtaria.Anios_60_mas
-  ];
-
+  edades: FranjaEtaria[];
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
   
   dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
@@ -69,6 +35,18 @@ export class ByHandComponent implements AfterViewInit {
 
   @ViewChild('TablePaginatorF') paginatorF: MatPaginator;
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
+
+  constructor(
+    public rest: RestService, 
+    private router: Router,
+    private ageGroupService: AgeGroupService,
+    private resultsService: ResultsService,
+    private _snackBar: MatSnackBar,
+  ) { }
+
+  ngOnInit() {
+    this.edades = this.ageGroupService.getAgeGroups();
+  }
 
   ngAfterViewInit() {
     this.dataSourceF.paginator = this.paginatorF;
@@ -165,9 +143,6 @@ export class ByHandComponent implements AfterViewInit {
   } // borrarEdad
 
   // Envio de datos al backend
-  constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar,
-    private dataService : ParsedDataService) { }
-
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
     const res: AgeGroupJSON[] =[];
     
@@ -193,33 +168,23 @@ export class ByHandComponent implements AfterViewInit {
   }
 
   addCalculation(): void {
-    this.rest.addCalculation(this.prepareData(femeninoData, masculinoData)).subscribe((result) => {
-      
-      this.router.navigate(['/result'], { queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
-
+    this.rest.addCalculation(
+      this.prepareData(femeninoData, masculinoData))
+      .subscribe((result) => {
+        this.resultsService
+          .setData(result);
+        this.router
+          .navigate(['/result']);
+        // this.router
+        //   .navigate(['/result'], {​​​​​​​​ 
+        //     queryParams: {
+        //       result: JSON.stringify(result)
+        //     },
+        //     skipLocationChange: true
+        //   }​​​​​​​​);
     }, (err) => {
       console.log(err);
     });
-  }
-
-  //Desde planilla
-  ngOnInit(): void {
-    let grupos : GrupoEtario[] = this.dataService.getData();
-    for (let grupo of grupos) {
-      if (grupo.sexo === Sexo.Femenino) {
-        femeninoData.push(grupo);
-      } else {
-        masculinoData.push(grupo);
-      }
-    }
-    femeninoData.sort((a,b) => {
-      return compareFranjaEtaria(a.edad, b.edad)
-    })
-    this.dataSourceF._updateChangeSubscription();
-    masculinoData.sort((a,b) => {
-      return compareFranjaEtaria(a.edad, b.edad)
-    })
-    this.dataSourceM._updateChangeSubscription();
   }
 
 }

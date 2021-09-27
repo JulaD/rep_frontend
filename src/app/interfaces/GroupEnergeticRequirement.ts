@@ -1,4 +1,4 @@
-import { AgeGroupJSON } from "../rest.service";
+import { AgeGroupJSON } from "../services/rest/rest.service";
 
 export type GroupEnergeticRequirement = {​​​​​​​​
   grupoEtario: AgeGroupJSON;
