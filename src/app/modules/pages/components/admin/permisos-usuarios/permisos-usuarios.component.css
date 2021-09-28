@@ -15,7 +15,7 @@ section {
   transition: 0.5s;
 }
 section.active {
-  background: #3fb1b5;
+  background: #82cacc;
 }
 section .color {
   position: absolute;
@@ -31,7 +31,7 @@ section .color:nth-child(1) {
   background: #78b1c7;
 }
 section.active .color:nth-child(1) {
-  background: #386db3;
+  background: #baf0f1;
 }
 section .color:nth-child(2) {
   top: 50px;
@@ -41,7 +41,7 @@ section .color:nth-child(2) {
   background: #5fced6;
 }
 section.active .color:nth-child(2) {
-  background: #1b69cf;
+  background: #bfebec;
 }
 section .color:nth-child(3) {
   bottom: -120px;
@@ -51,7 +51,7 @@ section .color:nth-child(3) {
   background: #64c4f0;
 }
 section.active .color:nth-child(3) {
-  background: #357ad3;
+  background: #ccfdff;
 }
 section .fijo {
   position: absolute;
@@ -113,7 +113,7 @@ section .fijo .titulo h1:nth-child(2) {
   transition: 0.5s;
 }
 section.active .fijo .titulo h1:nth-child(2) {
-  color: #3fb1b5;
+  color: #82cacc;
 }
 section .usuarios .busqueda {
   margin: 20px;
@@ -136,8 +136,8 @@ section .usuarios .busqueda input[type="text"] {
   transition: 1s;
 }
 section.active .usuarios .busqueda input[type="text"] {
-  background: #3fb1b5;
-  border: 2px solid #3fb1b5;
+  background: #82cacc;
+  border: 2px solid #82cacc;
 }
 section .usuarios .busqueda:hover input[type="text"] {
   width: 70vw;
@@ -164,13 +164,13 @@ section .usuarios .busqueda a span {
   height: 50px;
   background: #ccfdff;
   border-radius: 50%;
-  border: 3px solid #3fb1b565;
+  border: 3px solid #82cacc65;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
   cursor: pointer;
   transition: 0.5s;
 }
 section.active .usuarios .busqueda a span {
-  background: #3fb1b5;
+  background: #82cacc;
   border: 3px solid rgba(133, 215, 226, 0.911);
 }
 section .usuarios .busqueda a span:hover {
@@ -225,7 +225,7 @@ section .fijo .botones a.btnPendientes {
   overflow: hidden;
   width: 240px;
   height: 60px;
-  border: 3px solid #3fb1b5ab;
+  border: 3px solid #82caccab;
   font-size: 18px;
   cursor: pointer;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
@@ -294,7 +294,7 @@ section .fijo .botones a.btnPendientes:before {
   }
 }
 section .fijo .botones a.btnAceptados:before {
-  background: #3fb1b5;
+  background: #82cacc;
 }
 section.active .fijo .botones a.btnAceptados:before {
   animation: animAceptados 8s infinite linear;
@@ -302,7 +302,7 @@ section.active .fijo .botones a.btnAceptados:before {
 @keyframes animAceptados {
   0%,
   100% {
-    background: #3fb1b5;
+    background: #82cacc;
   }
   20% {
     background: #44c4c9;
@@ -409,7 +409,7 @@ ul.listaUsuarios li a .boton.cancelar {
   color: white;
 }
 section.active ul.listaUsuarios li {
-  background: #3fb1b5;
+  background: #82cacc;
 }
 ul.listaUsuarios li:hover {
   width: 100%;
@@ -438,7 +438,7 @@ ul.paginado li {
   font-weight: 500;
   font-size: 16px;
   background: #ccfdff;
-  border: 2px solid #3fb1b5ab;
+  border: 2px solid #82caccab;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
   color: black;
   margin: 5px 10px;
@@ -450,7 +450,7 @@ ul.paginado li svg {
   display: flex;
 }
 section.active ul.paginado li {
-  background: #3fb1b5;
+  background: #82cacc;
   border: 2px solid rgba(133, 215, 226, 0.911);
 }
 @media (max-width: 740px) {

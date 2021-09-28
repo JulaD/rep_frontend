@@ -78,7 +78,7 @@ section .acordeon {
   align-items: center;
   flex-direction: column;
   max-width: 800px;
-  width: 80vw;
+  width: 95vw;
   top: 220px;
 }
 section .acordeon .contenidoBx {
@@ -282,6 +282,7 @@ section .acordeon .subcontenido .valor h1 {
   letter-spacing: 0px;
   font-weight: 800;
   color: #3fb1b5;
+  pointer-events: none;
 }
 section .acordeon .subcontenido .modificarBtn {
   display: flex;
@@ -353,7 +354,8 @@ section .acordeon .subcontenido .modificar h1 {
   color: #3f51b5;
 }
 section .acordeon .subcontenido .modificar input {
-  width: 60%;
+  width: 95%;
+  max-width: 450px;
   padding: 5px;
   background: #3fb1b5;
   color: #ccfdff;
@@ -367,7 +369,8 @@ section .acordeon .subcontenido .modificar .confirmarBtn {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 80%;
+  max-width: 180px;
   height: 40px;
   position: relative;
   background: #01bd75e7;
@@ -381,7 +384,8 @@ section .acordeon .subcontenido .modificar .confirmarBtn {
   transition: 0.3s;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn:hover {
-  width: 33%;
+  width: 85%;
+  max-width: 200px;
   background: #03a165;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn span {
@@ -428,6 +432,15 @@ section .acordeon .subcontenido .modificar input::placeholder {
     left: 0px;
     color: #ccfdff;
     transition: 0.5s;
+  }
+  section .acordeon .subcontenido .grid {
+    position: relative;
+    grid-template-columns: 90%;
+    grid-template-rows: 50px 130px 50px;
+    left: 5%;
+  }
+  section .acordeon .subcontenido .valor h1 {
+    bottom: -40px;
   }
 }
 @media (max-width: 430px) {

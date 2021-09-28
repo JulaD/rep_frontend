@@ -20,9 +20,11 @@ export class ConfiguracionValoresComponent implements OnInit {
         var contenidoMujeres = document.getElementById(id + 'Mujeres');
         if (contenidoHombres) {
           contenidoHombres.classList.remove("active");
+          contenidoHombres.classList.remove("mod");
         }
         if (contenidoMujeres) {
           contenidoMujeres.classList.remove("active");
+          contenidoMujeres.classList.remove("mod");
         }
       }
       contenido.classList.toggle('active');
@@ -40,6 +42,10 @@ export class ConfiguracionValoresComponent implements OnInit {
   toggleModificar(id: string) {
     var elementoModificar = document.getElementById(id);
     if (elementoModificar) {
+      var inputMod = <HTMLInputElement>document.getElementById(id + 'Input');
+      if (inputMod) {
+        inputMod.value = '';
+      }
       elementoModificar.classList.toggle('mod');
     }
   }
