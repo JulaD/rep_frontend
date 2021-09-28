@@ -3,13 +3,14 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import {MatPaginator} from '@angular/material/paginator';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {MatTableDataSource} from '@angular/material/table';
-import { Router } from "@angular/router";
-import { compareFranjaEtaria, FranjaEtaria } from "src/app/FranjaEtaria";
-import { GrupoEtario } from "src/app/GrupoEtario";
+import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
+import { Sexo } from "src/app/enums/Sexo";
+import { GrupoEtario } from "src/app/models/grupo-etario";
+
+
 import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
 import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
-import { AgeGroupJSON, RestService } from "src/app/rest.service";
-import { Sexo } from "src/app/Sexo";
+import { AgeGroupJSON } from "src/app/services/rest/rest.service";
 
 
 const femeninoData: GrupoEtario[] = []
@@ -60,7 +61,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     FranjaEtaria.Anios_60_mas
   ];
 
-  constructor(public rest: RestService, private router: Router, private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar) { }
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
   dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
@@ -107,12 +108,12 @@ export class CalculosPaso1Component implements AfterViewInit {
         if (this.grupoEtarioForm.get('cantFemenino')?.value === '') { // cantidad vacia equivale a 0
           cantFemenino = 0;
         } else {
-          cantFemenino = this.grupoEtarioForm.get('cantFemenino')?.value
+          cantFemenino = Number(this.grupoEtarioForm.get('cantFemenino')?.value)
         }
         femeninoData.push(new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
-          this.grupoEtarioForm.get('medianaFemenino')?.value,
+          Number(this.grupoEtarioForm.get('medianaFemenino')?.value),
           cantFemenino));
         femeninoData.sort((a,b) => {
           return compareFranjaEtaria(a.edad, b.edad)
@@ -124,12 +125,12 @@ export class CalculosPaso1Component implements AfterViewInit {
         if (this.grupoEtarioForm.get('cantMasculino')?.value === '') { // cantidad vacia equivale a 0
           cantMasculino = 0;
         } else {
-          cantMasculino = this.grupoEtarioForm.get('cantMasculino')?.value
+          cantMasculino = Number(this.grupoEtarioForm.get('cantMasculino')?.value)
         }
         masculinoData.push(new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
-          this.grupoEtarioForm.get('medianaMasculino')?.value,
+          Number(this.grupoEtarioForm.get('medianaMasculino')?.value),
           cantMasculino));
           masculinoData.sort((a,b) => {
             return compareFranjaEtaria(a.edad, b.edad)
@@ -168,60 +169,26 @@ export class CalculosPaso1Component implements AfterViewInit {
     
     dataFem.forEach((group: GrupoEtario)=> {
       let elem :AgeGroupJSON = {
-        edad: group.edad as string,
-        sexo: group.sexo as string,
-        pesoMediano: group.pesoMediano,
-        cantidad: group.cantidad };
+        age: group.edad,
+        sex: group.sexo,
+        medianWeight: group.pesoMediano,
+        population: group.cantidad };
       res.push(elem);
     });
 
     dataMasc.forEach((group: GrupoEtario)=> {
       let elem :AgeGroupJSON = {
-        edad: group.edad as string,
-        sexo: group.sexo as string,
-        pesoMediano: group.pesoMediano,
-        cantidad: group.cantidad };
+        age: group.edad,
+        sex: group.sexo,
+        medianWeight: group.pesoMediano,
+        population: group.cantidad };
       res.push(elem);
     });
 
     return res;
   }
 
-  addCalculation(): void {
-    this.rest.addCalculation(this.prepareData(femeninoData, masculinoData)).subscribe((result) => {
-      
-      this.router.navigate(['/result'], { queryParams: {result: JSON.stringify(result)}, skipLocationChange: true}​​​​​​​​);
-
-    }, (err) => {
-      console.log(err);
-    });
+  sendData(): AgeGroupJSON[] {
+    return this.prepareData(femeninoData, masculinoData)
   }
 } // component class
-
-/*
-Capaz que esto modificado para que sea con GrupoEtario
-sirve datos por defecto para mostrar algo
-
-const FEMENINO_DATA: EdadCantMediana[] = [
-  {edad: '1 Año', cantidad: 151, mediana: 9.5},
-  {edad: '2 Años', cantidad: 441, mediana: 12.0},
-  {edad: '3 Años', cantidad: 411, mediana: 14.2},
-  {edad: '4 Años', cantidad: 846, mediana: 15.4},
-  {edad: '5 Años', cantidad: 456, mediana: 17.9},
-  {edad: '6 Años', cantidad: 894, mediana: 19.9},
-  {edad: '7 Años', cantidad: 120, mediana: 22.4},
-  {edad: '8 Años', cantidad: 784, mediana: 25.8},
-  {edad: '9 Años', cantidad: 9561, mediana: 28.1},
-  {edad: '10 Años', cantidad: 7984, mediana: 31.9},
-  {edad: '11 Años', cantidad: 845, mediana: 36.9},
-  {edad: '12 Años', cantidad: 1511, mediana: 41.5},
-  {edad: '13 Años', cantidad: 946, mediana: 45.8},
-  {edad: '14 Años', cantidad: 496, mediana: 47.6},
-  {edad: '15 Años', cantidad: 794, mediana: 52.1},
-  {edad: '16 Años', cantidad: 48, mediana: 53.5},
-  {edad: '17 Años', cantidad: 749, mediana: 54.4},
-  {edad: '18-29 Años', cantidad: 554, mediana: 60.0},
-  {edad: '30-59 Años', cantidad: 461, mediana: 60.0},
-  {edad: '60+ Años', cantidad: 1288, mediana: 60.0}
-];
-*/

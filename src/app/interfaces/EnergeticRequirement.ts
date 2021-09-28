@@ -1,5 +1,5 @@
 export type EnergeticRequirement = {​​​​​​​​
-  requerimientoEnergeticoPerCapita: number;
-  requerimientoEnergeticoTotal: number;
-  poblacionTotal: number;
+  perCapita: number;
+  total: number;
+  totalPopulation: number;
 }​​​​​​​​;

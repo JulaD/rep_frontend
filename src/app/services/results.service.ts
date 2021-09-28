@@ -1,24 +1,24 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { FranjaEtaria } from '../enums/FranjaEtaria';
-import { CalculatorResponseDTO } from '../interfaces/CalculatorResponseDTO';
+import CalculatorResponse from '../interfaces/CalculatorResponseDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResultsService {
 
-  private dummy: CalculatorResponseDTO;
-  private result: BehaviorSubject<CalculatorResponseDTO>;
+  private dummy: CalculatorResponse;
+  private result: BehaviorSubject<CalculatorResponse>;
   // The $ is observable nomenclature
   public result$;
 
   constructor() {
-    this.result = new BehaviorSubject<CalculatorResponseDTO>(this.dummy);
+    this.result = new BehaviorSubject<CalculatorResponse>(this.dummy);
     this.result$ = this.result.asObservable();
   }
   
-  setData(result: CalculatorResponseDTO): void {
+  setData(result: CalculatorResponse): void {
     this.result.next(result);
   }
 }

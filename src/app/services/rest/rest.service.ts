@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/internal/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 
 export interface AgeGroupJSON {
-  edad: string;
-  sexo: string;
-  pesoMediano: number;
-  cantidad: number;
+  age: string;
+  sex: string;
+  medianWeight: number;
+  population: number;
 }
 
 const endpoint = 'http://localhost:8000/';
@@ -20,8 +21,8 @@ export class RestService {
 
   constructor(private http: HttpClient) { }
 
-  addCalculation(groups: AgeGroupJSON[]): Observable<any> {
-    return this.http.post(endpoint + serviceCalc, groups).pipe(
+  addCalculation(groups: AgeGroupJSON[], extraData: ExtraData): Observable<any> {
+    return this.http.post(endpoint + serviceCalc, {groups: groups, extraData: extraData}).pipe(
       catchError(this.handleError)
     );
   }

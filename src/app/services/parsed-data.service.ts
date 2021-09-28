@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { GrupoEtario } from '../GrupoEtario';
-import { Sexo } from '../Sexo';
+import { Sexo } from '../enums/Sexo';
+import { GrupoEtario } from '../models/grupo-etario';
 
 @Injectable({
   providedIn: 'root'

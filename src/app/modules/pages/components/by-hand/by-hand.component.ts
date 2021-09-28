@@ -148,43 +148,23 @@ export class ByHandComponent implements AfterViewInit {
     
     dataFem.forEach((group: GrupoEtario)=> {
       let elem :AgeGroupJSON = {
-        edad: group.edad as string,
-        sexo: group.sexo as string,
-        pesoMediano: group.pesoMediano,
-        cantidad: group.cantidad };
+        age: group.edad as string,
+        sex: group.sexo as string,
+        medianWeight: group.pesoMediano,
+        population: group.cantidad };
       res.push(elem);
     });
 
     dataMasc.forEach((group: GrupoEtario)=> {
       let elem :AgeGroupJSON = {
-        edad: group.edad as string,
-        sexo: group.sexo as string,
-        pesoMediano: group.pesoMediano,
-        cantidad: group.cantidad };
+        age: group.edad as string,
+        sex: group.sexo as string,
+        medianWeight: group.pesoMediano,
+        population: group.cantidad };
       res.push(elem);
     });
 
     return res;
-  }
-
-  addCalculation(): void {
-    this.rest.addCalculation(
-      this.prepareData(femeninoData, masculinoData))
-      .subscribe((result) => {
-        this.resultsService
-          .setData(result);
-        this.router
-          .navigate(['/result']);
-        // this.router
-        //   .navigate(['/result'], {​​​​​​​​ 
-        //     queryParams: {
-        //       result: JSON.stringify(result)
-        //     },
-        //     skipLocationChange: true
-        //   }​​​​​​​​);
-    }, (err) => {
-      console.log(err);
-    });
   }
 
 }

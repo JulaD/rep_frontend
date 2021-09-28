@@ -1,4 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import AdultPAL from 'src/app/interfaces/AdultPALDTO';
+import ExtraData from 'src/app/interfaces/ExtraDataDTO';
+import MinorPAL from 'src/app/interfaces/MinorPALDTO';
+import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
+import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
 import { CalculosPaso2Component } from '../calculos-paso2/calculos-paso2.component';
 import { CalculosPaso3Component } from '../calculos-paso3/calculos-paso3.component';
@@ -26,11 +32,37 @@ export class StepperComponent implements OnInit {
 
   ngOnInit() { }
 
-  ngAfterViewInit() {
-    this.ParentTestMethod()
-  }
+  constructor(
+    public rest: RestService,
+    private resultsService: ResultsService,
+    private router: Router
+  ) {}
 
-  ParentTestMethod() {
-    this.step2Access.testMethod();
+  onSubmit(): void {
+    const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
+    const step2Data: MinorPAL = this.step2Access.sendData();
+    const step3Data: AdultPAL = this.step3Access.sendData()
+
+    const extraData: ExtraData = {minorPAL: step2Data,
+      adultPAL: step3Data,
+      maternity18To29: undefined,
+      maternity30To59: undefined }
+      
+    this.rest.addCalculation(step1Data, extraData)
+      .subscribe((result) => {
+        this.resultsService
+          .setData(result);
+        this.router
+          .navigate(['/result']);
+        // this.router
+        //   .navigate(['/result'], {​​​​​​​​ 
+        //     queryParams: {
+        //       result: JSON.stringify(result)
+        //     },
+        //     skipLocationChange: true
+        //   }​​​​​​​​);
+    }, (err) => {
+      console.log(err);
+    });
   }
 }

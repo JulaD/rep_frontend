@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
 
 // El regex es ^(un entero >= 0)|(un decimal >= 0)$
@@ -26,7 +27,15 @@ export class CalculosPaso2Component {
     intensePAL: new FormControl('', percentageValidators)
   }, {validators: groupSuman100Validator(3)});
 
-  testMethod() {
-    console.log("funciona")
+  sendData(): MinorPAL {
+    const lowPAL: number = Number(this.minorPALForm.get('lowPAL')?.value);
+    const moderatePAL: number = Number(this.minorPALForm.get('moderatePAL')?.value);
+    const intensePAL: number = Number(this.minorPALForm.get('intensePAL')?.value);
+
+    const minorPALData: MinorPAL = {lowPALPrevalence: lowPAL,
+      moderatePALPrevalence: moderatePAL,
+      intensePALPrevalence: intensePAL}
+    
+    return minorPALData
   }
 }

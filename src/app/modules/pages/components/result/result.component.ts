@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CalculatorResponseDTO } from 'src/app/interfaces/CalculatorResponseDTO';
+
 import { GroupEnergeticRequirement } from 'src/app/interfaces/GroupEnergeticRequirement';
 import { ResultsService } from 'src/app/services/results.service';
 import { GrupoEtario } from 'src/app/models/grupo-etario';
+import CalculatorResponse from 'src/app/interfaces/CalculatorResponseDTO';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -31,7 +32,7 @@ const TABLA_DATA2: RequerimientoEnergetico[] = [
 
 export class ResultComponent implements OnInit {
 
-  parsedObtainedResult: CalculatorResponseDTO;
+  parsedObtainedResult: CalculatorResponse;
   totalRequirement: number = 0;
   totalPopulation: number = 0;
 
@@ -62,28 +63,28 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  setValues(result: CalculatorResponseDTO): void {
+  setValues(result: CalculatorResponse): void {
     if (result) {
       this.totalRequirement = Math.round(
-        result?.requerimientoTotal?.requerimientoEnergeticoPerCapita
+        result?.totalRequirement?.perCapita
       ) | 0;
-      this.totalPopulation = result?.requerimientoTotal!.poblacionTotal | 0;
-      const groupedByAge = this.groupByAge(result?.requerimientosPorGrupo);
+      this.totalPopulation = result?.totalRequirement!.totalPopulation | 0;
+      const groupedByAge = this.groupByAge(result?.groupsRequirements);
       const keys = Object.keys(groupedByAge);
       this.dataSources = keys.map((key: string) => {
         let femenineAmount: number = 0, masculineAmount: number = 0, totalAmount: number = 0;
         let femeninePer: number = 0, femenineTotal: number = 0;
         let masculinePer: number = 0, masculineTotal: number = 0;
         groupedByAge[key].map((value: GroupEnergeticRequirement) => {
-          totalAmount += Number(value.grupoEtario.cantidad);
-          if (value?.grupoEtario?.sexo == 'Femenino') {
-            femenineAmount = value.grupoEtario.cantidad;
-            femeninePer = value.requerimientoEnergeticoPerCapita;
-            femenineTotal = value.requerimientoEnergeticoTotal;
-          } else if (value?.grupoEtario?.sexo == 'Masculino') {
-            masculineAmount = value.grupoEtario.cantidad;
-            masculinePer = value.requerimientoEnergeticoPerCapita;
-            masculineTotal = value.requerimientoEnergeticoTotal;
+          totalAmount += Number(value.group.population);
+          if (value?.group?.sex == 'Femenino') {
+            femenineAmount = value.group.population;
+            femeninePer = value.perCapita;
+            femenineTotal = value.total;
+          } else if (value?.group?.sex == 'Masculino') {
+            masculineAmount = value.group.population;
+            masculinePer = value.perCapita;
+            masculineTotal = value.total;
           }
         });
         return {
@@ -107,7 +108,7 @@ export class ResultComponent implements OnInit {
 
   groupByAge(array: GroupEnergeticRequirement[]): {[attr: string]: GroupEnergeticRequirement[]} {
     return array.reduce((objectsByKeyValue: any, obj: GroupEnergeticRequirement) => {
-      const value: string = obj.grupoEtario.edad;
+      const value: string = obj.group.age;
       objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
       return objectsByKeyValue;
     }, {});

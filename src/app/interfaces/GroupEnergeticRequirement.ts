@@ -1,7 +1,7 @@
 import { AgeGroupJSON } from "../services/rest/rest.service";
 
 export type GroupEnergeticRequirement = {​​​​​​​​
-  grupoEtario: AgeGroupJSON;
-  requerimientoEnergeticoPerCapita: number;
-  requerimientoEnergeticoTotal: number;
+  group: AgeGroupJSON;
+  perCapita: number;
+  total: number;
 }​​​​​​​​;

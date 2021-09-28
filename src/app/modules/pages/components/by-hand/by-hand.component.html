@@ -3,7 +3,7 @@
     <p class="number">1</p>
     <p class="title">Edad y cantidad de personas por sexo</p>
   </div>
-  <form [formGroup]="grupoEtarioForm" (ngSubmit)="onSubmit()">
+  <form>
     <div class="step1-titulo">
       <ng-template matStepLabel>
         Edad y cantidad de personas por sexo
@@ -117,7 +117,7 @@
   </form>
   <div>
     <button class="boton-resultado"
-        (click)="addCalculation()"
+        
         mat-flat-button color="primary">
         Confirmar
     </button>
