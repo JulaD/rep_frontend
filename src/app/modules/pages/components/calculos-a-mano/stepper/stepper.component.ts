@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
+import Maternity from 'src/app/interfaces/MaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
@@ -44,12 +45,13 @@ export class StepperComponent implements OnInit {
     const step2Data: MinorPAL = this.step2Access.sendData();
     const step3Data: AdultPAL = this.step3Access.sendData();
     // placeholder mientras se implementa el paso 4 (al backend no le gustaba undefined)
-    const step4Data: IndividualMaternity = {pregnantWomen: 0, lactatingWomen: 0}
+    const step4Data: Maternity = this.step4Access.sendData();
+    //{pregnantWomen: 0, lactatingWomen: 0}
 
     const extraData: ExtraData = {minorPAL: step2Data,
       adultPAL: step3Data,
-      maternity18To29: step4Data,
-      maternity30To59: step4Data }
+      maternity18To29: step4Data.maternity18to29,
+      maternity30To59: step4Data.maternity30to59 }
       
     this.rest.addCalculation(step1Data, extraData)
       .subscribe((result) => {

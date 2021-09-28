@@ -47,10 +47,10 @@
     </div>
     <!-- CHECKBOX --> 
     <div class="step4-check-box">
-      <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
+      <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
     </div>
     <!-- DATOS A PARTIR DE LA NATALIDAD -->
-    <mat-card [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value">
+    <mat-card class="card-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value">
       <div class="step4-tasa-natalidad">
         <mat-form-field appearance="standard">
           <mat-label>Tasa de natalidad</mat-label>
@@ -65,6 +65,73 @@
         <mat-form-field appearance="standard">
           <mat-label>Población total</mat-label>
           <input matInput formControlName="pobTotPrimerFranja">
+          <mat-hint>
+            Ingrese el número de habitantes del país.
+            Por defecto se tomará la población de Uruguay
+          </mat-hint>
+        </mat-form-field>
+      </div>
+    </mat-card>
+
+     <!------------------------ 20 A 59 AÑOS ------------------------>
+     <div class="step4-cant-mujeres-2">
+      <mat-form-field appearance="standard">
+        <mat-label>Mujeres de 20 a 59 años</mat-label>
+        <input matInput formControlName="cantSegundaFranja">
+        <mat-hint>
+          Ingrese el número de mujeres entre 20 y 59 años de la población estudiada
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <!-- DATOS ESPECÍFICAS DEL GRUPO -->
+    <div class="step4-num-embarazos-2">
+      <mat-form-field appearance="standard">
+        <mat-label>Número de embarazos</mat-label>
+        <input matInput formControlName="embsSegundaFranja">
+        <mat-hint>
+          Ingrese el número de personas embarazadas para este rango
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="step4-num-amamantando-2">
+      <mat-form-field appearance="standard">
+        <mat-label>Número de personas amamantando</mat-label>
+        <input matInput formControlName="amamSegundaFranja">
+        <mat-hint>
+          Ingrese el número de personas amamantando para este rango
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <div class="step4-mediana-2">
+      <mat-form-field appearance="standard">
+        <mat-label>Mediana</mat-label>
+        <input matInput formControlName="medSegundaFranja">
+        <mat-hint>
+          Ingrese la mediana de los pesos para mujeres de este rango
+          que no estén embarazadas ni amamantando
+        </mat-hint>
+      </mat-form-field>
+    </div>
+    <!-- CHECKBOX --> 
+    <div class="step4-check-box-2">
+      <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
+    </div>
+    <!-- DATOS A PARTIR DE LA NATALIDAD -->
+    <mat-card class="card-2" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value">
+      <div class="step4-tasa-natalidad">
+        <mat-form-field appearance="standard">
+          <mat-label>Tasa de natalidad</mat-label>
+          <input matInput formControlName="natSegundaFranja">
+          <mat-hint>
+            Ingrese la tasa de natalidad.
+            Por defecto se tomará la tasa de natalidad de Uruguay
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="step4-pob-total">
+        <mat-form-field appearance="standard">
+          <mat-label>Población total</mat-label>
+          <input matInput formControlName="pobTotPrimerSegundaFranja">
           <mat-hint>
             Ingrese el número de habitantes del país.
             Por defecto se tomará la población de Uruguay
