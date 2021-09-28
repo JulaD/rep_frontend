@@ -25,21 +25,21 @@ section .color:nth-child(1) {
   right: 50px;
   width: 450px;
   height: 450px;
-  background: #78b1c7;
+  background: #abedf0;
 }
 section .color:nth-child(2) {
   top: 50px;
   left: -150px;
   width: 600px;
   height: 600px;
-  background: #5fced6;
+  background: #aee5e7;
 }
 section .color:nth-child(3) {
   bottom: -120px;
   right: 300px;
   width: 500px;
   height: 500px;
-  background: #64c4f0;
+  background: #a4f3f3;
 }
 section .fijo {
   position: absolute;
@@ -81,7 +81,7 @@ section .acordeon {
   width: 80vw;
   top: 220px;
 }
-section .acordeon .pesos {
+section .acordeon .contenidoBx {
   position: relative;
   display: flex;
   justify-content: center;
@@ -103,6 +103,42 @@ section .acordeon .opcion {
   background: #3f51b5;
   color: #ccfdff;
   cursor: pointer;
+  transition: 0.25s;
+  overflow: hidden;
+}
+section .acordeon .opcion::after {
+  content: "";
+  width: 20px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -20%;
+  transform: skew(-45deg);
+  background: rgba(255, 255, 255, 0.8);
+  filter: blur(20px);
+  transition: 0.35s;
+}
+section .acordeon .opcion:hover::after {
+  left: 120%;
+}
+section .acordeon .contenidoBx.active .opcion::after {
+  left: 120%;
+}
+section .acordeon .contenidoBx.active .opcion {
+  max-width: 850px;
+  width: 90vw;
+  padding: 25px;
+  padding-left: 40px;
+  box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.4);
+  letter-spacing: 7px;
+}
+section .acordeon .opcion:hover {
+  max-width: 850px;
+  width: 90vw;
+  padding: 25px;
+  padding-left: 40px;
+  box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.4);
+  letter-spacing: 7px;
 }
 section .acordeon .opcion::before {
   content: "+";
@@ -112,7 +148,7 @@ section .acordeon .opcion::before {
   transform: translateY(-50%);
   font-size: 1em;
 }
-section .acordeon .pesos.active .opcion::before {
+section .acordeon .contenidoBx.active .opcion::before {
   content: "—";
 }
 section .acordeon .subopcion {
@@ -128,11 +164,22 @@ section .acordeon .subopcion {
   font-size: 20px;
   letter-spacing: 4px;
   font-weight: 500;
-  width: 100%;
+  width: 95%;
+  left: 2.5%;
   background: #3fb1b5;
   color: #ccfdff;
   cursor: pointer;
   z-index: 2;
+  transition: 0.35s;
+}
+section .acordeon .subopcion:hover {
+  width: 100%;
+  left: 0%;
+}
+section .acordeon .subcontenidoBx.active .subopcion {
+  background: #3f51b5;
+  width: 100%;
+  left: 0%;
 }
 section .acordeon .subopcion::before {
   content: "+";
@@ -142,10 +189,7 @@ section .acordeon .subopcion::before {
   transform: translateY(-50%);
   font-size: 1.5em;
 }
-section .acordeon .pesosHombres.active .subopcion::before {
-  content: "—";
-}
-section .acordeon .pesosMujeres.active .subopcion::before {
+section .acordeon .subcontenidoBx.active .subopcion::before {
   content: "—";
 }
 section .acordeon .contenido {
@@ -154,51 +198,204 @@ section .acordeon .contenido {
   height: 0;
   transition: 0.5s;
 }
-section .acordeon .pesos.active .contenido {
-  height: initial;
+section .acordeon .contenidoBx.active .contenido {
+  height: auto;
+  overflow: visible;
+  transform: translateX(0vw);
 }
 section .acordeon .subcontenido {
   height: 0;
-  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: translateX(-100vw);
+  transition: 0.3s;
+  width: 85%;
+  position: relative;
+  left: 7.5%;
   overflow: hidden;
   z-index: 3;
 }
-section .acordeon .pesosHombres.active .subcontenido {
+section .acordeon .subcontenido .grid {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  grid-template-rows: 50px;
+}
+section .acordeon .subcontenidoBx.active .subcontenido {
   height: auto;
+  transform: translateX(0);
+  margin-top: 30px;
+  margin-bottom: 30px;
   overflow: visible;
 }
-section .acordeon .pesosMujeres.active .subcontenido {
-  height: auto;
-  overflow: visible;
-}
-section .acordeon .subcontenido ul {
+section .acordeon .subcontenido .dropdown {
   position: relative;
-  width: 95%;
-  margin: auto;
-  padding-top: 40px;
-  padding-bottom: 20px;
-  top: -30px;
-  border-radius: 20px;
-  background: #3fb1b5;
+  top: 0;
   display: flex;
-  flex-direction: column;
+}
+section .acordeon .subcontenido .dropdown select {
+  background: #3fb1b5;
+  padding: 10px;
+  color: #ccfdff;
+  width: 100%;
+  height: 50px;
+  border: none;
+  font-size: 20px;
+  outline: none;
+  cursor: pointer;
+}
+section .acordeon .subcontenido .dropdown:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  font-size: 25px;
+  z-index: 2;
+  background: #3f51b5;
+  transition: 0.2s;
+  pointer-events: none;
+}
+section .acordeon .subcontenido .dropdown:hover:before {
+  background: #4f62ce;
+}
+section .acordeon .subcontenido .dropdown svg {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccfdff;
+  z-index: 3;
+  pointer-events: none;
+}
+section .acordeon .subcontenido .valor {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 100px;
+  padding: 0;
+}
+section .acordeon .subcontenido .valor h1 {
+  position: relative;
+  bottom: -35px;
+  font-size: 120px;
+  letter-spacing: 0px;
+  font-weight: 800;
+  color: #3fb1b5;
+}
+section .acordeon .subcontenido .modificarBtn {
+  display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 50px;
+  position: relative;
+  background: #01bd75e7;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  color: #ccfdff;
+  cursor: pointer;
+  content: "MODIFICAR";
+  transition: 0.2s;
 }
-section .acordeon .subcontenido ul li {
+section .acordeon .subcontenido .modificarBtn #canBtn {
+  display: none;
+}
+section .acordeon .subcontenidoBx.mod .subcontenido .modificarBtn #canBtn {
+  display: block;
+}
+section .acordeon .subcontenidoBx.mod .subcontenido .modificarBtn #modBtn {
+  display: none;
+}
+section .acordeon .subcontenidoBx.mod .subcontenido .modificarBtn {
+  background: #cc4141d7;
+}
+section .acordeon .subcontenidoBx.mod .subcontenido .modificarBtn:hover {
+  background: #b32b2be7;
+}
+section .acordeon .subcontenido .modificarBtn:hover {
+  background: #03a165;
+}
+section .acordeon .subcontenido .modificarBtn span {
+  font-size: 25px;
+  letter-spacing: 3px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+section .acordeon .subcontenido .modificarBtn:hover span {
+  font-size: 26px;
+  letter-spacing: 4px;
+}
+section .acordeon .subcontenido .modificar {
+  position: relative;
+  height: 0;
+  margin-top: 0px;
+  transform: translateX(100vw);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: 0.3s;
+}
+section .acordeon .subcontenidoBx.mod .subcontenido .modificar {
+  margin-top: 25px;
+  transform: translateX(0);
+  height: auto;
+  overflow: visible;
+}
+section .acordeon .subcontenido .modificar h1 {
+  position: relative;
+  left: -30px;
+  bottom: -18px;
+  font-size: 32px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: #3f51b5;
+}
+section .acordeon .subcontenido .modificar input {
+  width: 60%;
+  padding: 5px;
+  background: #3fb1b5;
+  color: #ccfdff;
+  font-size: 25px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  text-align: center;
+}
+section .acordeon .subcontenido .modificar .confirmarBtn {
   display: flex;
   justify-content: center;
-  text-align: center;
-  flex-direction: column;
-  width: 95%;
-  height: 50px;
-  background: #ccfdff;
-  padding: 10px 20px;
-  color: black;
-  margin: 5px 0;
-  overflow: hidden;
+  align-items: center;
+  width: 30%;
+  height: 40px;
+  position: relative;
+  background: #01bd75e7;
+  border-left: 2px solid rgba(0, 0, 0, 0.2);
+  border-right: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: #ccfdff;
+  cursor: pointer;
+  transition: 0.3s;
 }
-
+section .acordeon .subcontenido .modificar .confirmarBtn:hover {
+  width: 33%;
+  background: #03a165;
+}
+section .acordeon .subcontenido .modificar .confirmarBtn span {
+  font-size: 20px;
+  letter-spacing: 4px;
+  transition: 0.3s;
+}
+section .acordeon .subcontenido .modificar .confirmarBtn:hover span {
+  font-size: 20px;
+  letter-spacing: 6px;
+}
+section .acordeon .subcontenido .modificar input::placeholder {
+  color: #ccfdff;
+}
 @media (max-width: 980px) {
   section .fijo .titulo h1:nth-child(1) {
     position: relative;

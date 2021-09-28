@@ -9,876 +9,160 @@
         </div>
     </div>
     <div class="acordeon">
-        <div class="pesos">
-            <span (click)="togglePesos()" class="opcion">PESOS</span>
+        <div id="pesos" class="contenidoBx">
+            <span (click)="toggleContenido('pesos')" class="opcion">PESOS</span>
             <div class="contenido">
-                <div class="pesosHombres">
-                    <span (click)="togglePesosHombres()" class="subopcion">HOMBRES</span>
-                    <div class="subcontenido"> 
-                        <ul>
-                            <li>
-                                <p>0 meses</p>
-                            </li>
-                            <li>
-                                <p>1 mes</p>
-                            </li>
-                            <li>
-                                <p>2 meses</p>
-                            </li>
-                            <li>
-                                <p>3 meses</p>
-                            </li>
-                            <li>
-                                <p>4 meses</p>
-                            </li>
-                            <li>
-                                <p>5 meses</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 meses</p>
-                            </li>
-                            <li>
-                                <p>8 meses</p>
-                            </li>
-                            <li>
-                                <p>9 meses</p>
-                            </li>
-                            <li>
-                                <p>10 meses</p>
-                            </li>
-                            <li>
-                                <p>11 meses</p>
-                            </li>
-                            <li>
-                                <p>12 meses</p>
-                            </li>
-                            <li>
-                                <p>1 año</p>
-                            </li>
-                            <li>
-                                <p>2 años</p>
-                            </li>
-                            <li>
-                                <p>3 años</p>
-                            </li>
-                            <li>
-                                <p>4 años</p>
-                            </li>
-                            <li>
-                                <p>5 años</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 años</p>
-                            </li>
-                            <li>
-                                <p>8 años</p>
-                            </li>
-                            <li>
-                                <p>9 años</p>
-                            </li>
-                            <li>
-                                <p>10 años</p>
-                            </li>
-                            <li>
-                                <p>11 años</p>
-                            </li>
-                            <li>
-                                <p>12 años</p>
-                            </li>
-                            <li>
-                                <p>13 años</p>
-                            </li>
-                            <li>
-                                <p>14 años</p>
-                            </li>
-                            <li>
-                                <p>15 años</p>
-                            </li>
-                            <li>
-                                <p>16 años</p>
-                            </li>
-                            <li>
-                                <p>17 años</p>
-                            </li>
-                            <li>
-                                <p>18-29 años</p>
-                            </li>
-                            <li>
-                                <p>30-59 años</p>
-                            </li>
-                            <li>
-                                <p>60+ años</p>
-                            </li>
-                        </ul>
+                <div id="pesosHombres" class="subcontenidoBx">
+                    <span (click)="toggleSubcontenido('pesosHombres')" class="subopcion">HOMBRES</span>
+                    <div class="subcontenido">
+                        <div class="grid">
+                            <div class="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                                <select>
+                                    <option>0 MESES</option>
+                                    <option>1 MES</option>
+                                    <option>2 MESES</option>
+                                    <option>3 MESES</option>
+                                    <option>4 MESES</option>
+                                    <option>5 MESES</option>
+                                    <option>6 MESES</option>
+                                    <option>7 MESES</option>
+                                    <option>8 MESES</option>
+                                    <option>9 MESES</option>
+                                    <option>10 MESES</option>
+                                    <option>11 MESES</option>
+                                    <option>12 MESES</option>
+                                    <option>1 AÑO</option>
+                                    <option>2 AÑOS</option>
+                                    <option>3 AÑOS</option>
+                                    <option>4 AÑOS</option>
+                                    <option>5 AÑOS</option>
+                                    <option>6 AÑOS</option>
+                                    <option>7 AÑOS</option>
+                                    <option>8 AÑOS</option>
+                                    <option>9 AÑOS</option>
+                                    <option>10 AÑOS</option>
+                                    <option>11 AÑOS</option>
+                                    <option>12 AÑOS</option>
+                                    <option>13 AÑOS</option>
+                                    <option>14 AÑOS</option>
+                                    <option>15 AÑOS</option>
+                                    <option>16 AÑOS</option>
+                                    <option>17 AÑOS</option>
+                                    <option>18-29 AÑOS</option>
+                                    <option>30-59 AÑOS</option>
+                                    <option>60+ AÑOS</option>
+                                </select>
+                            </div>
+                            <div class="valor">
+                                <h1>100kg</h1>
+                            </div>
+                            <div (click)="toggleModificar('pesosHombres')" class="modificarBtn">
+                                <span id="modBtn">
+                                    MODIFICAR
+                                </span>
+                                <span id="canBtn">
+                                    CANCELAR
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modificar">
+                            <h1>MODIFICAR PESO:</h1>
+                            <input type="text" placeholder="Ingrese el nuevo valor (kg)">
+                            <div class="confirmarBtn">
+                                <span>
+                                    CONFIRMAR
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="pesosMujeres">
-                    <span (click)="togglePesosMujeres()" class="subopcion">MUJERES</span>
-                    <div class="subcontenido pesosMujeres"> 
-                        <ul>
-                            <li>
-                                <p>0 meses</p>
-                            </li>
-                            <li>
-                                <p>1 mes</p>
-                            </li>
-                            <li>
-                                <p>2 meses</p>
-                            </li>
-                            <li>
-                                <p>3 meses</p>
-                            </li>
-                            <li>
-                                <p>4 meses</p>
-                            </li>
-                            <li>
-                                <p>5 meses</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 meses</p>
-                            </li>
-                            <li>
-                                <p>8 meses</p>
-                            </li>
-                            <li>
-                                <p>9 meses</p>
-                            </li>
-                            <li>
-                                <p>10 meses</p>
-                            </li>
-                            <li>
-                                <p>11 meses</p>
-                            </li>
-                            <li>
-                                <p>12 meses</p>
-                            </li>
-                            <li>
-                                <p>1 año</p>
-                            </li>
-                            <li>
-                                <p>2 años</p>
-                            </li>
-                            <li>
-                                <p>3 años</p>
-                            </li>
-                            <li>
-                                <p>4 años</p>
-                            </li>
-                            <li>
-                                <p>5 años</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 años</p>
-                            </li>
-                            <li>
-                                <p>8 años</p>
-                            </li>
-                            <li>
-                                <p>9 años</p>
-                            </li>
-                            <li>
-                                <p>10 años</p>
-                            </li>
-                            <li>
-                                <p>11 años</p>
-                            </li>
-                            <li>
-                                <p>12 años</p>
-                            </li>
-                            <li>
-                                <p>13 años</p>
-                            </li>
-                            <li>
-                                <p>14 años</p>
-                            </li>
-                            <li>
-                                <p>15 años</p>
-                            </li>
-                            <li>
-                                <p>16 años</p>
-                            </li>
-                            <li>
-                                <p>17 años</p>
-                            </li>
-                            <li>
-                                <p>18-29 años</p>
-                            </li>
-                            <li>
-                                <p>30-59 años</p>
-                            </li>
-                            <li>
-                                <p>60+ años</p>
-                            </li>
-                        </ul>
+                <div id="pesosMujeres" class="subcontenidoBx">
+                    <span (click)="toggleSubcontenido('pesosMujeres')" class="subopcion">MUJERES</span>
+                    <div class="subcontenido">
+                        <div class="grid">
+                            <div class="dropdown">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                    <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                                <select>
+                                    <option>0 MESES</option>
+                                    <option>1 MES</option>
+                                    <option>2 MESES</option>
+                                    <option>3 MESES</option>
+                                    <option>4 MESES</option>
+                                    <option>5 MESES</option>
+                                    <option>6 MESES</option>
+                                    <option>7 MESES</option>
+                                    <option>8 MESES</option>
+                                    <option>9 MESES</option>
+                                    <option>10 MESES</option>
+                                    <option>11 MESES</option>
+                                    <option>12 MESES</option>
+                                    <option>1 AÑO</option>
+                                    <option>2 AÑOS</option>
+                                    <option>3 AÑOS</option>
+                                    <option>4 AÑOS</option>
+                                    <option>5 AÑOS</option>
+                                    <option>6 AÑOS</option>
+                                    <option>7 AÑOS</option>
+                                    <option>8 AÑOS</option>
+                                    <option>9 AÑOS</option>
+                                    <option>10 AÑOS</option>
+                                    <option>11 AÑOS</option>
+                                    <option>12 AÑOS</option>
+                                    <option>13 AÑOS</option>
+                                    <option>14 AÑOS</option>
+                                    <option>15 AÑOS</option>
+                                    <option>16 AÑOS</option>
+                                    <option>17 AÑOS</option>
+                                    <option>18-29 AÑOS</option>
+                                    <option>30-59 AÑOS</option>
+                                    <option>60+ AÑOS</option>
+                                </select>
+                            </div>
+                            <div class="valor">
+                                <h1>62kg</h1>
+                            </div>
+                            <div (click)="toggleModificar('pesosMujeres')" class="modificarBtn">
+                                <span id="modBtn">
+                                    MODIFICAR
+                                </span>
+                                <span id="canBtn">
+                                    CANCELAR
+                                </span>
+                            </div>
+                        </div> 
+                        <div class="modificar">
+                            <h1>MODIFICAR PESO:</h1>
+                            <input type="text" placeholder="Ingrese el nuevo valor (kg)">
+                            <div class="confirmarBtn">
+                                <span>
+                                    CONFIRMAR
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="pesos">
-            <span (click)="togglePesos()" class="opcion">PESOS</span>
-            <div class="contenido">
-                <div class="pesosHombres">
-                    <span (click)="togglePesosHombres()" class="subopcion">HOMBRES</span>
-                    <div class="subcontenido"> 
-                        <ul>
-                            <li>
-                                <p>0 meses</p>
-                            </li>
-                            <li>
-                                <p>1 mes</p>
-                            </li>
-                            <li>
-                                <p>2 meses</p>
-                            </li>
-                            <li>
-                                <p>3 meses</p>
-                            </li>
-                            <li>
-                                <p>4 meses</p>
-                            </li>
-                            <li>
-                                <p>5 meses</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 meses</p>
-                            </li>
-                            <li>
-                                <p>8 meses</p>
-                            </li>
-                            <li>
-                                <p>9 meses</p>
-                            </li>
-                            <li>
-                                <p>10 meses</p>
-                            </li>
-                            <li>
-                                <p>11 meses</p>
-                            </li>
-                            <li>
-                                <p>12 meses</p>
-                            </li>
-                            <li>
-                                <p>1 año</p>
-                            </li>
-                            <li>
-                                <p>2 años</p>
-                            </li>
-                            <li>
-                                <p>3 años</p>
-                            </li>
-                            <li>
-                                <p>4 años</p>
-                            </li>
-                            <li>
-                                <p>5 años</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 años</p>
-                            </li>
-                            <li>
-                                <p>8 años</p>
-                            </li>
-                            <li>
-                                <p>9 años</p>
-                            </li>
-                            <li>
-                                <p>10 años</p>
-                            </li>
-                            <li>
-                                <p>11 años</p>
-                            </li>
-                            <li>
-                                <p>12 años</p>
-                            </li>
-                            <li>
-                                <p>13 años</p>
-                            </li>
-                            <li>
-                                <p>14 años</p>
-                            </li>
-                            <li>
-                                <p>15 años</p>
-                            </li>
-                            <li>
-                                <p>16 años</p>
-                            </li>
-                            <li>
-                                <p>17 años</p>
-                            </li>
-                            <li>
-                                <p>18-29 años</p>
-                            </li>
-                            <li>
-                                <p>30-59 años</p>
-                            </li>
-                            <li>
-                                <p>60+ años</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="pesosMujeres">
-                    <span (click)="togglePesosMujeres()" class="subopcion">MUJERES</span>
-                    <div class="subcontenido pesosMujeres"> 
-                        <ul>
-                            <li>
-                                <p>0 meses</p>
-                            </li>
-                            <li>
-                                <p>1 mes</p>
-                            </li>
-                            <li>
-                                <p>2 meses</p>
-                            </li>
-                            <li>
-                                <p>3 meses</p>
-                            </li>
-                            <li>
-                                <p>4 meses</p>
-                            </li>
-                            <li>
-                                <p>5 meses</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 meses</p>
-                            </li>
-                            <li>
-                                <p>8 meses</p>
-                            </li>
-                            <li>
-                                <p>9 meses</p>
-                            </li>
-                            <li>
-                                <p>10 meses</p>
-                            </li>
-                            <li>
-                                <p>11 meses</p>
-                            </li>
-                            <li>
-                                <p>12 meses</p>
-                            </li>
-                            <li>
-                                <p>1 año</p>
-                            </li>
-                            <li>
-                                <p>2 años</p>
-                            </li>
-                            <li>
-                                <p>3 años</p>
-                            </li>
-                            <li>
-                                <p>4 años</p>
-                            </li>
-                            <li>
-                                <p>5 años</p>
-                            </li>
-                            <li>
-                                <p>6 mes</p>
-                            </li>
-                            <li>
-                                <p>7 años</p>
-                            </li>
-                            <li>
-                                <p>8 años</p>
-                            </li>
-                            <li>
-                                <p>9 años</p>
-                            </li>
-                            <li>
-                                <p>10 años</p>
-                            </li>
-                            <li>
-                                <p>11 años</p>
-                            </li>
-                            <li>
-                                <p>12 años</p>
-                            </li>
-                            <li>
-                                <p>13 años</p>
-                            </li>
-                            <li>
-                                <p>14 años</p>
-                            </li>
-                            <li>
-                                <p>15 años</p>
-                            </li>
-                            <li>
-                                <p>16 años</p>
-                            </li>
-                            <li>
-                                <p>17 años</p>
-                            </li>
-                            <li>
-                                <p>18-29 años</p>
-                            </li>
-                            <li>
-                                <p>30-59 años</p>
-                            </li>
-                            <li>
-                                <p>60+ años</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="contenidoBx">
+                <span class="opcion">OPCION 2</span>
+            </div>
+            <div class="contenidoBx">
+                <span class="opcion">OPCION 3</span>
+            </div>
+            <div class="contenidoBx">
+                <span class="opcion">OPCION 4</span>
+            </div>
+            <div class="contenidoBx">
+                <span class="opcion">OPCION 5</span>
             </div>
         </div>
     </div>
-
-   <!--<div class="acordeon">
-       <div class="contenidoBx">
-           <div class="subtitulo">Pesos</div>
-           <div class="contenido">
-                <div class="subsubtitulo">Hombres</div>
-                <div class="subcontenido">
-                    <ul>
-                        <li>
-                            <p>0 meses</p>
-                        </li>
-                        <li>
-                            <p>1 mes</p>
-                        </li>
-                        <li>
-                            <p>2 meses</p>
-                        </li>
-                        <li>
-                            <p>3 meses</p>
-                        </li>
-                        <li>
-                            <p>4 meses</p>
-                        </li>
-                        <li>
-                            <p>5 meses</p>
-                        </li>
-                        <li>
-                            <p>6 mes</p>
-                        </li>
-                        <li>
-                            <p>7 meses</p>
-                        </li>
-                        <li>
-                            <p>8 meses</p>
-                        </li>
-                        <li>
-                            <p>9 meses</p>
-                        </li>
-                        <li>
-                            <p>10 meses</p>
-                        </li>
-                        <li>
-                            <p>11 meses</p>
-                        </li>
-                        <li>
-                            <p>12 meses</p>
-                        </li>
-                        <li>
-                            <p>1 año</p>
-                        </li>
-                        <li>
-                            <p>2 años</p>
-                        </li>
-                        <li>
-                            <p>3 años</p>
-                        </li>
-                        <li>
-                            <p>4 años</p>
-                        </li>
-                        <li>
-                            <p>5 años</p>
-                        </li>
-                        <li>
-                            <p>6 mes</p>
-                        </li>
-                        <li>
-                            <p>7 años</p>
-                        </li>
-                        <li>
-                            <p>8 años</p>
-                        </li>
-                        <li>
-                            <p>9 años</p>
-                        </li>
-                        <li>
-                            <p>10 años</p>
-                        </li>
-                        <li>
-                            <p>11 años</p>
-                        </li>
-                        <li>
-                            <p>12 años</p>
-                        </li>
-                        <li>
-                            <p>13 años</p>
-                        </li>
-                        <li>
-                            <p>14 años</p>
-                        </li>
-                        <li>
-                            <p>15 años</p>
-                        </li>
-                        <li>
-                            <p>16 años</p>
-                        </li>
-                        <li>
-                            <p>17 años</p>
-                        </li>
-                        <li>
-                            <p>18-29 años</p>
-                        </li>
-                        <li>
-                            <p>30-59 años</p>
-                        </li>
-                        <li>
-                            <p>60+ años</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="subsubtitulo">Mujeres</div>
-                <div class="subcontenido">
-                    <ul>
-                        <li>
-                            <p>0 meses</p>
-                        </li>
-                        <li>
-                            <p>1 mes</p>
-                        </li>
-                        <li>
-                            <p>2 meses</p>
-                        </li>
-                        <li>
-                            <p>3 meses</p>
-                        </li>
-                        <li>
-                            <p>4 meses</p>
-                        </li>
-                        <li>
-                            <p>5 meses</p>
-                        </li>
-                        <li>
-                            <p>6 mes</p>
-                        </li>
-                        <li>
-                            <p>7 meses</p>
-                        </li>
-                        <li>
-                            <p>8 meses</p>
-                        </li>
-                        <li>
-                            <p>9 meses</p>
-                        </li>
-                        <li>
-                            <p>10 meses</p>
-                        </li>
-                        <li>
-                            <p>11 meses</p>
-                        </li>
-                        <li>
-                            <p>12 meses</p>
-                        </li>
-                        <li>
-                            <p>1 año</p>
-                        </li>
-                        <li>
-                            <p>2 años</p>
-                        </li>
-                        <li>
-                            <p>3 años</p>
-                        </li>
-                        <li>
-                            <p>4 años</p>
-                        </li>
-                        <li>
-                            <p>5 años</p>
-                        </li>
-                        <li>
-                            <p>6 mes</p>
-                        </li>
-                        <li>
-                            <p>7 años</p>
-                        </li>
-                        <li>
-                            <p>8 años</p>
-                        </li>
-                        <li>
-                            <p>9 años</p>
-                        </li>
-                        <li>
-                            <p>10 años</p>
-                        </li>
-                        <li>
-                            <p>11 años</p>
-                        </li>
-                        <li>
-                            <p>12 años</p>
-                        </li>
-                        <li>
-                            <p>13 años</p>
-                        </li>
-                        <li>
-                            <p>14 años</p>
-                        </li>
-                        <li>
-                            <p>15 años</p>
-                        </li>
-                        <li>
-                            <p>16 años</p>
-                        </li>
-                        <li>
-                            <p>17 años</p>
-                        </li>
-                        <li>
-                            <p>18-29 años</p>
-                        </li>
-                        <li>
-                            <p>30-59 años</p>
-                        </li>
-                        <li>
-                            <p>60+ años</p>
-                        </li>
-                    </ul>
-                </div>
-           </div>
-       </div>
-       <div class="contenidoBx">
-            <div class="subtitulo">E° Crecimiento</div>
-            <div class="contenido">
-                <ul class="listaPesos">
-                    <li>
-                        <div class="subsubtitulo hombre">Hombres</div>
-                        <div class="subcontenido">
-                            <ul>
-                                <li>
-                                    <p>0 meses</p>
-                                </li>
-                                <li>
-                                    <p>1 mes</p>
-                                </li>
-                                <li>
-                                    <p>2 meses</p>
-                                </li>
-                                <li>
-                                    <p>3 meses</p>
-                                </li>
-                                <li>
-                                    <p>4 meses</p>
-                                </li>
-                                <li>
-                                    <p>5 meses</p>
-                                </li>
-                                <li>
-                                    <p>6 mes</p>
-                                </li>
-                                <li>
-                                    <p>7 meses</p>
-                                </li>
-                                <li>
-                                    <p>8 meses</p>
-                                </li>
-                                <li>
-                                    <p>9 meses</p>
-                                </li>
-                                <li>
-                                    <p>10 meses</p>
-                                </li>
-                                <li>
-                                    <p>11 meses</p>
-                                </li>
-                                <li>
-                                    <p>12 meses</p>
-                                </li>
-                                <li>
-                                    <p>1 año</p>
-                                </li>
-                                <li>
-                                    <p>2 años</p>
-                                </li>
-                                <li>
-                                    <p>3 años</p>
-                                </li>
-                                <li>
-                                    <p>4 años</p>
-                                </li>
-                                <li>
-                                    <p>5 años</p>
-                                </li>
-                                <li>
-                                    <p>6 mes</p>
-                                </li>
-                                <li>
-                                    <p>7 años</p>
-                                </li>
-                                <li>
-                                    <p>8 años</p>
-                                </li>
-                                <li>
-                                    <p>9 años</p>
-                                </li>
-                                <li>
-                                    <p>10 años</p>
-                                </li>
-                                <li>
-                                    <p>11 años</p>
-                                </li>
-                                <li>
-                                    <p>12 años</p>
-                                </li>
-                                <li>
-                                    <p>13 años</p>
-                                </li>
-                                <li>
-                                    <p>14 años</p>
-                                </li>
-                                <li>
-                                    <p>15 años</p>
-                                </li>
-                                <li>
-                                    <p>16 años</p>
-                                </li>
-                                <li>
-                                    <p>17 años</p>
-                                </li>
-                                <li>
-                                    <p>18-29 años</p>
-                                </li>
-                                <li>
-                                    <p>30-59 años</p>
-                                </li>
-                                <li>
-                                    <p>60+ años</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="subsubtitulo mujer">Mujeres</div>
-                        <div class="subcontenido">
-                            <ul>
-                                <li>
-                                    <p>0 meses</p>
-                                </li>
-                                <li>
-                                    <p>1 mes</p>
-                                </li>
-                                <li>
-                                    <p>2 meses</p>
-                                </li>
-                                <li>
-                                    <p>3 meses</p>
-                                </li>
-                                <li>
-                                    <p>4 meses</p>
-                                </li>
-                                <li>
-                                    <p>5 meses</p>
-                                </li>
-                                <li>
-                                    <p>6 mes</p>
-                                </li>
-                                <li>
-                                    <p>7 meses</p>
-                                </li>
-                                <li>
-                                    <p>8 meses</p>
-                                </li>
-                                <li>
-                                    <p>9 meses</p>
-                                </li>
-                                <li>
-                                    <p>10 meses</p>
-                                </li>
-                                <li>
-                                    <p>11 meses</p>
-                                </li>
-                                <li>
-                                    <p>12 meses</p>
-                                </li>
-                                <li>
-                                    <p>1 año</p>
-                                </li>
-                                <li>
-                                    <p>2 años</p>
-                                </li>
-                                <li>
-                                    <p>3 años</p>
-                                </li>
-                                <li>
-                                    <p>4 años</p>
-                                </li>
-                                <li>
-                                    <p>5 años</p>
-                                </li>
-                                <li>
-                                    <p>6 mes</p>
-                                </li>
-                                <li>
-                                    <p>7 años</p>
-                                </li>
-                                <li>
-                                    <p>8 años</p>
-                                </li>
-                                <li>
-                                    <p>9 años</p>
-                                </li>
-                                <li>
-                                    <p>10 años</p>
-                                </li>
-                                <li>
-                                    <p>11 años</p>
-                                </li>
-                                <li>
-                                    <p>12 años</p>
-                                </li>
-                                <li>
-                                    <p>13 años</p>
-                                </li>
-                                <li>
-                                    <p>14 años</p>
-                                </li>
-                                <li>
-                                    <p>15 años</p>
-                                </li>
-                                <li>
-                                    <p>16 años</p>
-                                </li>
-                                <li>
-                                    <p>17 años</p>
-                                </li>
-                                <li>
-                                    <p>18-29 años</p>
-                                </li>
-                                <li>
-                                    <p>30-59 años</p>
-                                </li>
-                                <li>
-                                    <p>60+ años</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-   </div>-->
 
 </section>
 

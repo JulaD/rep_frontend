@@ -12,22 +12,35 @@ export class ConfiguracionValoresComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  togglePesos() {
-    var contenidoPesos = document.getElementsByClassName('pesos');
-    if (contenidoPesos) {
-      contenidoPesos[0].classList.toggle('active');
+  toggleContenido(id: string) {
+    var contenido = document.getElementById(id);
+    if (contenido) {
+      if (contenido.classList.contains('active')) {
+        var contenidoHombres = document.getElementById(id + 'Hombres');
+        var contenidoMujeres = document.getElementById(id + 'Mujeres');
+        if (contenidoHombres) {
+          contenidoHombres.classList.remove("active");
+        }
+        if (contenidoMujeres) {
+          contenidoMujeres.classList.remove("active");
+        }
+      }
+      contenido.classList.toggle('active');
     }
   }
-  togglePesosHombres() {
-    var contenidoPesosHombres = document.getElementsByClassName('pesosHombres');
-    if (contenidoPesosHombres) {
-      contenidoPesosHombres[0].classList.toggle('active');
+  toggleSubcontenido(id: string) {
+    var subcontenido = document.getElementById(id);
+    if (subcontenido) {
+      if (subcontenido.classList.contains('active')) {
+        subcontenido.classList.remove("mod");
+      }
+      subcontenido.classList.toggle('active');
     }
   }
-  togglePesosMujeres() {
-    var contenidoPesosMujeres = document.getElementsByClassName('pesosMujeres');
-    if (contenidoPesosMujeres) {
-      contenidoPesosMujeres[0].classList.toggle('active');
+  toggleModificar(id: string) {
+    var elementoModificar = document.getElementById(id);
+    if (elementoModificar) {
+      elementoModificar.classList.toggle('mod');
     }
   }
 }
