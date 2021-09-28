@@ -5,10 +5,10 @@ import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
 
-const numeroEnteroRe: RegExp = new RegExp('^[0-9]+$')
+const numeroEnteroRe: RegExp = new RegExp(/^[0-9]+$/)
 // El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
 const numeroFloatRe: RegExp =
-new RegExp('^(0*[1-9][0-9]*)|(0*[1-9][0-9]+.[0-9]+)|(0+.0*[1-9][0-9]*)$')
+  new RegExp(/^((0*[1-9][0-9]*)|(0*[1-9][0-9]+\.[0-9]+)|(0+\.0*[1-9][0-9]*))$/)
 
 @Component({
   selector: 'app-calculos-paso4',
