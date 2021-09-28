@@ -1,6 +1,6 @@
 export enum FranjaEtaria {
   Meses_0 = "0 meses",
-  Meses_1 = "1 mes",
+  Meses_1 = "1 meses",
   Meses_2 = "2 meses",
   Meses_3 = "3 meses",
   Meses_4 = "4 meses",
@@ -11,7 +11,7 @@ export enum FranjaEtaria {
   Meses_9 = "9 meses",
   Meses_10 = "10 meses",
   Meses_11 = "11 meses",
-  Anios_1 = "1 año",
+  Anios_1 = "1 años",
   Anios_2 = "2 años",
   Anios_3 = "3 años",
   Anios_4 = "4 años",

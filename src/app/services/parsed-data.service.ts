@@ -13,7 +13,9 @@ export class ParsedDataService {
   constructor(private router: Router) { }
 
   getData() : GrupoEtario[] {
-    return this.gruposEtarios;
+    let ret = this.gruposEtarios;
+    // this.gruposEtarios = []; //No queda en el servicio la última plantilla procesada por el usuario
+    return ret;
   }
 
   changeData(grupos : GrupoEtario[]) {
