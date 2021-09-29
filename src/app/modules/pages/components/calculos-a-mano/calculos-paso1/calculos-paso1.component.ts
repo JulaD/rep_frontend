@@ -6,6 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
 import { Sexo } from "src/app/enums/Sexo";
 import { GrupoEtario } from "src/app/models/grupo-etario";
+import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
 
 
 import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
@@ -15,10 +16,7 @@ import { AgeGroupJSON } from "src/app/services/rest/rest.service";
 
 const femeninoData: GrupoEtario[] = []
 const masculinoData: GrupoEtario[] = []
-const numeroEnteroRe: RegExp = new RegExp(/^[0-9]+$/)
-// El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
-const numeroFloatRe: RegExp =
-  new RegExp(/^((0*[1-9][0-9]*)|(0*[1-9][0-9]+\.[0-9]+)|(0+\.0*[1-9][0-9]*))$/)
+
 @Component({
   selector: 'app-calculos-paso1',
   templateUrl: './calculos-paso1.component.html',
@@ -77,10 +75,10 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   grupoEtarioForm = new FormGroup({
     edad: new FormControl('', Validators.required),
-    cantFemenino: new FormControl('', Validators.pattern(numeroEnteroRe)),
-    cantMasculino: new FormControl('', Validators.pattern(numeroEnteroRe)),
-    medianaFemenino: new FormControl('', Validators.pattern(numeroFloatRe)),
-    medianaMasculino: new FormControl('', Validators.pattern(numeroFloatRe))
+    cantFemenino: new FormControl('', numeroEnteroPositivoValidator),
+    cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
+    medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
+    medianaMasculino: new FormControl('', numeroFloatMayorCeroValidator)
   }, { validators: Validators.compose([step1TodoVacioValidator, step1CantidadSinMedianaValidator]) })
   
   onSubmit() {

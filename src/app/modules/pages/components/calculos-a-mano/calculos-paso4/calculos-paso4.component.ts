@@ -4,11 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-
-const numeroEnteroRe: RegExp = new RegExp(/^[0-9]+$/)
-// El regex es ^(un entero > 0)|(un decimal >= 1)|(un decimal > 0 y < 1)$
-const numeroFloatRe: RegExp =
-  new RegExp(/^((0*[1-9][0-9]*)|(0*[1-9][0-9]+\.[0-9]+)|(0+\.0*[1-9][0-9]*))$/)
+import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 @Component({
   selector: 'app-calculos-paso4',
@@ -19,19 +15,19 @@ export class CalculosPaso4Component {
 
   materYLactanciaForm = new FormGroup({
     //Primer franja
-    cantPrimerFranja:   new FormControl('', Validators.pattern(numeroEnteroRe)),
-    embsPrimerFranja:   new FormControl({value: '', disabled: false}, Validators.pattern(numeroEnteroRe)),
-    amamPrimerFranja:   new FormControl({value: '', disabled: false}, Validators.pattern(numeroEnteroRe)),
-    medPrimerFranja:    new FormControl({value: '', disabled: false}, Validators.pattern(numeroFloatRe)),
-    pobTotPrimerFranja: new FormControl({value: '', disabled: true}, Validators.pattern(numeroEnteroRe)),
-    natPrimerFranja:    new FormControl({value: '', disabled: true}, Validators.pattern(numeroFloatRe)),
+    cantPrimerFranja:   new FormControl('', numeroEnteroPositivoValidator),
+    embsPrimerFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
+    amamPrimerFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
+    medPrimerFranja:    new FormControl({value: '', disabled: false}, numeroFloatMayorCeroValidator),
+    pobTotPrimerFranja: new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
+    natPrimerFranja:    new FormControl({value: '', disabled: true}, numeroFloatMayorCeroValidator),
     //Segunda franja
-    cantSegundaFranja:   new FormControl('', Validators.pattern(numeroEnteroRe)),
-    embsSegundaFranja:   new FormControl({value: '', disabled: false}, Validators.pattern(numeroEnteroRe)),
-    amamSegundaFranja:   new FormControl({value: '', disabled: false}, Validators.pattern(numeroEnteroRe)),
-    medSegundaFranja:    new FormControl({value: '', disabled: false}, Validators.pattern(numeroFloatRe)),
-    pobTotSegundaFranja: new FormControl({value: '', disabled: true}, Validators.pattern(numeroEnteroRe)),
-    natSegundaFranja:    new FormControl({value: '', disabled: true}, Validators.pattern(numeroFloatRe)),
+    cantSegundaFranja:   new FormControl('', numeroEnteroPositivoValidator),
+    embsSegundaFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
+    amamSegundaFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
+    medSegundaFranja:    new FormControl({value: '', disabled: false}, numeroFloatMayorCeroValidator),
+    pobTotSegundaFranja: new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
+    natSegundaFranja:    new FormControl({value: '', disabled: true}, numeroFloatMayorCeroValidator),
     //Checkbox
     primerFranjaDisabled: new FormControl(false),
     segundaFranjaDisabled: new FormControl(false),

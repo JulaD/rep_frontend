@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
-
-// El regex es ^(un entero >= 0)|(un decimal >= 0)$
-const numeroFloatY0Re: RegExp =
-  new RegExp(/^((\d*)|(\d*\.\d+))$/)
+import { numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 const percentageValidators: ValidatorFn[] = [
-  Validators.pattern(numeroFloatY0Re),
+  numeroFloatValidator,
   Validators.min(0),
   Validators.max(100)];
 
