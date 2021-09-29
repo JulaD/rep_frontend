@@ -13,7 +13,9 @@ export class ParsedDataService {
   constructor(private router: Router) { }
 
   getData() : GrupoEtario[] {
-    return this.gruposEtarios;
+    let ret = this.gruposEtarios;
+    // this.gruposEtarios = []; //No queda en el servicio la última plantilla procesada por el usuario
+    return ret;
   }
 
   changeData(grupos : GrupoEtario[]) {
@@ -21,41 +23,16 @@ export class ParsedDataService {
   }
 
   parseData(sheetData: any) {
-    let grupos : GrupoEtario [] = [];    
-    if (sheetData.hombresMenores) {
-      this.addMascs(sheetData.hombresMenores, grupos);
-    }
-    if (sheetData.hombres) {
-      this.addMascs(sheetData.hombresMenores, grupos);
-    }
-    if (sheetData.mujeresMenores) {
-      this.addFems(sheetData.mujeresMenores, grupos);
-    }
-    if (sheetData.mujeres) {
-      this.addMascs(sheetData.mujeres, grupos);
+    let grupos : GrupoEtario [] = [];  
+    for (let data of sheetData) {
+      grupos.push(new GrupoEtario(
+        data.age,
+        data.sex,
+        data.medianWeight,
+        data.population))  
     }
     this.changeData(grupos);
-    this.router.navigate(['/by-hand'], { queryParams: {skipLocationChange: true}​​​​​​​}​);
-  }
-
-  addMascs(mascs : any, grupos : GrupoEtario[]) {
-    for (let m of mascs) {
-      grupos.push(new GrupoEtario(
-        m.edad,
-        Sexo.Masculino,
-        m.peso? m.peso : m.talla,
-        0));
-    }
-  }
-
-  addFems(fems : any, grupos : GrupoEtario[]) {
-    for (let f of fems) {
-      grupos.push(new GrupoEtario(
-        f.edad,
-        Sexo.Femenino,
-        f.peso? f.peso : f.talla,
-        0));
-    }
+    this.router.navigate(['/stepper'], { queryParams: {skipLocationChange: true}​​​​​​​}​);
   }
 
 }

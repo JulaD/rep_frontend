@@ -4,7 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from 'src/app/modules/shared/validators/numbers-validation';
+import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 @Component({
   selector: 'app-calculos-paso4',
@@ -15,19 +15,17 @@ export class CalculosPaso4Component {
 
   materYLactanciaForm = new FormGroup({
     //Primer franja
-    cantPrimerFranja:   new FormControl('', numeroEnteroPositivoValidator),
     embsPrimerFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
     amamPrimerFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
-    medPrimerFranja:    new FormControl({value: '', disabled: false}, numeroFloatMayorCeroValidator),
+    cantPrimerFranja:   new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
     pobTotPrimerFranja: new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
-    natPrimerFranja:    new FormControl({value: '', disabled: true}, numeroFloatMayorCeroValidator),
+    natPrimerFranja:    new FormControl({value: '', disabled: true}, numeroFloatValidator),
     //Segunda franja
-    cantSegundaFranja:   new FormControl('', numeroEnteroPositivoValidator),
     embsSegundaFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
     amamSegundaFranja:   new FormControl({value: '', disabled: false}, numeroEnteroPositivoValidator),
-    medSegundaFranja:    new FormControl({value: '', disabled: false}, numeroFloatMayorCeroValidator),
+    cantSegundaFranja:   new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
     pobTotSegundaFranja: new FormControl({value: '', disabled: true}, numeroEnteroPositivoValidator),
-    natSegundaFranja:    new FormControl({value: '', disabled: true}, numeroFloatMayorCeroValidator),
+    natSegundaFranja:    new FormControl({value: '', disabled: true}, numeroFloatValidator),
     //Checkbox
     primerFranjaDisabled: new FormControl(false),
     segundaFranjaDisabled: new FormControl(false),
@@ -39,12 +37,14 @@ export class CalculosPaso4Component {
     switch (fields) {
       case 1:
         if (event.checked) {
+          this.materYLactanciaForm.get('cantPrimerFranja')?.enable();   
           this.materYLactanciaForm.get('pobTotPrimerFranja')?.enable();   
           this.materYLactanciaForm.get('natPrimerFranja')?.enable();
           this.materYLactanciaForm.get('embsPrimerFranja')?.disable(); 
           this.materYLactanciaForm.get('amamPrimerFranja')?.disable();   
           this.materYLactanciaForm.get('medPrimerFranja')?.disable();     
         } else {
+          this.materYLactanciaForm.get('cantPrimerFranja')?.disable();   
           this.materYLactanciaForm.get('pobTotPrimerFranja')?.disable();   
           this.materYLactanciaForm.get('natPrimerFranja')?.disable();
           this.materYLactanciaForm.get('embsPrimerFranja')?.enable(); 
@@ -54,12 +54,14 @@ export class CalculosPaso4Component {
         break;
       case 2:
         if (event.checked) {
+          this.materYLactanciaForm.get('cantSegundaFranja')?.enable();   
           this.materYLactanciaForm.get('pobTotSegundaFranja')?.enable();   
           this.materYLactanciaForm.get('natSegundaFranja')?.enable();
           this.materYLactanciaForm.get('embsSegundaFranja')?.disable(); 
           this.materYLactanciaForm.get('amamSegundaFranja')?.disable();   
           this.materYLactanciaForm.get('medSegundaFranja')?.disable();     
         } else {
+          this.materYLactanciaForm.get('cantSegundaFranja')?.disable();   
           this.materYLactanciaForm.get('pobTotSegundaFranja')?.disable();   
           this.materYLactanciaForm.get('natSegundaFranja')?.disable();
           this.materYLactanciaForm.get('embsSegundaFranja')?.enable(); 
@@ -75,7 +77,7 @@ export class CalculosPaso4Component {
     let maternity18to29 : IndividualMaternity | PopulationMaternity;
     let maternity30to59 : IndividualMaternity | PopulationMaternity;
     //Primer franja etaria
-    if (this.materYLactanciaForm.get('embsPrimerFranja')) {
+    if (!this.materYLactanciaForm.get('primerFranjaDisabled')?.value) {
       maternity18to29 = {
         pregnantWomen: this.materYLactanciaForm.get('embsPrimerFranja')?.value,
         lactatingWomen: this.materYLactanciaForm.get('amamPrimerFranja')?.value
@@ -88,7 +90,7 @@ export class CalculosPaso4Component {
       }
     }
     //Segunda franja etaria
-    if (this.materYLactanciaForm.get('embsSegundaFranja')) {
+    if (!this.materYLactanciaForm.get('segundaFranjaDisabled')?.value) {
       maternity30to59 = {
         pregnantWomen: this.materYLactanciaForm.get('embsSegundaFranja')?.value,
         lactatingWomen: this.materYLactanciaForm.get('amamSegundaFranja')?.value

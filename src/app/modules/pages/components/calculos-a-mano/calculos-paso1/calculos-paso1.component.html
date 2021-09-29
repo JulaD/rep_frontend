@@ -1,4 +1,4 @@
-<form [formGroup]="grupoEtarioForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="grupoEtarioForm" (ngSubmit)="onSubmit()" *ngIf="!fromTemplate">
   <div class="box-with-shadow">
     <div class="step1-titulo">
       <ng-template matStepLabel>
