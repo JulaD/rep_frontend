@@ -7,7 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
 import { Sexo } from "src/app/enums/Sexo";
 import { GrupoEtario } from "src/app/models/grupo-etario";
-import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
+import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
 
 
 import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
@@ -112,32 +112,20 @@ export class CalculosPaso1Component implements AfterViewInit {
     } else {
       // Datos Femenino
       if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') { // hay datos para agregar a Femenino
-        let cantFemenino: number = 0;
-        if (this.grupoEtarioForm.get('cantFemenino')?.value === '') { // cantidad vacia equivale a 0
-          cantFemenino = 0;
-        } else {
-          cantFemenino = Number(this.grupoEtarioForm.get('cantFemenino')?.value)
-        }
         let grupoFem : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
-          Number(this.grupoEtarioForm.get('medianaFemenino')?.value),
-          cantFemenino)
+          NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value),
+          NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value))
         this.addFem(grupoFem);
       }
       // Datos Masculino
       if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') { // hay datos para agregar a Masculino
-        let cantMasculino: number = 0;
-        if (this.grupoEtarioForm.get('cantMasculino')?.value === '') { // cantidad vacia equivale a 0
-          cantMasculino = 0;
-        } else {
-          cantMasculino = Number(this.grupoEtarioForm.get('cantMasculino')?.value)
-        }
         let grupoMasc : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
-          Number(this.grupoEtarioForm.get('medianaMasculino')?.value),
-          cantMasculino)
+          NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value),
+          NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value))
         this.addMasc(grupoMasc);
       }
     }

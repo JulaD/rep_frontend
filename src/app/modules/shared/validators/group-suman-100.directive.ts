@@ -1,4 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { NumberForForms } from "./numbers-validation";
 
 /*
  control.value devuelve un objeto {key: value, ...}
@@ -13,13 +14,15 @@ export function groupSuman100Validator(inputsQuantity: number): ValidatorFn {
 
     let allNumbers: boolean = true;
     let suma: number = 0;
+    let numInput: number = 0;
 
     for (let i = 0; i < inputsQuantity; i++) {
-      allNumbers = !Number.isNaN(Number(arrInputs[i]));
+      numInput = NumberForForms(arrInputs[i]);
+      allNumbers = !Number.isNaN(numInput);
       if (!allNumbers) {
         break;
       } else {
-        suma += Number(arrInputs[i])
+        suma += numInput
       }
     }
   

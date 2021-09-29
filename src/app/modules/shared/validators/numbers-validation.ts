@@ -22,3 +22,6 @@ export const numeroFloatValidator: ValidatorFn =
 export const numeroFloatMayorCeroValidator: ValidatorFn =
   Validators.pattern(/^\+?((0*[1-9][0-9]*)|(0*[1-9][0-9]*(\.|,)[0-9]+)|(0+(\.|,)0*[1-9][0-9]*))$/)
 
+export function NumberForForms(num: any): number {
+  return Number(String(num).replace(',','.'))
+}

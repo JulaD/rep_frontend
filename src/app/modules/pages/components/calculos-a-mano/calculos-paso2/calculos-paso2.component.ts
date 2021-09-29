@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
-import { numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
+import { NumberForForms, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 const percentageValidators: ValidatorFn[] = [
   numeroFloatValidator,
@@ -25,9 +25,9 @@ export class CalculosPaso2Component {
   }, {validators: groupSuman100Validator(3)});
 
   sendData(): MinorPAL {
-    const lowPAL: number = Number(this.minorPALForm.get('lowPAL')?.value);
-    const moderatePAL: number = Number(this.minorPALForm.get('moderatePAL')?.value);
-    const intensePAL: number = Number(this.minorPALForm.get('intensePAL')?.value);
+    const lowPAL: number = NumberForForms(this.minorPALForm.get('lowPAL')?.value);
+    const moderatePAL: number = NumberForForms(this.minorPALForm.get('moderatePAL')?.value);
+    const intensePAL: number = NumberForForms(this.minorPALForm.get('intensePAL')?.value);
 
     const minorPALData: MinorPAL = {lowPALPrevalence: lowPAL,
       moderatePALPrevalence: moderatePAL,

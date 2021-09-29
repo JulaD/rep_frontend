@@ -4,7 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-import { numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
+import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 @Component({
   selector: 'app-calculos-paso4',
@@ -79,27 +79,27 @@ export class CalculosPaso4Component {
     //Primer franja etaria
     if (!this.materYLactanciaForm.get('primerFranjaDisabled')?.value) {
       maternity18to29 = {
-        pregnantWomen: this.materYLactanciaForm.get('embsPrimerFranja')?.value,
-        lactatingWomen: this.materYLactanciaForm.get('amamPrimerFranja')?.value
+        pregnantWomen: NumberForForms(this.materYLactanciaForm.get('embsPrimerFranja')?.value),
+        lactatingWomen: NumberForForms(this.materYLactanciaForm.get('amamPrimerFranja')?.value)
       }
     } else {
       maternity18to29 = {
-        countryWomenInAgeGroup: this.materYLactanciaForm.get('cantPrimerFranja')?.value,
-        countryBirthRate: this.materYLactanciaForm.get('natPrimerFranja')?.value,
-        countryPopulation: this.materYLactanciaForm.get('pobTotPrimerFranja')?.value
+        countryWomenInAgeGroup: NumberForForms(this.materYLactanciaForm.get('cantPrimerFranja')?.value),
+        countryBirthRate: NumberForForms(this.materYLactanciaForm.get('natPrimerFranja')?.value),
+        countryPopulation: NumberForForms(this.materYLactanciaForm.get('pobTotPrimerFranja')?.value)
       }
     }
     //Segunda franja etaria
     if (!this.materYLactanciaForm.get('segundaFranjaDisabled')?.value) {
       maternity30to59 = {
-        pregnantWomen: this.materYLactanciaForm.get('embsSegundaFranja')?.value,
-        lactatingWomen: this.materYLactanciaForm.get('amamSegundaFranja')?.value
+        pregnantWomen: NumberForForms(this.materYLactanciaForm.get('embsSegundaFranja')?.value),
+        lactatingWomen: NumberForForms(this.materYLactanciaForm.get('amamSegundaFranja')?.value)
       }
     } else {
       maternity30to59 = {
-        countryWomenInAgeGroup: this.materYLactanciaForm.get('cantSegundaFranja')?.value,
-        countryBirthRate: this.materYLactanciaForm.get('natSegundaFranja')?.value,
-        countryPopulation: this.materYLactanciaForm.get('pobTotSegundaFranja')?.value
+        countryWomenInAgeGroup: NumberForForms(this.materYLactanciaForm.get('cantSegundaFranja')?.value),
+        countryBirthRate: NumberForForms(this.materYLactanciaForm.get('natSegundaFranja')?.value),
+        countryPopulation: NumberForForms(this.materYLactanciaForm.get('pobTotSegundaFranja')?.value)
       }
     }
     let maternity: Maternity = {maternity18to29: maternity18to29,
