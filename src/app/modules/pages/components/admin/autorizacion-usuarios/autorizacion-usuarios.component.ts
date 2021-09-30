@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../../../../services';
+import { User } from '../../../../../models/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-autorizacion-usuarios',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutorizacionUsuariosComponent implements OnInit {
 
-  constructor() { }
+  users: [User]
+
+  constructor(
+    public userService: UserService,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
+    this.userService.getUsers().subscribe (
+      res => {
+        this.users = res;
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   mostrarAceptados() {
