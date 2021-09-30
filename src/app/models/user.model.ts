@@ -9,7 +9,7 @@ export class Auth implements IAuth {
   password: string;
 };
 
-export class User implements IUser {
+/*export class User implements IUser {
   id: number;
   name: string;
   email: string;
@@ -23,6 +23,17 @@ export class User implements IUser {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+};*/
+
+export class User implements IUser {
+  id: number;
+  name: string;
+  email: string;
+  organization: string;
+  type: number;
+  status: number;
+  active: boolean;
+  createdAt: Date;
 };
 
 export class Register implements IRegister {
@@ -30,4 +41,5 @@ export class Register implements IRegister {
   email: string;
   organization: string;
   password: string;
+  passwordConf: string;
 }

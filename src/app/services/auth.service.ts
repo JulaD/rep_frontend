@@ -1,36 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, Register } from '../models';
+import { Auth, Register, User } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  usuarioRegistro: Register = {
+  loggedUser: User = {
+    id: NaN,
     name: '',
     email: '',
     organization: '',
-    password: '',
-  }
-
-  usuarioLogin: Auth = {
-    email: '',
-    password: '',
+    type: NaN,
+    status: NaN,
+    active: false,
+    createdAt: new Date(),
   }
 
   constructor(
-    //private router: Router,
-    //private http: HttpClient,
+    private router: Router,
+    private http: HttpClient,
   ) { }
 
-  /*registrar(usuario: Register) {
-    return this.http.post<any>('http://localhost:3000/registrar', usuario);
+  register(user: Register) {
+    return this.http.post<any>('http://localhost:8000/users', user);
   }
 
-  ingresar(usuario: Auth) {
-    return this.http.post<any>('http://localhost:3000/ingresar', usuario);*/
+  login(user: Auth) {
+    return this.http.post<any>('http://localhost:3000/ingresar', user);
+  }
 
 
   //-------------------------------------------------------------------------
