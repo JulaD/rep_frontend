@@ -1,0 +1,75 @@
+<body>
+    <section>
+        <div class="alertas">
+            <div *ngIf="alertaSuccess" class="alertaSuccess">
+                <p>{{message}}</p>
+                <button type="button" (click)="cerrarAlerta()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                  </svg></button>
+            </div>
+            <div *ngIf="alertaError" class="alertaError">
+                <p>{{message}}</p>
+                <button type="button" (click)="cerrarAlerta()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                  </svg></button>
+            </div>
+        </div>
+        <div class="tituloBx">
+            <h1 class="titulo">REP!</h1>
+        </div>
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx">
+                    <img src="../../../../assets/ilustrations/edificio.jpg">
+                </div>
+                <div class="formBx">
+                    <form [formGroup]="loginForm">
+                        <h2>Ingresar</h2>
+                        <input formControlName="email" name="email" type="text" placeholder="Email" >
+                        <small *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">El email es requerido.</small>
+                        <input formControlName="password" name="password" type="password" placeholder="Contraseña">
+                        <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">La contraseña es requerida.</small>
+                        <p></p>
+                        <input (click)="login()" [disabled]="loginForm.invalid" type="submit" value="Ingresar">
+                        <p class="signup">No tienes una cuenta? <a id="registrarse" (click)="toggleForm()">Registrese</a></p>              
+                    </form>
+                </div>
+            </div>
+            <div class="user signupBx">
+                <div class="formBx">
+                    <form [formGroup]="registerForm">    
+                        <h2>Crear una cuenta</h2>
+                        <input formControlName="name" name="nombre" type="text" placeholder="Usuario" >
+                        <small *ngIf="registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched">El nombre es requerido.</small>
+                        <small *ngIf="registerForm.get('name')?.hasError('minlength') && registerForm.get('name')?.touched">Como mínimo 3 caracteres.</small>
+                        <small *ngIf="registerForm.get('name')?.hasError('maxlength') && registerForm.get('name')?.touched">Como máximo 40 caracteres.</small>
+
+                        <input formControlName="email" name="email" type="text"  placeholder="Email" >
+                        <small *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">El email es requerido.</small>
+                        <small *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">El no tiene in fromato válido.</small>
+                        <small *ngIf="registerForm.get('email')?.hasError('maxlength') && registerForm.get('email')?.touched">Como máximo 60 caracteres.</small>
+
+                        <input formControlName="organization" name="organization" type="text"  placeholder="Organizacion" >
+                        <small *ngIf="registerForm.get('organization')?.hasError('required') && registerForm.get('organization')?.touched">La organizacion es requerida.</small>
+                        <small *ngIf="registerForm.get('organization')?.hasError('maxlength') && registerForm.get('organization')?.touched">Como máximo 50 caracteres.</small>
+
+                        <input formControlName="password" name="password" type="password"  placeholder="Contraseña">
+                        <small *ngIf="registerForm.get('password')?.hasError('required') && registerForm.get('password')?.touched">La contraseña es requerida.</small>
+                        <small *ngIf="registerForm.get('password')?.hasError('minlength') && registerForm.get('password')?.touched">Como mínimo 6 caracteres.</small>
+                        <small *ngIf="registerForm.get('password')?.hasError('maxlength') && registerForm.get('password')?.touched">Como máximo 50 caracteres.</small>
+                        
+                        <input formControlName="passwordConf" name="passwordConf" type="password"  placeholder="Repetir Contraseña">
+                        <small *ngIf="registerForm.get('passwordConf')?.hasError('required') && registerForm.get('passwordConf')?.touched">La confirmacion de constraseña es requerida</small>
+
+                        <input (click)="register()" [disabled]="registerForm.invalid" type="submit" value="Registrarse">
+                        <p class="signup">Ya tienes cuenta? <a id="ingresar" (click)="toggleForm()">Ingresar</a></p>              
+                    </form>
+                </div>
+                <div class="imgBx">
+                    <img src="../../../../assets/ilustrations/udelar.png">
+                </div>
+            </div>
+        </div>
+    </section>
+  </body>
+

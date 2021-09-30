@@ -1,16 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { Auth, User } from '../models';
+import { Auth, Register, User } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  loggedUser: User = {
+    id: NaN,
+    name: '',
+    email: '',
+    organization: '',
+    type: NaN,
+    status: NaN,
+    active: false,
+    createdAt: new Date(),
+  }
+
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) { }
+
+  register(user: Register) {
+    return this.http.post<any>('http://localhost:8000/users', user);
+  }
+
+  login(user: Auth) {
+    return this.http.post<any>('http://localhost:3000/ingresar', user);
+  }
+
+
+  //-------------------------------------------------------------------------
   // private url: string = environment.api;
 
   // constructor(
