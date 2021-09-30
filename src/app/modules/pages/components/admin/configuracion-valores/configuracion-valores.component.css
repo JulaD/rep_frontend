@@ -381,7 +381,7 @@ section .acordeon .subcontenido .modificar .confirmarBtn {
   border-bottom-right-radius: 20px;
   color: #ccfdff;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn:hover {
   width: 85%;
