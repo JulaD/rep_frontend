@@ -57,12 +57,12 @@ export class AutorizacionUsuariosComponent implements OnInit {
         if (this.acceptedUsersPageCount > 0) {
           this.goToAcceptedPage(1);
         }
-        console.log(this.pendingUsers);
+        /*console.log(this.pendingUsers);
         console.log(this.acceptedUsers);
         console.log(this.pendingUsersCount);
         console.log(this.acceptedUsersCount);
         console.log(this.pendingUsersPageCount);
-        console.log(this.acceptedUsersPageCount);
+        console.log(this.acceptedUsersPageCount);*/
       },
       err => {
         console.log(err);
@@ -70,8 +70,22 @@ export class AutorizacionUsuariosComponent implements OnInit {
     );
   }
 
+  searchPending() {
+    /*const busquedaInput:any  = document.getElementById('busquedaPendientes');
+    if (busquedaInput) {
+      var busqueda: string = busquedaInput.value;
+      var pendingUsersFound: User[] = [];
+      this.pendingUsers.forEach(user => {
+        if (user.name.match(busqueda) || user.email.match(busqueda)) {
+          pendingUsersFound.push(user);
+        }
+      })
+      console.log(pendingUsersFound);
+    }*/
+  }
+
   goToPendingPage(page: number) {
-    if (page != this.pendingUsersCurrentPage && 1 <= page && page <= this.pendingUsersPageCount) {
+    if (1 <= page && page <= this.pendingUsersPageCount) {
       this.pendingUsersCurrentPage = page;
       if (page == 1) {
         this.pendingUsersCurrentPages = Array(Math.min((page+2), this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
@@ -81,12 +95,12 @@ export class AutorizacionUsuariosComponent implements OnInit {
         this.pendingUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
       }
       this.currentPendingUsers = this.pendingUsers.slice(5*(page-1), Math.min((5*page), this.pendingUsersCount));
-      this.togglePendingPageNumber(page);
+      //this.togglePendingPageNumber(page);
     }
   }
 
   goToAcceptedPage(page: number) {
-    if (page != this.acceptedUsersCurrentPage && 1 <= page && page <= this.acceptedUsersPageCount) {
+    if (1 <= page && page <= this.acceptedUsersPageCount) {
       this.acceptedUsersCurrentPage = page;
       if (page == 1) {
         this.acceptedUsersCurrentPages = Array(Math.min((page+2), this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
@@ -96,27 +110,6 @@ export class AutorizacionUsuariosComponent implements OnInit {
         this.acceptedUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
       }
       this.currentAcceptedUsers = this.acceptedUsers.slice(5*(page-1), Math.min((5*page), this.acceptedUsersCount));
-      this.toggleAcceptedPageNumber(page);
-    }
-  }
-
-  togglePendingPageNumber(page: number) {
-    var element = document.getElementById('pending' + page.toString());
-    Array.from(document.getElementsByClassName("pending")).forEach(elem => {
-      elem.classList.remove("active");
-    });
-    if (element){
-      element.classList.add("active");
-    }
-  }
-
-  toggleAcceptedPageNumber(page: number) {
-    var element = document.getElementById('accepted' + page.toString());
-    Array.from(document.getElementsByClassName("accepted")).forEach(elem => {
-      elem.classList.remove("active");
-    });
-    if (element){
-      element.classList.add("active");
     }
   }
 
@@ -157,38 +150,68 @@ export class AutorizacionUsuariosComponent implements OnInit {
     }
   }
 
-  approve(id: number) {
-    this.userService.approve(id).subscribe (
-      res => {
-        this.message = 'El usuario ha sido aceptado exitosamente.'
-        this.successAlert = true;
-        this.errorAlert = false;
-        //window.location.reload();
-      },
-      err => {
-        this.message = 'Hubo un problema.'
-        this.successAlert = false;
-        this.errorAlert = true;
-        console.log(err);
-      }
-    );
+  approve(id: number, name: string) {
+    const res = confirm("Confirmar autorización para " + name);
+    if (res) {
+      this.userService.approve(id).subscribe (
+        res => {
+          this.message = 'El usuario ha sido aceptado exitosamente.'
+          this.successAlert = true;
+          this.errorAlert = false;
+          this.pendingUsers = [];
+          this.currentPendingUsers = [];
+          this.acceptedUsers = [];
+          this.currentAcceptedUsers = [];
+          this.pendingUsersCount = 0;
+          this.acceptedUsersCount = 0;
+          this.pendingUsersPageCount = 0;
+          this.acceptedUsersPageCount = 0;
+          this.pendingUsersCurrentPage = 0;
+          this.acceptedUsersCurrentPage = 0;
+          this.pendingUsersCurrentPages = [];
+          this.acceptedUsersCurrentPages = [];
+          this.init();
+        },
+        err => {
+          this.message = 'Hubo un problema.'
+          this.successAlert = false;
+          this.errorAlert = true;
+          console.log(err);
+        }
+      );
+    }
   }
 
-  cancel(id: number) {
-    this.userService.cancel(id).subscribe (
-      res => {
-        this.message = 'El usuario ha sido cancelado exitosamente.'
-        this.successAlert = true;
-        this.errorAlert = false;
-        //window.location.reload();
-      },
-      err => {
-        this.message = 'Hubo un problema.'
-        this.successAlert = false;
-        this.errorAlert = true;
-        console.log(err);
-      }
-    );
+  cancel(id: number, name: string) {
+    const res = confirm("Cancelar autorización para " + name);
+    if (res) {
+      this.userService.cancel(id).subscribe (
+        res => {
+          this.message = 'El usuario ha sido cancelado exitosamente.'
+          this.successAlert = true;
+          this.errorAlert = false;
+          this.pendingUsers = [];
+          this.currentPendingUsers = [];
+          this.acceptedUsers = [];
+          this.currentAcceptedUsers = [];
+          this.pendingUsersCount = 0;
+          this.acceptedUsersCount = 0;
+          this.pendingUsersPageCount = 0;
+          this.acceptedUsersPageCount = 0;
+          this.pendingUsersCurrentPage = 0;
+          this.acceptedUsersCurrentPage = 0;
+          this.pendingUsersCurrentPages = [];
+          this.acceptedUsersCurrentPages = [];
+          this.init();
+        },
+        err => {
+          this.message = 'Hubo un problema.'
+          this.successAlert = false;
+          this.errorAlert = true;
+          console.log(err);
+        }
+      );
+    }
   }
 
   closeAlert() {
