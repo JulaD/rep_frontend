@@ -14,6 +14,14 @@ export class UserService {
   ) { }
 
   getUsers() {
-    return this.http.get<[User]>('http://localhost:8000/users');
+    return this.http.get<any>('http://localhost:8000/users');
+  }
+
+  approve(id: number) {
+    return this.http.put<any>('http://localhost:8000/users/' + id + '/approve', undefined);
+  }
+
+  cancel(id: number) {
+    return this.http.put<any>('http://localhost:8000/users/' + id + '/cancel', undefined);
   }
 }

@@ -1,4 +1,18 @@
 <section>
+    <div class="alertas">
+        <div *ngIf="successAlert" class="alertaSuccess">
+            <p>{{message}}</p>
+            <button type="button" (click)="closeAlert()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+              </svg></button>
+        </div>
+        <div *ngIf="errorAlert" class="alertaError">
+            <p>{{message}}</p>
+            <button type="button" (click)="closeAlert()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+              </svg></button>
+        </div>
+    </div>
     <div class="color"></div>
     <div class="color"></div>
     <div class="color"></div>
@@ -8,17 +22,17 @@
             <h1>AUTORIZACION</h1>
         </div>
         <div class="botones">
-            <a class="btnPendientes" (click)="mostrarPendientes()" >
+            <a class="btnPendientes" (click)="showPending()">
                 <span>PENDIENTES</span>
                 <span style="color: black">PENDIENTES</span>
             </a>
-            <a class="btnAceptados" (click)="mostrarAceptados()" >
+            <a class="btnAceptados" (click)="showAccepted()" >
                 <span>ACEPTADOS</span>
                 <span style="color: black">ACEPTADOS</span>
             </a>
         </div>
     </div>
-    <div class="usuarios pendientes">
+    <div class="usuarios pendientes" id="usuariosPendientes">
         <div class="busqueda">
             <input type="text" placeholder="Buscar por nombre o email">
             <a>
@@ -29,61 +43,13 @@
             </a>
         </div>
         <ul class="listaUsuarios">
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+            <li *ngFor="let user of currentPendingUsers">
+                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
                 <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
                     <a>
-                        <span class="boton aceptar">
-                            ACEPTAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            ACEPTAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            ACEPTAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            ACEPTAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
+                        <span class="boton aceptar" (click)="approve(user.id)">
                             ACEPTAR
                         </span>
                     </a>
@@ -91,21 +57,15 @@
             </li>
         </ul>
         <ul class ="paginado">
-            <li>
+            <li (click)="goToPreviousPendingPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                   </svg></span>
             </li>
-            <li>
-                <span>1</span>
+            <li class="elementoPaginado pending" id="pending{{number}}" (click)="goToPendingPage(number)" *ngFor="let number of pendingUsersCurrentPages">
+                <span>{{number}}</span>
             </li>
-            <li>
-                <span>2</span>
-            </li>
-            <li>
-                <span>3</span>
-            </li>
-            <li>
+            <li (click)="goToNextPendingPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                   </svg></span>
@@ -123,61 +83,13 @@
             </a>
         </div>
         <ul class="listaUsuarios">
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+            <li *ngFor="let user of currentAcceptedUsers">
+                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
                 <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
                     <a>
-                        <span class="boton cancelar">
-                            CANCELAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            CANCELAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            CANCELAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            CANCELAR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
+                        <span class="boton cancelar" (click)="cancel(user.id)">
                             CANCELAR
                         </span>
                     </a>
@@ -185,21 +97,15 @@
             </li>
         </ul>
         <ul class ="paginado">
-            <li>
+            <li class="elementoPaginado" (click)="goToPreviousAcceptedPage()">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                   </svg></span>
             </li>
-            <li>
-                <span>1</span>
+            <li class="elementoPaginado accepted" id="accepted{{number}}" (click)="goToAcceptedPage(number)" *ngFor="let number of acceptedUsersCurrentPages">
+                <span>{{number}}</span>
             </li>
-            <li>
-                <span>2</span>
-            </li>
-            <li>
-                <span>3</span>
-            </li>
-            <li>
+            <li class="elementoPaginado" (click)="goToNextAcceptedPage()">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                   </svg></span>
