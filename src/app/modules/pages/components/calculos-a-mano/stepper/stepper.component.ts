@@ -41,10 +41,25 @@ export class StepperComponent implements OnInit {
 
   onSubmit(): void {
     const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
-    const step2Data: MinorPAL = this.step2Access.sendData();
-    const step3Data: AdultPAL = this.step3Access.sendData();
-    const step4Data: Maternity = this.step4Access.sendData();
 
+    // Inicializo con datos hardcodeados hasta que se implementen los datos por defecto
+    let step2Data: MinorPAL = {lowPALPrevalence: 0, moderatePALPrevalence: 0, intensePALPrevalence: 0}
+    let step3Data: AdultPAL = {urbanPercentage: 100, activeUrbanPAL: 0, lowUrbanPAL: 100,
+      ruralPercentage: 0, activeRuralPAL: 100, lowRuralPAL: 0}
+    let step4Data: Maternity = {maternity18to29: {pregnantWomen: 0, lactatingWomen: 0},
+      maternity30to59: {pregnantWomen: 0, lactatingWomen: 0}}
+
+    if (this.step1Access.stepperLogic.agesMinorPresent) {
+      step2Data = this.step2Access.sendData();
+    }
+    if (this.step1Access.stepperLogic.agesAdultPresent) {
+      step3Data = this.step3Access.sendData();
+    }
+    if (this.step1Access.stepperLogic.agesFemale18To29Present ||
+      this.step1Access.stepperLogic.agesFemale30To59Present) {
+      step4Data = this.step4Access.sendData();
+    }
+    
     const extraData: ExtraData = {minorPAL: step2Data,
       adultPAL: step3Data,
       maternity18To29: step4Data.maternity18to29,
