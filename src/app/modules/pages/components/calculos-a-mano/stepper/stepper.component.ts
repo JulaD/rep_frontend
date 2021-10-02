@@ -74,5 +74,7 @@ export class StepperComponent implements OnInit {
     }, (err) => {
       console.log(err);
     });
+    // luego de obtener el resultado, vacio las tablas
+    this.step1Access.clearTables();
   }
 }

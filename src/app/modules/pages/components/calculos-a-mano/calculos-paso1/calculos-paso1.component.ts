@@ -269,4 +269,12 @@ export class CalculosPaso1Component implements AfterViewInit {
         });
     }
   }
+
+  clearTables() {
+    femeninoData.splice(0, femeninoData.length);
+    this.dataSourceF._updateChangeSubscription();
+
+    masculinoData.splice(0, masculinoData.length);
+    this.dataSourceM._updateChangeSubscription();
+  }
 } // component class
