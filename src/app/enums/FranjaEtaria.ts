@@ -34,7 +34,10 @@ export enum FranjaEtaria {
 }
 
 const franjaEtariaOrder = Object.values(FranjaEtaria);
-
+/*
+ Return a negative value if first argument is less than second argument,
+ zero if they're equal and a positive value otherwise.
+ */
 export function compareFranjaEtaria(a: FranjaEtaria, b: FranjaEtaria) {
   return franjaEtariaOrder.indexOf(a) - franjaEtariaOrder.indexOf(b)
 }

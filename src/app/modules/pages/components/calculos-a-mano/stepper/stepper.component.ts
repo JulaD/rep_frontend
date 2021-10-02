@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
-import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
@@ -44,9 +43,7 @@ export class StepperComponent implements OnInit {
     const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
     const step2Data: MinorPAL = this.step2Access.sendData();
     const step3Data: AdultPAL = this.step3Access.sendData();
-    // placeholder mientras se implementa el paso 4 (al backend no le gustaba undefined)
     const step4Data: Maternity = this.step4Access.sendData();
-    //{pregnantWomen: 0, lactatingWomen: 0}
 
     const extraData: ExtraData = {minorPAL: step2Data,
       adultPAL: step3Data,
@@ -59,13 +56,6 @@ export class StepperComponent implements OnInit {
           .setData(result);
         this.router
           .navigate(['/result']);
-        // this.router
-        //   .navigate(['/result'], {​​​​​​​​ 
-        //     queryParams: {
-        //       result: JSON.stringify(result)
-        //     },
-        //     skipLocationChange: true
-        //   }​​​​​​​​);
     }, (err) => {
       console.log(err);
     });

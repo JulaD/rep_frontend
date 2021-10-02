@@ -26,6 +26,13 @@ const masculinoData: GrupoEtario[] = []
 })
 export class CalculosPaso1Component implements AfterViewInit {
 
+  stepperLogic = {
+    agesMinorPresent: false,
+    agesAdultPresent: false,
+    agesFemale18To29Present: false,
+    agesFemale30To59Present: false,
+  }
+
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
     FranjaEtaria.Meses_1,
@@ -137,6 +144,7 @@ export class CalculosPaso1Component implements AfterViewInit {
       return compareFranjaEtaria(a.edad, b.edad)
     })
     this.dataSourceF._updateChangeSubscription();
+    this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
   addMasc(grupo: GrupoEtario) {
@@ -145,6 +153,7 @@ export class CalculosPaso1Component implements AfterViewInit {
         return compareFranjaEtaria(a.edad, b.edad)
       })
     this.dataSourceM._updateChangeSubscription();
+    this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
   // Boton de borrar datos asociados a FranjaEtaria
@@ -159,6 +168,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     if (indexF > -1) {
       femeninoData.splice(indexF, 1);
       this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
+      this.updateStepperLogicOnRemove(edadSel, Sexo.Femenino);
     }
     // Borro en la tabla femeninoData
     const indexM = masculinoData.findIndex((element: GrupoEtario) => {
@@ -167,6 +177,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     if (indexM > -1) {
       masculinoData.splice(indexM, 1);
       this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
+      this.updateStepperLogicOnRemove(edadSel, Sexo.Masculino);
     }
   } // borrarEdad
 
@@ -211,5 +222,51 @@ export class CalculosPaso1Component implements AfterViewInit {
           break;
       }
     });
+  }
+
+  updateStepperLogicOnInsert(age: FranjaEtaria, sex: Sexo) {
+    if(compareFranjaEtaria(age, FranjaEtaria.Anios_6) >= 0 &&
+      compareFranjaEtaria(age, FranjaEtaria.Anios_17) <= 0) {
+        this.stepperLogic.agesMinorPresent = true;
+    }
+    else if (compareFranjaEtaria(age,FranjaEtaria.Anios_18_29) >= 0) {
+      this.stepperLogic.agesAdultPresent = true;
+      if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale18To29Present = true;
+      }
+      else if (compareFranjaEtaria(age, FranjaEtaria.Anios_30_59) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale30To59Present = true;
+      }
+    }
+  }
+
+  updateStepperLogicOnRemove(age: FranjaEtaria, sex: Sexo) {
+    if(compareFranjaEtaria(age, FranjaEtaria.Anios_6) >= 0 &&
+      compareFranjaEtaria(age, FranjaEtaria.Anios_17) <= 0) {
+      this.stepperLogic.agesMinorPresent =
+        femeninoData.some((group: GrupoEtario) => {
+          return compareFranjaEtaria(group.edad, FranjaEtaria.Anios_6) >= 0 &&
+          compareFranjaEtaria(group.edad, FranjaEtaria.Anios_17) <= 0
+        }) ||
+        masculinoData.some((group: GrupoEtario) => {
+          return compareFranjaEtaria(group.edad, FranjaEtaria.Anios_6) >= 0 &&
+          compareFranjaEtaria(group.edad, FranjaEtaria.Anios_17) <= 0
+        });
+    }
+    else if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) >= 0) {
+      if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale18To29Present = false;
+      }
+      else if (compareFranjaEtaria(age, FranjaEtaria.Anios_30_59) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale30To59Present = false;
+      }
+      this.stepperLogic.agesAdultPresent =
+        femeninoData.some((group: GrupoEtario) => {
+          return compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0
+        }) ||
+        masculinoData.some((group: GrupoEtario) => {
+          return compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0
+        });
+    }
   }
 } // component class

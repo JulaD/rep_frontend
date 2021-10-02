@@ -5,35 +5,68 @@
         <ng-template matStepLabel>Edad y cantidad de personas por sexo</ng-template>
         <app-calculos-paso1 #step1Access class="mb-4"></app-calculos-paso1>
         <div class="containerButtons">
-          <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="step1Access.stepperLogic.agesMinorPresent ||
+            step1Access.stepperLogic.agesAdultPresent ||
+            step1Access.stepperLogic.agesFemale18To29Present ||
+            step1Access.stepperLogic.agesFemale30To59Present;
+            then thenBlockStep1 else elseBlockStep1">
+          </div>
+          <ng-template #thenBlockStep1>
+            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+          </ng-template>
+          <ng-template #elseBlockStep1>
+            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+          </ng-template>
         </div>
       </div>
     </mat-step>
-    <mat-step>
+    <mat-step *ngIf="this.step1Access.stepperLogic.agesMinorPresent">
       <div class="container">
         <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
         <app-calculos-paso2 #step2Access class="mb-4"></app-calculos-paso2>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
-          <button mat-flat-button color="primary" mat-button matStepperNext >Siguiente</button>
+          <div *ngIf="step1Access.stepperLogic.agesAdultPresent ||
+            step1Access.stepperLogic.agesFemale18To29Present ||
+            step1Access.stepperLogic.agesFemale30To59Present;
+            then thenBlockStep2 else elseBlockStep2">
+          </div>
+          <ng-template #thenBlockStep2>
+            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+          </ng-template>
+          <ng-template #elseBlockStep2>
+            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+          </ng-template>
         </div>
       </div>
     </mat-step>
-    <mat-step>
+    <mat-step *ngIf="this.step1Access.stepperLogic.agesAdultPresent">
       <div class="container"> 
         <ng-template matStepLabel>Estilo de vida por area</ng-template>
         <app-calculos-paso3 class="mb-4"></app-calculos-paso3>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
-          <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+          <div *ngIf="step1Access.stepperLogic.agesFemale18To29Present ||
+            step1Access.stepperLogic.agesFemale30To59Present;
+            then thenBlockStep3 else elseBlockStep3">
+          </div>
+          <ng-template #thenBlockStep3>
+            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+          </ng-template>
+          <ng-template #elseBlockStep3>
+            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+          </ng-template>
         </div>
       </div>
     </mat-step>
-    <mat-step>
+    <mat-step
+      *ngIf="this.step1Access.stepperLogic.agesFemale18To29Present ||
+        this.step1Access.stepperLogic.agesFemale30To59Present">
       <div class="container">
         <ng-template matStepLabel>Maternidad y lactancia</ng-template>
         <app-calculos-paso4 class="mb-4"></app-calculos-paso4>
         <div class="containerButtons">
+          <button mat-button matStepperPrevious>Volver</button>
           <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
         </div>
       </div>
