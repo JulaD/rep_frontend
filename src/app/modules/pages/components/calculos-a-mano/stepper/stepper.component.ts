@@ -1,3 +1,4 @@
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
@@ -15,9 +16,13 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
 export class StepperComponent implements OnInit {
-  isLinear = false;
+  isLinear: boolean = false;
+  stepperValid: boolean = false;
 
   @ViewChild(CalculosPaso1Component)
   private step1Access: CalculosPaso1Component
@@ -77,5 +82,24 @@ export class StepperComponent implements OnInit {
     });
     // luego de obtener el resultado, vacio las tablas
     this.step1Access.clearTables();
+  }
+
+  updateValidity() {
+    const step1Valid: boolean = this.step1Access.isStepValid();
+    let step2Valid: boolean = true;
+    let step3Valid: boolean = true;
+    let step4Valid: boolean = true;
+    if (this.step1Access.stepperLogic.agesMinorPresent) {
+      step2Valid = this.step2Access.minorPALForm.valid;
+    }
+    if (this.step1Access.stepperLogic.agesAdultPresent) {
+      step3Valid = this.step3Access.adultPALForm.valid;
+    }
+    if (this.step1Access.stepperLogic.agesFemale18To29Present ||
+      this.step1Access.stepperLogic.agesFemale30To59Present) {
+      step4Valid = this.step4Access.materYLactanciaForm.valid
+    }
+
+    this.stepperValid = step1Valid && step2Valid && step3Valid && step4Valid;
   }
 }

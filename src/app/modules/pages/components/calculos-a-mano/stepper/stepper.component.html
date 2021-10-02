@@ -3,71 +3,104 @@
     <mat-step>
       <div class="container">
         <ng-template matStepLabel>Edad y cantidad de personas por sexo</ng-template>
-        <app-calculos-paso1 #step1Access class="mb-4"></app-calculos-paso1>
+        <app-calculos-paso1 #step1DOMAccess class="mb-4"></app-calculos-paso1>
         <div class="containerButtons">
-          <div *ngIf="step1Access.stepperLogic.agesMinorPresent ||
-            step1Access.stepperLogic.agesAdultPresent ||
-            step1Access.stepperLogic.agesFemale18To29Present ||
-            step1Access.stepperLogic.agesFemale30To59Present;
+          <div *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent ||
+            step1DOMAccess.stepperLogic.agesAdultPresent ||
+            step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+            step1DOMAccess.stepperLogic.agesFemale30To59Present;
             then thenBlockStep1 else elseBlockStep1">
           </div>
           <ng-template #thenBlockStep1>
             <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
           </ng-template>
           <ng-template #elseBlockStep1>
-            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+            <button
+              mat-flat-button color="primary" mat-button
+              [disabled]="!step1DOMAccess.isStepValid()"
+              (click)="onSubmit()">
+              Confirmar
+          </button>
           </ng-template>
         </div>
       </div>
     </mat-step>
-    <mat-step *ngIf="this.step1Access.stepperLogic.agesMinorPresent">
+    <mat-step [stepControl]="step2DOMAccess.minorPALForm"
+      errorMessage="El paso contiene errores"
+      *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent">
       <div class="container">
         <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
-        <app-calculos-paso2 #step2Access class="mb-4"></app-calculos-paso2>
+        <app-calculos-paso2 #step2DOMAccess class="mb-4"></app-calculos-paso2>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
-          <div *ngIf="step1Access.stepperLogic.agesAdultPresent ||
-            step1Access.stepperLogic.agesFemale18To29Present ||
-            step1Access.stepperLogic.agesFemale30To59Present;
+          <div *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent ||
+            step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+            step1DOMAccess.stepperLogic.agesFemale30To59Present;
             then thenBlockStep2 else elseBlockStep2">
           </div>
           <ng-template #thenBlockStep2>
             <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
           </ng-template>
           <ng-template #elseBlockStep2>
-            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+            <button
+              mat-flat-button color="primary" mat-button
+              [disabled]="!(step1DOMAccess.isStepValid && step2DOMAccess.minorPALForm.valid)"
+              (click)="onSubmit()">
+              Confirmar
+          </button>
           </ng-template>
         </div>
       </div>
     </mat-step>
-    <mat-step *ngIf="this.step1Access.stepperLogic.agesAdultPresent">
+    <mat-step [stepControl]="step3DOMAccess.adultPALForm"
+      errorMessage="El paso contiene errores"
+      *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent">
       <div class="container"> 
         <ng-template matStepLabel>Estilo de vida por area</ng-template>
-        <app-calculos-paso3 class="mb-4"></app-calculos-paso3>
+        <app-calculos-paso3 #step3DOMAccess class="mb-4"></app-calculos-paso3>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
-          <div *ngIf="step1Access.stepperLogic.agesFemale18To29Present ||
-            step1Access.stepperLogic.agesFemale30To59Present;
+          <div *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+            step1DOMAccess.stepperLogic.agesFemale30To59Present;
             then thenBlockStep3 else elseBlockStep3">
           </div>
           <ng-template #thenBlockStep3>
             <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
           </ng-template>
           <ng-template #elseBlockStep3>
-            <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+            <!--
+              Puedo acceder a step1DOMAcess pero no a step2DOMAcess, ¿es por el ngIf?
+              Se puede hacer algo accediendo a stepper.steps y revisando cada uno para ver si contiene
+              un error alguno.
+              Tambien ver si hay algun metodo o propiedad que diga si un componente fue inicializado,
+              para asi intentar acceder a sus metodos y propiedades.
+            -->
+            <button
+              mat-flat-button color="primary" mat-button
+              [disabled]="false"
+              (click)="onSubmit()">
+              Confirmar
+          </button>
           </ng-template>
         </div>
       </div>
     </mat-step>
     <mat-step
-      *ngIf="this.step1Access.stepperLogic.agesFemale18To29Present ||
-        this.step1Access.stepperLogic.agesFemale30To59Present">
+      [stepControl]="step4Access.materYLactanciaForm"
+      errorMessage="El paso contiene errores"
+      *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+        step1DOMAccess.stepperLogic.agesFemale30To59Present">
       <div class="container">
         <ng-template matStepLabel>Maternidad y lactancia</ng-template>
-        <app-calculos-paso4 class="mb-4"></app-calculos-paso4>
+        <app-calculos-paso4 #step4Access class="mb-4"></app-calculos-paso4>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
-          <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+          <button
+            mat-flat-button color="primary" mat-button
+            [disabled]="false"
+            (click)="onSubmit()">
+            Confirmar
+          </button>
         </div>
       </div>
     </mat-step>

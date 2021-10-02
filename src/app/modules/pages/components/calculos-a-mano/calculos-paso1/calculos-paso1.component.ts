@@ -270,6 +270,10 @@ export class CalculosPaso1Component implements AfterViewInit {
     }
   }
 
+  isStepValid(): boolean {
+    return femeninoData.length > 0 || masculinoData.length > 0;
+  }
+
   clearTables() {
     femeninoData.splice(0, femeninoData.length);
     this.dataSourceF._updateChangeSubscription();
