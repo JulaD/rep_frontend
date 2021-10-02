@@ -40,30 +40,31 @@ export class StepperComponent implements OnInit {
   ) {}
 
   onSubmit(): void {
+    let extraData: ExtraData = {
+      minorPAL: undefined,
+      adultPAL: undefined,
+      maternity18To29: undefined,
+      maternity30To59: undefined
+    }
+
     const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
 
-    // Inicializo con datos hardcodeados hasta que se implementen los datos por defecto
-    let step2Data: MinorPAL = {lowPALPrevalence: 0, moderatePALPrevalence: 0, intensePALPrevalence: 0}
-    let step3Data: AdultPAL = {urbanPercentage: 100, activeUrbanPAL: 0, lowUrbanPAL: 100,
-      ruralPercentage: 0, activeRuralPAL: 100, lowRuralPAL: 0}
-    let step4Data: Maternity = {maternity18to29: {pregnantWomen: 0, lactatingWomen: 0},
-      maternity30to59: {pregnantWomen: 0, lactatingWomen: 0}}
-
     if (this.step1Access.stepperLogic.agesMinorPresent) {
-      step2Data = this.step2Access.sendData();
+      extraData.minorPAL = this.step2Access.sendData();
     }
     if (this.step1Access.stepperLogic.agesAdultPresent) {
-      step3Data = this.step3Access.sendData();
+      extraData.adultPAL = this.step3Access.sendData();
     }
     if (this.step1Access.stepperLogic.agesFemale18To29Present ||
       this.step1Access.stepperLogic.agesFemale30To59Present) {
-      step4Data = this.step4Access.sendData();
+      const step4Data = this.step4Access.sendData();
+      if (this.step1Access.stepperLogic.agesFemale18To29Present) {
+        extraData.maternity18To29 = step4Data.maternity18to29;
+      }
+      if (this.step1Access.stepperLogic.agesFemale30To59Present) {
+        extraData.maternity30To59 = step4Data.maternity30to59;
+      }
     }
-    
-    const extraData: ExtraData = {minorPAL: step2Data,
-      adultPAL: step3Data,
-      maternity18To29: step4Data.maternity18to29,
-      maternity30To59: step4Data.maternity30to59 }
       
     this.rest.addCalculation(step1Data, extraData)
       .subscribe((result) => {
