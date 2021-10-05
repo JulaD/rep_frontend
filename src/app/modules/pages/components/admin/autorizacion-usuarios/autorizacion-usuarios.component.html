@@ -43,7 +43,7 @@
             </a>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let user of currentPendingUsers">
+            <li *ngFor="let user of pendingUsers">
                 <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
                 <div class="info">
                     <span class="Organizacion">Organizacion: {{user.organization}}</span>
@@ -83,7 +83,7 @@
             </a>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let user of currentAcceptedUsers">
+            <li *ngFor="let user of acceptedUsers">
                 <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
                 <div class="info">
                     <span class="Organizacion">Organizacion: {{user.organization}}</span>

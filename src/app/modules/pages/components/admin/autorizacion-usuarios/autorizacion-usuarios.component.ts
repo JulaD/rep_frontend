@@ -11,9 +11,7 @@ import { Router } from '@angular/router';
 export class AutorizacionUsuariosComponent implements OnInit {
 
   pendingUsers: User[] = [];
-  currentPendingUsers: User[] = [];
   acceptedUsers: User[] = [];
-  currentAcceptedUsers: User[] = [];
   pendingUsersCount: number = 0;
   acceptedUsersCount: number = 0;
   pendingUsersPageCount: number = 0;
@@ -36,33 +34,27 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   init() {
-    this.userService.getUsers().subscribe (
+    this.userService.getPendingUsers(5, 0).subscribe (
       res => {
-        const users: User[] = res.rows;
-        users.forEach(user => {
-          if (user.status == 0) {
-            this.pendingUsers.push(user);
-          }
-          if (user.status == 1) {
-            this.acceptedUsers.push(user);
-          }
-        });
-        this.pendingUsersCount = this.pendingUsers.length;
-        this.acceptedUsersCount = this.acceptedUsers.length;
+        this.pendingUsersCount = res.count;
+        this.pendingUsers = res.rows;
         this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount/5);
-        this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount/5);
         if (this.pendingUsersPageCount > 0) {
           this.goToPendingPage(1);
         }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+    this.userService.getApprovedUsers(5, 0).subscribe (
+      res => {
+        this.acceptedUsersCount = res.count;
+        this.acceptedUsers = res.rows;
+        this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount/5);
         if (this.acceptedUsersPageCount > 0) {
           this.goToAcceptedPage(1);
         }
-        /*console.log(this.pendingUsers);
-        console.log(this.acceptedUsers);
-        console.log(this.pendingUsersCount);
-        console.log(this.acceptedUsersCount);
-        console.log(this.pendingUsersPageCount);
-        console.log(this.acceptedUsersPageCount);*/
       },
       err => {
         console.log(err);
@@ -86,30 +78,47 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   goToPendingPage(page: number) {
     if (1 <= page && page <= this.pendingUsersPageCount) {
-      this.pendingUsersCurrentPage = page;
-      if (page == 1) {
-        this.pendingUsersCurrentPages = Array(Math.min((page+2), this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-      } else if (page == this.pendingUsersPageCount) {
-        this.pendingUsersCurrentPages = Array(page - Math.max((page-2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page-2), 1) + idx);
-      } else {
-        this.pendingUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
-      }
-      this.currentPendingUsers = this.pendingUsers.slice(5*(page-1), Math.min((5*page), this.pendingUsersCount));
-      //this.togglePendingPageNumber(page);
+      this.userService.getPendingUsers(5, (page-1)*5).subscribe (
+        res => {
+          this.pendingUsersCurrentPage = page;
+          this.pendingUsersCount = res.count;
+          this.pendingUsers = res.rows;
+          this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount/5);
+          if (page == 1) {
+            this.pendingUsersCurrentPages = Array(Math.min((page+2), this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page == this.pendingUsersPageCount) {
+            this.pendingUsersCurrentPages = Array(page - Math.max((page-2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page-2), 1) + idx);
+          } else {
+            this.pendingUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   }
 
   goToAcceptedPage(page: number) {
     if (1 <= page && page <= this.acceptedUsersPageCount) {
-      this.acceptedUsersCurrentPage = page;
-      if (page == 1) {
-        this.acceptedUsersCurrentPages = Array(Math.min((page+2), this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-      } else if (page == this.acceptedUsersPageCount) {
-        this.acceptedUsersCurrentPages = Array(page - Math.max((page-2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page-2), 1) + idx);
-      } else {
-        this.acceptedUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
-      }
-      this.currentAcceptedUsers = this.acceptedUsers.slice(5*(page-1), Math.min((5*page), this.acceptedUsersCount));
+      this.userService.getApprovedUsers(5, (page-1)*5).subscribe (
+        res => {
+          this.acceptedUsersCurrentPage = page;
+          this.acceptedUsersCount = res.count;
+          this.acceptedUsers = res.rows;
+          this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount/5);
+          if (page == 1) {
+            this.acceptedUsersCurrentPages = Array(Math.min((page+2), this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page == this.acceptedUsersPageCount) {
+            this.acceptedUsersCurrentPages = Array(page - Math.max((page-2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page-2), 1) + idx);
+          } else {
+            this.acceptedUsersCurrentPages = Array((page+1) - (page-1) + 1).fill(undefined).map((_, idx) => (page-1) + idx);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   }
 
@@ -159,9 +168,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.successAlert = true;
           this.errorAlert = false;
           this.pendingUsers = [];
-          this.currentPendingUsers = [];
           this.acceptedUsers = [];
-          this.currentAcceptedUsers = [];
           this.pendingUsersCount = 0;
           this.acceptedUsersCount = 0;
           this.pendingUsersPageCount = 0;
@@ -191,9 +198,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.successAlert = true;
           this.errorAlert = false;
           this.pendingUsers = [];
-          this.currentPendingUsers = [];
           this.acceptedUsers = [];
-          this.currentAcceptedUsers = [];
           this.pendingUsersCount = 0;
           this.acceptedUsersCount = 0;
           this.pendingUsersPageCount = 0;
