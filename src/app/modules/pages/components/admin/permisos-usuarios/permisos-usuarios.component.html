@@ -1,4 +1,18 @@
 <section>
+    <div class="alertas">
+        <div *ngIf="successAlert" class="alertaSuccess">
+            <p>{{message}}</p>
+            <button type="button" (click)="closeAlert()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+              </svg></button>
+        </div>
+        <div *ngIf="errorAlert" class="alertaError">
+            <p>{{message}}</p>
+            <button type="button" (click)="closeAlert()" class="cerrarAlerta"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+              </svg></button>
+        </div>
+    </div>
     <div class="color"></div>
     <div class="color"></div>
     <div class="color"></div>
@@ -20,92 +34,49 @@
     </div>
     <div class="usuarios pendientes">
         <div class="busqueda">
-            <input type="text" placeholder="Buscar por nombre o email">
+            <input type="text" id="busquedaUsuarios" placeholder="Buscar por nombre o email">
             <a>
-                <span>
+                <span (click)="searchUsers()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
                 </span>
             </a>
         </div>
+        <div class="resultadoBusqueda" *ngIf="usersSearch != ''">
+            <h1 class="resultadoBusquedaUsuarios">RESULTADO DE LA BUSQUEDA: "{{usersSearch}}"</h1>
+            <button type="button" (click)="resetUsersSearch()" class="cancelarBusqueda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                </svg>
+            </button>
+        </div>
         <ul class="listaUsuarios">
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+            <li *ngFor="let user of users">
+                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
                 <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
                     <a>
-                        <span class="boton aceptar">
-                            DAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            DAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            DAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
-                            DAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton aceptar">
+                        <span class="boton aceptar" (click)="giveAdminPermission(user.id, user.name)">
                             DAR PERMISOS DE ADMINISTRADOR
                         </span>
                     </a>
                 </div>
             </li>
         </ul>
-        <ul class ="paginado">
-            <li>
+        <div class="vacio" *ngIf="usersCount == 0">
+            <h1 class="vacioUsuarios">¡NO HAY USUARIOS!</h1>
+        </div>
+        <ul class ="paginado" *ngIf="usersCount != 0">
+            <li (click)="goToPreviousUserPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                   </svg></span>
             </li>
-            <li>
-                <span>1</span>
+            <li class="elementoPaginado users" id="users{{number}}" (click)="goToUserPage(number)" *ngFor="let number of usersCurrentPages" [ngClass]="number==usersCurrentPage ? 'active' : ''">
+                <span>{{number}}</span>
             </li>
-            <li>
-                <span>2</span>
-            </li>
-            <li>
-                <span>3</span>
-            </li>
-            <li>
+            <li (click)="goToNextUserPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                   </svg></span>
@@ -114,92 +85,49 @@
     </div>
     <div class="usuarios aceptados">
         <div class="busqueda">
-            <input type="text" placeholder="Buscar por nombre o email">
+            <input type="text" id="busquedaAdministradores" placeholder="Buscar por nombre o email">
             <a>
-                <span>
+                <span (click)="searchAdmins()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
                 </span>
             </a>
         </div>
+        <div class="resultadoBusqueda" *ngIf="adminsSearch != ''">
+            <h1 class="resultadoBusquedaAdministradores">RESULTADO DE LA BUSQUEDA: "{{adminsSearch}}"</h1>
+            <button type="button" (click)="resetAdminsSearch()" class="cancelarBusqueda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                </svg>
+            </button>
+        </div>
         <ul class="listaUsuarios">
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
+            <li *ngFor="let admin of admins">
+                <span class="UsuarioEmail">{{admin.name}} - {{admin.email}}</span>
                 <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
+                    <span class="Organizacion">Organizacion: {{admin.organization}}</span>
+                    <span class="Fecha">Fecha de registro: {{admin.createdAt}}</span>
                     <a>
-                        <span class="boton cancelar">
-                            QUITAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            QUITAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            QUITAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
-                            QUITAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
-            <li>
-                <span class="UsuarioEmail">Pepe Rodriguez - pepe.rodriguez@gmail.com</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: Facultad de Ingenieria UDELAR</span>
-                    <span class="Fecha">Fecha de registro: 7/9/2021</span>
-                    <a>
-                        <span class="boton cancelar">
+                        <span class="boton cancelar" (click)="removeAdminPermission(admin.id, admin.name)">
                             QUITAR PERMISOS DE ADMINISTRADOR
                         </span>
                     </a>
                 </div>
             </li>
         </ul>
-        <ul class ="paginado">
-            <li>
+        <div class="vacio" *ngIf="adminsCount == 0">
+            <h1 class="vacioAdministradores">¡NO HAY ADMINISTRADORES!</h1>
+        </div>
+        <ul class ="paginado" *ngIf="adminsCount != 0">
+            <li (click)="goToPreviousAdminPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                   </svg></span>
             </li>
-            <li>
-                <span>1</span>
+            <li class="elementoPaginado admins" id="admins{{number}}" (click)="goToAdminPage(number)" *ngFor="let number of adminsCurrentPages" [ngClass]="number==adminsCurrentPage ? 'active' : ''">
+                <span>{{number}}</span>
             </li>
-            <li>
-                <span>2</span>
-            </li>
-            <li>
-                <span>3</span>
-            </li>
-            <li>
+            <li (click)="goToNextAdminPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                   </svg></span>

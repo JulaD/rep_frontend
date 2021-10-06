@@ -17,6 +17,48 @@ section {
 section.active {
   background: #82cacc;
 }
+section .alertas {
+  position: absolute;
+  text-align: center;
+  max-width: 600px;
+  padding: 50px;
+  width: 80vw;
+  top: 12vh;
+  color: white;
+  font-size: 20px;
+  z-index: 11;
+  pointer-events: none;
+  transition: 0.25s;
+}
+section .alertas:hover {
+  transform: scale(102%);
+}
+section .alertas .cerrarAlerta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  left: calc(50% - 10px);
+  border: none;
+  background: rgb(255, 255, 255);
+  margin-top: 5px;
+  height: 20px;
+  width: 20px;
+  pointer-events: initial;
+  border-radius: 50%;
+}
+section .alertas .alertaSuccess {
+  background: rgb(132, 196, 132);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  border-radius: 10px;
+}
+section .alertas .alertaError {
+  background: rgb(204, 107, 107);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
+  padding: 15px;
+  border-radius: 10px;
+}
 section .color {
   position: absolute;
   filter: blur(100px);
@@ -127,9 +169,9 @@ section .usuarios .busqueda input[type="text"] {
   border-radius: 20px;
   background: #ccfdff;
   color: black;
-  font-weight: 300;
+  font-weight: 400;
   outline: none;
-  font-size: 16px;
+  font-size: 18px;
   padding-left: 14px;
   max-width: 500px;
   border: 2px solid #ccfdff;
@@ -181,6 +223,50 @@ section .usuarios .busqueda a span svg {
   height: 22px;
   position: absolute;
   top: 10px;
+}
+section .resultadoBusqueda {
+  position: relative;
+  width: 100%;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+section .resultadoBusqueda h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 420;
+  letter-spacing: 1px;
+}
+section .resultadoBusqueda .cancelarBusqueda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: -15px;
+  border: none;
+  background: rgb(224, 52, 52);
+  color: #fff;
+  height: 25px;
+  width: 25px;
+  pointer-events: initial;
+  border-radius: 50%;
+  transition: 0.35s;
+}
+section .resultadoBusqueda .cancelarBusqueda:hover {
+  transform: scale(115%);
+}
+section .resultadoBusqueda .cancelarBusqueda svg {
+  position: absolute;
+  left: 3.35px;
+}
+section .resultadoBusqueda .resultadoBusquedaUsuarios {
+  color: #ccfdff;
+}
+section .resultadoBusqueda .resultadoBusquedaAdministradores {
+  color: #82cacc;
 }
 section .fijo .botones {
   position: relative;
@@ -426,7 +512,7 @@ ul.paginado {
   justify-content: center;
   align-items: center;
 }
-ul.paginado li {
+ul.paginado .elementoPaginado {
   position: relative;
   display: flex;
   align-items: center;
@@ -443,15 +529,45 @@ ul.paginado li {
   color: black;
   margin: 5px 10px;
   cursor: pointer;
-  transition: 0.15s 0.15s;
+  transition: 0.2s 0.15s;
 }
-ul.paginado li svg {
+ul.paginado .elementoPaginado.active {
+  background: #6bc4c5;
+  border: 2px solid #abf7f3;
+}
+ul.paginado .elementoPaginado svg {
   position: relative;
   display: flex;
 }
-section.active ul.paginado li {
+section.active ul.paginado .elementoPaginado {
   background: #82cacc;
   border: 2px solid rgba(133, 215, 226, 0.911);
+}
+section.active ul.paginado .elementoPaginado.active {
+  background: #c9fdff;
+  border: 2px solid rgba(82, 154, 163, 0.925);
+}
+section .vacio {
+  position: relative;
+  width: 80%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+section .vacio h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 450;
+  letter-spacing: 2px;
+}
+section .vacio .vacioUsuarios {
+  color: #82cacc;
+}
+section .vacio .vacioAdministradores {
+  color: #c9fdff;
 }
 @media (max-width: 740px) {
   section .fijo .titulo h1:nth-child(1) {

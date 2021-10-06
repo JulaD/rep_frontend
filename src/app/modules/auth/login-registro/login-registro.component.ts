@@ -83,6 +83,10 @@ export class LoginRegistroComponent implements OnInit {
     )
   }
 
+  dashboard() {
+    this.router.navigate(['']);
+  }
+
   /*efectuarIngreso(res: any) {
     this.authService.usuarioActual = res.usuario;
     localStorage.setItem('Token', res.token);

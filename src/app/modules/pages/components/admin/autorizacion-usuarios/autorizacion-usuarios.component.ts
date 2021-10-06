@@ -252,6 +252,8 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.acceptedUsersPageCount = 0;
           this.pendingUsersCurrentPage = 0;
           this.acceptedUsersCurrentPage = 0;
+          this.pendingUsersCurrentPages = [];
+          this.acceptedUsersCurrentPages = [];
           this.pendingUsersSearch = '';
           this.acceptedUsersSearch = '';
           this.init('');

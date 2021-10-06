@@ -31,7 +31,8 @@
                         <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">La contraseña es requerida.</small>
                         <p></p>
                         <input (click)="login()" [disabled]="loginForm.invalid" type="submit" value="Ingresar">
-                        <p class="signup">No tienes una cuenta? <a id="registrarse" (click)="toggleForm()">Registrese</a></p>              
+                        <p class="signup">No tienes una cuenta? <a id="registrarse" (click)="toggleForm()">Registrese</a></p>
+                        <p class="signup">IR A LA <a id="inicio" (click)="dashboard()">PÁGINA PRINCIPAL</a></p>            
                     </form>
                 </div>
             </div>
