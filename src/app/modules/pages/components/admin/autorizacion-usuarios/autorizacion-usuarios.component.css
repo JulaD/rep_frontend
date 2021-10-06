@@ -169,9 +169,9 @@ section .usuarios .busqueda input[type="text"] {
   border-radius: 20px;
   background: #ccfdff;
   color: black;
-  font-weight: 300;
+  font-weight: 400;
   outline: none;
-  font-size: 16px;
+  font-size: 18px;
   padding-left: 14px;
   max-width: 500px;
   border: 2px solid #ccfdff;

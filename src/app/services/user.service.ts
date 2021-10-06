@@ -13,16 +13,16 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-  getAllUsers(limit: number, offset: number) {
-    return this.http.get<any>('http://localhost:3000/users?' + 'limit=' + limit + '&offset=' + offset);
+  getAllUsers(limit: number, offset: number, busqueda: string) {
+    return this.http.get<any>('http://localhost:3000/users?' + 'limit=' + limit + '&offset=' + offset + '&search=' + busqueda);
   }
 
-  getPendingUsers(limit: number, offset: number) {
-    return this.http.get<any>('http://localhost:3000/users/pending?' + 'limit=' + limit + '&offset=' + offset);
+  getPendingUsers(limit: number, offset: number, busqueda: string) {
+    return this.http.get<any>('http://localhost:3000/users/pending?' + 'limit=' + limit + '&offset=' + offset + '&search=' + busqueda);
   }
 
-  getApprovedUsers(limit: number, offset: number) {
-    return this.http.get<any>('http://localhost:3000/users/approved?' + 'limit=' + limit + '&offset=' + offset);
+  getApprovedUsers(limit: number, offset: number, busqueda: string) {
+    return this.http.get<any>('http://localhost:3000/users/approved?' + 'limit=' + limit + '&offset=' + offset + '&search=' + busqueda);
   }
 
   approve(id: number) {
