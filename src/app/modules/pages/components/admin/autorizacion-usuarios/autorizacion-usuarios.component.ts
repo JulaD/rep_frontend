@@ -36,11 +36,11 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
-    this.userService.getPendingUsers(5, 0, '').subscribe(
+    this.userService.getPendingUsers(4, 0, '').subscribe(
       res => {
         this.pendingUsersCount = res.count;
         this.pendingUsers = res.rows;
-        this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 5);
+        this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
         if (this.pendingUsersPageCount > 0) {
           this.goToPendingPage(1);
         }
@@ -49,11 +49,11 @@ export class AutorizacionUsuariosComponent implements OnInit {
         console.log(err);
       }
     );
-    this.userService.getApprovedUsers(5, 0, '').subscribe(
+    this.userService.getApprovedUsers(4, 0, '').subscribe(
       res => {
         this.acceptedUsersCount = res.count;
         this.acceptedUsers = res.rows;
-        this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 5);
+        this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
         if (this.acceptedUsersPageCount > 0) {
           this.goToAcceptedPage(1);
         }
@@ -68,7 +68,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaPendientes');
     if (busquedaInput) {
       this.pendingUsersSearch = busquedaInput.value;
-      this.userService.getPendingUsers(5, 0, this.pendingUsersSearch).subscribe(
+      this.userService.getPendingUsers(4, 0, this.pendingUsersSearch).subscribe(
         res => {
           this.message = ''
           this.successAlert = false;
@@ -80,7 +80,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.pendingUsersCurrentPages = [];
           this.pendingUsersCount = res.count;
           this.pendingUsers = res.rows;
-          this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 5);
+          this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
           if (this.pendingUsersPageCount > 0) {
             this.goToPendingPage(1);
           }
@@ -96,7 +96,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaAceptados');
     if (busquedaInput) {
       this.acceptedUsersSearch = busquedaInput.value;
-      this.userService.getApprovedUsers(5, 0, this.acceptedUsersSearch).subscribe(
+      this.userService.getApprovedUsers(4, 0, this.acceptedUsersSearch).subscribe(
         res => {
           this.message = ''
           this.successAlert = false;
@@ -108,7 +108,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.acceptedUsersCurrentPages = [];
           this.acceptedUsersCount = res.count;
           this.acceptedUsers = res.rows;
-          this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 5);
+          this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
           if (this.acceptedUsersPageCount > 0) {
             this.goToAcceptedPage(1);
           }
@@ -123,12 +123,12 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   goToPendingPage(page: number) {
     if (1 <= page && page <= this.pendingUsersPageCount) {
-      this.userService.getPendingUsers(5, (page - 1) * 5, this.pendingUsersSearch).subscribe(
+      this.userService.getPendingUsers(4, (page - 1) * 4, this.pendingUsersSearch).subscribe(
         res => {
           this.pendingUsersCurrentPage = page;
           this.pendingUsersCount = res.count;
           this.pendingUsers = res.rows;
-          this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 5);
+          this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
           if (page == 1) {
             this.pendingUsersCurrentPages = Array(Math.min((page + 2), this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
           } else if (page == this.pendingUsersPageCount) {
@@ -146,12 +146,12 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   goToAcceptedPage(page: number) {
     if (1 <= page && page <= this.acceptedUsersPageCount) {
-      this.userService.getApprovedUsers(5, (page - 1) * 5, this.acceptedUsersSearch).subscribe(
+      this.userService.getApprovedUsers(4, (page - 1) * 4, this.acceptedUsersSearch).subscribe(
         res => {
           this.acceptedUsersCurrentPage = page;
           this.acceptedUsersCount = res.count;
           this.acceptedUsers = res.rows;
-          this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 5);
+          this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
           if (page == 1) {
             this.acceptedUsersCurrentPages = Array(Math.min((page + 2), this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
           } else if (page == this.acceptedUsersPageCount) {
@@ -272,4 +272,19 @@ export class AutorizacionUsuariosComponent implements OnInit {
     this.errorAlert = false;
   }
 
+  resetPendingSearch() {
+    const busquedaInput: any = document.getElementById('busquedaPendientes');
+    if (busquedaInput) {
+      busquedaInput.value = '';
+      this.searchPending();
+    }
+  }
+
+  resetAcceptedSearch() {
+    const busquedaInput: any = document.getElementById('busquedaAceptados');
+    if (busquedaInput) {
+      busquedaInput.value = '';
+      this.searchAccepted();
+    }
+  }
 }

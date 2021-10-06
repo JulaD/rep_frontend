@@ -42,6 +42,14 @@
                 </span>
             </a>
         </div>
+        <div class="resultadoBusqueda" *ngIf="pendingUsersSearch != ''">
+            <h1 class="resultadoBusquedaPendientes">RESULTADO DE LA BUSQUEDA: "{{pendingUsersSearch}}"</h1>
+            <button type="button" (click)="resetPendingSearch()" class="cancelarBusqueda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                </svg>
+            </button>
+        </div>
         <ul class="listaUsuarios">
             <li *ngFor="let user of pendingUsers">
                 <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
@@ -56,7 +64,10 @@
                 </div>
             </li>
         </ul>
-        <ul class ="paginado">
+        <div class="vacio" *ngIf="pendingUsersCount == 0">
+            <h1 class="vacioPendientes">¡NO HAY USUARIOS PENDIENTES!</h1>
+        </div>
+        <ul class ="paginado" *ngIf="pendingUsersCount != 0">
             <li (click)="goToPreviousPendingPage()" class="elementoPaginado">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
@@ -82,6 +93,14 @@
                 </span>
             </a>
         </div>
+        <div class="resultadoBusqueda" *ngIf="acceptedUsersSearch != ''">
+            <h1 class="resultadoBusquedaAceptados">RESULTADOD DE LA BUSQUEDA: "{{acceptedUsersSearch}}"</h1>
+            <button type="button" (click)="resetAcceptedSearch()" class="cancelarBusqueda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
+                </svg>
+            </button>
+        </div>
         <ul class="listaUsuarios">
             <li *ngFor="let user of acceptedUsers">
                 <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
@@ -96,7 +115,10 @@
                 </div>
             </li>
         </ul>
-        <ul class ="paginado">
+        <div class="vacio" *ngIf="acceptedUsersCount == 0">
+            <h1 class="vacioAceptados">¡NO HAY USUARIOS ACEPTADOS!</h1>
+        </div>
+        <ul class ="paginado" *ngIf="acceptedUsersCount != 0">
             <li class="elementoPaginado" (click)="goToPreviousAcceptedPage()">
                 <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>

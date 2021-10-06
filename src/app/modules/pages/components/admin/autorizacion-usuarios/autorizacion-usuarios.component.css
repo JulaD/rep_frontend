@@ -224,6 +224,50 @@ section .usuarios .busqueda a span svg {
   position: absolute;
   top: 10px;
 }
+section .resultadoBusqueda {
+  position: relative;
+  width: 100%;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+section .resultadoBusqueda h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 420;
+  letter-spacing: 1px;
+}
+section .resultadoBusqueda .cancelarBusqueda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: -15px;
+  border: none;
+  background: rgb(224, 52, 52);
+  color: #fff;
+  height: 25px;
+  width: 25px;
+  pointer-events: initial;
+  border-radius: 50%;
+  transition: 0.35s;
+}
+section .resultadoBusqueda .cancelarBusqueda:hover {
+  transform: scale(115%);
+}
+section .resultadoBusqueda .cancelarBusqueda svg {
+  position: absolute;
+  left: 3.35px;
+}
+section .resultadoBusqueda .resultadoBusquedaPendientes {
+  color: #ccfdff;
+}
+section .resultadoBusqueda .resultadoBusquedaAceptados {
+  color: #82cacc;
+}
 section .fijo .botones {
   position: relative;
   top: -10px;
@@ -502,6 +546,28 @@ section.active ul.paginado .elementoPaginado {
 section.active ul.paginado .elementoPaginado.active {
   background: #c9fdff;
   border: 2px solid rgba(82, 154, 163, 0.925);
+}
+section .vacio {
+  position: relative;
+  width: 80%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+section .vacio h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 450;
+  letter-spacing: 2px;
+}
+section .vacio .vacioAceptados {
+  color: #82cacc;
+}
+section .vacio .vacioPendientes {
+  color: #c9fdff;
 }
 @media (max-width: 850px) {
   section .fijo .titulo h1:nth-child(1) {
