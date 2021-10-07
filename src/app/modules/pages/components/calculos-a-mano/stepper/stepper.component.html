@@ -17,7 +17,7 @@
           <ng-template #elseBlockStep1>
             <button
               mat-flat-button color="primary" mat-button
-              [disabled]="!step1DOMAccess.isStepValid()"
+              [disabled]="!step1DOMAccess.stepValid"
               (click)="onSubmit()">
               Confirmar
           </button>
@@ -44,7 +44,7 @@
           <ng-template #elseBlockStep2>
             <button
               mat-flat-button color="primary" mat-button
-              [disabled]="!(step1DOMAccess.isStepValid && step2DOMAccess.minorPALForm.valid)"
+              [disabled]="!isStepperValid()"
               (click)="onSubmit()">
               Confirmar
           </button>
@@ -77,7 +77,7 @@
             -->
             <button
               mat-flat-button color="primary" mat-button
-              [disabled]="false"
+              [disabled]="!isStepperValid()"
               (click)="onSubmit()">
               Confirmar
           </button>
@@ -97,7 +97,7 @@
           <button mat-button matStepperPrevious>Volver</button>
           <button
             mat-flat-button color="primary" mat-button
-            [disabled]="false"
+            [disabled]="!isStepperValid()"
             (click)="onSubmit()">
             Confirmar
           </button>

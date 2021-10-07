@@ -33,6 +33,8 @@ export class CalculosPaso1Component implements AfterViewInit {
     agesFemale30To59Present: false,
   }
 
+  stepValid: boolean = false;
+
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
     FranjaEtaria.Meses_1,
@@ -144,6 +146,7 @@ export class CalculosPaso1Component implements AfterViewInit {
       return compareFranjaEtaria(a.edad, b.edad)
     })
     this.dataSourceF._updateChangeSubscription();
+    this.stepValid = true;
     this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
@@ -153,6 +156,7 @@ export class CalculosPaso1Component implements AfterViewInit {
         return compareFranjaEtaria(a.edad, b.edad)
       })
     this.dataSourceM._updateChangeSubscription();
+    this.stepValid = true;
     this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
@@ -179,6 +183,7 @@ export class CalculosPaso1Component implements AfterViewInit {
       this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
       this.updateStepperLogicOnRemove(edadSel, Sexo.Masculino);
     }
+    this.stepValid = femeninoData.length > 0 || masculinoData.length > 0
   } // borrarEdad
 
   // Envio de datos al backend
@@ -268,10 +273,6 @@ export class CalculosPaso1Component implements AfterViewInit {
           return compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0
         });
     }
-  }
-
-  isStepValid(): boolean {
-    return femeninoData.length > 0 || masculinoData.length > 0;
   }
 
   clearTables() {
