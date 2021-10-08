@@ -29,9 +29,9 @@
             </div>
           </div>
           <div *ngIf="adultPALForm.get('population')?.errors?.groupSuman100Validator &&
-            (adultPALForm.touched || adultPALForm.dirty)"
+            (adultPALForm.get('population')?.touched || adultPALForm.get('population')?.dirty)"
             class="mensaje-error">
-            Los 2 porcentajes ingresados deben sumar 100
+            Los 2 porcentajes de población ingresados deben sumar 100
           </div>
         </div> <!--end poblacion-->
       </div>
@@ -66,7 +66,7 @@
                 Debe ingresar un numero entre 0 y 100
               </div>
             </div>
-            <div *ngIf="adultPALForm.get('ruralPAL')?.errors?.groupSuman100Validator &&
+            <div *ngIf="adultPALForm.errors?.step3RuralSuman100 &&
               (adultPALForm.get('ruralPAL')?.touched || adultPALForm.get('ruralPAL')?.dirty)"
               class="mensaje-error">
               Los 2 porcentajes de actividad rural ingresados deben sumar 100
@@ -101,7 +101,7 @@
                 Debe ingresar un numero entre 0 y 100
               </div>
             </div>
-            <div *ngIf="adultPALForm.get('urbanPAL')?.errors?.groupSuman100Validator &&
+            <div *ngIf="adultPALForm.errors?.step3UrbanSuman100 &&
               (adultPALForm.get('urbanPAL')?.touched || adultPALForm.get('urbanPAL')?.dirty)"
               class="mensaje-error">
               Los 2 porcentajes de actividad urbana ingresados deben sumar 100
