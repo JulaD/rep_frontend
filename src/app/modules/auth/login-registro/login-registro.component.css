@@ -19,7 +19,9 @@ section.active {
   background: #3fb1b5;
 }
 section .tituloBx {
-  height: 130px;
+  position: relative;
+  top: -20px;
+  height: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,6 +89,7 @@ section .alertas .alertaError {
 }
 section .container {
   position: relative;
+  top: -20px;
   width: 800px;
   height: 550px;
   background: rgba(255, 255, 255, 0.75);
