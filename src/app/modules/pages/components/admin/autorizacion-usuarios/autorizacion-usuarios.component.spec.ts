@@ -8,9 +8,9 @@ describe('AutorizacionUsuariosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AutorizacionUsuariosComponent ]
+      declarations: [AutorizacionUsuariosComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

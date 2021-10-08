@@ -1,29 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { UserService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-permisos-usuarios',
   templateUrl: './permisos-usuarios.component.html',
-  styleUrls: ['./permisos-usuarios.component.css']
+  styleUrls: ['./permisos-usuarios.component.css'],
 })
-export class PermisosUsuariosComponent implements OnInit {
 
+export class PermisosUsuariosComponent implements OnInit {
   users: User[] = [];
+
   admins: User[] = [];
+
   usersCount: number = 0;
+
   adminsCount: number = 0;
+
   usersPageCount: number = 0;
+
   adminsPageCount: number = 0;
+
   usersCurrentPage: number = 0;
+
   adminsCurrentPage: number = 0;
+
   usersCurrentPages: number[] = [];
+
   adminsCurrentPages: number[] = [];
+
   usersSearch: string = '';
+
   adminsSearch: string = '';
+
   message: string = '';
+
   successAlert: boolean = false;
+
   errorAlert: boolean = false;
 
   constructor(
@@ -36,8 +51,9 @@ export class PermisosUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
-    this.userService.getUsers(4, 0, '').subscribe(
-      res => {
+    this.userService.getUsers(4, 0, busqueda).subscribe(
+      (res) => {
+        console.log(res.rows);
         this.usersCount = res.count;
         this.users = res.rows;
         this.usersPageCount = Math.ceil(this.usersCount / 4);
@@ -45,12 +61,12 @@ export class PermisosUsuariosComponent implements OnInit {
           this.goToUserPage(1);
         }
       },
-      err => {
+      (err) => {
         console.log(err);
-      }
+      },
     );
-    this.userService.getAdmins(4, 0, '').subscribe(
-      res => {
+    this.userService.getAdmins(4, 0, busqueda).subscribe(
+      (res) => {
         this.adminsCount = res.count;
         this.admins = res.rows;
         this.adminsPageCount = Math.ceil(this.adminsCount / 4);
@@ -58,156 +74,183 @@ export class PermisosUsuariosComponent implements OnInit {
           this.goToAdminPage(1);
         }
       },
-      err => {
+      (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
   goToUserPage(page: number) {
-    if (1 <= page && page <= this.usersPageCount) {
+    if (page >= 1 && page <= this.usersPageCount) {
       this.userService.getUsers(4, (page - 1) * 4, this.usersSearch).subscribe(
-        res => {
+        (res) => {
           this.usersCurrentPage = page;
           this.usersCount = res.count;
           this.users = res.rows;
           this.usersPageCount = Math.ceil(this.usersCount / 4);
-          if (page == 1) {
-            this.usersCurrentPages = Array(Math.min((page + 2), this.usersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-          } else if (page == this.usersPageCount) {
-            this.usersCurrentPages = Array(page - Math.max((page - 2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
+          if (page === 1) {
+            this.usersCurrentPages = Array(Math.min((page + 2),
+              this.usersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page === this.usersPageCount) {
+            this.usersCurrentPages = Array(page - Math.max((page - 2), 1) + 1)
+              .fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
           } else {
-            this.usersCurrentPages = Array((page + 1) - (page - 1) + 1).fill(undefined).map((_, idx) => (page - 1) + idx);
+            this.usersCurrentPages = Array((page + 1) - (page - 1) + 1)
+              .fill(undefined).map((_, idx) => (page - 1) + idx);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
 
   goToAdminPage(page: number) {
-    if (1 <= page && page <= this.adminsPageCount) {
+    if (page >= 1 && page <= this.adminsPageCount) {
       this.userService.getAdmins(4, (page - 1) * 4, this.adminsSearch).subscribe(
-        res => {
+        (res) => {
           this.adminsCurrentPage = page;
           this.adminsCount = res.count;
           this.admins = res.rows;
           this.adminsPageCount = Math.ceil(this.adminsCount / 4);
-          if (page == 1) {
-            this.adminsCurrentPages = Array(Math.min((page + 2), this.adminsPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-          } else if (page == this.adminsPageCount) {
-            this.adminsCurrentPages = Array(page - Math.max((page - 2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
+          if (page === 1) {
+            this.adminsCurrentPages = Array(Math.min((page + 2),
+              this.adminsPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page === this.adminsPageCount) {
+            this.adminsCurrentPages = Array(page - Math.max((page - 2), 1) + 1)
+              .fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
           } else {
-            this.adminsCurrentPages = Array((page + 1) - (page - 1) + 1).fill(undefined).map((_, idx) => (page - 1) + idx);
+            this.adminsCurrentPages = Array((page + 1) - (page - 1) + 1)
+              .fill(undefined).map((_, idx) => (page - 1) + idx);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
 
   goToPreviousUserPage() {
-    if (this.usersPageCount > 0 && this.usersCurrentPage != 1) {
+    if (this.usersPageCount > 0 && this.usersCurrentPage !== 1) {
       this.goToUserPage(this.usersCurrentPage - 1);
     }
   }
 
   goToNextUserPage() {
-    if (this.usersPageCount > 0 && this.usersCurrentPage != this.usersPageCount) {
+    if (this.usersPageCount > 0 && this.usersCurrentPage !== this.usersPageCount) {
       this.goToUserPage(this.usersCurrentPage + 1);
     }
   }
 
   goToPreviousAdminPage() {
-    if (this.adminsPageCount > 0 && this.adminsCurrentPage != 1) {
+    if (this.adminsPageCount > 0 && this.adminsCurrentPage !== 1) {
       this.goToAdminPage(this.adminsCurrentPage - 1);
     }
   }
 
   goToNextAdminPage() {
-    if (this.adminsPageCount > 0 && this.adminsCurrentPage != this.adminsPageCount) {
+    if (this.adminsPageCount > 0 && this.adminsCurrentPage !== this.adminsPageCount) {
       this.goToAdminPage(this.adminsCurrentPage + 1);
     }
   }
 
   giveAdminPermission(id: number, name: string) {
-    const res = confirm("Dar permisos de Administrador a " + name);
-    if (res) {
-      this.userService.giveAdminPermission(id).subscribe(
-        res => {
-          this.message = 'Se han otorgado permisos de Administrador para el usuario ' + name;
-          this.successAlert = true;
-          this.errorAlert = false;
-          this.users = [];
-          this.admins = [];
-          this.usersCount = 0;
-          this.adminsCount = 0;
-          this.usersPageCount = 0;
-          this.adminsPageCount = 0;
-          this.usersCurrentPage = 0;
-          this.adminsCurrentPage = 0;
-          this.usersCurrentPages = [];
-          this.adminsCurrentPages = [];
-          this.usersSearch = '';
-          this.adminsSearch = '';
-          this.init('');
-        },
-        err => {
-          this.message = 'Hubo un problema.'
-          this.successAlert = false;
-          this.errorAlert = true;
-          console.log(err);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Confirmar',
+      text: `Dar permisos de Administrador a ${name}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.giveAdminPermission(id).subscribe(
+          () => {
+            Swal.fire(
+              '¡Éxito!',
+              `Se han otorgado permisos de Administrador para ${name}.`,
+            );
+            this.users = [];
+            this.admins = [];
+            this.usersCount = 0;
+            this.adminsCount = 0;
+            this.usersPageCount = 0;
+            this.adminsPageCount = 0;
+            this.usersCurrentPage = 0;
+            this.adminsCurrentPage = 0;
+            this.usersCurrentPages = [];
+            this.adminsCurrentPages = [];
+            this.usersSearch = '';
+            this.adminsSearch = '';
+            this.init('');
+          },
+          (err) => {
+            Swal.fire(
+              '¡Error!',
+              'Hubo un problema',
+            );
+            console.log(err);
+          },
+        );
+      }
+    });
   }
 
   removeAdminPermission(id: number, name: string) {
-    const res = confirm("Quitar permisos de Administrador a " + name);
-    if (res) {
-      this.userService.removeAdminPermission(id).subscribe(
-        res => {
-          this.message = 'Se han removido los permisos de Administrador para el usuario ' + name;
-          this.successAlert = true;
-          this.errorAlert = false;
-          this.users = [];
-          this.admins = [];
-          this.usersCount = 0;
-          this.adminsCount = 0;
-          this.usersPageCount = 0;
-          this.adminsPageCount = 0;
-          this.usersCurrentPage = 0;
-          this.adminsCurrentPage = 0;
-          this.usersCurrentPages = [];
-          this.adminsCurrentPages = [];
-          this.usersSearch = '';
-          this.adminsSearch = '';
-          this.init('');
-        },
-        err => {
-          this.message = 'Hubo un problema.'
-          this.successAlert = false;
-          this.errorAlert = true;
-          console.log(err);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Confirmar',
+      text: `Quitar permisos de Administrador a ${name}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.removeAdminPermission(id).subscribe(
+          () => {
+            Swal.fire(
+              '¡Éxito!',
+              `Se le han quitado los permisos de Administrador a ${name}.`,
+            );
+            this.users = [];
+            this.admins = [];
+            this.usersCount = 0;
+            this.adminsCount = 0;
+            this.usersPageCount = 0;
+            this.adminsPageCount = 0;
+            this.usersCurrentPage = 0;
+            this.adminsCurrentPage = 0;
+            this.usersCurrentPages = [];
+            this.adminsCurrentPages = [];
+            this.usersSearch = '';
+            this.adminsSearch = '';
+            this.init('');
+          },
+          (err) => {
+            Swal.fire(
+              '¡Error!',
+              'Hubo un problema',
+            );
+            console.log(err);
+          },
+        );
+      }
+    });
   }
 
   mostrarAceptados() {
-    var section = document.querySelector('section');
-    if (section != null){
-      section.classList.add("active");
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.add('active');
     }
   }
+
   mostrarPendientes() {
-    var section = document.querySelector('section');
-    if (section != null){
-      section.classList.remove("active");
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.remove('active');
     }
   }
 
@@ -222,8 +265,8 @@ export class PermisosUsuariosComponent implements OnInit {
     if (busquedaInput) {
       this.adminsSearch = busquedaInput.value;
       this.userService.getAdmins(4, 0, this.adminsSearch).subscribe(
-        res => {
-          this.message = ''
+        (res) => {
+          this.message = '';
           this.successAlert = false;
           this.errorAlert = false;
           this.admins = [];
@@ -238,11 +281,10 @@ export class PermisosUsuariosComponent implements OnInit {
             this.goToAdminPage(1);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
-
     }
   }
 
@@ -251,8 +293,8 @@ export class PermisosUsuariosComponent implements OnInit {
     if (busquedaInput) {
       this.usersSearch = busquedaInput.value;
       this.userService.getUsers(4, 0, this.usersSearch).subscribe(
-        res => {
-          this.message = ''
+        (res) => {
+          this.message = '';
           this.successAlert = false;
           this.errorAlert = false;
           this.users = [];
@@ -267,11 +309,10 @@ export class PermisosUsuariosComponent implements OnInit {
             this.goToUserPage(1);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
-
     }
   }
 
@@ -290,5 +331,4 @@ export class PermisosUsuariosComponent implements OnInit {
       this.searchAdmins();
     }
   }
-
 }

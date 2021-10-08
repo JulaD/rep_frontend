@@ -7,5 +7,5 @@ export {
   AuthService,
   AgeGroupService,
   RestService,
-  UserService
-}
+  UserService,
+};

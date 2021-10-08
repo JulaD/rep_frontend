@@ -13,11 +13,7 @@ import { LoginRegistroComponent } from './login-registro/login-registro.componen
   ],
   declarations: [
     AuthComponent,
-<<<<<<< HEAD
-    LoginRegistroComponent
-=======
-    LoginComponent,
->>>>>>> origin/develop
+    LoginRegistroComponent,
   ],
   imports: [
     CommonModule,

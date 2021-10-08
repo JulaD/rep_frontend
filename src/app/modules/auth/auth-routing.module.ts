@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { AuthComponent } from './auth.component';
 import { LoginRegistroComponent } from './login-registro/login-registro.component';
 
@@ -9,7 +8,7 @@ const routes: Routes = [{
   component: AuthComponent,
   children: [{
     path: 'login',
-    component: LoginRegistroComponent
+    component: LoginRegistroComponent,
   }, {
     path: '',
     redirectTo: 'login',
@@ -25,4 +24,5 @@ const routes: Routes = [{
     RouterModule,
   ],
 })
+
 export class AuthRoutingModule { }

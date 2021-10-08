@@ -11,18 +11,19 @@ const routes: Routes = [{
   component: AdminComponent,
   children: [{
     path: 'autorizacion',
-    component: AutorizacionUsuariosComponent
+    component: AutorizacionUsuariosComponent,
   }, {
     path: 'permisos',
-    component: PermisosUsuariosComponent
+    component: PermisosUsuariosComponent,
   }, {
     path: 'valores',
-    component: ConfiguracionValoresComponent
-  }]
+    component: ConfiguracionValoresComponent,
+  }],
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
+
 export class AdminRoutingModule { }

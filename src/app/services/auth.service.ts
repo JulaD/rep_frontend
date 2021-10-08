@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Auth, Register, User } from '../models';
 import { HttpClient } from '@angular/common/http';
-
+import { Auth, Register, User } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-
   loggedUser: User = {
     id: NaN,
     name: '',
@@ -19,7 +17,7 @@ export class AuthService {
     status: NaN,
     active: false,
     createdAt: new Date(),
-  }
+  };
 
   constructor(
     private router: Router,
@@ -33,7 +31,6 @@ export class AuthService {
   login(user: Auth): Observable<User> {
     return this.http.post<User>('http://localhost:3000/users/login', user);
   }
-
 
   //-------------------------------------------------------------------------
   // private url: string = environment.api;

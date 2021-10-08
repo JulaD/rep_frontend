@@ -1,30 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 import { UserService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
-import { Router } from '@angular/router';
-import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-autorizacion-usuarios',
   templateUrl: './autorizacion-usuarios.component.html',
-  styleUrls: ['./autorizacion-usuarios.component.css']
+  styleUrls: ['./autorizacion-usuarios.component.css'],
 })
-export class AutorizacionUsuariosComponent implements OnInit {
 
+export class AutorizacionUsuariosComponent implements OnInit {
   pendingUsers: User[] = [];
+
   acceptedUsers: User[] = [];
+
   pendingUsersCount: number = 0;
+
   acceptedUsersCount: number = 0;
+
   pendingUsersPageCount: number = 0;
+
   acceptedUsersPageCount: number = 0;
+
   pendingUsersCurrentPage: number = 0;
+
   acceptedUsersCurrentPage: number = 0;
+
   pendingUsersCurrentPages: number[] = [];
+
   acceptedUsersCurrentPages: number[] = [];
+
   pendingUsersSearch: string = '';
+
   acceptedUsersSearch: string = '';
+
   message: string = '';
+
   successAlert: boolean = false;
+
   errorAlert: boolean = false;
 
   constructor(
@@ -37,8 +51,8 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
-    this.userService.getPendingUsers(4, 0, '').subscribe(
-      res => {
+    this.userService.getPendingUsers(4, 0, busqueda).subscribe(
+      (res) => {
         this.pendingUsersCount = res.count;
         this.pendingUsers = res.rows;
         this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
@@ -46,12 +60,12 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.goToPendingPage(1);
         }
       },
-      err => {
+      (err) => {
         console.log(err);
-      }
+      },
     );
-    this.userService.getApprovedUsers(4, 0, '').subscribe(
-      res => {
+    this.userService.getApprovedUsers(4, 0, busqueda).subscribe(
+      (res) => {
         this.acceptedUsersCount = res.count;
         this.acceptedUsers = res.rows;
         this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
@@ -59,9 +73,9 @@ export class AutorizacionUsuariosComponent implements OnInit {
           this.goToAcceptedPage(1);
         }
       },
-      err => {
+      (err) => {
         console.log(err);
-      }
+      },
     );
   }
 
@@ -70,8 +84,8 @@ export class AutorizacionUsuariosComponent implements OnInit {
     if (busquedaInput) {
       this.pendingUsersSearch = busquedaInput.value;
       this.userService.getPendingUsers(4, 0, this.pendingUsersSearch).subscribe(
-        res => {
-          this.message = ''
+        (res) => {
+          this.message = '';
           this.successAlert = false;
           this.errorAlert = false;
           this.pendingUsers = [];
@@ -86,9 +100,9 @@ export class AutorizacionUsuariosComponent implements OnInit {
             this.goToPendingPage(1);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
@@ -98,8 +112,8 @@ export class AutorizacionUsuariosComponent implements OnInit {
     if (busquedaInput) {
       this.acceptedUsersSearch = busquedaInput.value;
       this.userService.getApprovedUsers(4, 0, this.acceptedUsersSearch).subscribe(
-        res => {
-          this.message = ''
+        (res) => {
+          this.message = '';
           this.successAlert = false;
           this.errorAlert = false;
           this.acceptedUsers = [];
@@ -114,114 +128,122 @@ export class AutorizacionUsuariosComponent implements OnInit {
             this.goToAcceptedPage(1);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
-
     }
   }
 
   goToPendingPage(page: number) {
-    if (1 <= page && page <= this.pendingUsersPageCount) {
+    if (page >= 1 && page <= this.pendingUsersPageCount) {
       this.userService.getPendingUsers(4, (page - 1) * 4, this.pendingUsersSearch).subscribe(
-        res => {
+        (res) => {
           this.pendingUsersCurrentPage = page;
           this.pendingUsersCount = res.count;
           this.pendingUsers = res.rows;
           this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
-          if (page == 1) {
-            this.pendingUsersCurrentPages = Array(Math.min((page + 2), this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-          } else if (page == this.pendingUsersPageCount) {
-            this.pendingUsersCurrentPages = Array(page - Math.max((page - 2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
+          if (page === 1) {
+            this.pendingUsersCurrentPages = Array(Math.min((page + 2),
+              this.pendingUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page === this.pendingUsersPageCount) {
+            this.pendingUsersCurrentPages = Array(page - Math.max((page - 2), 1) + 1)
+              .fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
           } else {
-            this.pendingUsersCurrentPages = Array((page + 1) - (page - 1) + 1).fill(undefined).map((_, idx) => (page - 1) + idx);
+            this.pendingUsersCurrentPages = Array((page + 1) - (page - 1) + 1)
+              .fill(undefined).map((_, idx) => (page - 1) + idx);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
 
   goToAcceptedPage(page: number) {
-    if (1 <= page && page <= this.acceptedUsersPageCount) {
+    if (page >= 1 && page <= this.acceptedUsersPageCount) {
       this.userService.getApprovedUsers(4, (page - 1) * 4, this.acceptedUsersSearch).subscribe(
-        res => {
+        (res) => {
           this.acceptedUsersCurrentPage = page;
           this.acceptedUsersCount = res.count;
           this.acceptedUsers = res.rows;
           this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
-          if (page == 1) {
-            this.acceptedUsersCurrentPages = Array(Math.min((page + 2), this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
-          } else if (page == this.acceptedUsersPageCount) {
-            this.acceptedUsersCurrentPages = Array(page - Math.max((page - 2), 1) + 1).fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
+          if (page === 1) {
+            this.acceptedUsersCurrentPages = Array(Math.min((page + 2),
+              this.acceptedUsersPageCount)).fill(undefined).map((_, idx) => 1 + idx);
+          } else if (page === this.acceptedUsersPageCount) {
+            this.acceptedUsersCurrentPages = Array(page - Math.max((page - 2), 1) + 1)
+              .fill(undefined).map((_, idx) => Math.max((page - 2), 1) + idx);
           } else {
-            this.acceptedUsersCurrentPages = Array((page + 1) - (page - 1) + 1).fill(undefined).map((_, idx) => (page - 1) + idx);
+            this.acceptedUsersCurrentPages = Array((page + 1) - (page - 1) + 1)
+              .fill(undefined).map((_, idx) => (page - 1) + idx);
           }
         },
-        err => {
+        (err) => {
           console.log(err);
-        }
+        },
       );
     }
   }
 
   goToPreviousPendingPage() {
-    if (this.pendingUsersPageCount > 0 && this.pendingUsersCurrentPage != 1) {
+    if (this.pendingUsersPageCount > 0 && this.pendingUsersCurrentPage !== 1) {
       this.goToPendingPage(this.pendingUsersCurrentPage - 1);
     }
   }
 
   goToNextPendingPage() {
-    if (this.pendingUsersPageCount > 0 && this.pendingUsersCurrentPage != this.pendingUsersPageCount) {
+    if (this.pendingUsersPageCount > 0
+        && this.pendingUsersCurrentPage !== this.pendingUsersPageCount) {
       this.goToPendingPage(this.pendingUsersCurrentPage + 1);
     }
   }
 
   goToPreviousAcceptedPage() {
-    if (this.acceptedUsersPageCount > 0 && this.acceptedUsersCurrentPage != 1) {
+    if (this.acceptedUsersPageCount > 0
+        && this.acceptedUsersCurrentPage !== 1) {
       this.goToAcceptedPage(this.acceptedUsersCurrentPage - 1);
     }
   }
 
   goToNextAcceptedPage() {
-    if (this.acceptedUsersPageCount > 0 && this.acceptedUsersCurrentPage != this.acceptedUsersPageCount) {
+    if (this.acceptedUsersPageCount > 0
+        && this.acceptedUsersCurrentPage !== this.acceptedUsersPageCount) {
       this.goToAcceptedPage(this.acceptedUsersCurrentPage + 1);
     }
   }
 
   showAccepted() {
-    var section = document.querySelector('section');
+    const section = document.querySelector('section');
     if (section != null) {
-      section.classList.add("active");
+      section.classList.add('active');
     }
   }
+
   showPending() {
-    var section = document.querySelector('section');
+    const section = document.querySelector('section');
     if (section != null) {
-      section.classList.remove("active");
+      section.classList.remove('active');
     }
   }
 
   approve(id: number, name: string) {
-    //const res = confirm("Confirmar autorización para " + name);
     Swal.fire({
-      title: "Confirmar",
-      text: "Autorizar a " + name + " a utilizar la aplicación",
+      title: 'Confirmar',
+      text: `Autorizar a ${name} a utilizar la aplicación`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Aceptar',
-      cancelButtonText: 'Cancelar'
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
         this.userService.approve(id).subscribe(
-          res => {
+          () => {
             Swal.fire(
-              "¡Éxito!",
-              "Se ha autorizado a " + name + " a utilizar la aplicación.",
-            )
+              '¡Éxito!',
+              `Se ha autorizado a ${name} a utilizar la aplicación.`,
+            );
             this.pendingUsers = [];
             this.acceptedUsers = [];
             this.pendingUsersCount = 0;
@@ -236,89 +258,58 @@ export class AutorizacionUsuariosComponent implements OnInit {
             this.acceptedUsersSearch = '';
             this.init('');
           },
-          err => {
+          (err) => {
             Swal.fire(
               '¡Error!',
-              'Hubo un problema'
-            )
+              'Hubo un problema',
+            );
             console.log(err);
-          }
+          },
         );
-        Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
-          'success'
-        )
-      // For more information about handling dismissals please visit
-      // https://sweetalert2.github.io/#handling-dismissals
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
       }
-    })
-    /*if (res) {
-      this.userService.approve(id).subscribe(
-        res => {
-          this.message = 'El usuario ha sido aceptado exitosamente.'
-          this.successAlert = true;
-          this.errorAlert = false;
-          this.pendingUsers = [];
-          this.acceptedUsers = [];
-          this.pendingUsersCount = 0;
-          this.acceptedUsersCount = 0;
-          this.pendingUsersPageCount = 0;
-          this.acceptedUsersPageCount = 0;
-          this.pendingUsersCurrentPage = 0;
-          this.acceptedUsersCurrentPage = 0;
-          this.pendingUsersCurrentPages = [];
-          this.acceptedUsersCurrentPages = [];
-          this.pendingUsersSearch = '';
-          this.acceptedUsersSearch = '';
-          this.init('');
-        },
-        err => {
-          this.message = 'Hubo un problema.'
-          this.successAlert = false;
-          this.errorAlert = true;
-          console.log(err);
-        }
-      );
-    }*/
+    });
   }
 
   cancel(id: number, name: string) {
-    const res = confirm("Cancelar autorización para " + name);
-    if (res) {
-      this.userService.cancel(id).subscribe(
-        res => {
-          this.message = 'El usuario ha sido cancelado exitosamente.'
-          this.successAlert = true;
-          this.errorAlert = false;
-          this.pendingUsers = [];
-          this.acceptedUsers = [];
-          this.pendingUsersCount = 0;
-          this.acceptedUsersCount = 0;
-          this.pendingUsersPageCount = 0;
-          this.acceptedUsersPageCount = 0;
-          this.pendingUsersCurrentPage = 0;
-          this.acceptedUsersCurrentPage = 0;
-          this.pendingUsersCurrentPages = [];
-          this.acceptedUsersCurrentPages = [];
-          this.pendingUsersSearch = '';
-          this.acceptedUsersSearch = '';
-          this.init('');
-        },
-        err => {
-          this.message = 'Hubo un problema.'
-          this.successAlert = false;
-          this.errorAlert = true;
-          console.log(err);
-        }
-      );
-    }
+    Swal.fire({
+      title: 'Confirmar',
+      text: `Cancelar autorización para utilizar la aplpicación a ${name}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.cancel(id).subscribe(
+          () => {
+            Swal.fire(
+              '¡Éxito!',
+              `${name} ya no está autorizado para utilizar la aplicación.`,
+            );
+            this.pendingUsers = [];
+            this.acceptedUsers = [];
+            this.pendingUsersCount = 0;
+            this.acceptedUsersCount = 0;
+            this.pendingUsersPageCount = 0;
+            this.acceptedUsersPageCount = 0;
+            this.pendingUsersCurrentPage = 0;
+            this.acceptedUsersCurrentPage = 0;
+            this.pendingUsersCurrentPages = [];
+            this.acceptedUsersCurrentPages = [];
+            this.pendingUsersSearch = '';
+            this.acceptedUsersSearch = '';
+            this.init('');
+          },
+          (err) => {
+            Swal.fire(
+              '¡Error!',
+              'Hubo un problema',
+            );
+            console.log(err);
+          },
+        );
+      }
+    });
   }
 
   closeAlert() {
