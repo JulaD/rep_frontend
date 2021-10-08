@@ -11,6 +11,7 @@ import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroVali
 
 
 import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
+import { step1CantidadesEnCeroValidator } from "src/app/modules/shared/validators/step1-cantidades-en-cero.directive";
 import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
 import { ParsedDataService } from "src/app/services/parsed-data.service";
 import { AgeGroupJSON } from "src/app/services/rest/rest.service";
@@ -99,7 +100,10 @@ export class CalculosPaso1Component implements AfterViewInit {
     cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
     medianaMasculino: new FormControl('', numeroFloatMayorCeroValidator)
-  }, { validators: Validators.compose([step1TodoVacioValidator, step1CantidadSinMedianaValidator]) })
+    }, { validators: Validators.compose([
+      step1TodoVacioValidator, step1CantidadSinMedianaValidator, step1CantidadesEnCeroValidator
+    ])
+  })
   
   onSubmit() {
     // Revisar si la la franja etaria ya tiene datos en la tabla
@@ -119,22 +123,24 @@ export class CalculosPaso1Component implements AfterViewInit {
       this._snackBar.open(
         "ERROR: Ya existen datos ingresados para esta franja etaria", "Aceptar")
     } else {
-      // Datos Femenino
-      if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') { // hay datos para agregar a Femenino
+      // Datos Femenino (ignoro datos con cantidad = 0 o vacio)
+      const cantFemenino: number = NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value);
+      if (this.grupoEtarioForm.get('medianaFemenino')?.value != '' && cantFemenino != 0) { // hay datos para agregar a Femenino
         let grupoFem : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
           NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value))
+          cantFemenino)
         this.addFem(grupoFem);
       }
-      // Datos Masculino
-      if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') { // hay datos para agregar a Masculino
+      // Datos Masculino (ignoro datos con cantidad = 0 o vacio)
+      const cantMasculino: number = NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value);
+      if (this.grupoEtarioForm.get('medianaMasculino')?.value != '' && cantMasculino != 0) { // hay datos para agregar a Masculino
         let grupoMasc : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
           NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value))
+          cantMasculino)
         this.addMasc(grupoMasc);
       }
     }

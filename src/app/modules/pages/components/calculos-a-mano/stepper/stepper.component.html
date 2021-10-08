@@ -68,13 +68,6 @@
             <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
           </ng-template>
           <ng-template #elseBlockStep3>
-            <!--
-              Puedo acceder a step1DOMAcess pero no a step2DOMAcess, ¿es por el ngIf?
-              Se puede hacer algo accediendo a stepper.steps y revisando cada uno para ver si contiene
-              un error alguno.
-              Tambien ver si hay algun metodo o propiedad que diga si un componente fue inicializado,
-              para asi intentar acceder a sus metodos y propiedades.
-            -->
             <button
               mat-flat-button color="primary" mat-button
               [disabled]="!isStepperValid()"

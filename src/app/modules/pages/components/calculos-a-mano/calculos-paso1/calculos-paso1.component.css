@@ -51,6 +51,12 @@ table {
   color: #dc3545;
 }
 
+.mensaje-alerta {
+  font-size: small;
+  padding: 0.7rem;
+  color: blue;
+}
+
 .boton-borrar {
   margin-top: 10px;
 }
