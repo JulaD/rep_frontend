@@ -1,5 +1,5 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
@@ -20,7 +20,7 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
     provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
   }]
 })
-export class StepperComponent implements OnInit {
+export class StepperComponent implements OnInit, OnDestroy {
   isLinear: boolean = false;
 
   @ViewChild(CalculosPaso1Component)
@@ -36,6 +36,11 @@ export class StepperComponent implements OnInit {
   private step4Access: CalculosPaso4Component
 
   ngOnInit() { }
+  
+  ngOnDestroy() {
+    // al salir del stepper, vacio las tablas
+    this.step1Access.clearTables();
+  }
 
   constructor(
     public rest: RestService,
@@ -79,8 +84,6 @@ export class StepperComponent implements OnInit {
     }, (err) => {
       console.log(err);
     });
-    // luego de obtener el resultado, vacio las tablas
-    this.step1Access.clearTables();
   }
 
   isStepperValid(): boolean {
