@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-autorizacion-usuarios',
@@ -205,8 +206,60 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   approve(id: number, name: string) {
-    const res = confirm("Confirmar autorización para " + name);
-    if (res) {
+    //const res = confirm("Confirmar autorización para " + name);
+    Swal.fire({
+      title: "Confirmar",
+      text: "Autorizar a " + name + " a utilizar la aplicación",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.approve(id).subscribe(
+          res => {
+            Swal.fire(
+              "¡Éxito!",
+              "Se ha autorizado a " + name + " a utilizar la aplicación.",
+            )
+            this.pendingUsers = [];
+            this.acceptedUsers = [];
+            this.pendingUsersCount = 0;
+            this.acceptedUsersCount = 0;
+            this.pendingUsersPageCount = 0;
+            this.acceptedUsersPageCount = 0;
+            this.pendingUsersCurrentPage = 0;
+            this.acceptedUsersCurrentPage = 0;
+            this.pendingUsersCurrentPages = [];
+            this.acceptedUsersCurrentPages = [];
+            this.pendingUsersSearch = '';
+            this.acceptedUsersSearch = '';
+            this.init('');
+          },
+          err => {
+            Swal.fire(
+              '¡Error!',
+              'Hubo un problema'
+            )
+            console.log(err);
+          }
+        );
+        Swal.fire(
+          'Deleted!',
+          'Your imaginary file has been deleted.',
+          'success'
+        )
+      // For more information about handling dismissals please visit
+      // https://sweetalert2.github.io/#handling-dismissals
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
+    /*if (res) {
       this.userService.approve(id).subscribe(
         res => {
           this.message = 'El usuario ha sido aceptado exitosamente.'
@@ -233,7 +286,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           console.log(err);
         }
       );
-    }
+    }*/
   }
 
   cancel(id: number, name: string) {

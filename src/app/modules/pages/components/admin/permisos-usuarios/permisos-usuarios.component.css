@@ -564,10 +564,10 @@ section .vacio h1 {
   letter-spacing: 2px;
 }
 section .vacio .vacioUsuarios {
-  color: #82cacc;
+  color: #c9fdff;
 }
 section .vacio .vacioAdministradores {
-  color: #c9fdff;
+  color: #82cacc;
 }
 @media (max-width: 740px) {
   section .fijo .titulo h1:nth-child(1) {
