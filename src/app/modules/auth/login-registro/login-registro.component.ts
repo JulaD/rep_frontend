@@ -65,17 +65,17 @@ export class LoginRegistroComponent implements OnInit {
   }
 
   login() {
-    const values = this.registerForm.value
+    const values = this.loginForm.value;
     this.authService.login(values).subscribe (
-      res => {
+      user => {
         //limpia los inputs
         this.registerForm.reset();
         //this.efectuarIngreso(res);
-        this.authService.loggedUser = res.usuario;
+        this.authService.loggedUser = user;
         this.router.navigate(['']);
       },
       err => {
-        this.message = err.error.error;
+        this.message = 'Correo electrónico o contraseña incorrectos';
         this.alertaError = true;
         this.alertaSuccess = false;
         console.log(err);
