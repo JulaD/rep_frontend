@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
@@ -12,6 +12,8 @@ import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroVali
   styleUrls: ['./calculos-paso4.component.css'],
 })
 export class CalculosPaso4Component {
+  @Input() agesFemale18To29Present: boolean;
+  @Input() agesFemale30To59Present: boolean;
 
   materYLactanciaForm = new FormGroup({
     //Primer franja

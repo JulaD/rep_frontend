@@ -85,7 +85,11 @@
         step1DOMAccess.stepperLogic.agesFemale30To59Present">
       <div class="container">
         <ng-template matStepLabel>Maternidad y lactancia</ng-template>
-        <app-calculos-paso4 #step4Access class="mb-4"></app-calculos-paso4>
+        <app-calculos-paso4
+          #step4Access class="mb-4"
+          [agesFemale18To29Present]="step1DOMAccess.stepperLogic.agesFemale18To29Present"
+          [agesFemale30To59Present]="step1DOMAccess.stepperLogic.agesFemale30To59Present">
+        </app-calculos-paso4>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
           <button
