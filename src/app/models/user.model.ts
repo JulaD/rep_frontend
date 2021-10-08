@@ -11,18 +11,31 @@ export class Auth implements IAuth {
 
 /*export class User implements IUser {
   id: number;
+
   name: string;
+
   email: string;
+
   password: string;
+
   type: number;
+
   extension?: string;
+
   token?: string;
+
   status: number;
+
   subscribed: boolean;
+
   active: boolean;
+
   createdAt: Date;
+
   updatedAt: Date;
+
   deletedAt?: Date;
+<<<<<<< HEAD
 };*/
 
 export class User implements IUser {
@@ -43,3 +56,6 @@ export class Register implements IRegister {
   password: string;
   passwordConf: string;
 }
+=======
+}
+>>>>>>> origin/develop

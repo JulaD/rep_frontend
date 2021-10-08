@@ -30,9 +30,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 // NgxModules
 import {
-  NgxMatDatetimePickerModule, 
-  NgxMatNativeDateModule, 
-  NgxMatTimepickerModule 
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 
 @NgModule({
@@ -64,10 +64,10 @@ import {
     MatStepperModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    NgxMatDatetimePickerModule, 
-    NgxMatNativeDateModule, 
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   exports: [
     MatCardModule,
@@ -95,14 +95,14 @@ import {
     MatStepperModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    NgxMatDatetimePickerModule, 
-    NgxMatNativeDateModule, 
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
     NgxMatTimepickerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   providers: [
     MatDatepickerModule,
-    MatNativeDateModule
-  ]
+    MatNativeDateModule,
+  ],
 })
 export class AngularMaterialModule { }

@@ -1,0 +1,42 @@
+<mat-card class="card">
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step>
+      <div class="container">
+        <ng-template matStepLabel>Edad y cantidad de personas por sexo</ng-template>
+        <app-calculos-paso1 #step1Access class="mb-4"></app-calculos-paso1>
+        <div class="containerButtons">
+          <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step>
+      <div class="container">
+        <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
+        <app-calculos-paso2 #step2Access class="mb-4"></app-calculos-paso2>
+        <div class="containerButtons">
+          <button mat-button matStepperPrevious>Volver</button>
+          <button mat-flat-button color="primary" mat-button matStepperNext >Siguiente</button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step>
+      <div class="container"> 
+        <ng-template matStepLabel>Estilo de vida por area</ng-template>
+        <app-calculos-paso3 class="mb-4"></app-calculos-paso3>
+        <div class="containerButtons">
+          <button mat-button matStepperPrevious>Volver</button>
+          <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+        </div>
+      </div>
+    </mat-step>
+    <mat-step>
+      <div class="container">
+        <ng-template matStepLabel>Maternidad y lactancia</ng-template>
+        <app-calculos-paso4 class="mb-4"></app-calculos-paso4>
+        <div class="containerButtons">
+          <button mat-flat-button color="primary" mat-button (click)="onSubmit()">Confirmar</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</mat-card>

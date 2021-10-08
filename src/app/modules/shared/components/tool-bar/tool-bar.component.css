@@ -4,10 +4,12 @@
   align-content: center;
   box-shadow: inset 0 0 1px #000000;
   height: 4rem;
+  min-width: min-content;
 }
 
 .toolbar {
   margin: 0;
+  overflow-x: scroll;
 }
 
 .left-side {
@@ -18,4 +20,24 @@
 .req {
   margin-left: 1rem;
   font-weight: 500;
+}
+
+.req-button {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 3vh !important;
+  line-height: 2rem;
+  }
+
+::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 1rem;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2vh;
+  line-height: 2rem;
 }

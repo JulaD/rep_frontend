@@ -3,13 +3,14 @@
 }
 
 .first-illustration {
-  width: 100%;
+  width: 90%;
 }
 
 .info-div {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 .titles-div {

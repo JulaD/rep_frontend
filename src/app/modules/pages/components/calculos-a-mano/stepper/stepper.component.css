@@ -1,0 +1,14 @@
+.card {
+    margin: 1rem;
+}
+
+.container {
+    display:flex;
+    flex-direction: column;
+    float: left;
+}
+
+.containerButtons {
+    display:flex;
+    justify-content: flex-end;
+}

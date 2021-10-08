@@ -1,7 +1,7 @@
 export interface IAuth {
   email: string;
   password: string;
-};
+}
 
 /*export interface IUser {
   id: number;
@@ -17,6 +17,7 @@ export interface IAuth {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date;
+<<<<<<< HEAD
 };*/
 
 export interface IUser {
@@ -36,3 +37,4 @@ export interface IRegister {
   organization: string;
   password: string;
 }
+

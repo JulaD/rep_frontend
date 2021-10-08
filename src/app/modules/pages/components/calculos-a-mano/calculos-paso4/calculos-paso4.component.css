@@ -1,0 +1,112 @@
+.container {
+ width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 10px;
+  float: left;
+  height: 34rem;
+  padding-bottom: 2rem; 
+}
+
+mat-form-field {
+  width: 100%; 
+}
+
+/*Primer franja*/
+.step4-label {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+.step4-num-embarazos {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.step4-num-amamantando {
+  width: 100%;
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+
+.step4-check-box {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  align-self: left;
+}
+
+.step4-cant-mujeres {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  text-align: center;
+}
+
+.step4-pob-total {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.step4-tasa-natalidad {
+  width: 100%;
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+
+.card-1 {
+  background: rgba(0, 0, 0, 0.12);
+  width: 100%;
+  grid-column: 1/5;
+  grid-row: 4/5;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 10px;
+  float:left;
+  padding-bottom: 2rem;
+}
+
+/*Segunda franja*/
+
+.step4-label-2 {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 5/6;
+}
+
+.step4-num-embarazos-2 {
+  width: 100%;
+  grid-column: 2/3;
+  grid-row: 5/6;
+}
+
+.step4-num-amamantando-2 {
+  width: 100%;
+  grid-column: 3/4;
+  grid-row: 5/6;
+}
+
+.step4-check-box-2 {
+  width: 100%;
+  grid-column: 1/2;
+  grid-row: 6/7;
+  align-self: left;
+}
+
+.card-2 {
+  background: rgba(0, 0, 0, 0.12);
+  width: 100%;
+  grid-column: 1/5;
+  grid-row: 7/8;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  grid-template-rows: 1fr;
+  grid-gap: 10px;
+  float:left;
+  padding-bottom: 2rem;
+}

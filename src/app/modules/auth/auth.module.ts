@@ -9,11 +9,15 @@ import { LoginRegistroComponent } from './login-registro/login-registro.componen
 
 @NgModule({
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   declarations: [
     AuthComponent,
+<<<<<<< HEAD
     LoginRegistroComponent
+=======
+    LoginComponent,
+>>>>>>> origin/develop
   ],
   imports: [
     CommonModule,
@@ -21,7 +25,7 @@ import { LoginRegistroComponent } from './login-registro/login-registro.componen
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    SharedModule
-  ]
+    SharedModule,
+  ],
 })
 export class AuthModule { }
