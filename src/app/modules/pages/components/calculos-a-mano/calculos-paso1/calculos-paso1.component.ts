@@ -83,9 +83,10 @@ export class CalculosPaso1Component implements AfterViewInit {
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngOnInit() {
-    if (this.parsedDataService.getData()?.length) {
+    let sheetData : GrupoEtario[] = this.parsedDataService.getData();
+    if (sheetData?.length) {
       this.fromTemplate = true;
-      this.initializeTable(this.parsedDataService.getData());
+      this.initializeTable(sheetData);
     }
   }
 

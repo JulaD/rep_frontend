@@ -42,3 +42,15 @@
   height: 3rem;
   font-size: 1rem;
 }
+
+::ng-deep snack-bar-container.error-snack-bar {
+  background: #FF5252;
+}
+
+::ng-deep .error-snack-bar .mat-simple-snackbar {
+  color: #ffffff;
+}
+
+::ng-deep .error-snack-bar .mat-simple-snackbar-action {
+  color: #ffffff !important;
+}

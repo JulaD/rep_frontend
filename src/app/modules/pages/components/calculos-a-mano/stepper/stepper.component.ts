@@ -87,19 +87,21 @@ export class StepperComponent implements OnInit, OnDestroy {
   }
 
   isStepperValid(): boolean {
-    const step1Valid: boolean = this.step1Access.stepValid;
+    const step1Valid: boolean = this.step1Access? this.step1Access.stepValid : false;
     let step2Valid: boolean = true;
     let step3Valid: boolean = true;
     let step4Valid: boolean = true;
-    if (this.step1Access.stepperLogic.agesMinorPresent) {
-      step2Valid = this.step2Access?.minorPALForm.valid;
-    }
-    if (this.step1Access.stepperLogic.agesAdultPresent) {
-      step3Valid = this.step3Access?.adultPALForm.valid;
-    }
-    if (this.step1Access.stepperLogic.agesFemale18To29Present ||
-      this.step1Access.stepperLogic.agesFemale30To59Present) {
-      step4Valid = this.step4Access?.materYLactanciaForm.valid
+    if (step1Valid) {
+      if (this.step1Access.stepperLogic.agesMinorPresent) {
+        step2Valid = this.step2Access?.minorPALForm.valid;
+      }
+      if (this.step1Access.stepperLogic.agesAdultPresent) {
+        step3Valid = this.step3Access?.adultPALForm.valid;
+      }
+      if (this.step1Access.stepperLogic.agesFemale18To29Present ||
+        this.step1Access.stepperLogic.agesFemale30To59Present) {
+        step4Valid = this.step4Access?.materYLactanciaForm.valid
+      }
     }
     return step1Valid && step2Valid && step3Valid && step4Valid;
   }
