@@ -7,6 +7,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
 import { Sexo } from "src/app/enums/Sexo";
 import { GrupoEtario } from "src/app/models/grupo-etario";
+import { ShowOnDirtyOrTouchedErrorStateMatcher } from "src/app/modules/shared/dirty-or-touched-error-state-matcher";
 import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
 
 
@@ -35,6 +36,8 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   stepValid: boolean = false;
+
+  matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,

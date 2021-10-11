@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
+import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
 import { NumberForForms, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 import { step3RuralSuman100Validator } from 'src/app/modules/shared/validators/step3-rural-suman-100.directive';
@@ -19,6 +20,8 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso3Component {
 
   constructor() {}
+
+  matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
   adultPALForm = new FormGroup({
     population: new FormGroup({

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
+import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
 import { NumberForForms, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
@@ -18,6 +19,8 @@ export class CalculosPaso2Component {
 
   constructor() {}
 
+  matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
+  
   minorPALForm = new FormGroup({
     lowPAL: new FormControl('', percentageValidators),
     moderatePAL: new FormControl('', percentageValidators),
