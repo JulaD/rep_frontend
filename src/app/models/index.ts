@@ -1,7 +1,7 @@
-import { User } from './user.model';
-import { Auth } from './auth.model';
+import { User, Auth, Register } from './user.model';
 
 export {
   Auth,
   User,
+  Register,
 };

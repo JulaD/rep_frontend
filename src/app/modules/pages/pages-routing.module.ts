@@ -39,11 +39,14 @@ const routes: Routes = [{
     component: UploadTemplateComponent,
   }, {
     path: 'stepper',
-    component: StepperComponent
-  },{
+    component: StepperComponent,
+  }, {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  }, {
+    path: 'admin',
+    loadChildren: () => import('./components/admin/admin.module').then((m) => m.AdminModule),
   }],
 }];
 

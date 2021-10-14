@@ -5,16 +5,18 @@ export interface IAuth {
 
 export interface IUser {
   id: number;
-  name?: string;
+  name: string;
   email: string;
-  password: string;
+  organization: string;
   type: number;
-  extension?: string;
-  token?: string;
   status: number;
-  subscribed: boolean;
   active: boolean;
   createdAt: Date;
-  updatedAt: Date;
-  deletedAt?: Date;
+}
+
+export interface IRegister {
+  name: string;
+  email: string;
+  organization: string;
+  password: string;
 }

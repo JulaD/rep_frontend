@@ -1,6 +1,15 @@
+/* eslint-disable max-classes-per-file */
 import {
+  IAuth,
+  IRegister,
   IUser,
 } from '../interfaces/user.interface';
+
+export class Auth implements IAuth {
+  email: string;
+
+  password: string;
+}
 
 export class User implements IUser {
   id: number;
@@ -9,23 +18,25 @@ export class User implements IUser {
 
   email: string;
 
-  password: string;
+  organization: string;
 
   type: number;
 
-  extension?: string;
-
-  token?: string;
-
   status: number;
-
-  subscribed: boolean;
 
   active: boolean;
 
   createdAt: Date;
+}
 
-  updatedAt: Date;
+export class Register implements IRegister {
+  name: string;
 
-  deletedAt?: Date;
+  email: string;
+
+  organization: string;
+
+  password: string;
+
+  passwordConf: string;
 }
