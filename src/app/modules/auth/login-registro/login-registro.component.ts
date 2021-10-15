@@ -75,11 +75,11 @@ export class LoginRegistroComponent implements OnInit {
   login() {
     const values = this.loginForm.value;
     this.authService.login(values).subscribe(
-      (user) => {
+      (result) => {
         // limpia los inputs
         this.registerForm.reset();
         // this.efectuarIngreso(res);
-        this.authService.loggedUser = user;
+        this.authService.loggedUser = result.user;
         this.router.navigate(['']);
       },
       (err) => {

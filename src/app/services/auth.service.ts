@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Auth, Register, User } from '../models';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -19,17 +21,25 @@ export class AuthService {
     createdAt: new Date(),
   };
 
+  private api: string = environment.usersApi;
+
   constructor(
     private router: Router,
     private http: HttpClient,
   ) { }
 
   register(user: Register) {
-    return this.http.post<any>('http://localhost:3000/users', user);
+    return this.http.post<any>(`${this.api}/users`, user);
   }
 
-  login(user: Auth): Observable<User> {
-    return this.http.post<User>('http://localhost:3000/users/login', user);
+  login(user: Auth): Observable<{token: string, user: User}> {
+    return this.http
+      .post<{token: string, user: User}>(`${this.api}/users/login`, user)
+      .pipe(
+        tap((response: any) => {
+          localStorage.setItem('token', response.token);
+        }),
+      );
   }
 
   //-------------------------------------------------------------------------
