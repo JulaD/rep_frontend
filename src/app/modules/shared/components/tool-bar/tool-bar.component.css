@@ -26,9 +26,7 @@
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
-  font-size: 3vh !important;
-  line-height: 2rem;
-  }
+}
 
 ::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
   color: white;
@@ -38,6 +36,4 @@
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
-  font-size: 2vh;
-  line-height: 2rem;
 }
