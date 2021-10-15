@@ -3,6 +3,8 @@ import { Component, Input, OnInit} from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { ParsedDataService } from 'src/app/services/parsed-data.service';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-upload-template',
@@ -28,6 +30,8 @@ export class UploadTemplateComponent implements OnInit {
   //Request
   headers: Headers = new Headers();
   httpClient: HttpClient;
+
+  private api: string = environment.api;
   
   constructor(private _errorSnackBar: MatSnackBar, private http : HttpClient, private dataService : ParsedDataService) {    
     this.requiredFileType = '.xlsx,.xls,.odt';
@@ -71,7 +75,7 @@ export class UploadTemplateComponent implements OnInit {
   uploadFile(): Observable<HttpEvent<any>> {
     console.log("uploadFile, sending req");
 
-    const endpoint = 'http://localhost:8000/sheetParser';
+    const endpoint = `${this.api}/sheetParser`;
     let reqHeaders            = new HttpHeaders({
       'Content-Type':  'application/octet-stream',
     })

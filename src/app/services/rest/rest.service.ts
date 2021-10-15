@@ -3,6 +3,7 @@ import { catchError } from 'rxjs/internal/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
+import { environment } from 'src/environments/environment';
 
 export interface AgeGroupJSON {
   age: string;
@@ -11,8 +12,9 @@ export interface AgeGroupJSON {
   population: number;
 }
 
-const endpoint = 'http://localhost:8000/';
-const serviceCalc = 'repCalculator';
+const api: string = environment.api;
+const endpoint = `${api}`;
+const serviceCalc = '/repCalculator';
 
 @Injectable({
   providedIn: 'root'

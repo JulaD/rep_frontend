@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://localhost:4321/api',
-  usersApi: 'http://localhost:4321',
+  api: 'http://repweb.duckdns.org:8000',
+  usersApi: 'http://repweb.duckdns.org:3000',
 };
 
 /*
