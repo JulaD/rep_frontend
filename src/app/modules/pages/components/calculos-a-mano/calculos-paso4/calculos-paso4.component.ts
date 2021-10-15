@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
+import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator, numeroFloatValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 @Component({
@@ -12,6 +13,10 @@ import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroVali
   styleUrls: ['./calculos-paso4.component.css'],
 })
 export class CalculosPaso4Component {
+  @Input() agesFemale18To29Present: boolean;
+  @Input() agesFemale30To59Present: boolean;
+
+  matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
   materYLactanciaForm = new FormGroup({
     //Primer franja

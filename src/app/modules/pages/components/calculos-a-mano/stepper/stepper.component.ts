@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
-import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
@@ -16,9 +16,12 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
+  providers: [{
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+  }]
 })
-export class StepperComponent implements OnInit {
-  isLinear = false;
+export class StepperComponent implements OnInit, OnDestroy {
+  isLinear: boolean = false;
 
   @ViewChild(CalculosPaso1Component)
   private step1Access: CalculosPaso1Component
@@ -33,6 +36,11 @@ export class StepperComponent implements OnInit {
   private step4Access: CalculosPaso4Component
 
   ngOnInit() { }
+  
+  ngOnDestroy() {
+    // al salir del stepper, vacio las tablas
+    this.step1Access.clearTables();
+  }
 
   constructor(
     public rest: RestService,
@@ -41,17 +49,31 @@ export class StepperComponent implements OnInit {
   ) {}
 
   onSubmit(): void {
-    const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
-    const step2Data: MinorPAL = this.step2Access.sendData();
-    const step3Data: AdultPAL = this.step3Access.sendData();
-    // placeholder mientras se implementa el paso 4 (al backend no le gustaba undefined)
-    const step4Data: Maternity = this.step4Access.sendData();
-    //{pregnantWomen: 0, lactatingWomen: 0}
+    let extraData: ExtraData = {
+      minorPAL: undefined,
+      adultPAL: undefined,
+      maternity18To29: undefined,
+      maternity30To59: undefined
+    }
 
-    const extraData: ExtraData = {minorPAL: step2Data,
-      adultPAL: step3Data,
-      maternity18To29: step4Data.maternity18to29,
-      maternity30To59: step4Data.maternity30to59 }
+    const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
+
+    if (this.step1Access.stepperLogic.agesMinorPresent) {
+      extraData.minorPAL = this.step2Access.sendData();
+    }
+    if (this.step1Access.stepperLogic.agesAdultPresent) {
+      extraData.adultPAL = this.step3Access.sendData();
+    }
+    if (this.step1Access.stepperLogic.agesFemale18To29Present ||
+      this.step1Access.stepperLogic.agesFemale30To59Present) {
+      const step4Data = this.step4Access.sendData();
+      if (this.step1Access.stepperLogic.agesFemale18To29Present) {
+        extraData.maternity18To29 = step4Data.maternity18to29;
+      }
+      if (this.step1Access.stepperLogic.agesFemale30To59Present) {
+        extraData.maternity30To59 = step4Data.maternity30to59;
+      }
+    }
       
     this.rest.addCalculation(step1Data, extraData)
       .subscribe((result) => {
@@ -59,15 +81,28 @@ export class StepperComponent implements OnInit {
           .setData(result);
         this.router
           .navigate(['/result']);
-        // this.router
-        //   .navigate(['/result'], {​​​​​​​​ 
-        //     queryParams: {
-        //       result: JSON.stringify(result)
-        //     },
-        //     skipLocationChange: true
-        //   }​​​​​​​​);
     }, (err) => {
       console.log(err);
     });
+  }
+
+  isStepperValid(): boolean {
+    const step1Valid: boolean = this.step1Access? this.step1Access.stepValid : false;
+    let step2Valid: boolean = true;
+    let step3Valid: boolean = true;
+    let step4Valid: boolean = true;
+    if (step1Valid) {
+      if (this.step1Access.stepperLogic.agesMinorPresent) {
+        step2Valid = this.step2Access?.minorPALForm.valid;
+      }
+      if (this.step1Access.stepperLogic.agesAdultPresent) {
+        step3Valid = this.step3Access?.adultPALForm.valid;
+      }
+      if (this.step1Access.stepperLogic.agesFemale18To29Present ||
+        this.step1Access.stepperLogic.agesFemale30To59Present) {
+        step4Valid = this.step4Access?.materYLactanciaForm.valid
+      }
+    }
+    return step1Valid && step2Valid && step3Valid && step4Valid;
   }
 }

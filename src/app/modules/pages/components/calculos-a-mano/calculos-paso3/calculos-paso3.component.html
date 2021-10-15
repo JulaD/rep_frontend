@@ -11,27 +11,25 @@
           <div class="step3-pob-rural row gy-1">
             <mat-form-field appearance="standard">
               <mat-label>Población rural</mat-label>
-              <input matInput formControlName="ruralPercentage">
+              <input matInput formControlName="ruralPercentage" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="adultPALForm.get('population.ruralPercentage')?.errors">
+                Debe ingresar un numero entre 0 y 100
+              </mat-error>
             </mat-form-field>
-            <div *ngIf="adultPALForm.get('population.ruralPercentage')?.errors"
-              class="mensaje-error">
-              Debe ingresar un numero entre 0 y 100
-            </div>
           </div>
           <div class="step3-pob-urbana row gy-1">
             <mat-form-field appearance="standard">
               <mat-label>Población urbana</mat-label>
-              <input matInput formControlName="urbanPercentage">
+              <input matInput formControlName="urbanPercentage" [errorStateMatcher]="matcher">
+              <mat-error *ngIf="adultPALForm.get('population.urbanPercentage')?.errors">
+                Debe ingresar un numero entre 0 y 100
+              </mat-error>
             </mat-form-field>
-            <div *ngIf="adultPALForm.get('population.urbanPercentage')?.errors"
-              class="mensaje-error">
-              Debe ingresar un numero entre 0 y 100
-            </div>
           </div>
           <div *ngIf="adultPALForm.get('population')?.errors?.groupSuman100Validator &&
-            (adultPALForm.touched || adultPALForm.dirty)"
+            (adultPALForm.get('population')?.touched || adultPALForm.get('population')?.dirty)"
             class="mensaje-error">
-            Los 2 porcentajes ingresados deben sumar 100
+            Los 2 porcentajes de población ingresados deben sumar 100
           </div>
         </div> <!--end poblacion-->
       </div>
@@ -41,32 +39,30 @@
             <div class="step3-activos-rural col-6">
               <mat-form-field appearance="standard">
                 <mat-label>Activos</mat-label>
-                <input matInput formControlName="activeRuralPAL">
+                <input matInput formControlName="activeRuralPAL" [errorStateMatcher]="matcher">
                 <mat-hint>
                   Ingrese el porcentaje de esta población que tiene un
                   nivel de actividad física intensa o moderada
                 </mat-hint>
+                <mat-error *ngIf="adultPALForm.get('ruralPAL.activeRuralPAL')?.errors">
+                  Debe ingresar un numero entre 0 y 100
+                </mat-error>
               </mat-form-field>
-              <div *ngIf="adultPALForm.get('ruralPAL.activeRuralPAL')?.errors"
-                class="mensaje-error">
-                Debe ingresar un numero entre 0 y 100
-              </div>
             </div>
             <div class="step3-liviana-rural col-6">
               <mat-form-field appearance="standard">
                 <mat-label>Actividad física liviana</mat-label>
-                <input matInput formControlName="lowRuralPAL">
+                <input matInput formControlName="lowRuralPAL" [errorStateMatcher]="matcher">
                 <mat-hint>
                   Ingrese el porcentaje de esta población que realiza
                   actividad física liviana
                 </mat-hint>
+                <mat-error *ngIf="adultPALForm.get('ruralPAL.lowRuralPAL')?.errors">
+                  Debe ingresar un numero entre 0 y 100
+                </mat-error>
               </mat-form-field>
-              <div *ngIf="adultPALForm.get('ruralPAL.lowRuralPAL')?.errors"
-                class="mensaje-error">
-                Debe ingresar un numero entre 0 y 100
-              </div>
             </div>
-            <div *ngIf="adultPALForm.get('ruralPAL')?.errors?.groupSuman100Validator &&
+            <div *ngIf="adultPALForm.errors?.step3RuralSuman100 &&
               (adultPALForm.get('ruralPAL')?.touched || adultPALForm.get('ruralPAL')?.dirty)"
               class="mensaje-error">
               Los 2 porcentajes de actividad rural ingresados deben sumar 100
@@ -76,32 +72,30 @@
             <div class="step3-activos-urbana col-6">
               <mat-form-field appearance="standard">
                 <mat-label>Activos</mat-label>
-                <input matInput formControlName="activeUrbanPAL">
+                <input matInput formControlName="activeUrbanPAL" [errorStateMatcher]="matcher">
                 <mat-hint>
                   Ingrese el porcentaje de esta población que tiene un
                   nivel de actividad física intensa o moderada
                 </mat-hint>
+                <mat-error *ngIf="adultPALForm.get('urbanPAL.activeUrbanPAL')?.errors">
+                  Debe ingresar un numero entre 0 y 100
+                </mat-error>
               </mat-form-field>
-              <div *ngIf="adultPALForm.get('urbanPAL.activeUrbanPAL')?.errors"
-                class="mensaje-error">
-                Debe ingresar un numero entre 0 y 100
-              </div>
             </div>
             <div class="step3-liviana-urbana col-6">
               <mat-form-field appearance="standard">
                 <mat-label>Actividad física liviana</mat-label>
-                <input matInput formControlName="lowUrbanPAL">
+                <input matInput formControlName="lowUrbanPAL" [errorStateMatcher]="matcher">
                 <mat-hint>
                   Ingrese el porcentaje de esta población que realiza
                   actividad física liviana
                 </mat-hint>
+                <mat-error *ngIf="adultPALForm.get('urbanPAL.lowUrbanPAL')?.errors">
+                  Debe ingresar un numero entre 0 y 100
+                </mat-error>
               </mat-form-field>
-              <div *ngIf="adultPALForm.get('urbanPAL.lowUrbanPAL')?.errors"
-                class="mensaje-error">
-                Debe ingresar un numero entre 0 y 100
-              </div>
             </div>
-            <div *ngIf="adultPALForm.get('urbanPAL')?.errors?.groupSuman100Validator &&
+            <div *ngIf="adultPALForm.errors?.step3UrbanSuman100 &&
               (adultPALForm.get('urbanPAL')?.touched || adultPALForm.get('urbanPAL')?.dirty)"
               class="mensaje-error">
               Los 2 porcentajes de actividad urbana ingresados deben sumar 100

@@ -14,7 +14,7 @@
     <div class="step4-num-embarazos">
       <mat-form-field appearance="standard">
         <mat-label>Número de embarazos</mat-label>
-        <input matInput formControlName="embsPrimerFranja">
+        <input matInput formControlName="embsPrimerFranja" [errorStateMatcher]="matcher">
         <mat-hint>
           Ingrese el número de personas embarazadas para este rango
         </mat-hint>
@@ -23,7 +23,7 @@
     <div class="step4-num-amamantando">
       <mat-form-field appearance="standard">
         <mat-label>Número de personas amamantando</mat-label>
-        <input matInput formControlName="amamPrimerFranja">
+        <input matInput formControlName="amamPrimerFranja" [errorStateMatcher]="matcher">
         <mat-hint>
           Ingrese el número de personas amamantando para este rango
         </mat-hint>
@@ -39,7 +39,7 @@
       <div class="step4-cant-mujeres">
         <mat-form-field appearance="standard">
           <mat-label>Mujeres entre 18 y 29 años</mat-label>
-          <input matInput formControlName="cantPrimerFranja">
+          <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese la población de mujeres del país para este rango etario
           </mat-hint>
@@ -48,7 +48,7 @@
       <div class="step4-tasa-natalidad">
         <mat-form-field appearance="standard">
           <mat-label>Tasa de natalidad</mat-label>
-          <input matInput formControlName="natPrimerFranja">
+          <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese la tasa de natalidad.
             Por defecto se tomará la tasa de natalidad de Uruguay
@@ -58,7 +58,7 @@
       <div class="step4-pob-total">
         <mat-form-field appearance="standard">
           <mat-label>Población total</mat-label>
-          <input matInput formControlName="pobTotPrimerFranja">
+          <input matInput formControlName="pobTotPrimerFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese el número de habitantes del país.
             Por defecto se tomará la población de Uruguay
@@ -75,7 +75,7 @@
     <div class="step4-num-embarazos-2">
       <mat-form-field appearance="standard">
         <mat-label>Número de embarazos</mat-label>
-        <input matInput formControlName="embsSegundaFranja">
+        <input matInput formControlName="embsSegundaFranja" [errorStateMatcher]="matcher">
         <mat-hint>
           Ingrese el número de personas embarazadas para este rango
         </mat-hint>
@@ -84,7 +84,7 @@
     <div class="step4-num-amamantando-2">
       <mat-form-field appearance="standard">
         <mat-label>Número de personas amamantando</mat-label>
-        <input matInput formControlName="amamSegundaFranja">
+        <input matInput formControlName="amamSegundaFranja" [errorStateMatcher]="matcher">
         <mat-hint>
           Ingrese el número de personas amamantando para este rango
         </mat-hint>
@@ -99,7 +99,7 @@
       <div class="step4-cant-mujeres">
         <mat-form-field appearance="standard">
           <mat-label>Mujeres entre 30 y 59 años</mat-label>
-          <input matInput formControlName="cantSegundaFranja">
+          <input matInput formControlName="cantSegundaFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese la población de mujeres del país para este rango etario
           </mat-hint>
@@ -108,7 +108,7 @@
       <div class="step4-tasa-natalidad">
         <mat-form-field appearance="standard">
           <mat-label>Tasa de natalidad</mat-label>
-          <input matInput formControlName="natSegundaFranja">
+          <input matInput formControlName="natSegundaFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese la tasa de natalidad.
             Por defecto se tomará la tasa de natalidad de Uruguay
@@ -118,7 +118,7 @@
       <div class="step4-pob-total">
         <mat-form-field appearance="standard">
           <mat-label>Población total</mat-label>
-          <input matInput formControlName="pobTotSegundaFranja">
+          <input matInput formControlName="pobTotSegundaFranja" [errorStateMatcher]="matcher">
           <mat-hint>
             Ingrese el número de habitantes del país.
             Por defecto se tomará la población de Uruguay
@@ -126,6 +126,6 @@
         </mat-form-field>
       </div>
     </mat-card>
-  </div>  
+  </div>
 </form>
 
