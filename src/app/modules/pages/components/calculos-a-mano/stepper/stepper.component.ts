@@ -105,4 +105,8 @@ export class StepperComponent implements OnInit, OnDestroy {
     }
     return step1Valid && step2Valid && step3Valid && step4Valid;
   }
+
+  checkDefaultValues() {
+    this.rest.processDefaultWeights();
+  }
 }
