@@ -162,9 +162,9 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   addMasc(grupo: GrupoEtario) {
     masculinoData.push(grupo);
-      masculinoData.sort((a,b) => {
-        return compareFranjaEtaria(a.edad, b.edad)
-      })
+    masculinoData.sort((a,b) => {
+      return compareFranjaEtaria(a.edad, b.edad)
+    })
     this.dataSourceM._updateChangeSubscription();
     this.stepValid = true;
     this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);

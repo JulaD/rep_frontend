@@ -15,6 +15,7 @@ export interface AgeGroupJSON {
 const api: string = environment.api;
 const endpoint = `${api}`;
 const serviceCalc = '/repCalculator';
+const serviceWeights = '/parameters/weights'
 
 @Injectable({
   providedIn: 'root'
