@@ -1,31 +1,29 @@
-import { Breakpoints } from "@angular/cdk/layout";
-import { Component, AfterViewInit, ViewChild } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import {MatPaginator} from '@angular/material/paginator';
-import { MatSnackBar } from "@angular/material/snack-bar";
-import {MatTableDataSource} from '@angular/material/table';
-import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
-import { Sexo } from "src/app/enums/Sexo";
-import { GrupoEtario } from "src/app/models/grupo-etario";
-import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
+/* eslint-disable no-underscore-dangle */
+// import { Breakpoints } from '@angular/cdk/layout';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import FranjaEtaria, { compareFranjaEtaria } from 'src/app/enums/FranjaEtaria';
+import Sexo from 'src/app/enums/Sexo';
+import { GrupoEtario } from 'src/app/models/grupo-etario';
+import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
+import { step1CantidadSinMedianaValidator } from 'src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive';
+import { step1TodoVacioValidator } from 'src/app/modules/shared/validators/step1-todo-vacio.directive';
+import { ParsedDataService } from 'src/app/services/parsed-data.service';
+import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
 
-import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
-import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
-import { ParsedDataService } from "src/app/services/parsed-data.service";
-import { AgeGroupJSON } from "src/app/services/rest/rest.service";
-
-
-const femeninoData: GrupoEtario[] = []
-const masculinoData: GrupoEtario[] = []
+const femeninoData: GrupoEtario[] = [];
+const masculinoData: GrupoEtario[] = [];
 
 @Component({
   selector: 'app-calculos-paso1',
   templateUrl: './calculos-paso1.component.html',
-  styleUrls: ['./calculos-paso1.component.css']
+  styleUrls: ['./calculos-paso1.component.css'],
 })
 export class CalculosPaso1Component implements AfterViewInit {
-
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
     FranjaEtaria.Meses_1,
@@ -58,18 +56,21 @@ export class CalculosPaso1Component implements AfterViewInit {
     FranjaEtaria.Anios_17,
     FranjaEtaria.Anios_18_29,
     FranjaEtaria.Anios_30_59,
-    FranjaEtaria.Anios_60_mas
+    FranjaEtaria.Anios_60_mas,
   ];
 
-  constructor(private _snackBar: MatSnackBar, private parsedDataService : ParsedDataService) { }
+  constructor(private snackBar: MatSnackBar, private parsedDataService : ParsedDataService) { }
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
+
   dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
+
   dataSourceM = new MatTableDataSource<GrupoEtario>(masculinoData);
 
   fromTemplate : boolean = false;
 
   @ViewChild('TablePaginatorF') paginatorF: MatPaginator;
+
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngOnInit() {
@@ -89,43 +90,45 @@ export class CalculosPaso1Component implements AfterViewInit {
     cantFemenino: new FormControl('', numeroEnteroPositivoValidator),
     cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
-    medianaMasculino: new FormControl('', numeroFloatMayorCeroValidator)
-  }, { validators: Validators.compose([step1TodoVacioValidator, step1CantidadSinMedianaValidator]) })
-  
+    medianaMasculino: new FormControl('', numeroFloatMayorCeroValidator),
+  }, {
+    validators: Validators.compose([step1TodoVacioValidator,
+      step1CantidadSinMedianaValidator]),
+  });
+
   onSubmit() {
     // Revisar si la la franja etaria ya tiene datos en la tabla
     let repetido: Boolean = false;
     const franja: string = this.grupoEtarioForm.get('edad')?.value;
 
-    repetido = masculinoData.some((group: GrupoEtario)=> {
-      return group.edad === franja;
-    });
+    repetido = masculinoData.some((group: GrupoEtario) => group.edad === franja);
     if (!repetido) {
-      repetido = femeninoData.some((group: GrupoEtario)=> {
-        return group.edad === franja;
-      });
+      repetido = femeninoData.some((group: GrupoEtario) => group.edad === franja);
     }
     if (repetido) {
       // presento mensaje de error
-      this._snackBar.open(
-        "ERROR: Ya existen datos ingresados para esta franja etaria", "Aceptar")
+      this.snackBar.open(
+        'ERROR: Ya existen datos ingresados para esta franja etaria', 'Aceptar',
+      );
     } else {
       // Datos Femenino
-      if (this.grupoEtarioForm.get('medianaFemenino')?.value != '') { // hay datos para agregar a Femenino
-        let grupoFem : GrupoEtario = new GrupoEtario(
+      if (this.grupoEtarioForm.get('medianaFemenino')?.value !== '') { // hay datos para agregar a Femenino
+        const grupoFem : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
           NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value))
+          NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value),
+        );
         this.addFem(grupoFem);
       }
       // Datos Masculino
-      if (this.grupoEtarioForm.get('medianaMasculino')?.value != '') { // hay datos para agregar a Masculino
-        let grupoMasc : GrupoEtario = new GrupoEtario(
+      if (this.grupoEtarioForm.get('medianaMasculino')?.value !== '') { // hay datos para agregar a Masculino
+        const grupoMasc : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
           NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value))
+          NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value),
+        );
         this.addMasc(grupoMasc);
       }
     }
@@ -133,17 +136,13 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   addFem(grupo: GrupoEtario) {
     femeninoData.push(grupo);
-    femeninoData.sort((a,b) => {
-      return compareFranjaEtaria(a.edad, b.edad)
-    })
+    femeninoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceF._updateChangeSubscription();
   }
 
   addMasc(grupo: GrupoEtario) {
     masculinoData.push(grupo);
-      masculinoData.sort((a,b) => {
-        return compareFranjaEtaria(a.edad, b.edad)
-      })
+    masculinoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceM._updateChangeSubscription();
   }
 
@@ -151,19 +150,15 @@ export class CalculosPaso1Component implements AfterViewInit {
   borrarEdad() {
     // la edad actualmente seleccionada en grupoEtarioForm
     const edadSel: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
-    
+
     // Borro en la tabla femeninoData
-    const indexF = femeninoData.findIndex((element: GrupoEtario) => {
-      return element.edad === edadSel;
-    })
+    const indexF = femeninoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
     if (indexF > -1) {
       femeninoData.splice(indexF, 1);
       this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
     }
     // Borro en la tabla femeninoData
-    const indexM = masculinoData.findIndex((element: GrupoEtario) => {
-      return element.edad === edadSel;
-    })
+    const indexM = masculinoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
     if (indexM > -1) {
       masculinoData.splice(indexM, 1);
       this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
@@ -172,23 +167,25 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   // Envio de datos al backend
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
-    const res: AgeGroupJSON[] =[];
-    
-    dataFem.forEach((group: GrupoEtario)=> {
-      let elem :AgeGroupJSON = {
+    const res: AgeGroupJSON[] = [];
+
+    dataFem.forEach((group: GrupoEtario) => {
+      const elem :AgeGroupJSON = {
         age: group.edad,
         sex: group.sexo,
         medianWeight: group.pesoMediano,
-        population: group.cantidad };
+        population: group.cantidad,
+      };
       res.push(elem);
     });
 
-    dataMasc.forEach((group: GrupoEtario)=> {
-      let elem :AgeGroupJSON = {
+    dataMasc.forEach((group: GrupoEtario) => {
+      const elem :AgeGroupJSON = {
         age: group.edad,
         sex: group.sexo,
         medianWeight: group.pesoMediano,
-        population: group.cantidad };
+        population: group.cantidad,
+      };
       res.push(elem);
     });
 
@@ -196,18 +193,20 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   sendData(): AgeGroupJSON[] {
-    return this.prepareData(femeninoData, masculinoData)
+    return this.prepareData(femeninoData, masculinoData);
   }
 
-  //Inicaliza la tabla de resultados
+  // Inicaliza la tabla de resultados
   initializeTable(grupos: GrupoEtario[]) {
-    grupos.forEach( (grupo) => {
+    grupos.forEach((grupo) => {
       switch (grupo.sexo) {
         case Sexo.Masculino:
           this.addMasc(grupo);
           break;
         case Sexo.Femenino:
           this.addFem(grupo);
+          break;
+        default:
           break;
       }
     });

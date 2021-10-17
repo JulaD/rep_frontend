@@ -19,6 +19,6 @@ export class ValuesService {
   }
 
   modifyParameter(parameter: DefaultWeightDTO | DefaultExtraDataDTO | EquationConstantDTO) {
-    return this.http.put<any>('http://localhost:8000/parameters/parameterUpdate', parameter);
+    return this.http.put<any>('http://localhost:8000/parameters/parameterUpdate', { parameter });
   }
 }
