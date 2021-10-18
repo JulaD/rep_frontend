@@ -152,12 +152,24 @@
                                 </span>
                             </div>
                         </div> 
-                        <div class="modificar">
-                            <h1 *ngIf="selectedNafMinorMeasurement === '%'">MODIFICAR VALOR:</h1>
-                            <h1 *ngIf="selectedNafMinorMeasurement === ''">MODIFICAR COEF.:</h1>
-                            <input *ngIf="selectedNafMinorMeasurement === '%'" type="number" id="nafMenoresInput" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <input *ngIf="selectedNafMinorMeasurement === ''" type="number" id="nafMenoresInput" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                        <div class="modificar" *ngIf="!(selectedNafMinor.id.includes('Prevalence'))">
+                            <h1>MODIFICAR VALOR:</h1>
+                            <input type="number" id="nafMenoresInput" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
                             <div class="confirmarBtn" (click)="modifyNaf('minors')">
+                                <span>
+                                    CONFIRMAR
+                                </span>
+                            </div>
+                        </div>
+                        <div class="modificar" id="minorPrevalenceInputs" *ngIf="selectedNafMinor.id.includes('Prevalence')">
+                            <h1>MODIFICAR VALORES:</h1>
+                            <h2>minorLowPrevalence:</h2>
+                            <input type="number" id="minorLowPrevalenceInput" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
+                            <h2>minorModeratePrevalence:</h2>
+                            <input type="number" id="minorModeratePrevalenceInput" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
+                            <h2>minorIntensePrevalence:</h2>
+                            <input type="number" id="minorIntensePrevalenceInput" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyMinorPrevalence()">
                                 <span>
                                     CONFIRMAR
                                 </span>

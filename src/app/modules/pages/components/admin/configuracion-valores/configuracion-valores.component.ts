@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import DefaultWeightDTO from 'src/app/interfaces/DefaultWeightDTO';
 import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
 import EquationConstantDTO from 'src/app/interfaces/EquationConstantDTO';
+import { compareFranjaEtaria } from 'src/app/enums/FranjaEtaria';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+// import ExtraDataDTO from 'src/app/interfaces/ExtraDataDTO';
+// import swal from 'sweetalert';
 import { ValuesService } from '../../../../../services/values.service';
 
 @Component({
@@ -66,6 +68,8 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.weightsWomen.push(weight);
           }
         });
+        this.weightsMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
+        this.weightsWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
         res.defaultExtraData.forEach((data: DefaultExtraDataDTO) => {
           if (data.parameterType === 'NAF Adultos') {
             this.nafAdults.push(data);
@@ -303,6 +307,7 @@ export class ConfiguracionValoresComponent implements OnInit {
   modifyWeight(sex: string) {
     let inputWeightElement: HTMLInputElement;
     let weightToModify: DefaultWeightDTO;
+    const weightToModifyArray: DefaultWeightDTO[] = [];
     let sexSwal: string = '';
     let textAlert: string = '';
     if (sex === 'men') {
@@ -329,7 +334,10 @@ export class ConfiguracionValoresComponent implements OnInit {
         newValue = Math.round(newValue * 10) / 10;
         textAlert = `El nuevo valor de peso para ${sexSwal} de ${weightToModify.ageRange} pasará de ser ${weightToModify.value}kg a ${newValue}kg.`;
         weightToModify.value = newValue;
-        this.confirmModify(textAlert, weightToModify, inputWeightElement);
+        weightToModifyArray.push(weightToModify);
+        const inputWeightElementArray: HTMLInputElement[] = [];
+        inputWeightElementArray.push(inputWeightElement);
+        this.confirmModify(textAlert, weightToModifyArray, inputWeightElementArray);
       }
     }
   }
@@ -337,6 +345,7 @@ export class ConfiguracionValoresComponent implements OnInit {
   modifyNaf(age: string) {
     let inputNafElement: HTMLInputElement;
     let nafToModify: DefaultExtraDataDTO;
+    const nafToModifyArray: DefaultExtraDataDTO[] = [];
     let ageSwal: string = '';
     let nafToModifyMeasurement: string = '';
     let textAlert: string = '';
@@ -367,7 +376,9 @@ export class ConfiguracionValoresComponent implements OnInit {
         // redondeo 2 decimales
           newValue = Math.round(newValue * 100) / 100;
         }
-        if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation') {
+        if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation'
+        || nafToModify.id === 'urbanActivePALPercentage' || nafToModify.id === 'urbanLowPALPercentage'
+        || nafToModify.id === 'ruralActivePALPercentage' || nafToModify.id === 'ruralLowPALPercentage') {
           if (newValue > 100 || newValue < 0) {
             Swal.fire(
               '¡Valor incorrecto!',
@@ -375,22 +386,44 @@ export class ConfiguracionValoresComponent implements OnInit {
             );
           } else {
             if (nafToModify.id === 'ruralPopulation') {
-              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement} 
-                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'urbanPopulation' pasará de ser 
-                ${100 - nafToModify.value}${nafToModifyMeasurement} a ${100 - newValue}${nafToModifyMeasurement}`;
-            } else {
-              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement} 
-                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'ruralPopulation' pasará de ser 
-                ${100 - nafToModify.value}${nafToModifyMeasurement} a ${100 - newValue}${nafToModifyMeasurement}`;
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'urbanPopulation' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
+            } else if (nafToModify.id === 'urbanPopulation') {
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'ruralPopulation' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
+            } else if (nafToModify.id === 'urbanActivePALPercentage') {
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'urbanLowPALPercentage' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
+            } else if (nafToModify.id === 'urbanLowPALPercentage') {
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'urbanActivePALPercentage' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
+            } else if (nafToModify.id === 'ruralActivePALPercentage') {
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'ruralLowPALPercentage' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
+            } else if (nafToModify.id === 'ruralLowPALPercentage') {
+              textAlert = `El nuevo valor de '${nafToModify.id}' pasará de ser ${nafToModify.value}${nafToModifyMeasurement}
+                a ${newValue}${nafToModifyMeasurement}. A su vez, el nuevo valor para 'ruralActivePALPercentage' pasará a ser
+                 ${100 - newValue}${nafToModifyMeasurement}`;
             }
             nafToModify.value = newValue;
-            this.confirmModify(textAlert, nafToModify, inputNafElement);
+            nafToModifyArray.push(nafToModify);
+            const inputNafElementArray: HTMLInputElement[] = [];
+            inputNafElementArray.push(inputNafElement);
+            this.confirmModify(textAlert, nafToModifyArray, inputNafElementArray);
           }
         } else {
-          textAlert = `El nuevo valor de '${nafToModify.id}' para ${ageSwal} pasará de ser 
+          textAlert = `El nuevo valor de '${nafToModify.id}' para ${ageSwal} pasará de ser
             ${nafToModify.value}${nafToModifyMeasurement} a ${newValue}${nafToModifyMeasurement}.`;
           nafToModify.value = newValue;
-          this.confirmModify(textAlert, nafToModify, inputNafElement);
+          nafToModifyArray.push(nafToModify);
+          const inputNafElementArray: HTMLInputElement[] = [];
+          inputNafElementArray.push(inputNafElement);
+          this.confirmModify(textAlert, nafToModifyArray, inputNafElementArray);
         }
       }
     }
@@ -399,6 +432,7 @@ export class ConfiguracionValoresComponent implements OnInit {
   modifyPregnancy(type: string) {
     let inputPregnancyElement: HTMLInputElement;
     let pregnancyToModify: DefaultExtraDataDTO;
+    const pregnancyToModifyArray: DefaultExtraDataDTO[] = [];
     let pregnancyToModifyMeasurement: string = '';
     let textAlert: string = '';
     if (type === 'energy') {
@@ -429,13 +463,16 @@ export class ConfiguracionValoresComponent implements OnInit {
         textAlert = `El nuevo valor de '${pregnancyToModify.id}' pasará de ser 
         ${pregnancyToModify.value} ${pregnancyToModifyMeasurement} a ${newValue} ${pregnancyToModifyMeasurement}.`;
         pregnancyToModify.value = newValue;
-        this.confirmModify(textAlert, pregnancyToModify, inputPregnancyElement);
+        pregnancyToModifyArray.push(pregnancyToModify);
+        const inputPregnancyElementArray: HTMLInputElement[] = [];
+        inputPregnancyElementArray.push(inputPregnancyElement);
+        this.confirmModify(textAlert, pregnancyToModifyArray, inputPregnancyElementArray);
       }
     }
   }
 
-  confirmModify(textAlert: string, parameterToModify: DefaultExtraDataDTO | DefaultWeightDTO
-  | EquationConstantDTO, inputElement: HTMLInputElement) {
+  confirmModify(textAlert: string, parameterToModify: DefaultExtraDataDTO[] | DefaultWeightDTO[]
+  | EquationConstantDTO[], inputElements: HTMLInputElement[]) {
     Swal.fire({
       title: 'Confirmar',
       text: textAlert,
@@ -455,9 +492,11 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.nafAdults = [];
             this.pregnancyEnergy = [];
             this.pregnancyPopulation = [];
+            inputElements.forEach((input) => {
+              // eslint-disable-next-line no-param-reassign
+              input.value = '';
+            });
             // this.init(previousSelectedAgeRangeMen, previousSelectedAgeRangeWomen);
-            // eslint-disable-next-line no-param-reassign
-            inputElement.value = '';
             this.init('', '', '', '', '', '');
             Swal.fire(
               '¡Éxito!',
@@ -474,5 +513,160 @@ export class ConfiguracionValoresComponent implements OnInit {
         );
       }
     });
+  }
+
+  modifyMinorPrevalence() {
+    const actualMinorLowPrevalence: DefaultExtraDataDTO | undefined = this.getNafById('minorLowPrevalence', 'minors');
+    const actualMinorModeratePrevalence: DefaultExtraDataDTO | undefined = this.getNafById('minorModeratePrevalence', 'minors');
+    const actualMinorIntensePrevalence: DefaultExtraDataDTO | undefined = this.getNafById('minorIntensePrevalence', 'minors');
+    const minorLowPrevalenceInput: HTMLInputElement = <HTMLInputElement>document.getElementById('minorLowPrevalenceInput');
+    const minorModeratePrevalenceInput: HTMLInputElement = <HTMLInputElement>document.getElementById('minorModeratePrevalenceInput');
+    const minorIntensePrevalenceInput: HTMLInputElement = <HTMLInputElement>document.getElementById('minorIntensePrevalenceInput');
+    let newMinorLowPrevalenceValue: number = 0;
+    let newMinorModeratePrevalenceValue: number = 0;
+    let newMinorIntensePrevalenceValue: number = 0;
+    let incompleteInputsError: boolean = false;
+    let nanOrRangeError: boolean = false;
+    let over100Error: boolean = false;
+    let swalText: string = '';
+    if (actualMinorLowPrevalence !== undefined && actualMinorModeratePrevalence !== undefined
+      && actualMinorIntensePrevalence !== undefined && minorModeratePrevalenceInput
+      && minorLowPrevalenceInput && minorIntensePrevalenceInput) {
+      const minorModeratePrevalenceInputValue: string = minorModeratePrevalenceInput.value;
+      const minorLowPrevalenceInputValue: string = minorLowPrevalenceInput.value;
+      const minorIntensePrevalenceInputValue: string = minorIntensePrevalenceInput.value;
+      if (minorModeratePrevalenceInputValue === '') {
+        if (minorLowPrevalenceInputValue === '' || minorIntensePrevalenceInputValue === '') {
+          incompleteInputsError = true;
+        } else {
+          newMinorLowPrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
+          newMinorIntensePrevalenceValue = parseFloat(minorIntensePrevalenceInputValue);
+          // eslint-disable-next-line no-restricted-globals
+          if (isNaN(newMinorLowPrevalenceValue as any) || newMinorLowPrevalenceValue < 0
+          // eslint-disable-next-line no-restricted-globals
+          || newMinorLowPrevalenceValue > 100 || isNaN(newMinorIntensePrevalenceValue as any)
+          || newMinorIntensePrevalenceValue < 0 || newMinorIntensePrevalenceValue > 100) {
+            nanOrRangeError = true;
+          } else {
+            newMinorLowPrevalenceValue = Math.round(newMinorLowPrevalenceValue * 10) / 10;
+            newMinorIntensePrevalenceValue = Math.round(newMinorIntensePrevalenceValue * 10) / 10;
+            const valueSum: number = newMinorLowPrevalenceValue + newMinorIntensePrevalenceValue;
+            if (valueSum > 100) {
+              over100Error = true;
+            } else {
+              newMinorModeratePrevalenceValue = 100 - valueSum;
+            }
+          }
+        }
+      } else if (minorLowPrevalenceInputValue === '') {
+        if (minorIntensePrevalenceInputValue === '') {
+          incompleteInputsError = true;
+        } else {
+          newMinorModeratePrevalenceValue = parseFloat(minorModeratePrevalenceInputValue);
+          newMinorIntensePrevalenceValue = parseFloat(minorIntensePrevalenceInputValue);
+          // eslint-disable-next-line no-restricted-globals
+          if (isNaN(newMinorModeratePrevalenceValue as any) || newMinorModeratePrevalenceValue < 0
+          // eslint-disable-next-line no-restricted-globals
+          || newMinorModeratePrevalenceValue > 100 || isNaN(newMinorIntensePrevalenceValue as any)
+          || newMinorIntensePrevalenceValue < 0 || newMinorIntensePrevalenceValue > 100) {
+            nanOrRangeError = true;
+          } else {
+            newMinorModeratePrevalenceValue = Math.round(newMinorModeratePrevalenceValue * 10) / 10;
+            newMinorIntensePrevalenceValue = Math.round(newMinorIntensePrevalenceValue * 10) / 10;
+            const valueSum: number = newMinorModeratePrevalenceValue
+            + newMinorIntensePrevalenceValue;
+            if (valueSum > 100) {
+              over100Error = true;
+            } else {
+              newMinorLowPrevalenceValue = 100 - valueSum;
+            }
+          }
+        }
+      } else if (minorIntensePrevalenceInputValue === '') {
+        newMinorModeratePrevalenceValue = parseFloat(minorModeratePrevalenceInputValue);
+        newMinorLowPrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(newMinorModeratePrevalenceValue as any) || newMinorModeratePrevalenceValue < 0
+        // eslint-disable-next-line no-restricted-globals
+        || newMinorModeratePrevalenceValue > 100 || isNaN(newMinorLowPrevalenceValue as any)
+        || newMinorLowPrevalenceValue < 0 || newMinorLowPrevalenceValue > 100) {
+          nanOrRangeError = true;
+        } else {
+          newMinorModeratePrevalenceValue = Math.round(newMinorModeratePrevalenceValue * 10) / 10;
+          newMinorLowPrevalenceValue = Math.round(newMinorLowPrevalenceValue * 10) / 10;
+          const valueSum: number = newMinorModeratePrevalenceValue
+          + newMinorLowPrevalenceValue;
+          if (valueSum > 100) {
+            over100Error = true;
+          } else {
+            newMinorIntensePrevalenceValue = 100 - valueSum;
+          }
+        }
+      } else {
+        // no hay ningun campo vacio
+        newMinorModeratePrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
+        newMinorLowPrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
+        newMinorIntensePrevalenceValue = parseFloat(minorIntensePrevalenceInputValue);
+        // eslint-disable-next-line no-restricted-globals
+        if (isNaN(newMinorModeratePrevalenceValue as any) || newMinorModeratePrevalenceValue < 0
+        // eslint-disable-next-line no-restricted-globals
+        || newMinorModeratePrevalenceValue > 100 || isNaN(newMinorLowPrevalenceValue as any)
+        || newMinorLowPrevalenceValue < 0 || newMinorLowPrevalenceValue > 100
+        // eslint-disable-next-line no-restricted-globals
+        || isNaN(newMinorIntensePrevalenceValue as any) || newMinorIntensePrevalenceValue < 0
+        || newMinorIntensePrevalenceValue > 100) {
+          nanOrRangeError = true;
+        } else {
+          newMinorModeratePrevalenceValue = Math.round(newMinorModeratePrevalenceValue * 10) / 10;
+          newMinorLowPrevalenceValue = Math.round(newMinorLowPrevalenceValue * 10) / 10;
+          newMinorIntensePrevalenceValue = Math.round(newMinorIntensePrevalenceValue * 10) / 10;
+          const valueSum: number = newMinorModeratePrevalenceValue
+          + newMinorLowPrevalenceValue + newMinorIntensePrevalenceValue;
+          if (valueSum !== 100) {
+            over100Error = true;
+          }
+        }
+      }
+      if (over100Error || nanOrRangeError || incompleteInputsError) {
+        if (over100Error) {
+          swalText = 'La suma de los tres campos debe ser exactamente 100%';
+        } else if (nanOrRangeError) {
+          swalText = 'Los valores deben ser números entre 0% y 100%';
+        } else {
+          swalText = 'Debe completar por lo menos dos de los campos';
+        }
+        Swal.fire(
+          '¡Error!',
+          swalText,
+        );
+      } else {
+        // todo bien, se confirma
+        swalText = `Los nuevos valores para 'minorLowPrevalence', 'minorModeratePrevalence' y 'minorIntensePrevalence'
+        pasaran a ser ${newMinorLowPrevalenceValue}%, ${newMinorModeratePrevalenceValue}% y ${newMinorIntensePrevalenceValue}%
+        respectivamente.`;
+        const minorLowPrevalenceToModify: DefaultExtraDataDTO = { ...actualMinorLowPrevalence };
+        const minorModeratePrevalenceToModify:
+        DefaultExtraDataDTO = { ...actualMinorModeratePrevalence };
+        const minorIntensePrevalenceToModify:
+        DefaultExtraDataDTO = { ...actualMinorIntensePrevalence };
+        const minorPrevalenceArray: DefaultExtraDataDTO[] = [];
+        minorLowPrevalenceToModify.value = newMinorLowPrevalenceValue;
+        minorModeratePrevalenceToModify.value = newMinorModeratePrevalenceValue;
+        minorIntensePrevalenceToModify.value = newMinorIntensePrevalenceValue;
+        minorPrevalenceArray.push(minorLowPrevalenceToModify);
+        minorPrevalenceArray.push(minorModeratePrevalenceToModify);
+        minorPrevalenceArray.push(minorIntensePrevalenceToModify);
+        const minorPrevalenceInputsArray: HTMLInputElement[] = [];
+        minorPrevalenceInputsArray.push(minorLowPrevalenceInput);
+        minorPrevalenceInputsArray.push(minorModeratePrevalenceInput);
+        minorPrevalenceInputsArray.push(minorIntensePrevalenceInput);
+        this.confirmModify(swalText, minorPrevalenceArray, minorPrevalenceInputsArray);
+      }
+    } else {
+      Swal.fire(
+        '¡Error!',
+        'Hubo un problema.',
+      );
+    }
   }
 }

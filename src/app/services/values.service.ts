@@ -18,7 +18,8 @@ export class ValuesService {
     return this.http.get<any>('http://localhost:8000/parameters');
   }
 
-  modifyParameter(parameter: DefaultWeightDTO | DefaultExtraDataDTO | EquationConstantDTO) {
-    return this.http.put<any>('http://localhost:8000/parameters/parameterUpdate', { parameter });
+  modifyParameter(parameters: DefaultWeightDTO[] | DefaultExtraDataDTO[] | EquationConstantDTO[]) {
+    const { parameterType } = parameters[0];
+    return this.http.put<any>('http://localhost:8000/parameters/parameterUpdate', { parameters, parameterType });
   }
 }
