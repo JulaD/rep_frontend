@@ -604,7 +604,7 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
       } else {
         // no hay ningun campo vacio
-        newMinorModeratePrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
+        newMinorModeratePrevalenceValue = parseFloat(minorModeratePrevalenceInputValue);
         newMinorLowPrevalenceValue = parseFloat(minorLowPrevalenceInputValue);
         newMinorIntensePrevalenceValue = parseFloat(minorIntensePrevalenceInputValue);
         // eslint-disable-next-line no-restricted-globals
