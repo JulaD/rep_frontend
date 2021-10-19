@@ -10,7 +10,7 @@ export class CalculosComponent implements OnInit {
   }
 
   downloadFile(): void {
-    let link = document.createElement('a');
+    const link = document.createElement('a');
     link.download = 'PlantillaEstandar';
     link.href = 'assets/files/planillaEstandar.xlsx';
     link.click();

@@ -8,9 +8,9 @@ describe('AdminRouterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminRouterComponent ]
+      declarations: [AdminRouterComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import { FormControl } from "@angular/forms";
-import { ErrorStateMatcher } from "@angular/material/core";
+import { FormControl } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 export class ShowOnDirtyOrTouchedErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null): boolean {
