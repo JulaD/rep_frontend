@@ -12,8 +12,7 @@ export class ParsedDataService {
 
   getData() : GrupoEtario[] {
     const ret = this.gruposEtarios;
-    // this.gruposEtarios = [];
-    // No queda en el servicio la última plantilla procesada por el usuario
+    this.gruposEtarios = []; // No queda en el servicio la última plantilla procesada por el usuario
     return ret;
   }
 

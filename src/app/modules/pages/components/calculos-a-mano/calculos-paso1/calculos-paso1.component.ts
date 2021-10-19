@@ -8,9 +8,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import FranjaEtaria, { compareFranjaEtaria } from 'src/app/enums/FranjaEtaria';
 import Sexo from 'src/app/enums/Sexo';
 import { GrupoEtario } from 'src/app/models/grupo-etario';
+import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from 'src/app/modules/shared/validators/numbers-validation';
 
 import { step1CantidadSinMedianaValidator } from 'src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive';
+import { step1CantidadesEnCeroValidator } from 'src/app/modules/shared/validators/step1-cantidades-en-cero.directive';
 import { step1TodoVacioValidator } from 'src/app/modules/shared/validators/step1-todo-vacio.directive';
 import { ParsedDataService } from 'src/app/services/parsed-data.service';
 import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
@@ -24,6 +26,17 @@ const masculinoData: GrupoEtario[] = [];
   styleUrls: ['./calculos-paso1.component.css'],
 })
 export class CalculosPaso1Component implements AfterViewInit {
+  stepperLogic = {
+    agesMinorPresent: false,
+    agesAdultPresent: false,
+    agesFemale18To29Present: false,
+    agesFemale30To59Present: false,
+  };
+
+  stepValid: boolean = false;
+
+  matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
+
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
     FranjaEtaria.Meses_1,
@@ -74,9 +87,10 @@ export class CalculosPaso1Component implements AfterViewInit {
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngOnInit() {
-    if (this.parsedDataService.getData()?.length) {
+    const sheetData : GrupoEtario[] = this.parsedDataService.getData();
+    if (sheetData?.length) {
       this.fromTemplate = true;
-      this.initializeTable(this.parsedDataService.getData());
+      this.initializeTable(sheetData);
     }
   }
 
@@ -92,8 +106,9 @@ export class CalculosPaso1Component implements AfterViewInit {
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
     medianaMasculino: new FormControl('', numeroFloatMayorCeroValidator),
   }, {
-    validators: Validators.compose([step1TodoVacioValidator,
-      step1CantidadSinMedianaValidator]),
+    validators: Validators.compose([
+      step1TodoVacioValidator, step1CantidadSinMedianaValidator, step1CantidadesEnCeroValidator,
+    ]),
   });
 
   onSubmit() {
@@ -111,23 +126,25 @@ export class CalculosPaso1Component implements AfterViewInit {
         'ERROR: Ya existen datos ingresados para esta franja etaria', 'Aceptar',
       );
     } else {
-      // Datos Femenino
-      if (this.grupoEtarioForm.get('medianaFemenino')?.value !== '') { // hay datos para agregar a Femenino
+      // Datos Femenino (ignoro datos con cantidad = 0 o vacio)
+      const cantFemenino: number = NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value);
+      if (this.grupoEtarioForm.get('medianaFemenino')?.value !== '' && cantFemenino !== 0) { // hay datos para agregar a Femenino
         const grupoFem : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
           NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value),
+          cantFemenino,
         );
         this.addFem(grupoFem);
       }
-      // Datos Masculino
-      if (this.grupoEtarioForm.get('medianaMasculino')?.value !== '') { // hay datos para agregar a Masculino
+      // Datos Masculino (ignoro datos con cantidad = 0 o vacio)
+      const cantMasculino: number = NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value);
+      if (this.grupoEtarioForm.get('medianaMasculino')?.value !== '' && cantMasculino !== 0) { // hay datos para agregar a Masculino
         const grupoMasc : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
           NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value),
-          NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value),
+          cantMasculino,
         );
         this.addMasc(grupoMasc);
       }
@@ -138,12 +155,16 @@ export class CalculosPaso1Component implements AfterViewInit {
     femeninoData.push(grupo);
     femeninoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceF._updateChangeSubscription();
+    this.stepValid = true;
+    this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
   addMasc(grupo: GrupoEtario) {
     masculinoData.push(grupo);
     masculinoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceM._updateChangeSubscription();
+    this.stepValid = true;
+    this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
   // Boton de borrar datos asociados a FranjaEtaria
@@ -156,13 +177,16 @@ export class CalculosPaso1Component implements AfterViewInit {
     if (indexF > -1) {
       femeninoData.splice(indexF, 1);
       this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
+      this.updateStepperLogicOnRemove(edadSel, Sexo.Femenino);
     }
     // Borro en la tabla femeninoData
     const indexM = masculinoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
     if (indexM > -1) {
       masculinoData.splice(indexM, 1);
       this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
+      this.updateStepperLogicOnRemove(edadSel, Sexo.Masculino);
     }
+    this.stepValid = femeninoData.length > 0 || masculinoData.length > 0;
   } // borrarEdad
 
   // Envio de datos al backend
@@ -210,5 +234,55 @@ export class CalculosPaso1Component implements AfterViewInit {
           break;
       }
     });
+  }
+
+  updateStepperLogicOnInsert(age: FranjaEtaria, sex: Sexo) {
+    if (compareFranjaEtaria(age, FranjaEtaria.Anios_6) >= 0
+      && compareFranjaEtaria(age, FranjaEtaria.Anios_17) <= 0) {
+      this.stepperLogic.agesMinorPresent = true;
+    } else if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) >= 0) {
+      this.stepperLogic.agesAdultPresent = true;
+      if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale18To29Present = true;
+      } else if (compareFranjaEtaria(age, FranjaEtaria.Anios_30_59) === 0
+      && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale30To59Present = true;
+      }
+    }
+  }
+
+  updateStepperLogicOnRemove(age: FranjaEtaria, sex: Sexo) {
+    if (compareFranjaEtaria(age, FranjaEtaria.Anios_6) >= 0
+      && compareFranjaEtaria(age, FranjaEtaria.Anios_17) <= 0) {
+      this.stepperLogic.agesMinorPresent = femeninoData.some((
+        group:GrupoEtario,
+      ) => compareFranjaEtaria(group.edad, FranjaEtaria.Anios_6) >= 0
+          && compareFranjaEtaria(group.edad, FranjaEtaria.Anios_17) <= 0)
+        || masculinoData.some((
+          group: GrupoEtario,
+        ) => compareFranjaEtaria(group.edad, FranjaEtaria.Anios_6) >= 0
+          && compareFranjaEtaria(group.edad, FranjaEtaria.Anios_17) <= 0);
+    } else if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) >= 0) {
+      if (compareFranjaEtaria(age, FranjaEtaria.Anios_18_29) === 0 && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale18To29Present = false;
+      } else if (compareFranjaEtaria(age, FranjaEtaria.Anios_30_59) === 0
+      && sex === Sexo.Femenino) {
+        this.stepperLogic.agesFemale30To59Present = false;
+      }
+      this.stepperLogic.agesAdultPresent = femeninoData.some((
+        group: GrupoEtario,
+      ) => compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0)
+        || masculinoData.some((
+          group: GrupoEtario,
+        ) => compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0);
+    }
+  }
+
+  clearTables() {
+    femeninoData.splice(0, femeninoData.length);
+    this.dataSourceF._updateChangeSubscription();
+
+    masculinoData.splice(0, masculinoData.length);
+    this.dataSourceM._updateChangeSubscription();
   }
 } // component class

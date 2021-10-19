@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  api: 'http://localhost:4321/api',
+  production: false,
+  api: 'http://repweb.duckdns.org:8000',
+  usersApi: 'http://repweb.duckdns.org:3000',
 };

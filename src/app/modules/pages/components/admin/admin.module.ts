@@ -8,6 +8,8 @@ import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizac
 import { AdminComponent } from './admin.component';
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
+import { AdminRouterComponent } from './admin-router/admin-router.component';
+import { AngularMaterialModule } from '../../../../material/angular-material.module';
 
 @NgModule({
   schemas: [
@@ -18,12 +20,14 @@ import { ConfiguracionValoresComponent } from './configuracion-valores/configura
     AutorizacionUsuariosComponent,
     PermisosUsuariosComponent,
     ConfiguracionValoresComponent,
+    AdminRouterComponent,
   ],
   imports: [
     RouterModule,
     // SharedModule,
     CommonModule,
     AdminRoutingModule,
+    AngularMaterialModule,
   ],
 })
 export class AdminModule { }

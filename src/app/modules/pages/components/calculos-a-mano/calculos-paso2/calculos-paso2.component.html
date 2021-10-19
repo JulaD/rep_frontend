@@ -20,45 +20,42 @@
         <div class="step2-af-liviana">
           <mat-form-field appearance="standard">
             <mat-label>Actividad fisica liviana</mat-label>
-            <input matInput formControlName="lowPAL">
+            <input matInput formControlName="lowPAL" [errorStateMatcher]="matcher">
             <mat-hint>
               Ingrese el porcentaje de población que realiza actividad fisica liviana
             </mat-hint>
+            <mat-error *ngIf="minorPALForm.get('lowPAL')?.errors">
+              Debe ingresar un numero entre 0 y 100
+            </mat-error>
           </mat-form-field>
-          <div *ngIf="minorPALForm.get('lowPAL')?.errors"
-            class="mensaje-error">
-            Debe ingresar un numero entre 0 y 100
-          </div>
         </div>
       </div>
       <div class="col">
         <div class="step2-af-moderada">
           <mat-form-field appearance="standard">
             <mat-label>Actividad fisica moderada</mat-label>
-            <input matInput formControlName="moderatePAL">
+            <input matInput formControlName="moderatePAL" [errorStateMatcher]="matcher">
             <mat-hint>
               Ingrese el porcentaje de población que realiza actividad fisica moderada
             </mat-hint>
+            <mat-error *ngIf="minorPALForm.get('moderatePAL')?.errors">
+              Debe ingresar un numero entre 0 y 100
+            </mat-error>
           </mat-form-field>
-          <div *ngIf="minorPALForm.get('moderatePAL')?.errors"
-            class="mensaje-error">
-            Debe ingresar un numero entre 0 y 100
-          </div>
         </div>
       </div>
       <div class="col">
         <div class="step2-af-intensa">
           <mat-form-field appearance="standard">
             <mat-label>Actividad fisica intensa</mat-label>
-            <input matInput formControlName="intensePAL">
+            <input matInput formControlName="intensePAL" [errorStateMatcher]="matcher">
             <mat-hint>
               Ingrese el porcentaje de población que realiza actividad fisica intensa
             </mat-hint>
+            <mat-error *ngIf="minorPALForm.get('intensePAL')?.errors">
+              Debe ingresar un numero entre 0 y 100
+            </mat-error>
           </mat-form-field>
-          <div *ngIf="minorPALForm.get('intensePAL')?.errors"
-            class="mensaje-error">
-            Debe ingresar un numero entre 0 y 100
-          </div>
         </div>
       </div>
     </div>

@@ -8,4 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class CalculosComponent implements OnInit {
   ngOnInit(): void {
   }
+
+  downloadFile(): void {
+    const link = document.createElement('a');
+    link.download = 'PlantillaEstandar';
+    link.href = 'assets/files/planillaEstandar.xlsx';
+    link.click();
+  }
 }
