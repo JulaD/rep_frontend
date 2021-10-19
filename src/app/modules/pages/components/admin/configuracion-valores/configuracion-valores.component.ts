@@ -105,25 +105,25 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
         if (this.nafMinors.length !== 0) {
           if (previousNafMinorId !== '') {
-            const nafMinor = this.getNafById(previousNafMinorId, 'minor');
+            const nafMinor = this.getNafById(previousNafMinorId, 'minors');
             if (nafMinor !== undefined) {
               this.selectedNafMinor = nafMinor;
             }
           } else {
             this.selectedNafMinor = this.nafMinors[0];
           }
-          this.selectedNafMinorMeasurement = this.getMeasurement('minor');
+          this.selectedNafMinorMeasurement = this.getMeasurement('minors');
         }
         if (this.nafAdults.length !== 0) {
           if (previousNafAdultId !== '') {
-            const nafAdult = this.getNafById(previousNafAdultId, 'adult');
+            const nafAdult = this.getNafById(previousNafAdultId, 'adults');
             if (nafAdult !== undefined) {
               this.selectedNafAdult = nafAdult;
             }
           } else {
             this.selectedNafAdult = this.nafAdults[0];
           }
-          this.selectedNafAdultMeasurement = this.getMeasurement('adult');
+          this.selectedNafAdultMeasurement = this.getMeasurement('adults');
         }
         if (this.pregnancyPopulation.length !== 0) {
           if (previousPregnancyPopulationId !== '') {
@@ -155,7 +155,7 @@ export class ConfiguracionValoresComponent implements OnInit {
   getMeasurement(age: string) {
     let naf: DefaultExtraDataDTO;
     let measurement: string;
-    if (age === 'minor') {
+    if (age === 'minors') {
       naf = this.selectedNafMinor;
     } else {
       naf = this.selectedNafAdult;
@@ -471,8 +471,8 @@ export class ConfiguracionValoresComponent implements OnInit {
     }
   }
 
-  confirmModify(textAlert: string, parameterToModify: DefaultExtraDataDTO[] | DefaultWeightDTO[]
-  | EquationConstantDTO[], inputElements: HTMLInputElement[]) {
+  async confirmModify(textAlert: string, parameterToModify: DefaultExtraDataDTO[]
+  | DefaultWeightDTO[] | EquationConstantDTO[], inputElements: HTMLInputElement[]) {
     Swal.fire({
       title: 'Confirmar',
       text: textAlert,
@@ -484,8 +484,6 @@ export class ConfiguracionValoresComponent implements OnInit {
       if (result.isConfirmed) {
         this.valuesService.modifyParameter(parameterToModify).subscribe(
           () => {
-            /* const previousSelectedAgeRangeMen: string = this.selectedWeightMen.ageRange;
-            const previousSelectedAgeRangeWomen: string = this.selectedWeightWomen.ageRange; */
             this.weightsMen = [];
             this.weightsWomen = [];
             this.nafMinors = [];
@@ -496,8 +494,9 @@ export class ConfiguracionValoresComponent implements OnInit {
               // eslint-disable-next-line no-param-reassign
               input.value = '';
             });
-            // this.init(previousSelectedAgeRangeMen, previousSelectedAgeRangeWomen);
-            this.init('', '', '', '', '', '');
+            this.init(this.selectedWeightMen.ageRange, this.selectedWeightWomen.ageRange,
+              this.selectedNafMinor.id, this.selectedNafAdult.id,
+              this.selectedPregnancyPopulation.id, this.selectedPregnancyEnergy.id);
             Swal.fire(
               '¡Éxito!',
               'Se ha modificado el valor.',

@@ -22,7 +22,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectWeightsMen" (click)="changeValue('selectWeightsMen', 'men')">
-                                    <option *ngFor="let weight of weightsMen">{{weight.ageRange}}</option>
+                                    <ng-container *ngFor="let weight of weightsMen"> 
+                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                    </ng-container>
                                 </select>
                             </div>
                             <div class="valor">
@@ -58,7 +61,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectWeightsWomen" (click)="changeValue('selectWeightsWomen', 'women')">
-                                    <option *ngFor="let weight of weightsWomen">{{weight.ageRange}}</option>
+                                    <ng-container *ngFor="let weight of weightsWomen"> 
+                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                    </ng-container>
                                 </select>
                             </div>
                             <div class="valor">
@@ -99,7 +105,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectNafAdults" (click)="changeValue('selectNafAdults', 'adults')">
-                                    <option *ngFor="let naf of nafAdults">{{naf.id}}</option>
+                                    <ng-container *ngFor="let naf of nafAdults"> 
+                                        <option *ngIf="selectedNafAdult.id === naf.id" selected="selected">{{naf.id}}</option>
+                                        <option *ngIf="selectedNafAdult.id !== naf.id">{{naf.id}}</option>
+                                    </ng-container>                                 
                                 </select>
                             </div>
                             <div class="valor">
@@ -137,7 +146,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectNafMinors" (click)="changeValue('selectNafMinors', 'minors')">
-                                    <option *ngFor="let naf of nafMinors">{{naf.id}}</option>
+                                    <ng-container *ngFor="let naf of nafMinors"> 
+                                        <option *ngIf="selectedNafMinor.id === naf.id" selected="selected">{{naf.id}}</option>
+                                        <option *ngIf="selectedNafMinor.id !== naf.id">{{naf.id}}</option>
+                                    </ng-container> 
                                 </select>
                             </div>
                             <div class="valor">
@@ -192,7 +204,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectPregnancyPopulation" (click)="changeValue('selectPregnancyPopulation', 'population')">
-                                    <option *ngFor="let population of pregnancyPopulation">{{population.id}}</option>
+                                    <ng-container *ngFor="let pregnancy of pregnancyPopulation"> 
+                                        <option *ngIf="selectedPregnancyPopulation.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
+                                        <option *ngIf="selectedPregnancyPopulation.id !== pregnancy.id">{{pregnancy.id}}</option>
+                                    </ng-container>                                   
                                 </select>
                             </div>
                             <div (click)="toggleModificar('embarazoPoblacion')" class="modificarBtn">
@@ -231,7 +246,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectPregnancyEnergy" (click)="changeValue('selectPregnancyEnergy', 'energy')">
-                                    <option *ngFor="let energy of pregnancyEnergy">{{energy.id}}</option>
+                                    <ng-container *ngFor="let pregnancy of pregnancyEnergy"> 
+                                        <option *ngIf="selectedPregnancyEnergy.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
+                                        <option *ngIf="selectedPregnancyEnergy.id !== pregnancy.id">{{pregnancy.id}}</option>
+                                    </ng-container>    
                                 </select>
                             </div>
                             <div class="valor">
