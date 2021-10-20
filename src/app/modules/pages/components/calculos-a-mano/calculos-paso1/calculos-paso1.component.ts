@@ -39,7 +39,9 @@ export class CalculosPaso1Component implements AfterViewInit {
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
   defaultWeights: DefaultWeightDTO[] | undefined;
+
   defaultWeightsF: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
+
   defaultWeightsM: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
 
   edades: FranjaEtaria[] = [
@@ -302,16 +304,16 @@ export class CalculosPaso1Component implements AfterViewInit {
         this.defaultWeights = data;
         this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
           if (weight.sex === 'Femenino') {
-            this.defaultWeightsF.set(weight.ageRange, weight.value)
+            this.defaultWeightsF.set(weight.ageRange, weight.value);
           } else if (weight.sex === 'Masculino') {
             this.defaultWeightsM.set(weight.ageRange, weight.value);
           }
-        })
-      })
+        });
+      });
   }
 
   ageSelected(age: FranjaEtaria) {
-    this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age))
-    this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age))
+    this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+    this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
   }
 } // component class
