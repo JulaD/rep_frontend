@@ -7,125 +7,132 @@
   <div class="container">
 
     <!------------------------ 18 A 19 AÑOS ------------------------>
-    <div class="step4-label">
-      Mujeres de 18 a 29 años
-    </div>
-    <!-- DATOS ESPECÍFICAS DEL GRUPO -->
-    <div class="step4-num-embarazos">
-      <mat-form-field appearance="standard">
-        <mat-label>Número de embarazos</mat-label>
-        <input matInput formControlName="embsPrimerFranja" [errorStateMatcher]="matcher">
-        <mat-hint>
-          Ingrese el número de personas embarazadas para este rango
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="step4-num-amamantando">
-      <mat-form-field appearance="standard">
-        <mat-label>Número de personas amamantando</mat-label>
-        <input matInput formControlName="amamPrimerFranja" [errorStateMatcher]="matcher">
-        <mat-hint>
-          Ingrese el número de personas amamantando para este rango
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    
-    <!-- CHECKBOX --> 
-    <div class="step4-check-box">
-      <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
-    </div>
-    <!-- DATOS A PARTIR DE LA NATALIDAD -->
-    <mat-card class="card-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value">
-      <div class="step4-cant-mujeres">
+    <div *ngIf="agesFemale18To29Present; then thenBlock18to29"></div>
+    <ng-template #thenBlock18to29>
+
+      <div class="step4-label">
+        Mujeres de 18 a 29 años
+      </div>
+      <!-- DATOS ESPECÍFICAS DEL GRUPO -->
+      <div class="step4-num-embarazos">
         <mat-form-field appearance="standard">
-          <mat-label>Mujeres entre 18 y 29 años</mat-label>
-          <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
+          <mat-label>Número de embarazos</mat-label>
+          <input matInput formControlName="embsPrimerFranja" [errorStateMatcher]="matcher">
           <mat-hint>
-            Ingrese la población de mujeres del país para este rango etario
+            Ingrese el número de personas embarazadas para este rango
           </mat-hint>
         </mat-form-field>
       </div>
-      <div class="step4-tasa-natalidad">
+      <div class="step4-num-amamantando">
         <mat-form-field appearance="standard">
-          <mat-label>Tasa de natalidad</mat-label>
-          <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
+          <mat-label>Número de personas amamantando</mat-label>
+          <input matInput formControlName="amamPrimerFranja" [errorStateMatcher]="matcher">
           <mat-hint>
-            Ingrese la tasa de natalidad.
-            Por defecto se tomará la tasa de natalidad de Uruguay
+            Ingrese el número de personas amamantando para este rango
           </mat-hint>
         </mat-form-field>
       </div>
-      <div class="step4-pob-total">
-        <mat-form-field appearance="standard">
-          <mat-label>Población total</mat-label>
-          <input matInput formControlName="pobTotPrimerFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de habitantes del país.
-            Por defecto se tomará la población de Uruguay
-          </mat-hint>
-        </mat-form-field>
+      
+      <!-- CHECKBOX --> 
+      <div class="step4-check-box">
+        <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
       </div>
-    </mat-card>
+      <!-- DATOS A PARTIR DE LA NATALIDAD -->
+      <mat-card class="card-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value">
+        <div class="step4-cant-mujeres">
+          <mat-form-field appearance="standard">
+            <mat-label>Mujeres entre 18 y 29 años</mat-label>
+            <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese la población de mujeres del país para este rango etario
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="step4-tasa-natalidad">
+          <mat-form-field appearance="standard">
+            <mat-label>Tasa de natalidad</mat-label>
+            <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese la tasa de natalidad.
+              Por defecto se tomará la tasa de natalidad de Uruguay
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="step4-pob-total">
+          <mat-form-field appearance="standard">
+            <mat-label>Población total</mat-label>
+            <input matInput formControlName="pobTotPrimerFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese el número de habitantes del país.
+              Por defecto se tomará la población de Uruguay
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card>
+    </ng-template>
 
      <!------------------------ 30 A 59 AÑOS ------------------------>
-     <div class="step4-label-2">
-      Mujeres de 30 a 59 años
-    </div>
-    <!-- DATOS ESPECÍFICAS DEL GRUPO -->
-    <div class="step4-num-embarazos-2">
-      <mat-form-field appearance="standard">
-        <mat-label>Número de embarazos</mat-label>
-        <input matInput formControlName="embsSegundaFranja" [errorStateMatcher]="matcher">
-        <mat-hint>
-          Ingrese el número de personas embarazadas para este rango
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div class="step4-num-amamantando-2">
-      <mat-form-field appearance="standard">
-        <mat-label>Número de personas amamantando</mat-label>
-        <input matInput formControlName="amamSegundaFranja" [errorStateMatcher]="matcher">
-        <mat-hint>
-          Ingrese el número de personas amamantando para este rango
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <!-- CHECKBOX --> 
-    <div class="step4-check-box-2">
-      <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
-    </div>
-    <!-- DATOS A PARTIR DE LA NATALIDAD -->
-    <mat-card class="card-2" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value">
-      <div class="step4-cant-mujeres">
+     <div *ngIf="agesFemale30To59Present; then thenBlock30to59"></div>
+     <ng-template #thenBlock30to59>
+      <div class="step4-label-2">
+        Mujeres de 30 a 59 años
+      </div>
+      <!-- DATOS ESPECÍFICAS DEL GRUPO -->
+      <div class="step4-num-embarazos-2">
         <mat-form-field appearance="standard">
-          <mat-label>Mujeres entre 30 y 59 años</mat-label>
-          <input matInput formControlName="cantSegundaFranja" [errorStateMatcher]="matcher">
+          <mat-label>Número de embarazos</mat-label>
+          <input matInput formControlName="embsSegundaFranja" [errorStateMatcher]="matcher">
           <mat-hint>
-            Ingrese la población de mujeres del país para este rango etario
+            Ingrese el número de personas embarazadas para este rango
           </mat-hint>
         </mat-form-field>
       </div>
-      <div class="step4-tasa-natalidad">
+      <div class="step4-num-amamantando-2">
         <mat-form-field appearance="standard">
-          <mat-label>Tasa de natalidad</mat-label>
-          <input matInput formControlName="natSegundaFranja" [errorStateMatcher]="matcher">
+          <mat-label>Número de personas amamantando</mat-label>
+          <input matInput formControlName="amamSegundaFranja" [errorStateMatcher]="matcher">
           <mat-hint>
-            Ingrese la tasa de natalidad.
-            Por defecto se tomará la tasa de natalidad de Uruguay
+            Ingrese el número de personas amamantando para este rango
           </mat-hint>
         </mat-form-field>
       </div>
-      <div class="step4-pob-total">
-        <mat-form-field appearance="standard">
-          <mat-label>Población total</mat-label>
-          <input matInput formControlName="pobTotSegundaFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de habitantes del país.
-            Por defecto se tomará la población de Uruguay
-          </mat-hint>
-        </mat-form-field>
+      <!-- CHECKBOX --> 
+      <div class="step4-check-box-2">
+        <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
       </div>
-    </mat-card>
+      <!-- DATOS A PARTIR DE LA NATALIDAD -->
+      <mat-card class="card-2" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value">
+        <div class="step4-cant-mujeres">
+          <mat-form-field appearance="standard">
+            <mat-label>Mujeres entre 30 y 59 años</mat-label>
+            <input matInput formControlName="cantSegundaFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese la población de mujeres del país para este rango etario
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="step4-tasa-natalidad">
+          <mat-form-field appearance="standard">
+            <mat-label>Tasa de natalidad</mat-label>
+            <input matInput formControlName="natSegundaFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese la tasa de natalidad.
+              Por defecto se tomará la tasa de natalidad de Uruguay
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="step4-pob-total">
+          <mat-form-field appearance="standard">
+            <mat-label>Población total</mat-label>
+            <input matInput formControlName="pobTotSegundaFranja" [errorStateMatcher]="matcher">
+            <mat-hint>
+              Ingrese el número de habitantes del país.
+              Por defecto se tomará la población de Uruguay
+            </mat-hint>
+          </mat-form-field>
+        </div>
+      </mat-card>
+    </ng-template>
   </div>
 </form>
 

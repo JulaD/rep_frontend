@@ -1,6 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { FranjaEtaria } from '../enums/FranjaEtaria';
 import CalculatorResponse from '../interfaces/CalculatorResponseDTO';
 
 @Injectable({

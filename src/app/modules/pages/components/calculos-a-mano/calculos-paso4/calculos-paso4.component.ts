@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
@@ -12,9 +12,13 @@ import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroVali
   templateUrl: './calculos-paso4.component.html',
   styleUrls: ['./calculos-paso4.component.css'],
 })
-export class CalculosPaso4Component {
+export class CalculosPaso4Component implements OnInit {
+  @Input() defaultMaternity18to29: PopulationMaternity;
+  @Input() defaultMaternity30to59: PopulationMaternity;
   @Input() agesFemale18To29Present: boolean;
   @Input() agesFemale30To59Present: boolean;
+
+  ngOnInit() { this.loadDefaultData() }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -111,5 +115,14 @@ export class CalculosPaso4Component {
     maternity30to59: maternity30to59};
     return maternity
   }
+  
+  loadDefaultData() {
+    this.materYLactanciaForm.get('cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
+    this.materYLactanciaForm.get('pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
+    this.materYLactanciaForm.get('natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
 
+    this.materYLactanciaForm.get('cantSegundaFranja')?.setValue(this.defaultMaternity30to59.countryWomenInAgeGroup);
+    this.materYLactanciaForm.get('pobTotSegundaFranja')?.setValue(this.defaultMaternity30to59.countryPopulation);
+    this.materYLactanciaForm.get('natSegundaFranja')?.setValue(this.defaultMaternity30to59.countryBirthRate);
+  }
 }

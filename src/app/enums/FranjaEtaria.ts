@@ -1,4 +1,4 @@
-export enum FranjaEtaria {
+enum FranjaEtaria {
   Meses_0 = "0 meses",
   Meses_1 = "1 meses",
   Meses_2 = "2 meses",
@@ -32,6 +32,7 @@ export enum FranjaEtaria {
   Anios_30_59 = "30-59 años",
   Anios_60_mas = "60+ años"
 }
+export default FranjaEtaria;
 
 const franjaEtariaOrder = Object.values(FranjaEtaria);
 /*

@@ -1,21 +1,20 @@
-import { Breakpoints } from "@angular/cdk/layout";
 import { Component, AfterViewInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import {MatPaginator} from '@angular/material/paginator';
 import { MatSnackBar } from "@angular/material/snack-bar";
 import {MatTableDataSource} from '@angular/material/table';
-import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria";
-import { Sexo } from "src/app/enums/Sexo";
+import FranjaEtaria, { compareFranjaEtaria } from "src/app/enums/FranjaEtaria";
+import Sexo from "src/app/enums/Sexo";
+import DefaultWeightDTO from "src/app/interfaces/DefaultWeightDTO";
 import { GrupoEtario } from "src/app/models/grupo-etario";
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from "src/app/modules/shared/dirty-or-touched-error-state-matcher";
 import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from "src/app/modules/shared/validators/numbers-validation";
-
 
 import { step1CantidadSinMedianaValidator } from "src/app/modules/shared/validators/step1-cantidad-sin-mediana.directive";
 import { step1CantidadesEnCeroValidator } from "src/app/modules/shared/validators/step1-cantidades-en-cero.directive";
 import { step1TodoVacioValidator } from "src/app/modules/shared/validators/step1-todo-vacio.directive";
 import { ParsedDataService } from "src/app/services/parsed-data.service";
-import { AgeGroupJSON } from "src/app/services/rest/rest.service";
+import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 
 
 const femeninoData: GrupoEtario[] = []
@@ -38,6 +37,10 @@ export class CalculosPaso1Component implements AfterViewInit {
   stepValid: boolean = false;
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
+
+  defaultWeights: DefaultWeightDTO[] | undefined;
+  defaultWeightsF: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
+  defaultWeightsM: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
 
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
@@ -74,7 +77,11 @@ export class CalculosPaso1Component implements AfterViewInit {
     FranjaEtaria.Anios_60_mas
   ];
 
-  constructor(private _snackBar: MatSnackBar, private parsedDataService : ParsedDataService) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private parsedDataService : ParsedDataService,
+    public rest: RestService,
+  ) {}
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
   dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
@@ -91,6 +98,7 @@ export class CalculosPaso1Component implements AfterViewInit {
       this.fromTemplate = true;
       this.initializeTable(sheetData);
     }
+    this.processDefaultWeights();
   }
 
   ngAfterViewInit() {
@@ -291,5 +299,24 @@ export class CalculosPaso1Component implements AfterViewInit {
 
     masculinoData.splice(0, masculinoData.length);
     this.dataSourceM._updateChangeSubscription();
+  }
+
+  processDefaultWeights() {
+    this.rest.getDefaultWeights()
+      .subscribe((data) => {
+        this.defaultWeights = data;
+        this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
+          if (weight.sex === 'Femenino') {
+            this.defaultWeightsF.set(weight.ageRange, weight.value)
+          } else if (weight.sex === 'Masculino') {
+            this.defaultWeightsM.set(weight.ageRange, weight.value);
+          }
+        })
+      })
+  }
+
+  ageSelected(age: FranjaEtaria) {
+    this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age))
+    this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age))
   }
 } // component class

@@ -2,9 +2,10 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
+import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
-import Maternity from 'src/app/interfaces/MaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
+import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
@@ -22,6 +23,26 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
 })
 export class StepperComponent implements OnInit, OnDestroy {
   isLinear: boolean = false;
+  defaultExtraData: DefaultExtraDataDTO[];
+  defaultMinorPal: MinorPAL = {lowPALPrevalence: 0, moderatePALPrevalence: 0, intensePALPrevalence: 0};
+  defaultAdultPal: AdultPAL = {
+    urbanPercentage: 0,
+    ruralPercentage: 0,
+    lowRuralPAL: 0,
+    activeRuralPAL: 0,
+    lowUrbanPAL: 0,
+    activeUrbanPAL: 0
+  };
+  defaultMaternity18to29: PopulationMaternity = {
+    countryBirthRate: 0,
+    countryPopulation: 0,
+    countryWomenInAgeGroup: 0
+  };
+  defaultMaternity30to59: PopulationMaternity = {
+    countryBirthRate: 0,
+    countryPopulation: 0,
+    countryWomenInAgeGroup: 0
+  };
 
   @ViewChild(CalculosPaso1Component)
   private step1Access: CalculosPaso1Component
@@ -35,7 +56,7 @@ export class StepperComponent implements OnInit, OnDestroy {
   @ViewChild(CalculosPaso4Component)
   private step4Access: CalculosPaso4Component
 
-  ngOnInit() { }
+  ngOnInit() { this.processExtraData() }
   
   ngOnDestroy() {
     // al salir del stepper, vacio las tablas
@@ -106,7 +127,79 @@ export class StepperComponent implements OnInit, OnDestroy {
     return step1Valid && step2Valid && step3Valid && step4Valid;
   }
 
-  checkDefaultValues() {
-    this.rest.processDefaultWeights();
+  processNAFMenores(extraData: DefaultExtraDataDTO) {
+    switch (extraData.id) {
+      case 'minorLowPrevalence':
+        this.defaultMinorPal.lowPALPrevalence = extraData.value;
+      break;
+      case 'minorModeratePrevalence':
+        this.defaultMinorPal.moderatePALPrevalence = extraData.value;
+      break;
+      case 'minorIntensePrevalence':
+        this.defaultMinorPal.intensePALPrevalence = extraData.value;
+      break;
+    }
+  }
+
+  processNAFAdultos(extraData: DefaultExtraDataDTO) {
+    switch (extraData.id) {
+      case 'ruralPopulation':
+        this.defaultAdultPal.ruralPercentage = extraData.value;
+      break;
+      case 'urbanPopulation':
+        this.defaultAdultPal.urbanPercentage = extraData.value;
+      break;
+      case 'ruralActivePALPercentage':
+        this.defaultAdultPal.activeRuralPAL = extraData.value;
+      break;
+      case 'ruralLowPALPercentage':
+        this.defaultAdultPal.lowRuralPAL = extraData.value;
+      break;
+      case 'urbanActivePALPercentage':
+        this.defaultAdultPal.activeUrbanPAL = extraData.value;
+      break;
+      case 'urbanLowPALPercentage':
+        this.defaultAdultPal.lowUrbanPAL = extraData.value;
+      break;
+    }
+  }
+
+  processMaternity(extraData: DefaultExtraDataDTO) {
+    switch (extraData.id) {
+      case '18to29FemaleCountryPopulation':
+        this.defaultMaternity18to29.countryWomenInAgeGroup = extraData.value;
+      break;
+      case '30to59FemaleCountryPopulation':
+        this.defaultMaternity30to59.countryWomenInAgeGroup = extraData.value;
+      break;
+      case 'birthRate':
+        this.defaultMaternity18to29.countryBirthRate = extraData.value;
+        this.defaultMaternity30to59.countryBirthRate = extraData.value;
+      break;
+      case 'countryPopulation':
+        this.defaultMaternity18to29.countryPopulation = extraData.value;
+        this.defaultMaternity30to59.countryPopulation = extraData.value;
+      break;
+    }
+  }
+
+  processExtraData() {
+    this.rest.getDefaultExtraData()
+      .subscribe((data) => {
+        this.defaultExtraData = data;
+        this.defaultExtraData?.forEach((extraData: DefaultExtraDataDTO) => {
+          switch (extraData.parameterType) {
+            case 'NAF Menores':
+              this.processNAFMenores(extraData);
+            break;
+            case 'NAF Adultos':
+              this.processNAFAdultos(extraData);
+            break;
+            case 'Embarazo y lactancia':
+              this.processMaternity(extraData);
+            break;
+          }
+        })
+      })
   }
 }

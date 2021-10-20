@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Sexo } from '../enums/Sexo';
 import { GrupoEtario } from '../models/grupo-etario';
 
 @Injectable({

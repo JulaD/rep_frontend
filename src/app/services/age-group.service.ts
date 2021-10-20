@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FranjaEtaria } from '../enums/FranjaEtaria';
+import FranjaEtaria from '../enums/FranjaEtaria';
 
 @Injectable({
   providedIn: 'root'

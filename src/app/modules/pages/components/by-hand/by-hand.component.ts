@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GrupoEtario } from "src/app/models/grupo-etario"
-import { compareFranjaEtaria, FranjaEtaria } from "src/app/enums/FranjaEtaria"
-import { Sexo } from "src/app/enums/Sexo";
+import FranjaEtaria,{ compareFranjaEtaria } from "src/app/enums/FranjaEtaria"
+import Sexo from "src/app/enums/Sexo";
 import { AgeGroupJSON, RestService } from "src/app/services/rest/rest.service";
 import { Router } from "@angular/router";
 import { AgeGroupService } from "src/app/services/age-group.service";

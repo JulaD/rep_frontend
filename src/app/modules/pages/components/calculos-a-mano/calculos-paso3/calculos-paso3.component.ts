@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
@@ -17,9 +17,12 @@ const percentageValidators: ValidatorFn[] = [
   templateUrl: './calculos-paso3.component.html',
   styleUrls: ['./calculos-paso3.component.css'],
 })
-export class CalculosPaso3Component {
+export class CalculosPaso3Component implements OnInit {
+  @Input() defaultAdultPal: AdultPAL;
 
   constructor() {}
+
+  ngOnInit() { this.loadDefaultData() }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -64,5 +67,14 @@ export class CalculosPaso3Component {
       lowRuralPAL: lowRuralPAL}
   
     return adultPALData
+  }
+
+  loadDefaultData() {
+    this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
+    this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);
+    this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(this.defaultAdultPal.activeRuralPAL);
+    this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(this.defaultAdultPal.lowRuralPAL);
+    this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(this.defaultAdultPal.activeUrbanPAL);
+    this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(this.defaultAdultPal.lowUrbanPAL);
   }
 }

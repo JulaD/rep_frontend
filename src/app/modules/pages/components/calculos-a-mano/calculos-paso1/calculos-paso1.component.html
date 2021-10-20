@@ -19,7 +19,7 @@
             <mat-form-field appearance="standard">
               <mat-label>Edad</mat-label>
               <mat-select formControlName="edad" [errorStateMatcher]="matcher">
-                <mat-option *ngFor="let edad of edades" [value]="edad">
+                <mat-option *ngFor="let edad of edades" [value]="edad" (click)="ageSelected(edad)">
                   {{edad}}
                 </mat-option>
               </mat-select>
