@@ -52,7 +52,7 @@ section .fijo {
   width: 90vw;
   height: 120px;
   max-width: 1000px;
-  top: 90px;
+  top: 100px;
 }
 section .fijo .titulo {
   position: relative;
@@ -83,7 +83,7 @@ section .acordeon {
   flex-direction: column;
   max-width: 800px;
   width: 95vw;
-  top: 220px;
+  top: 240px;
 }
 section .acordeon .contenidoBx {
   position: relative;
@@ -225,6 +225,37 @@ section .acordeon .subcontenido .grid {
   grid-template-columns: 45% 55%;
   grid-template-rows: 50px;
 }
+section .acordeon .subcontenido #populationGrid {
+  grid-template-columns: 100%;
+}
+section .acordeon .subcontenido #populationGrid .valor {
+  justify-content: center;
+  margin-top: 10px;
+}
+section .acordeon .subcontenido #populationGrid .medida {
+  display: flex;
+  position: relative;
+  justify-content: right;
+  height: 50px;
+  margin-right: 20px;
+}
+section .acordeon .subcontenido #populationGrid .medida h1 {
+  position: relative;
+  font-size: 70px;
+  top: -20px;
+  letter-spacing: 0px;
+  font-weight: 700;
+  color: #3fb1b5;
+  pointer-events: none;
+}
+section .acordeon .subcontenido #populationGrid .modificarBtn {
+  width: 70%;
+  left: 15%;
+}
+section .acordeon .subcontenido #populationGrid .dropdown {
+  width: 70%;
+  left: 15%;
+}
 section .acordeon .subcontenidoBx.active .subcontenido {
   height: auto;
   transform: translateX(0);
@@ -247,6 +278,36 @@ section .acordeon .subcontenido .dropdown select {
   font-size: 20px;
   outline: none;
   cursor: pointer;
+}
+#selectWeightsWomen {
+  text-transform: uppercase;
+}
+#selectWeightsWomen option {
+  text-transform: uppercase;
+}
+#selectWeightsMen {
+  text-transform: uppercase;
+}
+#selectWeightsMen option {
+  text-transform: uppercase;
+}
+#selectNafMinors {
+  font-size: 16.5px;
+}
+#selectNafMinors option {
+  font-size: 19px;
+}
+#selectNafAdults {
+  font-size: 16.5px;
+}
+#selectNafAdults option {
+  font-size: 19px;
+}
+#selectPregnancyEnergy {
+  font-size: 16px;
+}
+#selectPregnancyEnergy option {
+  font-size: 19px;
 }
 section .acordeon .subcontenido .dropdown:before {
   content: "";
@@ -274,10 +335,9 @@ section .acordeon .subcontenido .dropdown svg {
 }
 section .acordeon .subcontenido .valor {
   display: flex;
-  justify-content: center;
   position: relative;
   height: 100px;
-  padding: 0;
+  padding-left: 15px;
 }
 section .acordeon .subcontenido .valor h1 {
   position: relative;
@@ -369,6 +429,18 @@ section .acordeon .subcontenido .modificar input {
   outline: none;
   text-align: center;
 }
+#minorPrevalenceInputs h1 {
+  left: initial;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+#minorPrevalenceInputs h2 {
+  position: relative;
+  color: #3f51b5;
+  left: -60px;
+  margin-top: 5px;
+  font-size: 25px;
+}
 section .acordeon .subcontenido .modificar .confirmarBtn {
   display: flex;
   justify-content: center;
@@ -388,18 +460,15 @@ section .acordeon .subcontenido .modificar .confirmarBtn {
   transition: 0.2s;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn:hover {
-  width: 85%;
-  max-width: 200px;
-  background: #03a165;
+  background: #09a368;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn span {
-  font-size: 20px;
   letter-spacing: 4px;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 section .acordeon .subcontenido .modificar .confirmarBtn:hover span {
-  font-size: 20px;
-  letter-spacing: 6px;
+  font-size: 16px;
+  letter-spacing: 5px;
 }
 section .acordeon .subcontenido .modificar input::placeholder {
   color: #ccfdff;
@@ -436,11 +505,31 @@ section .acordeon .subcontenido .modificar input::placeholder {
     grid-template-rows: 50px 130px 50px;
     left: 5%;
   }
-  section .acordeon .subcontenido .valor h1 {
-    bottom: -40px;
+  section .acordeon .subcontenido #populationGrid {
+    grid-template-columns: 100%;
+    grid-template-rows: 50px;
+    left: 0%;
+  }
+  section .acordeon .subcontenido #populationGrid .dropdown {
+    width: 90%;
+    left: 5%;
+  }
+  section .acordeon .subcontenido #populationGrid .modificarBtn {
+    width: 90%;
+    left: 5%;
+  }
+  section .acordeon .subcontenido #populationGrid .valor h1 {
+    top: -15px;
   }
   section .acordeon .subcontenido .valor h1 {
-    top: -15px;
+    top: -10px;
+  }
+  section .acordeon .subcontenido .valor {
+    justify-content: center;
+    padding-left: 0px;
+  }
+  #minorPrevalenceInputs h2 {
+    left: 0px;
   }
 }
 @media (max-width: 430px) {

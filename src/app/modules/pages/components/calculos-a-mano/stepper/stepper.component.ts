@@ -1,5 +1,7 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component, OnDestroy, OnInit, ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
@@ -18,8 +20,8 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
-  }]
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true },
+  }],
 })
 export class StepperComponent implements OnInit, OnDestroy {
   isLinear: boolean = false;
@@ -45,16 +47,16 @@ export class StepperComponent implements OnInit, OnDestroy {
   };
 
   @ViewChild(CalculosPaso1Component)
-  private step1Access: CalculosPaso1Component
+  private step1Access: CalculosPaso1Component;
 
   @ViewChild(CalculosPaso2Component)
-  private step2Access: CalculosPaso2Component
+  private step2Access: CalculosPaso2Component;
 
   @ViewChild(CalculosPaso3Component)
-  private step3Access: CalculosPaso3Component
+  private step3Access: CalculosPaso3Component;
 
   @ViewChild(CalculosPaso4Component)
-  private step4Access: CalculosPaso4Component
+  private step4Access: CalculosPaso4Component;
 
   ngOnInit() { this.processExtraData() }
   
@@ -66,16 +68,16 @@ export class StepperComponent implements OnInit, OnDestroy {
   constructor(
     public rest: RestService,
     private resultsService: ResultsService,
-    private router: Router
+    private router: Router,
   ) {}
 
   onSubmit(): void {
-    let extraData: ExtraData = {
+    const extraData: ExtraData = {
       minorPAL: undefined,
       adultPAL: undefined,
       maternity18To29: undefined,
-      maternity30To59: undefined
-    }
+      maternity30To59: undefined,
+    };
 
     const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
 
@@ -85,8 +87,8 @@ export class StepperComponent implements OnInit, OnDestroy {
     if (this.step1Access.stepperLogic.agesAdultPresent) {
       extraData.adultPAL = this.step3Access.sendData();
     }
-    if (this.step1Access.stepperLogic.agesFemale18To29Present ||
-      this.step1Access.stepperLogic.agesFemale30To59Present) {
+    if (this.step1Access.stepperLogic.agesFemale18To29Present
+      || this.step1Access.stepperLogic.agesFemale30To59Present) {
       const step4Data = this.step4Access.sendData();
       if (this.step1Access.stepperLogic.agesFemale18To29Present) {
         extraData.maternity18To29 = step4Data.maternity18to29;
@@ -95,20 +97,20 @@ export class StepperComponent implements OnInit, OnDestroy {
         extraData.maternity30To59 = step4Data.maternity30to59;
       }
     }
-      
+
     this.rest.addCalculation(step1Data, extraData)
       .subscribe((result) => {
         this.resultsService
           .setData(result);
         this.router
           .navigate(['/result']);
-    }, (err) => {
-      console.log(err);
-    });
+      }, (err) => {
+        console.log(err);
+      });
   }
 
   isStepperValid(): boolean {
-    const step1Valid: boolean = this.step1Access? this.step1Access.stepValid : false;
+    const step1Valid: boolean = this.step1Access ? this.step1Access.stepValid : false;
     let step2Valid: boolean = true;
     let step3Valid: boolean = true;
     let step4Valid: boolean = true;
@@ -119,9 +121,9 @@ export class StepperComponent implements OnInit, OnDestroy {
       if (this.step1Access.stepperLogic.agesAdultPresent) {
         step3Valid = this.step3Access?.adultPALForm.valid;
       }
-      if (this.step1Access.stepperLogic.agesFemale18To29Present ||
-        this.step1Access.stepperLogic.agesFemale30To59Present) {
-        step4Valid = this.step4Access?.materYLactanciaForm.valid
+      if (this.step1Access.stepperLogic.agesFemale18To29Present
+        || this.step1Access.stepperLogic.agesFemale30To59Present) {
+        step4Valid = this.step4Access?.materYLactanciaForm.valid;
       }
     }
     return step1Valid && step2Valid && step3Valid && step4Valid;

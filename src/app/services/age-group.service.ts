@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import FranjaEtaria from '../enums/FranjaEtaria';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AgeGroupService {
-
   edades: FranjaEtaria[] = [
     FranjaEtaria.Meses_0,
     FranjaEtaria.Meses_1,
@@ -38,11 +37,10 @@ export class AgeGroupService {
     FranjaEtaria.Anios_17,
     FranjaEtaria.Anios_18_29,
     FranjaEtaria.Anios_30_59,
-    FranjaEtaria.Anios_60_mas
+    FranjaEtaria.Anios_60_mas,
   ];
 
   getAgeGroups(): FranjaEtaria[] {
     return this.edades;
   }
-
 }

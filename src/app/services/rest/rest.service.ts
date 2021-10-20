@@ -13,22 +13,21 @@ export interface AgeGroupJSON {
   population: number;
 }
 
-const api: string = environment.api;
+const { api } = environment;
 const endpoint = `${api}`;
 const serviceCalc = '/repCalculator';
 const serviceWeights = '/parameters/weights'
 const serviceExtraData = '/parameters/extraData'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestService {
-
   constructor(private http: HttpClient) { }
 
   addCalculation(groups: AgeGroupJSON[], extraData: ExtraData): Observable<any> {
-    return this.http.post(endpoint + serviceCalc, {groups: groups, extraData: extraData}).pipe(
-      catchError(this.handleError)
+    return this.http.post(endpoint + serviceCalc, { groups, extraData }).pipe(
+      catchError(this.handleError),
     );
   }
 
@@ -45,11 +44,12 @@ export class RestService {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Backend returned code ${error.status}, ` +
-        `body was: ${error.error}`);
+        `Backend returned code ${error.status}, `
+        + `body was: ${error.error}`,
+      );
     }
     return throwError(
-      'Something bad happened; please try again later.');
+      'Something bad happened; please try again later.',
+    );
   }
 }
-
