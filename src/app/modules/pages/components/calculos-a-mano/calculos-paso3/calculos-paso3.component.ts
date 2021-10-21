@@ -12,7 +12,8 @@ import { step3UrbanSuman100Validator } from 'src/app/modules/shared/validators/s
 const percentageValidators: ValidatorFn[] = [
   numeroFloatValidator,
   Validators.min(0),
-  Validators.max(100)];
+  Validators.max(100),
+];
 
 @Component({
   selector: 'app-calculos-paso3',
@@ -22,9 +23,7 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso3Component implements OnInit {
   @Input() defaultAdultPal: AdultPAL;
 
-  constructor() {}
-
-  ngOnInit() { this.loadDefaultData() }
+  ngOnInit() { this.loadDefaultValues(); }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -77,7 +76,7 @@ export class CalculosPaso3Component implements OnInit {
     return adultPALData;
   }
 
-  loadDefaultData() {
+  loadDefaultValues() {
     this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
     this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);
     this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(this.defaultAdultPal.activeRuralPAL);

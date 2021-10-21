@@ -25,25 +25,34 @@ import { CalculosPaso4Component } from '../calculos-paso4/calculos-paso4.compone
 })
 export class StepperComponent implements OnInit, OnDestroy {
   isLinear: boolean = false;
+
   defaultExtraData: DefaultExtraDataDTO[];
-  defaultMinorPal: MinorPAL = {lowPALPrevalence: 0, moderatePALPrevalence: 0, intensePALPrevalence: 0};
+
+  defaultMinorPal: MinorPAL = {
+    lowPALPrevalence: 0,
+    moderatePALPrevalence: 0,
+    intensePALPrevalence: 0,
+  };
+
   defaultAdultPal: AdultPAL = {
     urbanPercentage: 0,
     ruralPercentage: 0,
     lowRuralPAL: 0,
     activeRuralPAL: 0,
     lowUrbanPAL: 0,
-    activeUrbanPAL: 0
+    activeUrbanPAL: 0,
   };
+
   defaultMaternity18to29: PopulationMaternity = {
     countryBirthRate: 0,
     countryPopulation: 0,
-    countryWomenInAgeGroup: 0
+    countryWomenInAgeGroup: 0,
   };
+
   defaultMaternity30to59: PopulationMaternity = {
     countryBirthRate: 0,
     countryPopulation: 0,
-    countryWomenInAgeGroup: 0
+    countryWomenInAgeGroup: 0,
   };
 
   @ViewChild(CalculosPaso1Component)
@@ -58,8 +67,8 @@ export class StepperComponent implements OnInit, OnDestroy {
   @ViewChild(CalculosPaso4Component)
   private step4Access: CalculosPaso4Component;
 
-  ngOnInit() { this.processExtraData() }
-  
+  ngOnInit() { this.processExtraData(); }
+
   ngOnDestroy() {
     // al salir del stepper, vacio las tablas
     this.step1Access.clearTables();
@@ -133,13 +142,15 @@ export class StepperComponent implements OnInit, OnDestroy {
     switch (extraData.id) {
       case 'minorLowPrevalence':
         this.defaultMinorPal.lowPALPrevalence = extraData.value;
-      break;
+        break;
       case 'minorModeratePrevalence':
         this.defaultMinorPal.moderatePALPrevalence = extraData.value;
-      break;
+        break;
       case 'minorIntensePrevalence':
         this.defaultMinorPal.intensePALPrevalence = extraData.value;
-      break;
+        break;
+      default:
+        break;
     }
   }
 
@@ -147,22 +158,24 @@ export class StepperComponent implements OnInit, OnDestroy {
     switch (extraData.id) {
       case 'ruralPopulation':
         this.defaultAdultPal.ruralPercentage = extraData.value;
-      break;
+        break;
       case 'urbanPopulation':
         this.defaultAdultPal.urbanPercentage = extraData.value;
-      break;
+        break;
       case 'ruralActivePALPercentage':
         this.defaultAdultPal.activeRuralPAL = extraData.value;
-      break;
+        break;
       case 'ruralLowPALPercentage':
         this.defaultAdultPal.lowRuralPAL = extraData.value;
-      break;
+        break;
       case 'urbanActivePALPercentage':
         this.defaultAdultPal.activeUrbanPAL = extraData.value;
-      break;
+        break;
       case 'urbanLowPALPercentage':
         this.defaultAdultPal.lowUrbanPAL = extraData.value;
-      break;
+        break;
+      default:
+        break;
     }
   }
 
@@ -170,18 +183,20 @@ export class StepperComponent implements OnInit, OnDestroy {
     switch (extraData.id) {
       case '18to29FemaleCountryPopulation':
         this.defaultMaternity18to29.countryWomenInAgeGroup = extraData.value;
-      break;
+        break;
       case '30to59FemaleCountryPopulation':
         this.defaultMaternity30to59.countryWomenInAgeGroup = extraData.value;
-      break;
+        break;
       case 'birthRate':
         this.defaultMaternity18to29.countryBirthRate = extraData.value;
         this.defaultMaternity30to59.countryBirthRate = extraData.value;
-      break;
+        break;
       case 'countryPopulation':
         this.defaultMaternity18to29.countryPopulation = extraData.value;
         this.defaultMaternity30to59.countryPopulation = extraData.value;
-      break;
+        break;
+      default:
+        break;
     }
   }
 
@@ -193,15 +208,17 @@ export class StepperComponent implements OnInit, OnDestroy {
           switch (extraData.parameterType) {
             case 'NAF Menores':
               this.processNAFMenores(extraData);
-            break;
+              break;
             case 'NAF Adultos':
               this.processNAFAdultos(extraData);
-            break;
+              break;
             case 'Embarazo y lactancia':
               this.processMaternity(extraData);
-            break;
+              break;
+            default:
+              break;
           }
-        })
-      })
+        });
+      });
   }
 }

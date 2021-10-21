@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 import { environment } from 'src/environments/environment';
-import DefaultWeightDTO from 'src/app/interfaces/DefaultWeightDTO';
 
 export interface AgeGroupJSON {
   age: string;
@@ -16,8 +15,8 @@ export interface AgeGroupJSON {
 const { api } = environment;
 const endpoint = `${api}`;
 const serviceCalc = '/repCalculator';
-const serviceWeights = '/parameters/weights'
-const serviceExtraData = '/parameters/extraData'
+const serviceWeights = '/parameters/weights';
+const serviceExtraData = '/parameters/extraData';
 
 @Injectable({
   providedIn: 'root',
