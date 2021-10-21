@@ -20,6 +20,8 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso2Component implements OnInit {
   @Input() defaultMinorPal: MinorPAL;
 
+  @Input() defaultExtraDataAvailable: boolean;
+
   ngOnInit() { this.loadDefaultValues(); }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
@@ -45,8 +47,10 @@ export class CalculosPaso2Component implements OnInit {
   }
 
   loadDefaultValues() {
-    this.minorPALForm.get('lowPAL')?.setValue(this.defaultMinorPal.lowPALPrevalence);
-    this.minorPALForm.get('moderatePAL')?.setValue(this.defaultMinorPal.moderatePALPrevalence);
-    this.minorPALForm.get('intensePAL')?.setValue(this.defaultMinorPal.intensePALPrevalence);
+    if (this.defaultExtraDataAvailable) {
+      this.minorPALForm.get('lowPAL')?.setValue(this.defaultMinorPal.lowPALPrevalence);
+      this.minorPALForm.get('moderatePAL')?.setValue(this.defaultMinorPal.moderatePALPrevalence);
+      this.minorPALForm.get('intensePAL')?.setValue(this.defaultMinorPal.intensePALPrevalence);
+    }
   }
 }

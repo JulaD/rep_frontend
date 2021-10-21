@@ -3,7 +3,7 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import FranjaEtaria, { compareFranjaEtaria } from 'src/app/enums/FranjaEtaria';
 import Sexo from 'src/app/enums/Sexo';
@@ -44,10 +44,13 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   defaultWeightsM: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
 
+  defaultWeightsAvailable: boolean = false;
+
   edades: FranjaEtaria[] = Object.values(FranjaEtaria);
 
   constructor(
-    private _snackBar: MatSnackBar,
+    private errorSnackBar: MatSnackBar,
+    private repetidoSnackBar: MatSnackBar,
     private parsedDataService : ParsedDataService,
     public rest: RestService,
   ) {}
@@ -101,7 +104,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     }
     if (repetido) {
       // presento mensaje de error
-      this._snackBar.open(
+      this.repetidoSnackBar.open(
         'ERROR: Ya existen datos ingresados para esta franja etaria', 'Aceptar',
       );
     } else {
@@ -267,20 +270,33 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   processDefaultWeights() {
     this.rest.getDefaultWeights()
-      .subscribe((data) => {
-        this.defaultWeights = data;
-        this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
-          if (weight.sex === 'Femenino') {
-            this.defaultWeightsF.set(weight.ageRange, weight.value);
-          } else if (weight.sex === 'Masculino') {
-            this.defaultWeightsM.set(weight.ageRange, weight.value);
-          }
-        });
-      });
+      .subscribe(
+        (data) => {
+          this.defaultWeightsAvailable = true;
+          this.defaultWeights = data;
+          this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
+            if (weight.sex === 'Femenino') {
+              this.defaultWeightsF.set(weight.ageRange, weight.value);
+            } else if (weight.sex === 'Masculino') {
+              this.defaultWeightsM.set(weight.ageRange, weight.value);
+            }
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.defaultWeightsAvailable = false;
+          const errorMessage = 'Los valores por defecto no estan disponibles';
+          const config : MatSnackBarConfig = new MatSnackBarConfig();
+          config.verticalPosition = 'top';
+          return this.errorSnackBar.open(errorMessage, 'Aceptar', config);
+        },
+      );
   }
 
   ageSelected(age: FranjaEtaria) {
-    this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
-    this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+    if (this.defaultWeightsAvailable) {
+      this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+      this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+    }
   }
 } // component class

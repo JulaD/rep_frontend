@@ -2,6 +2,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
   Component, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
@@ -27,6 +28,8 @@ export class StepperComponent implements OnInit, OnDestroy {
   isLinear: boolean = false;
 
   defaultExtraData: DefaultExtraDataDTO[];
+
+  defaultExtraDataAvailable: boolean = false;
 
   defaultMinorPal: MinorPAL = {
     lowPALPrevalence: 0,
@@ -78,6 +81,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     public rest: RestService,
     private resultsService: ResultsService,
     private router: Router,
+    private errorSnackBar: MatSnackBar,
   ) {}
 
   onSubmit(): void {
@@ -202,23 +206,34 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   processExtraData() {
     this.rest.getDefaultExtraData()
-      .subscribe((data) => {
-        this.defaultExtraData = data;
-        this.defaultExtraData?.forEach((extraData: DefaultExtraDataDTO) => {
-          switch (extraData.parameterType) {
-            case 'NAF Menores':
-              this.processNAFMenores(extraData);
-              break;
-            case 'NAF Adultos':
-              this.processNAFAdultos(extraData);
-              break;
-            case 'Embarazo y lactancia':
-              this.processMaternity(extraData);
-              break;
-            default:
-              break;
-          }
-        });
-      });
+      .subscribe(
+        (data) => {
+          this.defaultExtraDataAvailable = true;
+          this.defaultExtraData = data;
+          this.defaultExtraData?.forEach((extraData: DefaultExtraDataDTO) => {
+            switch (extraData.parameterType) {
+              case 'NAF Menores':
+                this.processNAFMenores(extraData);
+                break;
+              case 'NAF Adultos':
+                this.processNAFAdultos(extraData);
+                break;
+              case 'Embarazo y lactancia':
+                this.processMaternity(extraData);
+                break;
+              default:
+                break;
+            }
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.defaultExtraDataAvailable = false;
+          const errorMessage = 'Los valores por defecto no estan disponibles';
+          const config : MatSnackBarConfig = new MatSnackBarConfig();
+          config.verticalPosition = 'top';
+          return this.errorSnackBar.open(errorMessage, 'Aceptar', config);
+        },
+      );
   }
 }

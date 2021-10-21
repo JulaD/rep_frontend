@@ -23,6 +23,8 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso3Component implements OnInit {
   @Input() defaultAdultPal: AdultPAL;
 
+  @Input() defaultExtraDataAvailable: boolean;
+
   ngOnInit() { this.loadDefaultValues(); }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
@@ -77,11 +79,13 @@ export class CalculosPaso3Component implements OnInit {
   }
 
   loadDefaultValues() {
-    this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
-    this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);
-    this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(this.defaultAdultPal.activeRuralPAL);
-    this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(this.defaultAdultPal.lowRuralPAL);
-    this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(this.defaultAdultPal.activeUrbanPAL);
-    this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(this.defaultAdultPal.lowUrbanPAL);
+    if (this.defaultExtraDataAvailable) {
+      this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
+      this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);
+      this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(this.defaultAdultPal.activeRuralPAL);
+      this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(this.defaultAdultPal.lowRuralPAL);
+      this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(this.defaultAdultPal.activeUrbanPAL);
+      this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(this.defaultAdultPal.lowUrbanPAL);
+    }
   }
 }
