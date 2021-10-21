@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { GroupEnergeticRequirement } from 'src/app/interfaces/GroupEnergeticRequirement';
 import { ResultsService } from 'src/app/services/results.service';
-import { GrupoEtario } from 'src/app/models/grupo-etario';
 import CalculatorResponse from 'src/app/interfaces/CalculatorResponseDTO';
+import jsPDF, { TextOptionsLight } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -13,30 +14,33 @@ export interface RequerimientoEnergetico {
   masculino: number;
 }
 
-const TABLA_DATA: RequerimientoEnergetico[] = [
-  {texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400},
-  {texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800},
-];
+// const TABLA_DATA: RequerimientoEnergetico[] = [
+//   { texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400 },
+//   { texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800 },
+// ];
 
-const TABLA_DATA2: RequerimientoEnergetico[] = [
-  {texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400},
-  {texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800},
-];
-
+// const TABLA_DATA2: RequerimientoEnergetico[] = [
+//   { texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400 },
+//   { texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800 },
+// ];
 
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
-  styleUrls: ['./result.component.css']
+  styleUrls: ['./result.component.css'],
 })
 
 export class ResultComponent implements OnInit {
-
   parsedObtainedResult: CalculatorResponse;
+
   totalRequirement: number = 0;
+
+  totalPerCapitaRequirement: number = 0;
+
   totalPopulation: number = 0;
 
-  displayedColumns: string[] = ['texto','femenino', 'masculino'];
+  displayedColumns: string[] = ['texto', 'femenino', 'masculino'];
+
   dataSources: {
     title: string,
     subtitle: number,
@@ -48,7 +52,7 @@ export class ResultComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private resultsService: ResultsService
+    private resultsService: ResultsService,
   ) {
     this.resultsService.result$
       .subscribe((result) => {
@@ -65,23 +69,34 @@ export class ResultComponent implements OnInit {
 
   setValues(result: CalculatorResponse): void {
     if (result) {
+      // eslint-disable-next-line no-bitwise
       this.totalRequirement = Math.round(
-        result?.totalRequirement?.perCapita
+        result?.totalRequirement?.total,
       ) | 0;
+      // eslint-disable-next-line no-bitwise
+      this.totalPerCapitaRequirement = Math.round(
+        result?.totalRequirement?.perCapita,
+      ) | 0;
+      // eslint-disable-next-line no-bitwise
       this.totalPopulation = result?.totalRequirement!.totalPopulation | 0;
       const groupedByAge = this.groupByAge(result?.groupsRequirements);
       const keys = Object.keys(groupedByAge);
       this.dataSources = keys.map((key: string) => {
-        let femenineAmount: number = 0, masculineAmount: number = 0, totalAmount: number = 0;
-        let femeninePer: number = 0, femenineTotal: number = 0;
-        let masculinePer: number = 0, masculineTotal: number = 0;
+        let femenineAmount: number = 0;
+        let masculineAmount: number = 0;
+        let totalAmount: number = 0;
+        let femeninePer: number = 0;
+        let femenineTotal: number = 0;
+        let masculinePer: number = 0;
+        let masculineTotal: number = 0;
+        // eslint-disable-next-line array-callback-return
         groupedByAge[key].map((value: GroupEnergeticRequirement) => {
           totalAmount += Number(value.group.population);
-          if (value?.group?.sex == 'Femenino') {
+          if (value?.group?.sex === 'Femenino') {
             femenineAmount = value.group.population;
             femeninePer = value.perCapita;
             femenineTotal = value.total;
-          } else if (value?.group?.sex == 'Masculino') {
+          } else if (value?.group?.sex === 'Masculino') {
             masculineAmount = value.group.population;
             masculinePer = value.perCapita;
             masculineTotal = value.total;
@@ -92,26 +107,65 @@ export class ResultComponent implements OnInit {
           subtitle: totalAmount,
           femenine: femenineAmount,
           masculine: masculineAmount,
-          source: new MatTableDataSource<RequerimientoEnergetico>([{ 
+          source: new MatTableDataSource<RequerimientoEnergetico>([{
             texto: 'Requerimiento energético por persona',
             femenino: Math.round(femeninePer),
-            masculino: Math.round(masculinePer)
-          }, { 
+            masculino: Math.round(masculinePer),
+          }, {
             texto: 'Requerimiento energético del grupo',
             femenino: Math.round(femenineTotal),
-            masculino: Math.round(masculineTotal)
-          }])
-        }
-      });  
+            masculino: Math.round(masculineTotal),
+          }]),
+        };
+      });
     }
   }
 
   groupByAge(array: GroupEnergeticRequirement[]): {[attr: string]: GroupEnergeticRequirement[]} {
     return array.reduce((objectsByKeyValue: any, obj: GroupEnergeticRequirement) => {
       const value: string = obj.group.age;
+      // eslint-disable-next-line no-param-reassign
       objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
       return objectsByKeyValue;
     }, {});
   }
 
+  generatePDF() {
+    // eslint-disable-next-line new-cap
+    const doc: jsPDF = new jsPDF();
+    let opts: TextOptionsLight = {
+      align: 'center',
+    };
+    doc.setFontSize(20);
+    doc.setFont('Montserrat');
+    doc.text('REP: Requerimiento energético poblacional', 105, 20, opts);
+    opts = {
+      align: 'justify',
+      maxWidth: 190,
+    };
+    doc.setFontSize(12);
+    doc.text(`Para la población ingresada de ${this.totalPopulation} personas, el requerimiento energético total es de ${this.totalRequirement} KCal/día (${this.totalPerCapitaRequirement} KCal/día per capita).`, 10, 40, opts);
+    let rows: (string | number)[][] = [];
+    let offset: number = 60;
+    let nroTablas: number = 0;
+    this.dataSources.forEach((data) => {
+      if (nroTablas >= 7) {
+        doc.addPage();
+        nroTablas = 0;
+        offset = 20;
+      }
+      data.source.data.forEach((element) => {
+        rows.push([element.texto, element.femenino, element.masculino]);
+      });
+      autoTable(doc, {
+        head: [[`${data.title} (${data.subtitle} personas)`, `Femenino (${data.femenine} personas)`, `Masculino (${data.masculine} personas)`]],
+        body: rows,
+        startY: offset,
+      });
+      rows = [];
+      offset += 30;
+      nroTablas += 1;
+    });
+    doc.save('ResultadosREP.pdf');
+  }
 }
