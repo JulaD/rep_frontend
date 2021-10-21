@@ -4,174 +4,192 @@
       Maternidad y lactancia
     </ng-template>
   </div>
+
+  <!--Contenido del componente-->
   <div class="container">
-
-    <!------------------------ 18 A 19 AÑOS ------------------------>
-    <div *ngIf="agesFemale18To29Present; then thenBlock18to29"></div>
-    <ng-template #thenBlock18to29>
-      <div class="step4-label">
-        Mujeres de 18 a 29 años
-      </div>
-      <!-- DATOS ESPECÍFICAS DEL GRUPO -->
-      <div class="step4-num-embarazos">
-        <mat-form-field appearance="standard">
-          <mat-label>Número de embarazos</mat-label>
-          <input matInput formControlName="embsPrimerFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de personas embarazadas para este rango
-          </mat-hint>
-          <mat-error *ngIf="materYLactanciaForm.get('embsPrimerFranja')?.hasError('pattern')">
-            El número de personas embarazadas debe ser un número entero positivo
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="step4-num-amamantando">
-        <mat-form-field appearance="standard">
-          <mat-label>Número de personas amamantando</mat-label>
-          <input matInput formControlName="amamPrimerFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de personas amamantando para este rango
-          </mat-hint>
-          <mat-error *ngIf="materYLactanciaForm.get('amamPrimerFranja')?.hasError('pattern')">
-            El número de personas amamantando debe ser un número entero positivo
-          </mat-error>
-        </mat-form-field>
-      </div>
-      
-      <!-- CHECKBOX --> 
-      <div class="step4-check-box">
-        <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
-        <div *ngIf="materYLactanciaForm.get('maternityPrimerFranja')?.errors?.step4MenorIgualPobTotal &&
-          (materYLactanciaForm.get('maternityPrimerFranja')?.touched || materYLactanciaForm.get('maternityPrimerFranja')?.dirty)"
-          class="mensaje-error">
-          La población de mujeres de este rango etario no puede ser mayor que la población total.
+    <div class="row">
+      <!------------------------ 18 A 19 AÑOS ------------------------>
+      <div *ngIf="agesFemale18To29Present; then thenBlock18to29"></div>
+      <ng-template #thenBlock18to29>
+        <div class="step4-label-1 row gy-1">
+          Mujeres de 18 a 29 años
         </div>
-      </div>
-      <!-- DATOS A PARTIR DE LA NATALIDAD -->
-      <mat-card class="card-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value" formGroupName="maternityPrimerFranja">
-        <div class="step4-cant-mujeres">
-          <mat-form-field appearance="standard">
-            <mat-label>Mujeres entre 18 y 29 años</mat-label>
-            <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese la población de mujeres del país para este rango etario
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.hasError('pattern')">
-              La población debe ser un número entero positivo
-            </mat-error>
-          </mat-form-field>
+        <!-- DATOS ESPECÍFICOS DEL GRUPO -->
+        <div class="row gy-1 justify-content-end">
+          <div class="step4-num-embarazos col-4">
+            <mat-form-field appearance="standard">
+              <mat-label>Número de embarazos</mat-label>
+              <input matInput formControlName="embsPrimerFranja" [errorStateMatcher]="matcher">
+              <mat-hint>
+                Ingrese el número de personas embarazadas para este rango
+              </mat-hint>
+              <mat-error *ngIf="materYLactanciaForm.get('embsPrimerFranja')?.hasError('pattern')">
+                El número de personas embarazadas debe ser un número entero positivo
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="step4-num-amamantando col-4">
+            <mat-form-field appearance="standard">
+              <mat-label>Número de personas amamantando</mat-label>
+              <input matInput formControlName="amamPrimerFranja" [errorStateMatcher]="matcher">
+              <mat-hint>
+                Ingrese el número de personas amamantando para este rango
+              </mat-hint>
+              <mat-error *ngIf="materYLactanciaForm.get('amamPrimerFranja')?.hasError('pattern')">
+                El número de personas amamantando debe ser un número entero positivo
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
-        <div class="step4-tasa-natalidad">
-          <mat-form-field appearance="standard">
-            <mat-label>Tasa de natalidad</mat-label>
-            <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese la tasa de natalidad.
-              Por defecto se tomará la tasa de natalidad de Uruguay
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.hasError('pattern')">
-              La tasa de natalidad debe ser un número decimal positivo
-            </mat-error>
-          </mat-form-field>
+        <!-- CHECKBOX -->
+        <div class="step4-check-box-1 row gy-1">
+          <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
+          <div *ngIf="materYLactanciaForm.get('maternityPrimerFranja')?.errors?.step4MenorIgualPobTotal &&
+            (materYLactanciaForm.get('maternityPrimerFranja')?.touched || materYLactanciaForm.get('maternityPrimerFranja')?.dirty)"
+            class="mensaje-error">
+            La población de mujeres de este rango etario no puede ser mayor que la población total.
+          </div>
         </div>
-        <div class="step4-pob-total">
-          <mat-form-field appearance="standard">
-            <mat-label>Población total</mat-label>
-            <input matInput formControlName="pobTotPrimerFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese el número de habitantes del país.
-              Por defecto se tomará la población de Uruguay
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.hasError('pattern')">
-              La población debe ser un número entero positivo
-            </mat-error>
-          </mat-form-field>
+        <!-- DATOS A PARTIR DE LA NATALIDAD -->
+        <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value" formGroupName="maternityPrimerFranja">
+          <div class="row pb-3">
+            <div class="step4-cant-mujeres col">
+              <mat-form-field appearance="standard">
+                <mat-label>Mujeres entre 18 y 29 años</mat-label>
+                <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese la población de mujeres del país para este rango etario
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.hasError('pattern')">
+                  La población debe ser un número entero positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="step4-pob-total col">
+              <mat-form-field appearance="standard">
+                <mat-label>Población total</mat-label>
+                <input matInput formControlName="pobTotPrimerFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese el número de habitantes del país.
+                  Por defecto se tomará la población de Uruguay
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.hasError('pattern')">
+                  La población debe ser un número entero positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="step4-tasa-natalidad col">
+              <mat-form-field appearance="standard">
+                <mat-label>Tasa de natalidad</mat-label>
+                <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese la tasa de natalidad.
+                  Por defecto se tomará la tasa de natalidad de Uruguay
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.hasError('pattern')">
+                  La tasa de natalidad debe ser un número decimal positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </ng-template>
+      <!------------------------ 30 A 59 AÑOS ------------------------>
+      <div *ngIf="agesFemale30To59Present; then thenBlock30to59"></div>
+      <ng-template #thenBlock30to59>
+        <hr class="m-3"><!--Separador-->
+        <div class="step4-label-2 row gy-3">
+          Mujeres de 30 a 59 años
         </div>
-      </mat-card>
-    </ng-template>
-
-     <!------------------------ 30 A 59 AÑOS ------------------------>
-     <div *ngIf="agesFemale30To59Present; then thenBlock30to59"></div>
-     <ng-template #thenBlock30to59>
-      <div class="step4-label-2">
-        Mujeres de 30 a 59 años
-      </div>
-      <!-- DATOS ESPECÍFICAS DEL GRUPO -->
-      <div class="step4-num-embarazos-2">
-        <mat-form-field appearance="standard">
-          <mat-label>Número de embarazos</mat-label>
-          <input matInput formControlName="embsSegundaFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de personas embarazadas para este rango
-          </mat-hint>
-          <mat-error *ngIf="materYLactanciaForm.get('embsSegundaFranja')?.hasError('pattern')">
-            El número de personas embarazadas debe ser un número entero positivo
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="step4-num-amamantando-2">
-        <mat-form-field appearance="standard">
-          <mat-label>Número de personas amamantando</mat-label>
-          <input matInput formControlName="amamSegundaFranja" [errorStateMatcher]="matcher">
-          <mat-hint>
-            Ingrese el número de personas amamantando para este rango
-          </mat-hint>
-          <mat-error *ngIf="materYLactanciaForm.get('amamSegundaFranja')?.hasError('pattern')">
-            El número de personas amamantando debe ser un número entero positivo
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <!-- CHECKBOX --> 
-      <div class="step4-check-box-2">
-        <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
-        <div *ngIf="materYLactanciaForm.get('maternitySegundaFranja')?.errors?.step4MenorIgualPobTotal &&
-          (materYLactanciaForm.get('maternitySegundaFranja')?.touched || materYLactanciaForm.get('maternitySegundaFranja')?.dirty)"
-          class="mensaje-error">
-          La población de mujeres de este rango etario no puede ser mayor que la población total.
+        <!-- DATOS ESPECÍFICOS DEL GRUPO -->
+        <div class="row gy-1 justify-content-end">
+          <div class="step4-num-embarazos-2 col-4">
+            <mat-form-field appearance="standard">
+              <mat-label>Número de embarazos</mat-label>
+              <input matInput formControlName="embsSegundaFranja" [errorStateMatcher]="matcher">
+              <mat-hint>
+                Ingrese el número de personas embarazadas para este rango
+              </mat-hint>
+              <mat-error *ngIf="materYLactanciaForm.get('embsSegundaFranja')?.hasError('pattern')">
+                El número de personas embarazadas debe ser un número entero positivo
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="step4-num-amamantando-2 col-4">
+            <mat-form-field appearance="standard">
+              <mat-label>Número de personas amamantando</mat-label>
+              <input matInput formControlName="amamSegundaFranja" [errorStateMatcher]="matcher">
+              <mat-hint>
+                Ingrese el número de personas amamantando para este rango
+              </mat-hint>
+              <mat-error *ngIf="materYLactanciaForm.get('amamSegundaFranja')?.hasError('pattern')">
+                El número de personas amamantando debe ser un número entero positivo
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-      <!-- DATOS A PARTIR DE LA NATALIDAD -->
-      <mat-card class="card-2" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value" formGroupName="maternitySegundaFranja">
-        <div class="step4-cant-mujeres">
-          <mat-form-field appearance="standard">
-            <mat-label>Mujeres entre 30 y 59 años</mat-label>
-            <input matInput formControlName="cantSegundaFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese la población de mujeres del país para este rango etario
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.hasError('pattern')">
-              La población debe ser un número entero positivo
-            </mat-error>
-          </mat-form-field>
+        <!-- CHECKBOX -->
+        <div class="step4-check-box-2 row gy-1">
+          <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
+          <div *ngIf="materYLactanciaForm.get('maternitySegundaFranja')?.errors?.step4MenorIgualPobTotal &&
+            (materYLactanciaForm.get('maternitySegundaFranja')?.touched || materYLactanciaForm.get('maternitySegundaFranja')?.dirty)"
+            class="mensaje-error">
+            La población de mujeres de este rango etario no puede ser mayor que la población total.
+          </div>
         </div>
-        <div class="step4-tasa-natalidad">
-          <mat-form-field appearance="standard">
-            <mat-label>Tasa de natalidad</mat-label>
-            <input matInput formControlName="natSegundaFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese la tasa de natalidad.
-              Por defecto se tomará la tasa de natalidad de Uruguay
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.hasError('pattern')">
-              La tasa de natalidad debe ser un número decimal positivo
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="step4-pob-total">
-          <mat-form-field appearance="standard">
-            <mat-label>Población total</mat-label>
-            <input matInput formControlName="pobTotSegundaFranja" [errorStateMatcher]="matcher">
-            <mat-hint>
-              Ingrese el número de habitantes del país.
-              Por defecto se tomará la población de Uruguay
-            </mat-hint>
-            <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.hasError('pattern')">
-              La población debe ser un número entero positivo
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </mat-card>
-    </ng-template>
-  </div>
+        <!-- DATOS A PARTIR DE LA NATALIDAD -->
+        <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value" formGroupName="maternitySegundaFranja">
+          <div class="row pb-3">
+            <div class="step4-cant-mujeres col">
+              <mat-form-field appearance="standard">
+                <mat-label>Mujeres entre 30 y 59 años</mat-label>
+                <input matInput formControlName="cantSegundaFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese la población de mujeres del país para este rango etario
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.hasError('pattern')">
+                  La población debe ser un número entero positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="step4-pob-total col">
+              <mat-form-field appearance="standard">
+                <mat-label>Población total</mat-label>
+                <input matInput formControlName="pobTotSegundaFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese el número de habitantes del país.
+                  Por defecto se tomará la población de Uruguay
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.hasError('pattern')">
+                  La población debe ser un número entero positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="step4-tasa-natalidad col">
+              <mat-form-field appearance="standard">
+                <mat-label>Tasa de natalidad</mat-label>
+                <input matInput formControlName="natSegundaFranja" [errorStateMatcher]="matcher">
+                <mat-hint>
+                  Ingrese la tasa de natalidad.
+                  Por defecto se tomará la tasa de natalidad de Uruguay
+                </mat-hint>
+                <mat-error *ngIf="materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.hasError('pattern')">
+                  La tasa de natalidad debe ser un número decimal positivo
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </ng-template>
+    </div> <!--end row principal-->
+  </div> <!--end container-->
 </form>
 
+<!-----CORTAR ESTO HACIA OTRO DOCUMENTO Y RECORTAR DE AHI LOS ELEMENTOS PARA ESTE----->
+<!--
+https://getbootstrap.com/docs/5.0/layout/gutters/
+https://getbootstrap.com/docs/4.0/utilities/spacing/
+https://getbootstrap.com/docs/4.0/layout/grid/#alignment
+https://material.angular.io/components/card/overview
+http://localhost:4200/stepper
+-->
