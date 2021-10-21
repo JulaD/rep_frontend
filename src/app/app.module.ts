@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
+import { AdminGuard } from './guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { SharedModule } from './modules/shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AdminGuard
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

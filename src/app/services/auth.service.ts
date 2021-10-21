@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Auth, Register, User } from '../models';
 import { environment } from '../../environments/environment';
 
@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
+  
   loggedUser: User = {
     id: NaN,
     name: '',
@@ -22,6 +23,18 @@ export class AuthService {
   };
 
   private api: string = environment.usersApi;
+
+  private options = () => {
+    let token: string = '';
+    if (localStorage.getItem('token')) {
+      token = String(localStorage.getItem('token'));
+    }
+    return {
+      headers: new HttpHeaders({
+        Authorization: token,
+      }),
+    };
+  };
 
   constructor(
     private router: Router,
@@ -38,8 +51,29 @@ export class AuthService {
       .pipe(
         tap((response: any) => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('userId', response.user.id);
+          localStorage.setItem('type', response.user.type);
         }),
       );
+  }
+
+  getUser(): Partial<User> | undefined {
+    if (localStorage.getItem('userId') && localStorage.getItem('type')) {
+      return {
+        id: Number(localStorage.getItem('userId')),
+        type: Number(localStorage.getItem('type'))
+      }
+    }
+    return;
+  }
+
+  logout(): void {
+    localStorage.clear();
+  }
+
+  checkUser(): Observable<boolean> {
+    return this.http
+      .post<boolean>(`${this.api}/users/check-user`, {}, this.options());
   }
 
   //-------------------------------------------------------------------------

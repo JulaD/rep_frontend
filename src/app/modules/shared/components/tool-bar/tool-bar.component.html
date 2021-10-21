@@ -16,14 +16,18 @@
       <button mat-button color="primary" routerLink="manuals">
         MANUAL FAQ
       </button>
-      <button mat-button color="primary" routerLink="admin">
+      <button mat-button color="primary" routerLink="admin" *ngIf="isAdmin()">
         ADMINISTRACIÓN
       </button>
     </div>
     <div>
-      <button mat-icon-button routerLink="auth">
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
         <mat-icon>account_circle</mat-icon>
       </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="auth" *ngIf="!user">Iniciar sesión</button>
+        <button mat-menu-item (click)="logout()" *ngIf="user">Cerrar sesión</button>
+      </mat-menu>
     </div>
   </mat-toolbar>
 </p>
