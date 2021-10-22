@@ -68,10 +68,10 @@ body {
   40% {
     transform: translateY(5vh);
   }
-  50% {
+  60% {
     transform: translateY(0);
   }
-  70% {
+  75% {
     transform: skewX(0);
   }
   100% {
@@ -113,22 +113,22 @@ body {
 .container .box:nth-child(1):before,
 .container .box:nth-child(1):after {
   background: linear-gradient(315deg, #65fdd7, #3cd17f);
-  animation: init-top-down 0.75s linear;
+  animation: init-top-down 0.7s linear;
 }
 .container .box:nth-child(2):before,
 .container .box:nth-child(2):after {
   background: linear-gradient(315deg, #2b98ff, #61fff7);
-  animation: init-bottom-up 0.75s linear;
+  animation: init-bottom-up 0.7s linear;
 }
 .container .box:nth-child(3):before,
 .container .box:nth-child(3):after {
   background: linear-gradient(315deg, #f0e796, #f7a944);
-  animation: init-top-down 0.75s linear;
+  animation: init-top-down 0.7s linear;
 }
 .container .box:nth-child(4):before,
 .container .box:nth-child(4):after {
   background: linear-gradient(315deg, #f7405e, #ffb6d8);
-  animation: init-bottom-up 0.75s linear;
+  animation: init-bottom-up 0.7s linear;
 }
 
 .container .box span::before {
