@@ -60,6 +60,7 @@ export class ConfiguracionValoresComponent implements OnInit {
     previousPregnancyPopulationId: string, previousPregnancyEnergyId: string) {
     this.valuesService.getParameters().subscribe(
       (res) => {
+        console.log(res);
         this.equationConstants = res.equationConstants;
         res.defaultWeights.forEach((weight: DefaultWeightDTO) => {
           if (weight.sex === 'Masculino') {

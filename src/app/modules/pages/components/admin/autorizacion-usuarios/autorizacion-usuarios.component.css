@@ -342,7 +342,7 @@ section.active .fijo .botones a.btnAceptados::after {
   width: 100%;
   height: 100%;
   background: #fff;
-  border-radius: 25px;
+  border-radius: 40px;
   transition: 0.5s;
   background: linear-gradient(315deg, #65fdd7, #3cd17f);
   filter: blur(20px);
@@ -356,7 +356,7 @@ section .fijo .botones a.btnPendientes::after {
   width: 100%;
   height: 100%;
   background: #fff;
-  border-radius: 25px;
+  border-radius: 40px;
   transition: 0.5s;
   background: linear-gradient(315deg, #65fdd7, #3cd17f);
   filter: blur(20px);
