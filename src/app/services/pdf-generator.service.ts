@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jsPDF, TextOptionsLight } from 'jspdf';
-import { ResultPdf } from '../models/result-pdf.model';
 import autoTable from 'jspdf-autotable';
+import { ResultPdf } from '../models/result-pdf.model';
 
 /**
  * Fuentes en base64 para ser utilizadas en el pdf.
@@ -12,23 +12,20 @@ const montserratFont : string = 'AAEAAAARAQAABAAQR0RFRrFss1wAAnbQAAACfkdQT1PiOFs
  * Servicio encargado de generar pdfs client side.
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PdfGeneratorService {
-
-  constructor() { }
-
   /**
    * Añado la fuente Montserrat para que pueda ser utilizada en el pdf.
    * @param pdf generador del pdf
    */
   addMontserratFont(pdf : jsPDF) {
     pdf.addFileToVFS('Montserrat-Regular.ttf', montserratFont);
-    pdf.addFont('Montserrat-Regular.ttf', 'custom', 'normal');
+    pdf.addFont('Montserrat-Regular.ttf', 'MontserratRegular', 'normal');
   }
 
   /**
-   * Genera y dispara la descarga de un archivo pdf con los resultados del cálculo 
+   * Genera y dispara la descarga de un archivo pdf con los resultados del cálculo
    * realizado previamente.
    * @param res datos del cálculo realizado a ser cargados en el pdf
    */
@@ -36,25 +33,27 @@ export class PdfGeneratorService {
     // eslint-disable-next-line new-cap
     const doc: jsPDF = new jsPDF();
 
-    //Logo REP!
-    let logo : HTMLImageElement = document.createElement('img');
+    // Logo REP!
+    const logo : HTMLImageElement = document.createElement('img');
     logo.src = '../../../../../assets/ilustrations/REP_ RequerimientoEnergéticoPoblacional.png';
     doc.addImage(logo, 10, 10, 130, 30);
 
-    //Imagen
-    let img : HTMLImageElement = document.createElement('img');
+    // Imagen
+    const img : HTMLImageElement = document.createElement('img');
     img.src = '../../../../../assets/ilustrations/illustration1.png';
     doc.addImage(img, 140, 10, 60, 50);
 
-    //Texto
+    // Texto
     let opts: TextOptionsLight = {
       align: 'center',
-    }; 
-    doc.setFontSize(20);
+    };
     opts = {
       align: 'justify',
       maxWidth: 190,
     };
+
+    this.addMontserratFont(doc);
+    doc.setFont('MontserratRegular');
     doc.setFontSize(9);
     doc.text('Escuela de Nutrición UdelaR', 10, 45);
 
@@ -72,7 +71,7 @@ export class PdfGeneratorService {
       data.source.data.forEach((element) => {
         rows.push([element.texto, element.femenino, element.masculino]);
       });
-      //Generación de las tabla con los resultados
+      // Generación de las tabla con los resultados
       autoTable(doc, {
         head: [[`${data.title} (${data.subtitle} personas)`, `Femenino (${data.femenine} personas)`, `Masculino (${data.masculine} personas)`]],
         body: rows,
@@ -83,10 +82,10 @@ export class PdfGeneratorService {
       nroTablas += 1;
     });
     const date = new Date();
-    let fileName : string = 'ResultadosREP_' 
-      + date.getDate() + '_' 
-      + date.getMonth() + '_' 
-      + date.getFullYear() + ".pdf";
+    const fileName : string = `ResultadosREP_${
+      date.getDate()}_${
+      date.getMonth() + 1}_${
+      date.getFullYear()}.pdf`;
     doc.save(fileName);
   }
 }
