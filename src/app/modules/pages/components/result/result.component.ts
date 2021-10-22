@@ -5,24 +5,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GroupEnergeticRequirement } from 'src/app/interfaces/GroupEnergeticRequirement';
 import { ResultsService } from 'src/app/services/results.service';
 import CalculatorResponse from 'src/app/interfaces/CalculatorResponseDTO';
-import jsPDF, { TextOptionsLight } from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { ResultPdf } from 'src/app/models/result-pdf.model';
+import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 
 export interface RequerimientoEnergetico {
   texto: string,
   femenino: number;
   masculino: number;
 }
-
-// const TABLA_DATA: RequerimientoEnergetico[] = [
-//   { texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400 },
-//   { texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800 },
-// ];
-
-// const TABLA_DATA2: RequerimientoEnergetico[] = [
-//   { texto: 'Requerimiento energético por persona', femenino: 300, masculino: 400 },
-//   { texto: 'Requerimiento energético del grupo', femenino: 4500, masculino: 6800 },
-// ];
 
 @Component({
   selector: 'app-result',
@@ -53,6 +43,7 @@ export class ResultComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private resultsService: ResultsService,
+    private pdfService: PdfGeneratorService,
   ) {
     this.resultsService.result$
       .subscribe((result) => {
@@ -131,41 +122,12 @@ export class ResultComponent implements OnInit {
   }
 
   generatePDF() {
-    // eslint-disable-next-line new-cap
-    const doc: jsPDF = new jsPDF();
-    let opts: TextOptionsLight = {
-      align: 'center',
-    };
-    doc.setFontSize(20);
-    doc.setFont('Montserrat');
-    doc.text('REP: Requerimiento energético poblacional', 105, 20, opts);
-    opts = {
-      align: 'justify',
-      maxWidth: 190,
-    };
-    doc.setFontSize(12);
-    doc.text(`Para la población ingresada de ${this.totalPopulation} personas, el requerimiento energético total es de ${this.totalRequirement} KCal/día (${this.totalPerCapitaRequirement} KCal/día per capita).`, 10, 40, opts);
-    let rows: (string | number)[][] = [];
-    let offset: number = 60;
-    let nroTablas: number = 0;
-    this.dataSources.forEach((data) => {
-      if (nroTablas >= 7) {
-        doc.addPage();
-        nroTablas = 0;
-        offset = 20;
-      }
-      data.source.data.forEach((element) => {
-        rows.push([element.texto, element.femenino, element.masculino]);
-      });
-      autoTable(doc, {
-        head: [[`${data.title} (${data.subtitle} personas)`, `Femenino (${data.femenine} personas)`, `Masculino (${data.masculine} personas)`]],
-        body: rows,
-        startY: offset,
-      });
-      rows = [];
-      offset += 30;
-      nroTablas += 1;
-    });
-    doc.save('ResultadosREP.pdf');
+    let result : ResultPdf = new ResultPdf(this.totalPopulation, 
+      this.totalRequirement,
+      this.totalPerCapitaRequirement,
+      this.dataSources
+      );
+    this.pdfService.generateResults(result);
   }
+
 }
