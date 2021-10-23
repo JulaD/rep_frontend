@@ -7,6 +7,7 @@ import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
 import { AdminGuard } from '../../../../guards/admin.guard';
+import { FaqsComponent } from './faqs/faqs.component';
 
 const routes: Routes = [{
   path: '',
@@ -24,6 +25,9 @@ const routes: Routes = [{
   }, {
     path: 'valores',
     component: ConfiguracionValoresComponent,
+  }, {
+    path: 'faqs',
+    component: FaqsComponent,
   }],
 }];
 

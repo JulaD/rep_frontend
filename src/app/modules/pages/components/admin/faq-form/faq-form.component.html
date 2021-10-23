@@ -1,0 +1,11 @@
+<h2>{{isNew ? 'Nueva pregunta frecuente' : 'Editando pregunta frecuente'}}
+  <button class="close" aria-label="close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</h2>
+<form [formGroup]="form">
+  <input formControlName="question" type="text" placeholder="Pregunta">
+  <textarea formControlName="answer" type="text" placeholder="Respuesta"></textarea>
+  <input [disabled]="form.invalid" type="submit" value="Guardar" (click)="onConfirm()">
+</form>
+

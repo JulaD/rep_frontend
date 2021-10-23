@@ -1,0 +1,29 @@
+<section>
+  <div class="fijo">
+    <div class="titulo">
+      <h1>PREGUNTAS</h1>
+      <h1>FRECUENTES</h1>
+    </div>
+  </div>
+  <div class="faq-list-section">
+    <span class="new-faq-button" (click)="upsertFaq()">
+      AGREGAR
+    </span>
+    <ul class="faq-list">
+      <li *ngFor="let faq of faqs">
+        <span class="faq-item">{{faq.question}}</span>
+        <div class="info">
+          <span>Respuesta: {{faq.answer}}</span>
+          <a>
+            <span class="boton cancelar" (click)="deleteFaq(faq)">
+              ELIMINAR
+            </span>
+            <span class="boton edit" (click)="upsertFaq(faq)">
+              EDITAR
+            </span>
+          </a>
+        </div>
+      </li>
+    </ul>  
+  </div>
+</section>
