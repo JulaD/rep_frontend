@@ -18,6 +18,7 @@ import { TemplatesComponent } from './components/templates/templates.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
+import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq-expansion-panel.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { PagesComponent } from './pages.component';
     CalculosComponent,
     StepperComponent,
     ByHandComponent,
+    FaqExpansionPanelComponent,
   ],
   imports: [
     CommonModule,

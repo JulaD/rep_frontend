@@ -29,7 +29,6 @@ export class FaqsComponent implements OnInit {
       .getFAQs()
       .subscribe((faqs: FAQ[]) => {
         this.faqs = faqs;
-        console.log(this.faqs);
       }, (error: Error) => {
         console.log(error);
       });
@@ -50,18 +49,18 @@ export class FaqsComponent implements OnInit {
       .afterClosed()
       .subscribe((result: {
         success: boolean,
-        reload: true
+        close: boolean
       }) => {
-        if (result?.success && result?.reload) {
+        if (result?.success) {
           if (faq) {
             Swal.fire('¡Éxito!', 'Pregunta frecuente actualizada.', 'success');
           } else {
             Swal.fire('¡Éxito!', 'Pregunta frecuente ingresada.', 'success');
           }
           this.getFAQs();
-        } else if (faq) {
+        } else if (!result?.close && faq) {
           Swal.fire('¡Ups!', 'No se ha podido actualizar la pregunta.', 'error');
-        } else {
+        } else if (!result?.close) {
           Swal.fire('¡Ups!', 'No se ha podido ingresar la nueva pregunta.', 'error');
         }
       });

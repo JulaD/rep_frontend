@@ -14,6 +14,7 @@ export class FaqFormComponent implements OnInit {
   form = new FormGroup({
     question: new FormControl('', Validators.required),
     answer: new FormControl('', Validators.required),
+    position: new FormControl('', Validators.required)
   });
 
   isNew: boolean = true;
@@ -42,6 +43,7 @@ export class FaqFormComponent implements OnInit {
       this.form.setValue({
         question: faq.question,
         answer: faq.answer,
+        position: faq.position
       });
     }
   }
@@ -62,15 +64,13 @@ export class FaqFormComponent implements OnInit {
         this.spinner.hide();
         // Success
         this.dialog.close({
-          success: true,
-          reload: true,
+          success: true
         });
       }, () => {
         this.spinner.hide();
         // Error
         this.dialog.close({
-          success: false,
-          reload: false,
+          success: false
         });
       });
   }
@@ -83,23 +83,21 @@ export class FaqFormComponent implements OnInit {
         this.spinner.hide();
         // Success
         this.dialog.close({
-          success: true,
-          reload: true,
+          success: true
         });
       }, () => {
         this.spinner.hide();
         // Error
         this.dialog.close({
-          success: false,
-          reload: false,
+          success: false
         });
       });
   }
 
   async close() {
     this.dialog.close({
-      success: true,
-      reload: false,
+      success: false,
+      close: true,
     });
   }
 }

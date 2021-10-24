@@ -9,6 +9,7 @@ import { ResultComponent } from './components/result/result.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
+import { UserGuard } from 'src/app/guards/user.guard';
 
 const routes: Routes = [{
   path: '',
@@ -19,27 +20,33 @@ const routes: Routes = [{
   }, {
     path: 'by-hand',
     component: ByHandComponent,
+    canActivate: [UserGuard],
   }, {
     path: 'with-template',
     component: StepperComponent,
+    canActivate: [UserGuard],
   }, {
     path: 'manuals',
     component: ManualsComponent,
-  }, {
-    path: 'templates',
-    component: TemplatesComponent,
+  // }, {
+  //   path: 'templates',
+  //   component: TemplatesComponent,
   }, {
     path: 'calculos',
     component: CalculosComponent,
+    canActivate: [UserGuard],
   }, {
     path: 'result',
     component: ResultComponent,
+    canActivate: [UserGuard],
   }, {
     path: 'upload-template',
     component: UploadTemplateComponent,
+    canActivate: [UserGuard],
   }, {
     path: 'stepper',
     component: StepperComponent,
+    canActivate: [UserGuard],
   }, {
     path: '',
     redirectTo: 'dashboard',

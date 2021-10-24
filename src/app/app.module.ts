@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './modules/auth/auth.module';
 import { SharedModule } from './modules/shared/shared.module';
 import { AdminGuard } from './guards/admin.guard';
+import { UserGuard } from './guards/user.guard';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AdminGuard } from './guards/admin.guard';
     HttpClientModule,
   ],
   providers: [
-    AdminGuard
+    AdminGuard,
+    UserGuard
   ],
   bootstrap: [AppComponent],
 })

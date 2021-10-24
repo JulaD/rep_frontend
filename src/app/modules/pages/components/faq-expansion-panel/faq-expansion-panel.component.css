@@ -1,0 +1,23 @@
+.question-title {
+  color: #3F51B5;
+  font-size: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  height: 4rem;
+}
+
+::ng-deep .mat-expansion-panel-header-title {
+  color: #3F51B5;
+  font-size: 1.8rem;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  font-size: 1.2rem;
+  padding-top: 1rem !important;
+}

@@ -7,5 +7,7 @@ export class FAQ implements IFAQ {
 
   answer: string;
 
+  position: number;
+
   createdAt: Date;
 }

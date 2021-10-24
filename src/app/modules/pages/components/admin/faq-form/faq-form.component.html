@@ -6,6 +6,7 @@
 <form [formGroup]="form">
   <input formControlName="question" type="text" placeholder="Pregunta">
   <textarea formControlName="answer" type="text" placeholder="Respuesta"></textarea>
+  <input formControlName="position" type="number" min="1" placeholder="Posición">
   <input [disabled]="form.invalid" type="submit" value="Guardar" (click)="onConfirm()">
 </form>
 

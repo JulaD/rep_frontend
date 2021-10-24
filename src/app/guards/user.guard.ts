@@ -2,12 +2,11 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 import { map, catchError } from "rxjs/operators";
-import { UserTypes } from "../enums/UserTypes";
-import { User } from "../models";
 import { AuthService } from "../services";
+import { User } from "../models";
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class UserGuard implements CanActivate {
   
   constructor(
     private authService: AuthService,
@@ -21,7 +20,7 @@ export class AdminGuard implements CanActivate {
           if (!user) {
             this.router.navigate(['']);
           }
-          return user.userType == UserTypes.Admin;
+          return true;
         }),
         catchError((err: any, caught: Observable<boolean>): Observable<boolean> => {
           this.router.navigate(['']);

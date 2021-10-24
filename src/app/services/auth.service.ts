@@ -52,16 +52,18 @@ export class AuthService {
         tap((response: any) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('userId', response.user.id);
-          localStorage.setItem('type', response.user.type);
+          localStorage.setItem('userType', response.user.type);
+          localStorage.setItem('userName', response.user.name);
         }),
       );
   }
 
   getUser(): Partial<User> | undefined {
-    if (localStorage.getItem('userId') && localStorage.getItem('type')) {
+    if (localStorage.getItem('userId') && localStorage.getItem('userType')) {
       return {
         id: Number(localStorage.getItem('userId')),
-        type: Number(localStorage.getItem('type'))
+        type: Number(localStorage.getItem('userType')),
+        name: String(localStorage.getItem('userName'))
       }
     }
     return;
@@ -71,9 +73,11 @@ export class AuthService {
     localStorage.clear();
   }
 
-  checkUser(): Observable<boolean> {
+  checkUser(): Observable<{userId: number, userType: number}> {
     return this.http
-      .post<boolean>(`${this.api}/users/check-user`, {}, this.options());
+      .post<{userId: number, userType: number}>(
+        `${this.api}/users/check-user`, {}, this.options()
+      );
   }
 
   //-------------------------------------------------------------------------
