@@ -588,6 +588,11 @@ section .vacio .vacioAceptados {
 section .vacio .vacioPendientes {
   color: #c9fdff;
 }
+@media (max-width: 1435px) {
+  section .color {
+    display: none;
+  }
+}
 @media (max-width: 850px) {
   section .fijo .titulo {
     top: -54px;

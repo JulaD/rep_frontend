@@ -592,6 +592,11 @@ section .vacio .vacioUsuarios {
 section .vacio .vacioAdministradores {
   color: #c9fdff;
 }
+@media (max-width: 1435px) {
+  section .color {
+    display: none;
+  }
+}
 @media (max-width: 740px) {
   section .fijo .titulo {
     top: -54px;
@@ -600,6 +605,9 @@ section .vacio .vacioAdministradores {
     top: 21px;
     left: -80px;
     font-size: 45px;
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 80px;
   }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 58px;
@@ -613,6 +621,9 @@ section .vacio .vacioAdministradores {
     top: 15px;
     left: -40px;
     font-size: 30px;
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 40px;
   }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 35px;

@@ -13,33 +13,118 @@ section {
   align-items: center;
   overflow-x: hidden;
   transition: 0.5s;
+  animation: init-section 1.5s linear;
 }
 section .color {
   position: absolute;
-  filter: blur(100px);
-  border-radius: 50%;
-  transition: 0.3s;
+  border-radius: 10px;
+  background: linear-gradient(315deg, #f5eda4, #f7a944);
+  transition: 0.75s;
+}
+section .color:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #f5eda4, #f7a944);
+  filter: blur(20px);
 }
 section .color:nth-child(1) {
-  top: -160px;
-  right: 50px;
-  width: 450px;
-  height: 450px;
-  background: #abedf0;
+  top: 20vh;
+  right: -20px;
+  width: 190px;
+  height: 100px;
+  transform: skewY(15deg);
+  animation: init-color-right-left 0.5s ease-in;
+}
+section .color:nth-child(1)::after {
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+}
+section.active .color:nth-child(1) {
+  width: 320px;
 }
 section .color:nth-child(2) {
-  top: 50px;
-  left: -150px;
-  width: 600px;
-  height: 600px;
-  background: #aee5e7;
+  top: 10vh;
+  left: -20px;
+  width: 340px;
+  height: 80px;
+  transform: skewY(15deg);
+  animation: init-color-left-right 0.45s ease-in;
+}
+section.active .color:nth-child(2) {
+  top: 8vh;
+  width: 210px;
 }
 section .color:nth-child(3) {
-  bottom: -120px;
-  right: 300px;
-  width: 500px;
-  height: 500px;
-  background: #a4f3f3;
+  top: 25vh;
+  left: -20px;
+  width: 220px;
+  height: 100px;
+  border-radius: 10px;
+  transform: skewY(15deg);
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+  animation: init-color-left-right 0.55s ease-in;
+}
+section .color:nth-child(3)::after {
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+}
+section.active .color:nth-child(3) {
+  top: 26vh;
+  width: 300px;
+}
+section .color:nth-child(4) {
+  top: 60vh;
+  left: -20px;
+  width: 290px;
+  height: 80px;
+  border-radius: 10px;
+  transform: skewY(15deg);
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+  animation: init-color-left-right 0.3s ease-in;
+}
+section .color:nth-child(4)::after {
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+}
+section.active .color:nth-child(4) {
+  width: 200px;
+}
+section .color:nth-child(5) {
+  top: 50vh;
+  right: -20px;
+  width: 260px;
+  height: 100px;
+  border-radius: 10px;
+  transform: skewY(15deg);
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+  animation: init-color-right-left 0.35s ease-in;
+}
+section .color:nth-child(5)::after {
+  background: linear-gradient(315deg, #f7a944, #f5eda4);
+}
+section.active .color:nth-child(5) {
+  top: 51vh;
+  width: 180px;
+}
+@keyframes init-color-left-right {
+  0% {
+    transform: translateY(-50px) translateX(-150px) skewY(15deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) skewY(15deg);
+  }
+}
+@keyframes init-color-right-left {
+  0% {
+    transform: translateY(50px) translateX(150px) skewY(15deg);
+  }
+  100% {
+    transform: translateY(0) translateX(0) skewY(15deg);
+  }
 }
 section .fijo {
   position: absolute;
@@ -50,13 +135,33 @@ section .fijo {
   background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   width: 90vw;
-  height: 120px;
+  height: 180px;
   max-width: 1000px;
-  top: 100px;
+  top: 90px;
+  animation: init-title 0.35s ease-in;
+}
+@keyframes init-title {
+  0% {
+    transform: translateX(6vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 section .fijo .titulo {
+  width: 100%;
+  text-align: center;
   position: relative;
-  top: -70px;
+  top: -60px;
+}
+section.active .acordeon.porDefecto {
+  transform: translateX(-100vw);
+}
+section .acordeon.constantes {
+  transform: translateX(100vw);
+}
+section.active .acordeon.constantes {
+  transform: translateX(0vw);
 }
 section .fijo .titulo h1:nth-child(1) {
   position: relative;
@@ -64,16 +169,179 @@ section .fijo .titulo h1:nth-child(1) {
   left: -100px;
   font-size: 80px;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(315deg, #f5eda4, #f7a944);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: 0.5s;
+  animation: init-text 0.5s ease-in;
+}
+section.active .fijo .titulo h1:nth-child(1) {
+  left: 100px;
+}
+@keyframes init-text {
+  0% {
+    transform: translateY(-15vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 section .fijo .titulo h1:nth-child(2) {
   font-size: 100px;
   position: relative;
-  left: 80px;
+  left: 0px;
   font-weight: 900;
   letter-spacing: 5px;
   color: #ccfdff;
   transition: 0.5s;
+}
+section .fijo .botones {
+  position: relative;
+  top: -70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+section .fijo .botones a.btnConstantes {
+  position: relative;
+  width: 220px;
+  height: 55px;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #191919;
+  color: #fff;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+}
+section.active .fijo .botones a.btnConstantes {
+  width: 240px;
+  height: 60px;
+  border-radius: 40px;
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnConstantes::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnDefecto::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnDefecto::after {
+  display: none;
+}
+section .fijo .botones a.btnDefecto {
+  position: relative;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #191919;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 40px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  overflow: hidden;
+  width: 240px;
+  height: 60px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnDefecto {
+  width: 220px;
+  height: 55px;
+  border-radius: 40px;
+  box-shadow: none;
+}
+section .fijo .botones a span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transition: 0s;
+}
+section .fijo .botones a:hover span {
+  transition: 0.4s;
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnConstantes span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a.btnDefecto span {
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnDefecto span {
+  transform: translateY(0%);
+}
+section.active .fijo .botones a.btnDefecto:hover span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a:before {
+  content: "";
+  position: absolute;
+  bottom: -270px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 270px;
+  height: 270px;
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+  border-radius: 50%;
+  transition: 0.4s;
+}
+section .fijo .botones a.btnDefecto:before {
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+}
+section .fijo .botones a.btnConstantes:before {
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+}
+section.active .fijo .botones a.btnConstantes:before {
+  background: linear-gradient(315deg, #f0e796, #f7a944);
+}
+section .fijo .botones a:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnConstantes:before {
+  bottom: -150px;
+}
+section .fijo .botones a.btnDefecto:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnDefecto:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnDefecto:before {
+  bottom: -270px;
 }
 section .acordeon {
   position: absolute;
@@ -83,7 +351,24 @@ section .acordeon {
   flex-direction: column;
   max-width: 800px;
   width: 95vw;
-  top: 240px;
+  top: 300px;
+  transition: 0.5s;
+}
+@keyframes init-section {
+  0% {
+    overflow: hidden;
+  }
+  100% {
+    overflow: visible;
+  }
+}
+@keyframes init-acordeon-element {
+  0% {
+    transform: translateY(100vw);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 section .acordeon .contenidoBx {
   position: relative;
@@ -97,7 +382,8 @@ section .acordeon .opcion {
   position: relative;
   padding: 10px;
   padding-left: 40px;
-  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 80vw;
   max-width: 800px;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
@@ -133,6 +419,7 @@ section .acordeon .contenidoBx.active .opcion {
   width: 90vw;
   padding: 12px;
   padding-left: 40px;
+  color: #ebc087;
   box-shadow: 0px 10px 28px rgba(0, 0, 0, 0.4);
   letter-spacing: 7px;
 }
@@ -182,6 +469,7 @@ section .acordeon .subopcion:hover {
 }
 section .acordeon .subcontenidoBx.active .subopcion {
   background: #3f51b5;
+  color: #ebc087;
   width: 100%;
   left: 0%;
 }
@@ -201,6 +489,15 @@ section .acordeon .contenido {
   overflow: hidden;
   height: 0;
   transition: 0.5s;
+}
+section .acordeon #contenidoPesos {
+  animation: init-acordeon-element 0.35s ease-in;
+}
+section .acordeon #contenidoNaf {
+  animation: init-acordeon-element 0.5s ease-in;
+}
+section .acordeon #contenidoEmbarazo {
+  animation: init-acordeon-element 0.75s ease-in;
 }
 section .acordeon .contenidoBx.active .contenido {
   height: auto;
@@ -473,31 +770,54 @@ section .acordeon .subcontenido .modificar .confirmarBtn:hover span {
 section .acordeon .subcontenido .modificar input::placeholder {
   color: #ccfdff;
 }
+@media (max-width: 1435px) {
+  section .color {
+    display: none;
+  }
+}
 @media (max-width: 980px) {
   section .fijo .titulo {
-    top: -52px;
+    top: -39px;
   }
   section .fijo .titulo h1:nth-child(1) {
-    top: 30px;
+    top: 32px;
     left: -80px;
     font-size: 45px;
   }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 80px;
+  }
   section .fijo .titulo h1:nth-child(2) {
-    font-size: 90px;
-    left: 0px;
+    font-size: 100px;
+  }
+  section .fijo .botones {
+    top: -50px;
   }
 }
 @media (max-width: 600px) {
   section .fijo .titulo {
-    top: -50px;
+    top: -20px;
   }
   section .fijo .titulo h1:nth-child(1) {
     top: 22px;
     left: -40px;
     font-size: 30px;
   }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 40px;
+  }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 70px;
+  }
+  section .fijo .botones {
+    flex-direction: column;
+    top: -30px;
+  }
+  section .acordeon {
+    top: 310px;
+  }
+  section .fijo {
+    height: 210px;
   }
   section .acordeon .subcontenido .grid {
     position: relative;
@@ -533,12 +853,24 @@ section .acordeon .subcontenido .modificar input::placeholder {
   }
 }
 @media (max-width: 430px) {
+  section .fijo {
+    top: 60px;
+  }
+  section .acordeon {
+    top: 280px;
+  }
+  section .fijo .titulo {
+    top: 20px;
+  }
   section .fijo .titulo h1:nth-child(1) {
     position: relative;
     top: -27px;
     left: -5px;
     font-size: 28px;
     color: rgba(0, 0, 0, 0.3);
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 5px;
   }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 55px;

@@ -669,4 +669,18 @@ export class ConfiguracionValoresComponent implements OnInit {
       );
     }
   }
+
+  showDefault() {
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.remove('active');
+    }
+  }
+
+  showConstants() {
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.add('active');
+    }
+  }
 }
