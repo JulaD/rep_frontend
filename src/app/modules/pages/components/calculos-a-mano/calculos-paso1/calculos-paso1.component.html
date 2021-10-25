@@ -19,7 +19,7 @@
             <mat-form-field appearance="standard">
               <mat-label>Edad</mat-label>
               <mat-select formControlName="edad" [errorStateMatcher]="matcher">
-                <mat-option *ngFor="let edad of edades" [value]="edad">
+                <mat-option *ngFor="let edad of edades" [value]="edad" (click)="ageSelected(edad)">
                   {{edad}}
                 </mat-option>
               </mat-select>
@@ -107,7 +107,7 @@
         </div>
       </div>
     </div> <!--end container-->
-    <div class="div-boton">
+    <div class="div-boton pt-3">
       <button class="boton-agregar"
         type="submit"
         [disabled]="!grupoEtarioForm.valid"
@@ -205,18 +205,6 @@
   </div>
 </div>
 <div class="botones-finales-container">
-  <div class="boton-ver-resultados">
-    Ver resultados
-    <mat-icon
-      aria-hidden="false"
-      aria-label="More info"
-      color="primary">
-      arrow_circle_right
-    </mat-icon>
-    <p>
-      Se mostrarán los resultados en base a los datos ingresados hasta el momento
-    </p>
-  </div>
   <div class="descargar-planilla">
     Descargar como plantilla estandarizada
     <mat-icon

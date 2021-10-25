@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
@@ -17,8 +17,12 @@ const percentageValidators: ValidatorFn[] = [
   templateUrl: './calculos-paso2.component.html',
   styleUrls: ['./calculos-paso2.component.css'],
 })
-export class CalculosPaso2Component {
-  // constructor() {}
+export class CalculosPaso2Component implements OnInit {
+  @Input() defaultMinorPal: MinorPAL;
+
+  @Input() defaultExtraDataAvailable: boolean;
+
+  ngOnInit() { this.loadDefaultValues(); }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -40,5 +44,13 @@ export class CalculosPaso2Component {
     };
 
     return minorPALData;
+  }
+
+  loadDefaultValues() {
+    if (this.defaultExtraDataAvailable) {
+      this.minorPALForm.get('lowPAL')?.setValue(this.defaultMinorPal.lowPALPrevalence);
+      this.minorPALForm.get('moderatePAL')?.setValue(this.defaultMinorPal.moderatePALPrevalence);
+      this.minorPALForm.get('intensePAL')?.setValue(this.defaultMinorPal.intensePALPrevalence);
+    }
   }
 }

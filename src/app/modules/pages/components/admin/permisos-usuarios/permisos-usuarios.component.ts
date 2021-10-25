@@ -51,7 +51,7 @@ export class PermisosUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
-    this.userService.getUsers(4, 0, busqueda).subscribe(
+    this.userService.getUsers('clients', 4, 0, busqueda).subscribe(
       (res) => {
         console.log(res.rows);
         this.usersCount = res.count;
@@ -65,7 +65,7 @@ export class PermisosUsuariosComponent implements OnInit {
         console.log(err);
       },
     );
-    this.userService.getAdmins(4, 0, busqueda).subscribe(
+    this.userService.getUsers('admins', 4, 0, busqueda).subscribe(
       (res) => {
         this.adminsCount = res.count;
         this.admins = res.rows;
@@ -82,7 +82,7 @@ export class PermisosUsuariosComponent implements OnInit {
 
   goToUserPage(page: number) {
     if (page >= 1 && page <= this.usersPageCount) {
-      this.userService.getUsers(4, (page - 1) * 4, this.usersSearch).subscribe(
+      this.userService.getUsers('clients', 4, (page - 1) * 4, this.usersSearch).subscribe(
         (res) => {
           this.usersCurrentPage = page;
           this.usersCount = res.count;
@@ -108,7 +108,7 @@ export class PermisosUsuariosComponent implements OnInit {
 
   goToAdminPage(page: number) {
     if (page >= 1 && page <= this.adminsPageCount) {
-      this.userService.getAdmins(4, (page - 1) * 4, this.adminsSearch).subscribe(
+      this.userService.getUsers('admins', 4, (page - 1) * 4, this.adminsSearch).subscribe(
         (res) => {
           this.adminsCurrentPage = page;
           this.adminsCount = res.count;
@@ -264,7 +264,7 @@ export class PermisosUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaAdministradores');
     if (busquedaInput) {
       this.adminsSearch = busquedaInput.value;
-      this.userService.getAdmins(4, 0, this.adminsSearch).subscribe(
+      this.userService.getUsers('admins', 4, 0, this.adminsSearch).subscribe(
         (res) => {
           this.message = '';
           this.successAlert = false;
@@ -292,7 +292,7 @@ export class PermisosUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaUsuarios');
     if (busquedaInput) {
       this.usersSearch = busquedaInput.value;
-      this.userService.getUsers(4, 0, this.usersSearch).subscribe(
+      this.userService.getUsers('clients', 4, 0, this.usersSearch).subscribe(
         (res) => {
           this.message = '';
           this.successAlert = false;

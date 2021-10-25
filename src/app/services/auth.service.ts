@@ -22,7 +22,7 @@ export class AuthService {
     createdAt: new Date(),
   };
 
-  private api: string = environment.usersApi;
+  private api: string = environment.api;
 
   private options = () => {
     let token: string = '';

@@ -77,21 +77,25 @@ export class UploadTemplateComponent implements OnInit {
       );
   }
 
+  private options = () => {
+    let token: string = '';
+    if (localStorage.getItem('token')) {
+      token = String(localStorage.getItem('token'));
+    }
+    return {
+      headers: new HttpHeaders({
+        Authorization: token,
+        'Content-Type': 'application/octet-stream',
+      }),
+    };
+  };
+
   uploadFile(): Observable<HttpEvent<any>> {
     console.log('uploadFile, sending req');
 
     const endpoint = `${this.api}/sheetParser`;
-    const reqHeaders = new HttpHeaders({
-      'Content-Type': 'application/octet-stream',
-    });
 
-    /* const params = new HttpParams();
-    const options = {
-      params,
-      reportProgress: true,
-    }; */
-
-    const req = new HttpRequest('POST', endpoint, this.fileToUpload, { headers: reqHeaders });
+    const req = new HttpRequest('POST', endpoint, this.fileToUpload, this.options());
     return this.http.request(req);
   }
 }

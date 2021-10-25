@@ -21,13 +21,10 @@
       }
   },
   "rules": {
-      "linebreak-style": [
-          "error",
-          "windows"
-      ],
       "import/prefer-default-export":"off",
       "@typescript-eslint/camelcase":"off",
       "class-methods-use-this":"off",
-      "prefer-destructuring": ["error", {"object": true, "array": false}]
+      "prefer-destructuring": ["error", {"object": true, "array": false}],
+      "linebreak-style": "off"
   }
 }

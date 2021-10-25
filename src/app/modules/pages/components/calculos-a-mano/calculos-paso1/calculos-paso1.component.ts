@@ -3,10 +3,11 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import FranjaEtaria, { compareFranjaEtaria } from 'src/app/enums/FranjaEtaria';
 import Sexo from 'src/app/enums/Sexo';
+import DefaultWeightDTO from 'src/app/interfaces/DefaultWeightDTO';
 import { GrupoEtario } from 'src/app/models/grupo-etario';
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { NumberForForms, numeroEnteroPositivoValidator, numeroFloatMayorCeroValidator } from 'src/app/modules/shared/validators/numbers-validation';
@@ -15,7 +16,7 @@ import { step1CantidadSinMedianaValidator } from 'src/app/modules/shared/validat
 import { step1CantidadesEnCeroValidator } from 'src/app/modules/shared/validators/step1-cantidades-en-cero.directive';
 import { step1TodoVacioValidator } from 'src/app/modules/shared/validators/step1-todo-vacio.directive';
 import { ParsedDataService } from 'src/app/services/parsed-data.service';
-import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
+import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 
 const femeninoData: GrupoEtario[] = [];
 const masculinoData: GrupoEtario[] = [];
@@ -37,42 +38,22 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
-  edades: FranjaEtaria[] = [
-    FranjaEtaria.Meses_0,
-    FranjaEtaria.Meses_1,
-    FranjaEtaria.Meses_2,
-    FranjaEtaria.Meses_3,
-    FranjaEtaria.Meses_4,
-    FranjaEtaria.Meses_5,
-    FranjaEtaria.Meses_6,
-    FranjaEtaria.Meses_7,
-    FranjaEtaria.Meses_8,
-    FranjaEtaria.Meses_9,
-    FranjaEtaria.Meses_10,
-    FranjaEtaria.Meses_11,
-    FranjaEtaria.Anios_1,
-    FranjaEtaria.Anios_2,
-    FranjaEtaria.Anios_3,
-    FranjaEtaria.Anios_4,
-    FranjaEtaria.Anios_5,
-    FranjaEtaria.Anios_6,
-    FranjaEtaria.Anios_7,
-    FranjaEtaria.Anios_8,
-    FranjaEtaria.Anios_9,
-    FranjaEtaria.Anios_10,
-    FranjaEtaria.Anios_11,
-    FranjaEtaria.Anios_12,
-    FranjaEtaria.Anios_13,
-    FranjaEtaria.Anios_14,
-    FranjaEtaria.Anios_15,
-    FranjaEtaria.Anios_16,
-    FranjaEtaria.Anios_17,
-    FranjaEtaria.Anios_18_29,
-    FranjaEtaria.Anios_30_59,
-    FranjaEtaria.Anios_60_mas,
-  ];
+  defaultWeights: DefaultWeightDTO[] | undefined;
 
-  constructor(private snackBar: MatSnackBar, private parsedDataService : ParsedDataService) { }
+  defaultWeightsF: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
+
+  defaultWeightsM: Map<FranjaEtaria, number> = new Map<FranjaEtaria, number>();
+
+  defaultWeightsAvailable: boolean = false;
+
+  edades: FranjaEtaria[] = Object.values(FranjaEtaria);
+
+  constructor(
+    private errorSnackBar: MatSnackBar,
+    private repetidoSnackBar: MatSnackBar,
+    private parsedDataService : ParsedDataService,
+    public rest: RestService,
+  ) {}
 
   displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
 
@@ -92,6 +73,7 @@ export class CalculosPaso1Component implements AfterViewInit {
       this.fromTemplate = true;
       this.initializeTable(sheetData);
     }
+    this.processDefaultWeights();
   }
 
   ngAfterViewInit() {
@@ -122,7 +104,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     }
     if (repetido) {
       // presento mensaje de error
-      this.snackBar.open(
+      this.repetidoSnackBar.open(
         'ERROR: Ya existen datos ingresados para esta franja etaria', 'Aceptar',
       );
     } else {
@@ -284,5 +266,37 @@ export class CalculosPaso1Component implements AfterViewInit {
 
     masculinoData.splice(0, masculinoData.length);
     this.dataSourceM._updateChangeSubscription();
+  }
+
+  processDefaultWeights() {
+    this.rest.getDefaultWeights()
+      .subscribe(
+        (data) => {
+          this.defaultWeightsAvailable = true;
+          this.defaultWeights = data;
+          this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
+            if (weight.sex === 'Femenino') {
+              this.defaultWeightsF.set(weight.ageRange, weight.value);
+            } else if (weight.sex === 'Masculino') {
+              this.defaultWeightsM.set(weight.ageRange, weight.value);
+            }
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.defaultWeightsAvailable = false;
+          const errorMessage = 'Los valores por defecto no estan disponibles';
+          const config : MatSnackBarConfig = new MatSnackBarConfig();
+          config.verticalPosition = 'top';
+          return this.errorSnackBar.open(errorMessage, 'Aceptar', config);
+        },
+      );
+  }
+
+  ageSelected(age: FranjaEtaria) {
+    if (this.defaultWeightsAvailable) {
+      this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+      this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+    }
   }
 } // component class

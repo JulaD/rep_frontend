@@ -8,6 +8,7 @@ import { ConfiguracionValoresComponent } from './configuracion-valores/configura
 import { AdminRouterComponent } from './admin-router/admin-router.component';
 import { AdminGuard } from '../../../../guards/admin.guard';
 import { FaqsComponent } from './faqs/faqs.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 const routes: Routes = [{
   path: '',
@@ -28,6 +29,9 @@ const routes: Routes = [{
   }, {
     path: 'faqs',
     component: FaqsComponent,
+  }, {
+    path: 'auditoria',
+    component: AuditoriaComponent,
   }],
 }];
 

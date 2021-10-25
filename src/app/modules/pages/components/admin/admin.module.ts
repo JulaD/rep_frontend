@@ -12,6 +12,7 @@ import { ConfiguracionValoresComponent } from './configuracion-valores/configura
 import { FaqFormComponent } from './faq-form/faq-form.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 @NgModule({
   schemas: [
@@ -25,6 +26,7 @@ import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios
     AdminRouterComponent,
     FaqsComponent,
     FaqFormComponent,
+    AuditoriaComponent,
   ],
   imports: [
     RouterModule,
