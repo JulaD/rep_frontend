@@ -19,11 +19,11 @@ body {
 }
 .container .box {
   position: relative;
-  height: 400px;
+  height: 360px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 60px;
+  margin: 15px 40px;
   cursor: pointer;
   transition: 0.5s;
 }
@@ -31,7 +31,7 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 50px;
+  left: 70px;
   width: 50%;
   height: 100%;
   background: #fff;
@@ -43,7 +43,7 @@ body {
   content: "";
   position: absolute;
   top: 0;
-  left: 50px;
+  left: 70px;
   width: 50%;
   height: 100%;
   background: #fff;
@@ -124,28 +124,33 @@ body {
 .container .box:hover:before,
 .container .box:hover:after {
   transform: skewX(0deg);
-  left: 20px;
+  left: 45px;
   width: calc(100% - 90px);
 }
 .container .box:nth-child(1):before,
 .container .box:nth-child(1):after {
   background: linear-gradient(315deg, #65fdd7, #3cd17f);
-  animation: init-diagonal-top-down 0.25s ease-in;
+  animation: init-diagonal-top-down 0.2s ease-in;
 }
 .container .box:nth-child(2):before,
 .container .box:nth-child(2):after {
   background: linear-gradient(315deg, #2b98ff, #61fff7);
-  animation: init-diagonal-bottom-up 0.4s ease-in;
+  animation: init-diagonal-bottom-up 0.35s ease-in;
 }
 .container .box:nth-child(3):before,
 .container .box:nth-child(3):after {
   background: linear-gradient(315deg, #f0e796, #f7a944);
-  animation: init-diagonal-top-down 0.55s ease-in;
+  animation: init-diagonal-top-down 0.5s ease-in;
 }
 .container .box:nth-child(4):before,
 .container .box:nth-child(4):after {
   background: linear-gradient(315deg, #f7405e, #ffb6d8);
-  animation: init-diagonal-bottom-up 0.7s ease-in;
+  animation: init-diagonal-bottom-up 0.65s ease-in;
+}
+.container .box:nth-child(5):before,
+.container .box:nth-child(5):after {
+  background: linear-gradient(315deg, #f2d4fc, #8808af);
+  animation: init-diagonal-top-down 0.8s ease-in;
 }
 
 .container .box span::before {
@@ -182,7 +187,7 @@ body {
 }
 .container .box:hover .content {
   padding: 50px 20px;
-  left: -25px;
+  left: 0px;
 }
 .container .box .content h2 {
   position: relative;
@@ -201,65 +206,31 @@ body {
   margin-bottom: 10px;
   letter-spacing: 4px;
 }
-@keyframes animate1 {
-  0%,
-  100% {
-    background-position: 0%;
-  }
-  50% {
-    background-position: 100000%;
-  }
-}
-@keyframes animate2 {
-  0%,
-  100% {
-    background-position: 0%;
-  }
-  50% {
-    background-position: 40000%;
-  }
-}
-@keyframes animate3 {
-  0%,
-  100% {
-    background-position: 0%;
-  }
-  50% {
-    background-position: 80000%;
-  }
-}
-@keyframes animate4 {
-  0%,
-  100% {
-    background-position: 0%;
-  }
-  50% {
-    background-position: 10000%;
-  }
-}
+
 .container .box:nth-child(1):hover .content h2 {
   background: linear-gradient(90deg, #3cd17f, #65fdd7, #3cd17f);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: animate1 5s infinite;
 }
 .container .box:nth-child(2):hover .content h2 {
   background: linear-gradient(90deg, #61fff7, #2b98ff, #61fff7);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: animate2 5s infinite;
 }
 .container .box:nth-child(3):hover .content h2 {
   background: linear-gradient(90deg, #f7a944, #f0e796, #f7a944);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: animate3 5s infinite;
 }
 .container .box:nth-child(4):hover .content h2 {
   background: linear-gradient(90deg, #ffb6d8, #f7405e, #ffb6d8);
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: animate4 5s infinite;
+}
+.container .box:nth-child(5):hover .content h2 {
+  background: linear-gradient(90deg, #aa22d3, #e2b9f0, #aa22d3);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .container .box .content p {
   font-size: 1.2em;
@@ -286,7 +257,7 @@ body {
   font-weight: 700;
   margin-top: 5px;
 }
-@media (max-width: 1630px) {
+@media (max-width: 1820px) {
   .container .box {
     height: 320px;
     margin: 8px 25px;
@@ -364,6 +335,10 @@ body {
   }
   .container .box:nth-child(4):before,
   .container .box:nth-child(4):after {
+    animation: none;
+  }
+  .container .box:nth-child(5):before,
+  .container .box:nth-child(5):after {
     animation: none;
   }
 }

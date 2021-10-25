@@ -297,23 +297,22 @@
                 <div id="getHombres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('getHombres')" class="subopcion">HOMBRES</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectWeightsMen" tabindex="-1" (click)="changeValue('selectWeightsMen', 'men')">
-                                    <ng-container *ngFor="let weight of weightsMen"> 
-                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
-                                    </ng-container>
+                                <select id="selectGetMen" tabindex="-1" (click)="changeValue('selectGetMen', 'getMen')">
+                                    <option *ngIf="selectedGETMenRange === '0 A 5 MESES'" selected="selected">0 A 5 MESES</option>
+                                    <option *ngIf="selectedGETMenRange !== '0 A 5 MESES'">0 A 5 MESES</option>
+                                    <option *ngIf="selectedGETMenRange === '6 A 11 MESES'" selected="selected">6 A 11 MESES</option>
+                                    <option *ngIf="selectedGETMenRange !== '6 A 11 MESES'">6 A 11 MESES</option>
+                                    <option *ngIf="selectedGETMenRange === '1 A 17 AÑOS'" selected="selected">1 A 17 AÑOS</option>
+                                    <option *ngIf="selectedGETMenRange !== '1 A 17 AÑOS'">1 A 17 AÑOS</option>
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedWeightMen.value}}kg</h1>
-                            </div>
-                            <div (click)="toggleModificar('pesosHombres')" class="modificarBtn">
+                            <div (click)="toggleModificar('getHombres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -321,11 +320,36 @@
                                     CANCELAR
                                 </span>
                             </div>
+                            <div class="valor">
+                                <h1 id="primerConst">{{selectedGETMenEcuation[0].value}}</h1>
+                                <h1 *ngIf="selectedGETMenEcuation[1].value >= 0">+</h1>
+                                <h1 id="segundaConst">{{selectedGETMenEcuation[1].value}}</h1>
+                                <h1>MP</h1>
+                                <h1 *ngIf="selectedGETMenRange === '1 A 17 AÑOS' && selectedGETMenEcuation[2].value >= 0">+</h1>
+                                <h1 *ngIf="selectedGETMenRange === '1 A 17 AÑOS'" id="tercerConst">{{selectedGETMenEcuation[2].value}}</h1>
+                                <h1 *ngIf="selectedGETMenRange === '1 A 17 AÑOS'">MP<sup>2</sup></h1>
+                            </div>
                         </div>
-                        <div class="modificar">
-                            <h1>MODIFICAR PESO:</h1>
-                            <input type="number" id="pesosHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kg)" autocomplete="off" min="0" max="1000">
-                            <div class="confirmarBtn" (click)="modifyWeight('men')">
+                        <div class="modificar" id="constantsInputs">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="primerConst">PRIMER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="getHombresPrimerConstanteInput" value="{{selectedGETMenEcuation[0].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="segundaConst">SEGUNDO</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="getHombresSegundaConstanteInput" value="{{selectedGETMenEcuation[1].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div *ngIf="selectedGETMenRange === '1 A 17 AÑOS'" class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="tercerConst">TERCER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input *ngIf="selectedGETMenRange === '1 A 17 AÑOS'" type="number" id="getHombresTercerConstanteInput" value="{{selectedGETMenEcuation[2].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyEcuationConstants('GET', 'men')">
                                 <span>
                                     CONFIRMAR
                                 </span>
@@ -336,23 +360,22 @@
                 <div id="getMujeres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('getMujeres')" class="subopcion">MUJERES</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectWeightsWomen" tabindex="-1" (click)="changeValue('selectWeightsWomen', 'women')">
-                                    <ng-container *ngFor="let weight of weightsWomen"> 
-                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
-                                    </ng-container>
+                                <select id="selectGetWomen" tabindex="-1" (click)="changeValue('selectGetWomen', 'getWomen')">
+                                    <option *ngIf="selectedGETWomenRange === '0 A 5 MESES'" selected="selected">0 A 5 MESES</option>
+                                    <option *ngIf="selectedGETWomenRange !== '0 A 5 MESES'">0 A 5 MESES</option>
+                                    <option *ngIf="selectedGETWomenRange === '6 A 11 MESES'" selected="selected">6 A 11 MESES</option>
+                                    <option *ngIf="selectedGETWomenRange !== '6 A 11 MESES'">6 A 11 MESES</option>
+                                    <option *ngIf="selectedGETWomenRange === '1 A 17 AÑOS'" selected="selected">1 A 17 AÑOS</option>
+                                    <option *ngIf="selectedGETWomenRange !== '1 A 17 AÑOS'">1 A 17 AÑOS</option>
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedWeightWomen.value}}kg</h1>
-                            </div>
-                            <div (click)="toggleModificar('pesosMujeres')" class="modificarBtn">
+                            <div (click)="toggleModificar('getMujeres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -360,11 +383,36 @@
                                     CANCELAR
                                 </span>
                             </div>
+                            <div class="valor">
+                                <h1 id="primerConst">{{selectedGETWomenEcuation[0].value}}</h1>
+                                <h1 *ngIf="selectedGETWomenEcuation[1].value >= 0">+</h1>
+                                <h1 id="segundaConst">{{selectedGETWomenEcuation[1].value}}</h1>
+                                <h1>MP</h1>
+                                <h1 *ngIf="selectedGETWomenRange === '1 A 17 AÑOS' && selectedGETWomenEcuation[2].value >= 0">+</h1>
+                                <h1 *ngIf="selectedGETWomenRange === '1 A 17 AÑOS'" id="tercerConst">{{selectedGETWomenEcuation[2].value}}</h1>
+                                <h1 *ngIf="selectedGETWomenRange === '1 A 17 AÑOS'">MP<sup>2</sup></h1>
+                            </div>
                         </div> 
-                        <div class="modificar">
-                            <h1>MODIFICAR PESO:</h1>
-                            <input type="number" id="pesosMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kg)" autocomplete="off" min="0" max="1000">
-                            <div class="confirmarBtn" (click)="modifyWeight('women')">
+                        <div class="modificar" id="constantsInputs">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="primerConst">PRIMER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="getMujeresPrimerConstanteInput" value="{{selectedGETWomenEcuation[0].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="segundaConst">SEGUNDO</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="getMujeresSegundaConstanteInput" value="{{selectedGETWomenEcuation[1].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div *ngIf="selectedGETWomenRange === '1 A 17 AÑOS'" class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="tercerConst">TERCER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input *ngIf="selectedGETWomenRange === '1 A 17 AÑOS'" type="number" id="getMujeresTercerConstanteInput" value="{{selectedGETWomenEcuation[2].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyEcuationConstants('GET', 'women')">
                                 <span>
                                     CONFIRMAR
                                 </span>
@@ -380,23 +428,19 @@
                 <div id="tmbHombres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('tmbHombres')" class="subopcion">HOMBRES</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectNafAdults" tabindex="-1" (click)="changeValue('selectNafAdults', 'adults')">
-                                    <ng-container *ngFor="let naf of nafAdults"> 
-                                        <option *ngIf="selectedNafAdult.id === naf.id" selected="selected">{{naf.id}}</option>
-                                        <option *ngIf="selectedNafAdult.id !== naf.id">{{naf.id}}</option>
-                                    </ng-container>                                 
+                                <select id="selectTmbMen" tabindex="-1" (click)="changeValue('selectTmbMen', 'men')">
+                                    <option>18 A 29 AÑOS</option>
+                                    <option>30 A 59 AÑOS</option>
+                                    <option>60+ AÑOS</option>                                
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedNafAdult.value}}{{selectedNafAdultMeasurement}}</h1>
-                            </div>
-                            <div (click)="toggleModificar('nafMayores')" class="modificarBtn">
+                            <div (click)="toggleModificar('tmbHombres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -404,12 +448,15 @@
                                     CANCELAR
                                 </span>
                             </div>
+                            <div class="valor">
+                                <h1>XD</h1>
+                            </div>
                         </div>
                         <div class="modificar">
                             <h1 *ngIf="selectedNafAdultMeasurement === '%'">MODIFICAR VALOR:</h1>
                             <h1 *ngIf="selectedNafAdultMeasurement === ''">MODIFICAR COEF.:</h1>
-                            <input *ngIf="selectedNafAdultMeasurement === '%'" type="number" id="nafMayoresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <input *ngIf="selectedNafAdultMeasurement === ''" type="number" id="nafMayoresInput" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <input *ngIf="selectedNafAdultMeasurement === '%'" type="number" id="tmbHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
+                            <input *ngIf="selectedNafAdultMeasurement === ''" type="number" id="tmbHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
                             <div class="confirmarBtn" (click)="modifyNaf('adults')">
                                 <span>
                                     CONFIRMAR
@@ -421,23 +468,19 @@
                 <div id="tmbMujeres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('tmbMujeres')" class="subopcion">MUJERES</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectNafMinors" tabindex="-1" (click)="changeValue('selectNafMinors', 'minors')">
-                                    <ng-container *ngFor="let naf of nafMinors"> 
-                                        <option *ngIf="selectedNafMinor.id === naf.id" selected="selected">{{naf.id}}</option>
-                                        <option *ngIf="selectedNafMinor.id !== naf.id">{{naf.id}}</option>
-                                    </ng-container> 
+                                <select id="selectTmbWomen" tabindex="-1" (click)="changeValue('selectTmbWomen', 'women')">
+                                    <option>18 A 29 AÑOS</option>
+                                    <option>30 A 59 AÑOS</option>
+                                    <option>60+ AÑOS</option>
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedNafMinor.value}}{{selectedNafMinorMeasurement}}</h1>
-                            </div>
-                            <div (click)="toggleModificar('nafMenores')" class="modificarBtn">
+                            <div (click)="toggleModificar('tmbMujeres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -445,25 +488,14 @@
                                     CANCELAR
                                 </span>
                             </div>
-                        </div> 
-                        <div class="modificar" *ngIf="!(selectedNafMinor.id.includes('Prevalence'))">
-                            <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="nafMenoresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyNaf('minors')">
-                                <span>
-                                    CONFIRMAR
-                                </span>
+                            <div class="valor">
+                                <h1>XD</h1>
                             </div>
-                        </div>
-                        <div class="modificar" id="minorPrevalenceInputs" *ngIf="selectedNafMinor.id.includes('Prevalence')">
-                            <h1>MODIFICAR VALORES:</h1>
-                            <h2>minorLowPrevalence:</h2>
-                            <input type="number" id="minorLowPrevalenceInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <h2>minorModeratePrevalence:</h2>
-                            <input type="number" id="minorModeratePrevalenceInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <h2>minorIntensePrevalence:</h2>
-                            <input type="number" id="minorIntensePrevalenceInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyMinorPrevalence()">
+                        </div> 
+                        <div class="modificar">
+                            <h1>MODIFICAR VALOR:</h1>
+                            <input type="number" id="tmbMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyNaf('minors')">
                                 <span>
                                     CONFIRMAR
                                 </span>
@@ -479,20 +511,19 @@
                 <div id="crecimientoHombres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('crecimientoHombres')" class="subopcion">HOMBRES</span>
                     <div class="subcontenido">
-                        <div class="grid" id="populationGrid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectPregnancyPopulation" tabindex="-1" (click)="changeValue('selectPregnancyPopulation', 'population')">
-                                    <ng-container *ngFor="let pregnancy of pregnancyPopulation"> 
-                                        <option *ngIf="selectedPregnancyPopulation.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
-                                        <option *ngIf="selectedPregnancyPopulation.id !== pregnancy.id">{{pregnancy.id}}</option>
-                                    </ng-container>                                   
+                                <select id="selectCrecimientoMen" tabindex="-1" (click)="changeValue('selectCrecimientoMen', 'men')">
+                                    <option>0 A 5 MESES</option>
+                                    <option>6 A 11 MESES</option>
+                                    <option>1 A 17 AÑOS</option>                                
                                 </select>
                             </div>
-                            <div (click)="toggleModificar('embarazoPoblacion')" class="modificarBtn">
+                            <div (click)="toggleModificar('crecimientoHombres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -501,15 +532,12 @@
                                 </span>
                             </div>
                             <div class="valor">
-                                <h1>{{selectedPregnancyPopulation.value}}</h1>
-                            </div>
-                            <div class="medida">
-                                <h1>personas</h1>
+                                <h1>XD</h1>
                             </div>
                         </div>
                         <div class="modificar">
                             <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="embarazoPoblacionInput" tabindex="-1" placeholder="Ingrese la cantidad (personas)" autocomplete="off">
+                            <input type="number" id="crecimientoHombresInput" tabindex="-1" placeholder="Ingrese la cantidad (personas)" autocomplete="off">
                             <div class="confirmarBtn" (click)="modifyPregnancy('population')">
                                 <span>
                                     CONFIRMAR
@@ -521,23 +549,19 @@
                 <div id="crecimientoMujeres" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('crecimientoMujeres')" class="subopcion">MUJERES</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectPregnancyEnergy" tabindex="-1" (click)="changeValue('selectPregnancyEnergy', 'energy')">
-                                    <ng-container *ngFor="let pregnancy of pregnancyEnergy"> 
-                                        <option *ngIf="selectedPregnancyEnergy.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
-                                        <option *ngIf="selectedPregnancyEnergy.id !== pregnancy.id">{{pregnancy.id}}</option>
-                                    </ng-container>    
+                                <select id="selectCrecimientoWomen" tabindex="-1" (click)="changeValue('selectCrecimientoWomen', 'women')">
+                                    <option>0 A 5 MESES</option>
+                                    <option>6 A 11 MESES</option>
+                                    <option>1 A 17 AÑOS</option>   
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedPregnancyEnergy.value}}kcal</h1>
-                            </div>
-                            <div (click)="toggleModificar('embarazoEnergia')" class="modificarBtn">
+                            <div (click)="toggleModificar('crecimientoMujeres')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
                                 </span>
@@ -545,10 +569,13 @@
                                     CANCELAR
                                 </span>
                             </div>
+                            <div class="valor">
+                                <h1>XD</h1>
+                            </div>
                         </div> 
                         <div class="modificar">
                             <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="embarazoEnergiaInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal)" autocomplete="off">
+                            <input type="number" id="crecimientoMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal)" autocomplete="off">
                             <div class="confirmarBtn" (click)="modifyPregnancy('energy')">
                                 <span>
                                     CONFIRMAR
