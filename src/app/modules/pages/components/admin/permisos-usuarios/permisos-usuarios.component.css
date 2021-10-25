@@ -5,8 +5,10 @@
 }
 section {
   position: relative;
-  min-height: 100vh;
+  min-height: 1000px;
+  height: 100vh;
   background: #ccfdff;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,86 +16,97 @@ section {
   overflow: hidden;
   transition: 0.5s;
 }
-section.active {
-  background: #82cacc;
-}
-/* section .alertas {
-  position: absolute;
-  text-align: center;
-  max-width: 600px;
-  padding: 50px;
-  width: 80vw;
-  top: 12vh;
-  color: white;
-  font-size: 20px;
-  z-index: 11;
-  pointer-events: none;
-  transition: 0.25s;
-}
-section .alertas:hover {
-  transform: scale(102%);
-}
-section .alertas .cerrarAlerta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  left: calc(50% - 10px);
-  border: none;
-  background: rgb(255, 255, 255);
-  margin-top: 5px;
-  height: 20px;
-  width: 20px;
-  pointer-events: initial;
-  border-radius: 50%;
-}
-section .alertas .alertaSuccess {
-  background: rgb(132, 196, 132);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
-  padding: 15px;
-  border-radius: 10px;
-}
-section .alertas .alertaError {
-  background: rgb(204, 107, 107);
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
-  padding: 15px;
-  border-radius: 10px;
-} */
 section .color {
   position: absolute;
-  filter: blur(100px);
-  border-radius: 50%;
-  transition: 0.3s;
+  border-radius: 10px;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
+  transform: skewX(-20deg);
+  transition: 0.75s;
+}
+section .color:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
+  filter: blur(20px);
 }
 section .color:nth-child(1) {
-  top: -160px;
-  right: 50px;
-  width: 450px;
-  height: 450px;
-  background: #78b1c7;
+  top: -140px;
+  right: 80px;
+  width: 150px;
+  height: 550px;
+  animation: init-color1 0.5s ease-in;
 }
 section.active .color:nth-child(1) {
-  background: #baf0f1;
+  top: 160px;
+  right: 200px;
+  height: 850px;
 }
 section .color:nth-child(2) {
-  top: 50px;
-  left: -150px;
-  width: 600px;
-  height: 600px;
-  background: #5fced6;
+  top: 100px;
+  left: -20px;
+  width: 180px;
+  height: 900px;
+  animation: init-color2 0.75s ease-in;
 }
 section.active .color:nth-child(2) {
-  background: #bfebec;
+  top: -100px;
+  left: 170px;
+  height: 400px;
 }
 section .color:nth-child(3) {
   bottom: -120px;
-  right: 300px;
-  width: 500px;
-  height: 500px;
-  background: #64c4f0;
+  left: 180px;
+  width: 150px;
+  height: 550px;
+  animation: init-color3 0.8s ease-in;
 }
 section.active .color:nth-child(3) {
-  background: #ccfdff;
+  bottom: -20px;
+  left: 220px;
+  height: 550px;
+}
+@keyframes init-color1 {
+  0% {
+    top: -290px;
+    right: 20px;
+    height: 450px;
+  }
+  100% {
+    top: -140px;
+    right: 80px;
+    height: 550px;
+  }
+}
+@keyframes init-color2 {
+  0% {
+    top: 300px;
+    left: -50px;
+    height: 600px;
+  }
+  100% {
+    top: 100px;
+    left: -20px;
+    height: 900px;
+  }
+}
+@keyframes init-color3 {
+  0% {
+    bottom: -195px;
+    left: 150px;
+    height: 550px;
+  }
+  100% {
+    bottom: -120px;
+    left: 180px;
+    height: 550px;
+  }
 }
 section .fijo {
   position: absolute;
@@ -107,6 +120,15 @@ section .fijo {
   height: 180px;
   max-width: 1000px;
   top: 90px;
+  animation: init-title 0.35s ease-in;
+}
+@keyframes init-title {
+  0% {
+    transform: translateX(6vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 section .usuarios {
   position: absolute;
@@ -120,7 +142,16 @@ section .usuarios {
   width: 80vw;
   max-width: 800px;
   top: 285px;
-  transition: 0.6s;
+  transition: 0.5s;
+  animation: init-list 0.5s ease-in;
+}
+@keyframes init-list {
+  0% {
+    transform: translateY(3vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 section.active .usuarios.pendientes {
   transform: translateX(-100vw);
@@ -143,7 +174,23 @@ section .fijo .titulo h1:nth-child(1) {
   left: -120px;
   font-size: 80px;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.3);
+  color: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: 0.5s;
+  animation: init-text 0.5s ease-in;
+}
+@keyframes init-text {
+  0% {
+    transform: translateY(-15vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+section.active .fijo .titulo h1:nth-child(1) {
+  left: 120px;
 }
 section .fijo .titulo h1:nth-child(2) {
   font-size: 100px;
@@ -153,9 +200,6 @@ section .fijo .titulo h1:nth-child(2) {
   letter-spacing: 5px;
   color: #ccfdff;
   transition: 0.5s;
-}
-section.active .fijo .titulo h1:nth-child(2) {
-  color: #82cacc;
 }
 section .usuarios .busqueda {
   margin: 20px;
@@ -176,10 +220,6 @@ section .usuarios .busqueda input[type="text"] {
   max-width: 500px;
   border: 2px solid #ccfdff;
   transition: 1s;
-}
-section.active .usuarios .busqueda input[type="text"] {
-  background: #82cacc;
-  border: 2px solid #82cacc;
 }
 section .usuarios .busqueda:hover input[type="text"] {
   width: 70vw;
@@ -210,10 +250,6 @@ section .usuarios .busqueda a span {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
   cursor: pointer;
   transition: 0.5s;
-}
-section.active .usuarios .busqueda a span {
-  background: #82cacc;
-  border: 3px solid rgba(133, 215, 226, 0.911);
 }
 section .usuarios .busqueda a span:hover {
   transform: scale(1.15);
@@ -266,7 +302,7 @@ section .resultadoBusqueda .resultadoBusquedaUsuarios {
   color: #ccfdff;
 }
 section .resultadoBusqueda .resultadoBusquedaAdministradores {
-  color: #82cacc;
+  color: #ccfdff;
 }
 section .fijo .botones {
   position: relative;
@@ -284,6 +320,7 @@ section .fijo .botones a.btnAceptados {
   margin: 10px;
   background: #191919;
   color: #fff;
+  border-radius: 40px;
   font-size: 18px;
   font-weight: 500;
   text-decoration: none;
@@ -294,8 +331,40 @@ section .fijo .botones a.btnAceptados {
 section.active .fijo .botones a.btnAceptados {
   width: 240px;
   height: 60px;
-  border: 3px solid rgba(133, 215, 226, 0.911);
+  border-radius: 40px;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnAceptados::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnPendientes::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnPendientes::after {
+  display: none;
 }
 section .fijo .botones a.btnPendientes {
   position: relative;
@@ -306,12 +375,12 @@ section .fijo .botones a.btnPendientes {
   color: #fff;
   font-size: 18px;
   font-weight: 500;
+  border-radius: 40px;
   text-decoration: none;
   letter-spacing: 2px;
   overflow: hidden;
   width: 240px;
   height: 60px;
-  border: 3px solid #82caccab;
   font-size: 18px;
   cursor: pointer;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
@@ -319,7 +388,7 @@ section .fijo .botones a.btnPendientes {
 section.active .fijo .botones a.btnPendientes {
   width: 220px;
   height: 55px;
-  border: none;
+  border-radius: 40px;
   box-shadow: none;
 }
 section .fijo .botones a span {
@@ -354,54 +423,18 @@ section .fijo .botones a:before {
   transform: translateX(-50%);
   width: 270px;
   height: 270px;
-  background: #ccfdff;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
   border-radius: 50%;
   transition: 0.4s;
 }
 section .fijo .botones a.btnPendientes:before {
-  animation: animPendientes 8s infinite linear;
-}
-@keyframes animPendientes {
-  0%,
-  100% {
-    background: #ccfdff;
-  }
-  20% {
-    background: #87d5d8;
-  }
-  40% {
-    background: rgb(167, 227, 228);
-  }
-  60% {
-    background: #a9feff;
-  }
-  80% {
-    background: #91d2d3;
-  }
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
 }
 section .fijo .botones a.btnAceptados:before {
-  background: #82cacc;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
 }
 section.active .fijo .botones a.btnAceptados:before {
-  animation: animAceptados 8s infinite linear;
-}
-@keyframes animAceptados {
-  0%,
-  100% {
-    background: #82cacc;
-  }
-  20% {
-    background: #44c4c9;
-  }
-  40% {
-    background: #259da1;
-  }
-  60% {
-    background: #43a8ac;
-  }
-  80% {
-    background: #4bd2d6;
-  }
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
 }
 section .fijo .botones a:hover:before {
   bottom: -150px;
@@ -449,6 +482,7 @@ ul.listaUsuarios li .UsuarioEmail {
 }
 ul.listaUsuarios li:hover .UsuarioEmail {
   font-size: 25px;
+  margin-top: -30px;
 }
 ul.listaUsuarios li .info {
   display: flex;
@@ -494,12 +528,9 @@ ul.listaUsuarios li a .boton.cancelar {
   background: rgb(241, 62, 62);
   color: white;
 }
-section.active ul.listaUsuarios li {
-  background: #82cacc;
-}
 ul.listaUsuarios li:hover {
   width: 100%;
-  height: 180px;
+  height: 150px;
   transition: width 0.2s 0s, height 0.35s 0.1s;
 }
 ul.paginado {
@@ -532,20 +563,12 @@ ul.paginado .elementoPaginado {
   transition: 0.2s 0.15s;
 }
 ul.paginado .elementoPaginado.active {
-  background: #6bc4c5;
+  background: linear-gradient(315deg, #61fff7, #2b98ff);
   border: 2px solid #abf7f3;
 }
 ul.paginado .elementoPaginado svg {
   position: relative;
   display: flex;
-}
-section.active ul.paginado .elementoPaginado {
-  background: #82cacc;
-  border: 2px solid rgba(133, 215, 226, 0.911);
-}
-section.active ul.paginado .elementoPaginado.active {
-  background: #c9fdff;
-  border: 2px solid rgba(82, 154, 163, 0.925);
 }
 section .vacio {
   position: relative;
@@ -568,7 +591,12 @@ section .vacio .vacioUsuarios {
   color: #c9fdff;
 }
 section .vacio .vacioAdministradores {
-  color: #82cacc;
+  color: #c9fdff;
+}
+@media (max-width: 1435px) {
+  section .color {
+    display: none;
+  }
 }
 @media (max-width: 740px) {
   section .fijo .titulo {
@@ -578,6 +606,9 @@ section .vacio .vacioAdministradores {
     top: 21px;
     left: -80px;
     font-size: 45px;
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 80px;
   }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 58px;
@@ -591,6 +622,9 @@ section .vacio .vacioAdministradores {
     top: 15px;
     left: -40px;
     font-size: 30px;
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 40px;
   }
   section .fijo .titulo h1:nth-child(2) {
     font-size: 35px;

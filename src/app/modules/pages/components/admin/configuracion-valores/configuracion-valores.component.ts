@@ -44,7 +44,61 @@ export class ConfiguracionValoresComponent implements OnInit {
 
   selectedPregnancyEnergy: DefaultExtraDataDTO;
 
-  equationConstants: EquationConstantDTO[] = [];
+  GETMen: EquationConstantDTO[] = [];
+
+  selectedGETMenEcuation: EquationConstantDTO[] = [];
+
+  representativeGETMenEcuation0to5M: EquationConstantDTO[] = [];
+
+  representativeGETMenEcuation6to11M: EquationConstantDTO[] = [];
+
+  representativeGETMenEcuation1to17Y: EquationConstantDTO[] = [];
+
+  selectedGETMenRange: string;
+
+  GETWomen: EquationConstantDTO[] = [];
+
+  selectedGETWomenEcuation: EquationConstantDTO[] = [];
+
+  representativeGETWomenEcuation0to5M: EquationConstantDTO[] = [];
+
+  representativeGETWomenEcuation6to11M: EquationConstantDTO[] = [];
+
+  representativeGETWomenEcuation1to17Y: EquationConstantDTO[] = [];
+
+  selectedGETWomenRange: string;
+
+  TMBWomen: EquationConstantDTO[] = [];
+
+  selectedTMBWomenEcuation: EquationConstantDTO[] = [];
+
+  selectedTMBWomenRange: string;
+
+  representativeTMBWomenEcuation18to29Y: EquationConstantDTO[] = [];
+
+  representativeTMBWomenEcuation30to59Y: EquationConstantDTO[] = [];
+
+  representativeTMBWomenEcuation60Y: EquationConstantDTO[] = [];
+
+  TMBMen: EquationConstantDTO[] = [];
+
+  selectedTMBMenEcuation: EquationConstantDTO[] = [];
+
+  selectedTMBMenRange: string;
+
+  representativeTMBMenEcuation18to29Y: EquationConstantDTO[] = [];
+
+  representativeTMBMenEcuation30to59Y: EquationConstantDTO[] = [];
+
+  representativeTMBMenEcuation60Y: EquationConstantDTO[] = [];
+
+  growthMen: EquationConstantDTO[] = [];
+
+  selectedGrowthMen: EquationConstantDTO;
+
+  selectedGrowthWomen: EquationConstantDTO;
+
+  growthWomen: EquationConstantDTO[] = [];
 
   constructor(
     public valuesService: ValuesService,
@@ -52,15 +106,18 @@ export class ConfiguracionValoresComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.init('', '', '', '', '', '');
+    this.init('', '', '', '', '', '', '', '', '', '', '', '');
   }
 
   init(previousAgeRangeMen: string, previousAgeRangeWomen: string,
     previousNafMinorId: string, previousNafAdultId: string,
-    previousPregnancyPopulationId: string, previousPregnancyEnergyId: string) {
+    previousPregnancyPopulationId: string, previousPregnancyEnergyId: string,
+    previousAgeRangeGETMen: string, previousAgeRangeGETWomen: string,
+    previousAgeRangeTMBMen: string, previousAgeRangeTMBWomen: string,
+    previousAgeRangeGrowthMen: string, previousAgeRangeGrowthWomen: string) {
     this.valuesService.getParameters().subscribe(
       (res) => {
-        this.equationConstants = res.equationConstants;
+        console.log(res);
         res.defaultWeights.forEach((weight: DefaultWeightDTO) => {
           if (weight.sex === 'Masculino') {
             this.weightsMen.push(weight);
@@ -68,8 +125,6 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.weightsWomen.push(weight);
           }
         });
-        this.weightsMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
-        this.weightsWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
         res.defaultExtraData.forEach((data: DefaultExtraDataDTO) => {
           if (data.parameterType === 'NAF Adultos') {
             this.nafAdults.push(data);
@@ -83,7 +138,30 @@ export class ConfiguracionValoresComponent implements OnInit {
             }
           }
         });
+        res.equationConstants.forEach((constant: EquationConstantDTO) => {
+          if (constant.parameterType === 'GET') {
+            if (constant.sex === 'Masculino') {
+              this.GETMen.push(constant);
+            } else if (constant.sex === 'Femenino') {
+              this.GETWomen.push(constant);
+            }
+          } else if (constant.parameterType === 'TMB') {
+            if (constant.sex === 'Masculino') {
+              this.TMBMen.push(constant);
+            } else if (constant.sex === 'Femenino') {
+              this.TMBWomen.push(constant);
+            }
+          } else if (constant.parameterType === 'Energia para crecimiento') {
+            if (constant.sex === 'Masculino') {
+              this.growthMen.push(constant);
+            } else if (constant.sex === 'Femenino') {
+              this.growthWomen.push(constant);
+            }
+          }
+        });
+        this.representativeEcuations();
         if (this.weightsMen.length !== 0) {
+          this.weightsMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeMen !== '') {
             const weightMen = this.getWeightByAgeRange(previousAgeRangeMen, 'men');
             if (weightMen !== undefined) {
@@ -94,6 +172,7 @@ export class ConfiguracionValoresComponent implements OnInit {
           }
         }
         if (this.weightsWomen.length !== 0) {
+          this.weightsWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeWomen !== '') {
             const weightWomen = this.getWeightByAgeRange(previousAgeRangeWomen, 'women');
             if (weightWomen !== undefined) {
@@ -145,10 +224,196 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.selectedPregnancyEnergy = this.pregnancyEnergy[0];
           }
         }
+        if (this.GETMen.length !== 0) {
+          if (previousAgeRangeGETMen !== '') {
+            if (previousAgeRangeGETMen === '0 A 5 MESES') {
+              this.selectedGETMenEcuation = this.representativeGETMenEcuation0to5M;
+            }
+            if (previousAgeRangeGETMen === '6 A 11 MESES') {
+              this.selectedGETMenEcuation = this.representativeGETMenEcuation6to11M;
+            }
+            if (previousAgeRangeGETMen === '1 A 17 AÑOS') {
+              this.selectedGETMenEcuation = this.representativeGETMenEcuation1to17Y;
+            }
+            this.selectedGETMenRange = previousAgeRangeGETMen;
+          } else {
+            this.selectedGETMenEcuation = this.representativeGETMenEcuation0to5M;
+            this.selectedGETMenRange = '0 A 5 MESES';
+          }
+        }
+        if (this.GETWomen.length !== 0) {
+          if (previousAgeRangeGETWomen !== '') {
+            if (previousAgeRangeGETWomen === '0 A 5 MESES') {
+              this.selectedGETWomenEcuation = this.representativeGETWomenEcuation0to5M;
+            }
+            if (previousAgeRangeGETWomen === '6 A 11 MESES') {
+              this.selectedGETWomenEcuation = this.representativeGETWomenEcuation6to11M;
+            }
+            if (previousAgeRangeGETWomen === '1 A 17 AÑOS') {
+              this.selectedGETWomenEcuation = this.representativeGETWomenEcuation1to17Y;
+            }
+            this.selectedGETWomenRange = previousAgeRangeGETWomen;
+          } else {
+            this.selectedGETWomenEcuation = this.representativeGETWomenEcuation0to5M;
+            this.selectedGETWomenRange = '0 A 5 MESES';
+          }
+        }
+        if (this.TMBMen.length !== 0) {
+          if (previousAgeRangeTMBMen !== '') {
+            if (previousAgeRangeTMBMen === '18 A 29 AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+            }
+            if (previousAgeRangeTMBMen === '30 A 59 AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation30to59Y;
+            }
+            if (previousAgeRangeTMBMen === '60+ AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation60Y;
+            }
+            this.selectedTMBMenRange = previousAgeRangeTMBMen;
+          } else {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+            this.selectedTMBMenRange = '18 A 29 AÑOS';
+          }
+        }
+        if (this.TMBWomen.length !== 0) {
+          if (previousAgeRangeTMBWomen !== '') {
+            if (previousAgeRangeTMBWomen === '18 A 29 AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+            }
+            if (previousAgeRangeTMBWomen === '30 A 59 AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation30to59Y;
+            }
+            if (previousAgeRangeTMBWomen === '60+ AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation60Y;
+            }
+            this.selectedTMBWomenRange = previousAgeRangeTMBWomen;
+          } else {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+            this.selectedTMBWomenRange = '18 A 29 AÑOS';
+          }
+        }
+        if (this.growthMen.length !== 0) {
+          this.growthMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
+          if (previousAgeRangeGrowthMen !== '') {
+            const previousGrowthMen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthMen, 'men');
+            if (previousGrowthMen !== undefined) {
+              this.selectedGrowthMen = previousGrowthMen;
+            }
+          } else {
+            this.selectedGrowthMen = this.growthMen[0];
+          }
+        }
+        if (this.growthWomen.length !== 0) {
+          this.growthWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
+          if (previousAgeRangeGrowthWomen !== '') {
+            const previousGrowthWomen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthWomen, 'women');
+            if (previousGrowthWomen !== undefined) {
+              this.selectedGrowthWomen = previousGrowthWomen;
+            }
+          } else {
+            this.selectedGrowthWomen = this.growthWomen[0];
+          }
+        }
       },
       (err) => {
         console.log(err);
       },
+    );
+  }
+
+  representativeEcuations() {
+    // GET Men
+    if (this.GETMen.length > 0) {
+      this.GETMen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '0 meses') {
+          this.representativeGETMenEcuation0to5M.push(constant);
+        }
+        if (constant.ageRange === '6 meses') {
+          this.representativeGETMenEcuation6to11M.push(constant);
+        }
+        if (constant.ageRange === '1 años') {
+          this.representativeGETMenEcuation1to17Y.push(constant);
+        }
+      });
+    }
+    // GET Women
+    if (this.GETWomen.length > 0) {
+      this.GETWomen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '0 meses') {
+          this.representativeGETWomenEcuation0to5M.push(constant);
+        }
+        if (constant.ageRange === '6 meses') {
+          this.representativeGETWomenEcuation6to11M.push(constant);
+        }
+        if (constant.ageRange === '1 años') {
+          this.representativeGETWomenEcuation1to17Y.push(constant);
+        }
+      });
+    }
+    // TMB Men
+    if (this.TMBMen.length > 0) {
+      this.TMBMen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '18-29 años') {
+          this.representativeTMBMenEcuation18to29Y.push(constant);
+        }
+        if (constant.ageRange === '30-59 años') {
+          this.representativeTMBMenEcuation30to59Y.push(constant);
+        }
+        if (constant.ageRange === '60+ años') {
+          this.representativeTMBMenEcuation60Y.push(constant);
+        }
+      });
+    }
+    // TMB Women
+    if (this.TMBWomen.length > 0) {
+      this.TMBWomen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '18-29 años') {
+          this.representativeTMBWomenEcuation18to29Y.push(constant);
+        }
+        if (constant.ageRange === '30-59 años') {
+          this.representativeTMBWomenEcuation30to59Y.push(constant);
+        }
+        if (constant.ageRange === '60+ años') {
+          this.representativeTMBWomenEcuation60Y.push(constant);
+        }
+      });
+    }
+    // ordenar por terminos
+    this.representativeGETMenEcuation0to5M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETMenEcuation6to11M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETMenEcuation1to17Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation0to5M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation6to11M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation1to17Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation18to29Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation30to59Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation60Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation18to29Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation30to59Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation60Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
     );
   }
 
@@ -174,7 +439,7 @@ export class ConfiguracionValoresComponent implements OnInit {
     const contenido = document.getElementById(id);
     if (contenido) {
       if (contenido.classList.contains('active')) {
-        if (id === 'pesos') {
+        if (id === 'pesos' || id === 'get' || id === 'tmb' || id === 'crecimiento') {
           const contenidoHombres = document.getElementById(`${id}Hombres`);
           const contenidoMujeres = document.getElementById(`${id}Mujeres`);
           if (contenidoHombres) {
@@ -264,6 +529,54 @@ export class ConfiguracionValoresComponent implements OnInit {
         } else if ((type === 'population') && (selectedElement !== this.selectedPregnancyPopulation.id) && (data !== undefined)) {
           this.selectedPregnancyPopulation = data;
         }
+      } else if (type === 'getMen' || type === 'getWomen') {
+        if ((type === 'getMen') && (selectedElement !== this.selectedGETMenRange)) {
+          if (selectedElement === '0 A 5 MESES') {
+            this.selectedGETMenEcuation = this.representativeGETMenEcuation0to5M;
+          } else if (selectedElement === '6 A 11 MESES') {
+            this.selectedGETMenEcuation = this.representativeGETMenEcuation6to11M;
+          } else if (selectedElement === '1 A 17 AÑOS') {
+            this.selectedGETMenEcuation = this.representativeGETMenEcuation1to17Y;
+          }
+          this.selectedGETMenRange = selectedElement;
+        } else if ((type === 'getWomen') && (selectedElement !== this.selectedGETWomenRange)) {
+          if (selectedElement === '0 A 5 MESES') {
+            this.selectedGETWomenEcuation = this.representativeGETWomenEcuation0to5M;
+          } else if (selectedElement === '6 A 11 MESES') {
+            this.selectedGETWomenEcuation = this.representativeGETWomenEcuation6to11M;
+          } else if (selectedElement === '1 A 17 AÑOS') {
+            this.selectedGETWomenEcuation = this.representativeGETWomenEcuation1to17Y;
+          }
+          this.selectedGETWomenRange = selectedElement;
+        }
+      } else if (type === 'tmbMen' || type === 'tmbWomen') {
+        if ((type === 'tmbMen') && (selectedElement !== this.selectedTMBMenRange)) {
+          if (selectedElement === '18 A 29 AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+          } else if (selectedElement === '30 A 59 AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation30to59Y;
+          } else if (selectedElement === '60+ AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation60Y;
+          }
+          this.selectedTMBMenRange = selectedElement;
+        } else if ((type === 'tmbWomen') && (selectedElement !== this.selectedTMBWomenRange)) {
+          if (selectedElement === '18 A 29 AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+          } else if (selectedElement === '30 A 59 AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation30to59Y;
+          } else if (selectedElement === '60+ AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation60Y;
+          }
+          this.selectedTMBWomenRange = selectedElement;
+        }
+      } else if (type === 'growthMen' || type === 'growthWomen') {
+        const growth: EquationConstantDTO | undefined = this
+          .getGrowthByAgeRange(selectedElement, type);
+        if ((type === 'growthMen') && (selectedElement !== this.selectedGrowthMen.ageRange) && (growth !== undefined)) {
+          this.selectedGrowthMen = growth;
+        } else if ((type === 'growthWomen') && (selectedElement !== this.selectedGrowthMen.ageRange) && (growth !== undefined)) {
+          this.selectedGrowthWomen = growth;
+        }
       }
     }
   }
@@ -304,6 +617,18 @@ export class ConfiguracionValoresComponent implements OnInit {
     return res;
   }
 
+  getGrowthByAgeRange(ageRange: string, sex: string): EquationConstantDTO | undefined {
+    let growths: EquationConstantDTO[] = [];
+    if (sex === 'growthMen') {
+      growths = this.growthMen;
+    } else if (sex === 'growthWomen') {
+      growths = this.growthWomen;
+    }
+    const res: EquationConstantDTO | undefined = growths
+      .find((growth) => growth.ageRange === ageRange);
+    return res;
+  }
+
   modifyWeight(sex: string) {
     let inputWeightElement: HTMLInputElement;
     let weightToModify: DefaultWeightDTO;
@@ -332,12 +657,62 @@ export class ConfiguracionValoresComponent implements OnInit {
       } else {
         // redondeo 1 decimal
         newValue = Math.round(newValue * 10) / 10;
-        textAlert = `El nuevo valor de peso para ${sexSwal} de ${weightToModify.ageRange} pasará de ser ${weightToModify.value}kg a ${newValue}kg.`;
-        weightToModify.value = newValue;
-        weightToModifyArray.push(weightToModify);
-        const inputWeightElementArray: HTMLInputElement[] = [];
-        inputWeightElementArray.push(inputWeightElement);
-        this.confirmModify(textAlert, weightToModifyArray, inputWeightElementArray);
+        if (newValue === weightToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor de peso para ${sexSwal} de ${weightToModify.ageRange} pasará de ser ${weightToModify.value}kg a ${newValue}kg.`;
+          weightToModify.value = newValue;
+          weightToModifyArray.push(weightToModify);
+          const inputWeightElementArray: HTMLInputElement[] = [];
+          inputWeightElementArray.push(inputWeightElement);
+          this.confirmModify(textAlert, weightToModifyArray, inputWeightElementArray);
+        }
+      }
+    }
+  }
+
+  modifyGrowth(sex: string) {
+    let inputGrowthElement: HTMLInputElement;
+    let growthToModify: EquationConstantDTO;
+    const growthToModifyArray: EquationConstantDTO[] = [];
+    let sexSwal: string = '';
+    let textAlert: string = '';
+    if (sex === 'men') {
+      inputGrowthElement = <HTMLInputElement>document.getElementById('crecimientoHombresInput');
+      growthToModify = { ...this.selectedGrowthMen };
+      sexSwal = 'hombres';
+    } else {
+      inputGrowthElement = <HTMLInputElement>document.getElementById('crecimientoMujeresInput');
+      growthToModify = { ...this.selectedGrowthWomen };
+      sexSwal = 'mujeres';
+    }
+    if (inputGrowthElement) {
+      let newValue = parseFloat(inputGrowthElement.value);
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(newValue as any) || newValue < 0) {
+        Swal.fire(
+          '¡Valor incorrecto!',
+          'El valor ingresado debe ser un número positivo.',
+        );
+      } else {
+        // redondeo 2 decimales
+        newValue = Math.round(newValue * 100) / 100;
+        if (newValue === growthToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor energético para ${sexSwal} de ${growthToModify.ageRange} pasará de ser ${growthToModify.value}kcal/d a ${newValue}kcal/d.`;
+          growthToModify.value = newValue;
+          growthToModifyArray.push(growthToModify);
+          const inputGrowthElementArray: HTMLInputElement[] = [];
+          inputGrowthElementArray.push(inputGrowthElement);
+          this.confirmModify(textAlert, growthToModifyArray, inputGrowthElementArray);
+        }
       }
     }
   }
@@ -366,7 +741,7 @@ export class ConfiguracionValoresComponent implements OnInit {
       if (isNaN(newValue as any)) {
         Swal.fire(
           '¡Valor incorrecto!',
-          'El valor debe ser un número.',
+          'El valor ingresado debe ser un número.',
         );
       } else {
         if (nafToModifyMeasurement === '%') {
@@ -376,7 +751,12 @@ export class ConfiguracionValoresComponent implements OnInit {
         // redondeo 2 decimales
           newValue = Math.round(newValue * 100) / 100;
         }
-        if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation'
+        if (newValue === nafToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation'
         || nafToModify.id === 'urbanActivePALPercentage' || nafToModify.id === 'urbanLowPALPercentage'
         || nafToModify.id === 'ruralActivePALPercentage' || nafToModify.id === 'ruralLowPALPercentage') {
           if (newValue > 100 || newValue < 0) {
@@ -438,7 +818,7 @@ export class ConfiguracionValoresComponent implements OnInit {
     if (type === 'energy') {
       inputPregnancyElement = <HTMLInputElement>document.getElementById('embarazoEnergiaInput');
       pregnancyToModify = { ...this.selectedPregnancyEnergy };
-      pregnancyToModifyMeasurement = 'kcal';
+      pregnancyToModifyMeasurement = 'kcal/d';
     } else {
       inputPregnancyElement = <HTMLInputElement>document.getElementById('embarazoPoblacionInput');
       pregnancyToModify = { ...this.selectedPregnancyPopulation };
@@ -450,7 +830,7 @@ export class ConfiguracionValoresComponent implements OnInit {
       if (isNaN(newValue as any) || newValue < 0) {
         Swal.fire(
           '¡Valor incorrecto!',
-          'El valor debe ser un número positivo.',
+          'El valor ingresado debe ser un número positivo.',
         );
       } else {
         if (type === 'energy') {
@@ -460,13 +840,20 @@ export class ConfiguracionValoresComponent implements OnInit {
           // redondeo 0 decimales
           newValue = Math.round(newValue * 1) / 1;
         }
-        textAlert = `El nuevo valor de '${pregnancyToModify.id}' pasará de ser 
-        ${pregnancyToModify.value} ${pregnancyToModifyMeasurement} a ${newValue} ${pregnancyToModifyMeasurement}.`;
-        pregnancyToModify.value = newValue;
-        pregnancyToModifyArray.push(pregnancyToModify);
-        const inputPregnancyElementArray: HTMLInputElement[] = [];
-        inputPregnancyElementArray.push(inputPregnancyElement);
-        this.confirmModify(textAlert, pregnancyToModifyArray, inputPregnancyElementArray);
+        if (newValue === pregnancyToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor de '${pregnancyToModify.id}' pasará de ser 
+          ${pregnancyToModify.value} ${pregnancyToModifyMeasurement} a ${newValue} ${pregnancyToModifyMeasurement}.`;
+          pregnancyToModify.value = newValue;
+          pregnancyToModifyArray.push(pregnancyToModify);
+          const inputPregnancyElementArray: HTMLInputElement[] = [];
+          inputPregnancyElementArray.push(inputPregnancyElement);
+          this.confirmModify(textAlert, pregnancyToModifyArray, inputPregnancyElementArray);
+        }
       }
     }
   }
@@ -490,13 +877,34 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.nafAdults = [];
             this.pregnancyEnergy = [];
             this.pregnancyPopulation = [];
+            this.growthMen = [];
+            this.growthWomen = [];
+            this.GETMen = [];
+            this.GETWomen = [];
+            this.representativeGETMenEcuation0to5M = [];
+            this.representativeGETMenEcuation6to11M = [];
+            this.representativeGETMenEcuation1to17Y = [];
+            this.representativeGETWomenEcuation0to5M = [];
+            this.representativeGETWomenEcuation6to11M = [];
+            this.representativeGETWomenEcuation1to17Y = [];
+            this.TMBMen = [];
+            this.TMBWomen = [];
+            this.representativeTMBMenEcuation18to29Y = [];
+            this.representativeTMBMenEcuation30to59Y = [];
+            this.representativeTMBMenEcuation60Y = [];
+            this.representativeTMBWomenEcuation18to29Y = [];
+            this.representativeTMBWomenEcuation30to59Y = [];
+            this.representativeTMBWomenEcuation60Y = [];
             inputElements.forEach((input) => {
               // eslint-disable-next-line no-param-reassign
               input.value = '';
             });
             this.init(this.selectedWeightMen.ageRange, this.selectedWeightWomen.ageRange,
               this.selectedNafMinor.id, this.selectedNafAdult.id,
-              this.selectedPregnancyPopulation.id, this.selectedPregnancyEnergy.id);
+              this.selectedPregnancyPopulation.id, this.selectedPregnancyEnergy.id,
+              this.selectedGETMenRange, this.selectedGETWomenRange,
+              this.selectedTMBMenRange, this.selectedTMBWomenRange,
+              this.selectedGrowthMen.ageRange, this.selectedGrowthWomen.ageRange);
             Swal.fire(
               '¡Éxito!',
               'Se ha modificado el valor.',
@@ -666,6 +1074,151 @@ export class ConfiguracionValoresComponent implements OnInit {
         '¡Error!',
         'Hubo un problema.',
       );
+    }
+  }
+
+  modifyEcuationConstants(type:string, sex:string) {
+    let actualFirstValue: EquationConstantDTO | undefined;
+    let actualSecondValue: EquationConstantDTO | undefined;
+    let actualThirdValue: EquationConstantDTO | undefined;
+    let firstValueInput: HTMLInputElement | undefined;
+    let secondValueInput: HTMLInputElement | undefined;
+    let thirdValueInput: HTMLInputElement | undefined;
+    let firstValue: number = NaN;
+    let secondValue: number = NaN;
+    let thirdValue: number = NaN;
+    let actualRange: string = '';
+    let swalText: string = '';
+    let NaNError: boolean = false;
+    let sameValuesError: boolean = false;
+    if (type === 'GET') {
+      if (sex === 'men') {
+        actualFirstValue = this.selectedGETMenEcuation[0];
+        actualSecondValue = this.selectedGETMenEcuation[1];
+        actualThirdValue = this.selectedGETMenEcuation[2];
+        firstValueInput = <HTMLInputElement>document.getElementById('getHombresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('getHombresSegundaConstanteInput');
+        thirdValueInput = <HTMLInputElement>document.getElementById('getHombresTercerConstanteInput');
+        actualRange = this.selectedGETMenRange;
+      } else if (sex === 'women') {
+        actualFirstValue = this.selectedGETWomenEcuation[0];
+        actualSecondValue = this.selectedGETWomenEcuation[1];
+        actualThirdValue = this.selectedGETWomenEcuation[2];
+        firstValueInput = <HTMLInputElement>document.getElementById('getMujeresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('getMujeresSegundaConstanteInput');
+        thirdValueInput = <HTMLInputElement>document.getElementById('getMujeresTercerConstanteInput');
+        actualRange = this.selectedGETWomenRange;
+      }
+    } else if (type === 'TMB') {
+      if (sex === 'men') {
+        actualFirstValue = this.selectedTMBMenEcuation[0];
+        actualSecondValue = this.selectedTMBMenEcuation[1];
+        firstValueInput = <HTMLInputElement>document.getElementById('tmbHombresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('tmbHombresSegundaConstanteInput');
+        actualRange = this.selectedTMBMenRange;
+      } else if (sex === 'women') {
+        actualFirstValue = this.selectedTMBWomenEcuation[0];
+        actualSecondValue = this.selectedTMBWomenEcuation[1];
+        firstValueInput = <HTMLInputElement>document.getElementById('tmbMujeresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('tmbMujeresSegundaConstanteInput');
+        actualRange = this.selectedTMBWomenRange;
+      }
+    }
+    if (firstValueInput) {
+      firstValue = parseFloat(firstValueInput!.value);
+    }
+    if (secondValueInput) {
+      secondValue = parseFloat(secondValueInput!.value);
+    }
+    if (thirdValueInput) {
+      thirdValue = parseFloat(thirdValueInput!.value);
+    }
+    if (actualRange === '0 A 5 MESES' || actualRange === '6 A 11 MESES'
+      || actualRange === '18 A 29 AÑOS' || actualRange === '30 A 59 AÑOS'
+      || actualRange === '60+ AÑOS') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(firstValue) as any || isNaN(secondValue) as any) {
+        NaNError = true;
+        swalText = 'Los valores deben ser números.';
+      } else {
+        firstValue = Math.round(firstValue * 1000) / 1000;
+        secondValue = Math.round(secondValue * 1000) / 1000;
+        if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value) {
+          sameValuesError = true;
+          swalText = 'Debe modificar por lo menos uno de los campos.';
+        }
+      }
+    } else if (actualRange === '1 A 17 AÑOS') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(firstValue) as any || isNaN(secondValue) as any || isNaN(thirdValue) as any) {
+        NaNError = true;
+        swalText = 'Los valores ingresados deben ser números.';
+      } else {
+        // redonde 3 cifras significativas
+        firstValue = Math.round(firstValue * 1000) / 1000;
+        secondValue = Math.round(secondValue * 1000) / 1000;
+        thirdValue = Math.round(thirdValue * 1000) / 1000;
+        if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value
+            && thirdValue === actualThirdValue!.value) {
+          sameValuesError = true;
+          swalText = 'Debe modificar por lo menos uno de los campos.';
+        }
+      }
+    }
+    if (NaNError || sameValuesError) {
+      Swal.fire(
+        '¡Error!',
+        swalText,
+      );
+    } else {
+      // identificar valores modificados, sabemos que por lo menos hay 1
+      const constantsToModify: EquationConstantDTO[] = [];
+      swalText = '';
+      if (actualFirstValue && firstValue !== actualFirstValue!.value) {
+        const firstConstantToModify: EquationConstantDTO = { ...actualFirstValue };
+        firstConstantToModify.value = firstValue;
+        constantsToModify.push(firstConstantToModify);
+        swalText += `El primer término cambiará su valor de ${actualFirstValue!.value}
+        a ${firstConstantToModify.value}. `;
+      }
+      if (actualSecondValue && secondValue !== actualSecondValue!.value) {
+        const secondConstantToModify: EquationConstantDTO = { ...actualSecondValue };
+        secondConstantToModify.value = secondValue;
+        constantsToModify.push(secondConstantToModify);
+        swalText += `El segundo término cambiará su valor de ${actualSecondValue!.value}
+        a ${secondConstantToModify.value}. `;
+      }
+      if (actualThirdValue && thirdValue !== actualThirdValue!.value) {
+        const thirdConstantToModify: EquationConstantDTO = { ...actualThirdValue };
+        thirdConstantToModify.value = thirdValue;
+        constantsToModify.push(thirdConstantToModify);
+        swalText += `El tercer término cambiará su valor de ${actualThirdValue!.value}
+        a ${thirdConstantToModify.value}. `;
+      }
+      if (swalText === '') {
+        Swal.fire(
+          '¡Error!',
+          'Hubo un problema',
+        );
+      } else {
+        // en este caso no se quiere resetear inputs, le paso un arreglo vacio
+        const constantInputsArray: HTMLInputElement[] = [];
+        this.confirmModify(swalText, constantsToModify, constantInputsArray);
+      }
+    }
+  }
+
+  showDefault() {
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.remove('active');
+    }
+  }
+
+  showConstants() {
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.add('active');
     }
   }
 }
