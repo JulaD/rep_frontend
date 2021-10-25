@@ -10,6 +10,7 @@ import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
 import { AngularMaterialModule } from '../../../../material/angular-material.module';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 @NgModule({
   schemas: [
@@ -21,6 +22,7 @@ import { AngularMaterialModule } from '../../../../material/angular-material.mod
     PermisosUsuariosComponent,
     ConfiguracionValoresComponent,
     AdminRouterComponent,
+    AuditoriaComponent,
   ],
   imports: [
     RouterModule,
