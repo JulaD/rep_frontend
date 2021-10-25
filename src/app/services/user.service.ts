@@ -15,7 +15,7 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-  private api: string = environment.usersApi;
+  private api: string = environment.api;
 
   private options = () => {
     let token: string = '';

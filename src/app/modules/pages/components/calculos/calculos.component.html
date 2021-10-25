@@ -10,11 +10,17 @@
       </button>
       <a href="/calculos" (click)="downloadFile()">¿Qué plantilla?</a>  
     </div>
-    <button mat-raised-button color="primary" routerLink="/stepper">
-      Quiero subir los datos a mano
-    </button>
-    <button mat-raised-button color="primary" routerLink="/no-data">
-      No tengo los pesos
-    </button>
+    <div class="second-button">
+      <div class="col-sm">
+        <button mat-raised-button color="primary" routerLink="/stepper">
+          Quiero subir los datos a mano
+        </button>
+      </div>
+      <div class="col-sm">
+        <mat-icon class= "orange-icon" matTooltip="¡Si no cuenta con algún dato se le brindarán datos por defecto!">
+          info
+        </mat-icon>
+      </div>
+    </div>
   </div>
 </div>

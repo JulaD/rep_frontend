@@ -21,7 +21,7 @@ export class AuthService {
     createdAt: new Date(),
   };
 
-  private api: string = environment.usersApi;
+  private api: string = environment.api;
 
   constructor(
     private router: Router,
