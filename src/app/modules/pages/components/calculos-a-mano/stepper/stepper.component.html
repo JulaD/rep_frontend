@@ -30,7 +30,11 @@
       *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent">
       <div class="container">
         <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
-        <app-calculos-paso2 #step2DOMAccess class="mb-4"></app-calculos-paso2>
+        <app-calculos-paso2
+          #step2DOMAccess class="mb-4"
+          [defaultExtraDataAvailable]="this.defaultExtraDataAvailable"
+          [defaultMinorPal]="this.defaultMinorPal">
+        </app-calculos-paso2>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
           <div *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent ||
@@ -57,7 +61,11 @@
       *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent">
       <div class="container"> 
         <ng-template matStepLabel>Estilo de vida por area</ng-template>
-        <app-calculos-paso3 #step3DOMAccess class="mb-4"></app-calculos-paso3>
+        <app-calculos-paso3
+          #step3DOMAccess class="mb-4"
+          [defaultExtraDataAvailable]="defaultExtraDataAvailable"
+          [defaultAdultPal]="defaultAdultPal">
+        </app-calculos-paso3>
         <div class="containerButtons">
           <button mat-button matStepperPrevious>Volver</button>
           <div *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
@@ -87,6 +95,9 @@
         <ng-template matStepLabel>Maternidad y lactancia</ng-template>
         <app-calculos-paso4
           #step4Access class="mb-4"
+          [defaultExtraDataAvailable]="defaultExtraDataAvailable"
+          [defaultMaternity18to29]="defaultMaternity18to29"
+          [defaultMaternity30to59]="defaultMaternity30to59"
           [agesFemale18To29Present]="step1DOMAccess.stepperLogic.agesFemale18To29Present"
           [agesFemale30To59Present]="step1DOMAccess.stepperLogic.agesFemale30To59Present">
         </app-calculos-paso4>

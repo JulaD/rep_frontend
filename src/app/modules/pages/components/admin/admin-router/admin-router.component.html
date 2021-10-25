@@ -1,11 +1,34 @@
-<div class="router-content">
-  <button mat-raised-button color="primary" routerLink="autorizacion">
-    Autorización
-  </button>
-  <button mat-raised-button color="primary" routerLink="permisos">
-    Permisos
-  </button>
-  <button mat-raised-button color="primary" routerLink="valores">
-    Valores
-  </button>
-</div>
+<body>
+  <div class="container">
+    <div class="box" routerLink="autorizacion">
+        <div class="content">
+            <h2>AUTORIZAR</h2>
+            <p> Aceptar o denegar acceso a los usuarios que se hayan registrado. </p>
+        </div>
+    </div>
+    <div class="box" routerLink="permisos">
+        <div class="content">
+            <h2>PERMISOS</h2>
+            <p> Dar o quitar permisos de administrador a los usuarios que hayan sido autorizados. </p>
+        </div>
+    </div>
+    <div class="box" routerLink="valores">
+        <div class="content">
+            <h2>VALORES</h2>
+            <p> Modificar los valores que se utilizan al momento de realizar los cálculos. </p>
+        </div>
+    </div>
+    <div class="box" routerLink="faq">
+      <div class="content">
+          <h2>FAQ</h2>
+          <p> Crear, modificar o eliminar preguntas y respuestas frecuentes. </p>
+      </div>
+    </div>
+    <div class="box" routerLink="auditoria">
+      <div class="content">
+          <h2>AUDITORÍA</h2>
+          <p> Monitorear la actividad de los usuarios en la aplicación. </p>
+      </div>
+    </div>
+  </div>
+</body>

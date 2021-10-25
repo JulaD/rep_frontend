@@ -6,6 +6,7 @@ import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizac
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
+import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,9 @@ const routes: Routes = [{
   }, {
     path: 'valores',
     component: ConfiguracionValoresComponent,
+  }, {
+    path: 'auditoria',
+    component: AuditoriaComponent,
   }],
 }];
 

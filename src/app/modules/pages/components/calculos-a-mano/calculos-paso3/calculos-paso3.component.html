@@ -26,7 +26,7 @@
               </mat-error>
             </mat-form-field>
           </div>
-          <div *ngIf="adultPALForm.get('population')?.errors?.groupSuman100Validator &&
+          <div *ngIf="adultPALForm.get('population')?.errors?.groupSuman100 &&
             (adultPALForm.get('population')?.touched || adultPALForm.get('population')?.dirty)"
             class="mensaje-error">
             Los 2 porcentajes de población ingresados deben sumar 100
