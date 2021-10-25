@@ -106,16 +106,15 @@ export class ConfiguracionValoresComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.init('', '', '', '', '', '', '', '', '', '');
+    this.init('', '', '', '', '', '', '', '', '', '', '', '');
   }
 
   init(previousAgeRangeMen: string, previousAgeRangeWomen: string,
     previousNafMinorId: string, previousNafAdultId: string,
     previousPregnancyPopulationId: string, previousPregnancyEnergyId: string,
     previousAgeRangeGETMen: string, previousAgeRangeGETWomen: string,
-    previousAgeRangeTMBMen: string, previousAgeRangeTMBWomen: string) {
-    /* ,
-    previousAgeRangeGrowthMen: string, previousAgeRangeGrowthMen: string */
+    previousAgeRangeTMBMen: string, previousAgeRangeTMBWomen: string,
+    previousAgeRangeGrowthMen: string, previousAgeRangeGrowthWomen: string) {
     this.valuesService.getParameters().subscribe(
       (res) => {
         console.log(res);
@@ -126,8 +125,6 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.weightsWomen.push(weight);
           }
         });
-        this.weightsMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
-        this.weightsWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
         res.defaultExtraData.forEach((data: DefaultExtraDataDTO) => {
           if (data.parameterType === 'NAF Adultos') {
             this.nafAdults.push(data);
@@ -164,6 +161,7 @@ export class ConfiguracionValoresComponent implements OnInit {
         });
         this.representativeEcuations();
         if (this.weightsMen.length !== 0) {
+          this.weightsMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeMen !== '') {
             const weightMen = this.getWeightByAgeRange(previousAgeRangeMen, 'men');
             if (weightMen !== undefined) {
@@ -174,6 +172,7 @@ export class ConfiguracionValoresComponent implements OnInit {
           }
         }
         if (this.weightsWomen.length !== 0) {
+          this.weightsWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeWomen !== '') {
             const weightWomen = this.getWeightByAgeRange(previousAgeRangeWomen, 'women');
             if (weightWomen !== undefined) {
@@ -291,6 +290,28 @@ export class ConfiguracionValoresComponent implements OnInit {
           } else {
             this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
             this.selectedTMBWomenRange = '18 A 29 AÑOS';
+          }
+        }
+        if (this.growthMen.length !== 0) {
+          this.growthMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
+          if (previousAgeRangeGrowthMen !== '') {
+            const previousGrowthMen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthMen, 'men');
+            if (previousGrowthMen !== undefined) {
+              this.selectedGrowthMen = previousGrowthMen;
+            }
+          } else {
+            this.selectedGrowthMen = this.growthMen[0];
+          }
+        }
+        if (this.growthWomen.length !== 0) {
+          this.growthWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
+          if (previousAgeRangeGrowthWomen !== '') {
+            const previousGrowthWomen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthWomen, 'women');
+            if (previousGrowthWomen !== undefined) {
+              this.selectedGrowthWomen = previousGrowthWomen;
+            }
+          } else {
+            this.selectedGrowthWomen = this.growthWomen[0];
           }
         }
       },
@@ -548,6 +569,14 @@ export class ConfiguracionValoresComponent implements OnInit {
           }
           this.selectedTMBWomenRange = selectedElement;
         }
+      } else if (type === 'growthMen' || type === 'growthWomen') {
+        const growth: EquationConstantDTO | undefined = this
+          .getGrowthByAgeRange(selectedElement, type);
+        if ((type === 'growthMen') && (selectedElement !== this.selectedGrowthMen.ageRange) && (growth !== undefined)) {
+          this.selectedGrowthMen = growth;
+        } else if ((type === 'growthWomen') && (selectedElement !== this.selectedGrowthMen.ageRange) && (growth !== undefined)) {
+          this.selectedGrowthWomen = growth;
+        }
       }
     }
   }
@@ -588,6 +617,18 @@ export class ConfiguracionValoresComponent implements OnInit {
     return res;
   }
 
+  getGrowthByAgeRange(ageRange: string, sex: string): EquationConstantDTO | undefined {
+    let growths: EquationConstantDTO[] = [];
+    if (sex === 'growthMen') {
+      growths = this.growthMen;
+    } else if (sex === 'growthWomen') {
+      growths = this.growthWomen;
+    }
+    const res: EquationConstantDTO | undefined = growths
+      .find((growth) => growth.ageRange === ageRange);
+    return res;
+  }
+
   modifyWeight(sex: string) {
     let inputWeightElement: HTMLInputElement;
     let weightToModify: DefaultWeightDTO;
@@ -616,12 +657,62 @@ export class ConfiguracionValoresComponent implements OnInit {
       } else {
         // redondeo 1 decimal
         newValue = Math.round(newValue * 10) / 10;
-        textAlert = `El nuevo valor de peso para ${sexSwal} de ${weightToModify.ageRange} pasará de ser ${weightToModify.value}kg a ${newValue}kg.`;
-        weightToModify.value = newValue;
-        weightToModifyArray.push(weightToModify);
-        const inputWeightElementArray: HTMLInputElement[] = [];
-        inputWeightElementArray.push(inputWeightElement);
-        this.confirmModify(textAlert, weightToModifyArray, inputWeightElementArray);
+        if (newValue === weightToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor de peso para ${sexSwal} de ${weightToModify.ageRange} pasará de ser ${weightToModify.value}kg a ${newValue}kg.`;
+          weightToModify.value = newValue;
+          weightToModifyArray.push(weightToModify);
+          const inputWeightElementArray: HTMLInputElement[] = [];
+          inputWeightElementArray.push(inputWeightElement);
+          this.confirmModify(textAlert, weightToModifyArray, inputWeightElementArray);
+        }
+      }
+    }
+  }
+
+  modifyGrowth(sex: string) {
+    let inputGrowthElement: HTMLInputElement;
+    let growthToModify: EquationConstantDTO;
+    const growthToModifyArray: EquationConstantDTO[] = [];
+    let sexSwal: string = '';
+    let textAlert: string = '';
+    if (sex === 'men') {
+      inputGrowthElement = <HTMLInputElement>document.getElementById('crecimientoHombresInput');
+      growthToModify = { ...this.selectedGrowthMen };
+      sexSwal = 'hombres';
+    } else {
+      inputGrowthElement = <HTMLInputElement>document.getElementById('crecimientoMujeresInput');
+      growthToModify = { ...this.selectedGrowthWomen };
+      sexSwal = 'mujeres';
+    }
+    if (inputGrowthElement) {
+      let newValue = parseFloat(inputGrowthElement.value);
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(newValue as any) || newValue < 0) {
+        Swal.fire(
+          '¡Valor incorrecto!',
+          'El valor ingresado debe ser un número positivo.',
+        );
+      } else {
+        // redondeo 2 decimales
+        newValue = Math.round(newValue * 100) / 100;
+        if (newValue === growthToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor energético para ${sexSwal} de ${growthToModify.ageRange} pasará de ser ${growthToModify.value}kcal/d a ${newValue}kcal/d.`;
+          growthToModify.value = newValue;
+          growthToModifyArray.push(growthToModify);
+          const inputGrowthElementArray: HTMLInputElement[] = [];
+          inputGrowthElementArray.push(inputGrowthElement);
+          this.confirmModify(textAlert, growthToModifyArray, inputGrowthElementArray);
+        }
       }
     }
   }
@@ -650,7 +741,7 @@ export class ConfiguracionValoresComponent implements OnInit {
       if (isNaN(newValue as any)) {
         Swal.fire(
           '¡Valor incorrecto!',
-          'El valor debe ser un número.',
+          'El valor ingresado debe ser un número.',
         );
       } else {
         if (nafToModifyMeasurement === '%') {
@@ -660,7 +751,12 @@ export class ConfiguracionValoresComponent implements OnInit {
         // redondeo 2 decimales
           newValue = Math.round(newValue * 100) / 100;
         }
-        if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation'
+        if (newValue === nafToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else if (nafToModify.id === 'ruralPopulation' || nafToModify.id === 'urbanPopulation'
         || nafToModify.id === 'urbanActivePALPercentage' || nafToModify.id === 'urbanLowPALPercentage'
         || nafToModify.id === 'ruralActivePALPercentage' || nafToModify.id === 'ruralLowPALPercentage') {
           if (newValue > 100 || newValue < 0) {
@@ -722,7 +818,7 @@ export class ConfiguracionValoresComponent implements OnInit {
     if (type === 'energy') {
       inputPregnancyElement = <HTMLInputElement>document.getElementById('embarazoEnergiaInput');
       pregnancyToModify = { ...this.selectedPregnancyEnergy };
-      pregnancyToModifyMeasurement = 'kcal';
+      pregnancyToModifyMeasurement = 'kcal/d';
     } else {
       inputPregnancyElement = <HTMLInputElement>document.getElementById('embarazoPoblacionInput');
       pregnancyToModify = { ...this.selectedPregnancyPopulation };
@@ -734,7 +830,7 @@ export class ConfiguracionValoresComponent implements OnInit {
       if (isNaN(newValue as any) || newValue < 0) {
         Swal.fire(
           '¡Valor incorrecto!',
-          'El valor debe ser un número positivo.',
+          'El valor ingresado debe ser un número positivo.',
         );
       } else {
         if (type === 'energy') {
@@ -744,13 +840,20 @@ export class ConfiguracionValoresComponent implements OnInit {
           // redondeo 0 decimales
           newValue = Math.round(newValue * 1) / 1;
         }
-        textAlert = `El nuevo valor de '${pregnancyToModify.id}' pasará de ser 
-        ${pregnancyToModify.value} ${pregnancyToModifyMeasurement} a ${newValue} ${pregnancyToModifyMeasurement}.`;
-        pregnancyToModify.value = newValue;
-        pregnancyToModifyArray.push(pregnancyToModify);
-        const inputPregnancyElementArray: HTMLInputElement[] = [];
-        inputPregnancyElementArray.push(inputPregnancyElement);
-        this.confirmModify(textAlert, pregnancyToModifyArray, inputPregnancyElementArray);
+        if (newValue === pregnancyToModify.value) {
+          Swal.fire(
+            '¡Valor incorrecto!',
+            'El valor ingresado es igual al valor actual.',
+          );
+        } else {
+          textAlert = `El nuevo valor de '${pregnancyToModify.id}' pasará de ser 
+          ${pregnancyToModify.value} ${pregnancyToModifyMeasurement} a ${newValue} ${pregnancyToModifyMeasurement}.`;
+          pregnancyToModify.value = newValue;
+          pregnancyToModifyArray.push(pregnancyToModify);
+          const inputPregnancyElementArray: HTMLInputElement[] = [];
+          inputPregnancyElementArray.push(inputPregnancyElement);
+          this.confirmModify(textAlert, pregnancyToModifyArray, inputPregnancyElementArray);
+        }
       }
     }
   }
@@ -774,6 +877,8 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.nafAdults = [];
             this.pregnancyEnergy = [];
             this.pregnancyPopulation = [];
+            this.growthMen = [];
+            this.growthWomen = [];
             this.GETMen = [];
             this.GETWomen = [];
             this.representativeGETMenEcuation0to5M = [];
@@ -798,7 +903,8 @@ export class ConfiguracionValoresComponent implements OnInit {
               this.selectedNafMinor.id, this.selectedNafAdult.id,
               this.selectedPregnancyPopulation.id, this.selectedPregnancyEnergy.id,
               this.selectedGETMenRange, this.selectedGETWomenRange,
-              this.selectedTMBMenRange, this.selectedTMBWomenRange);
+              this.selectedTMBMenRange, this.selectedTMBWomenRange,
+              this.selectedGrowthMen.ageRange, this.selectedGrowthWomen.ageRange);
             Swal.fire(
               '¡Éxito!',
               'Se ha modificado el valor.',
@@ -1046,7 +1152,7 @@ export class ConfiguracionValoresComponent implements OnInit {
       // eslint-disable-next-line no-restricted-globals
       if (isNaN(firstValue) as any || isNaN(secondValue) as any || isNaN(thirdValue) as any) {
         NaNError = true;
-        swalText = 'Los valores deben ser números.';
+        swalText = 'Los valores ingresados deben ser números.';
       } else {
         // redonde 3 cifras significativas
         firstValue = Math.round(firstValue * 1000) / 1000;

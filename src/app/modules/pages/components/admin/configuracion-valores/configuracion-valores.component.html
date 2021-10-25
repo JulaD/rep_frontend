@@ -251,7 +251,7 @@
                 <div id="embarazoEnergia" class="subcontenidoBx">
                     <span (click)="toggleSubcontenido('embarazoEnergia')" class="subopcion">ENERGÍA</span>
                     <div class="subcontenido">
-                        <div class="grid">
+                        <div class="grid" id="constantsGrid">
                             <div class="dropdown">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
@@ -264,9 +264,6 @@
                                     </ng-container>    
                                 </select>
                             </div>
-                            <div class="valor">
-                                <h1>{{selectedPregnancyEnergy.value}}kcal</h1>
-                            </div>
                             <div (click)="toggleModificar('embarazoEnergia')" class="modificarBtn">
                                 <span id="modBtn">
                                     MODIFICAR
@@ -275,10 +272,13 @@
                                     CANCELAR
                                 </span>
                             </div>
+                            <div class="valor" id="kcald">
+                                <h1>{{selectedPregnancyEnergy.value}}kcal/d</h1>
+                            </div>
                         </div> 
                         <div class="modificar">
                             <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="embarazoEnergiaInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal)" autocomplete="off">
+                            <input type="number" id="embarazoEnergiaInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal/d)" autocomplete="off">
                             <div class="confirmarBtn" (click)="modifyPregnancy('energy')">
                                 <span>
                                     CONFIRMAR
@@ -547,10 +547,11 @@
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectCrecimientoMen" tabindex="-1" (click)="changeValue('selectCrecimientoMen', 'men')">
-                                    <option>0 A 5 MESES</option>
-                                    <option>6 A 11 MESES</option>
-                                    <option>1 A 17 AÑOS</option>                                
+                                <select id="selectGrowthMen" tabindex="-1" (click)="changeValue('selectGrowthMen', 'growthMen')">
+                                    <ng-container *ngFor="let growth of growthMen"> 
+                                        <option *ngIf="selectedGrowthMen.ageRange === growth.ageRange" selected="selected">{{growth.ageRange}}</option>
+                                        <option *ngIf="selectedGrowthMen.ageRange !== growth.ageRange">{{growth.ageRange}}</option>
+                                    </ng-container>                               
                                 </select>
                             </div>
                             <div (click)="toggleModificar('crecimientoHombres')" class="modificarBtn">
@@ -561,14 +562,14 @@
                                     CANCELAR
                                 </span>
                             </div>
-                            <div class="valor">
-                                <h1>XD</h1>
+                            <div class="valor" id="kcald">
+                                <h1>{{selectedGrowthMen.value}}kcal/d</h1>
                             </div>
                         </div>
                         <div class="modificar">
                             <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="crecimientoHombresInput" tabindex="-1" placeholder="Ingrese la cantidad (personas)" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyPregnancy('population')">
+                            <input type="number" id="crecimientoHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal/d)" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyGrowth('men')">
                                 <span>
                                     CONFIRMAR
                                 </span>
@@ -585,10 +586,11 @@
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectCrecimientoWomen" tabindex="-1" (click)="changeValue('selectCrecimientoWomen', 'women')">
-                                    <option>0 A 5 MESES</option>
-                                    <option>6 A 11 MESES</option>
-                                    <option>1 A 17 AÑOS</option>   
+                                <select id="selectGrowthWomen" tabindex="-1" (click)="changeValue('selectGrowthWomen', 'growthWomen')">
+                                    <ng-container *ngFor="let growth of growthWomen"> 
+                                        <option *ngIf="selectedGrowthWomen.ageRange === growth.ageRange" selected="selected">{{growth.ageRange}}</option>
+                                        <option *ngIf="selectedGrowthWomen.ageRange !== growth.ageRange">{{growth.ageRange}}</option>
+                                    </ng-container>                               
                                 </select>
                             </div>
                             <div (click)="toggleModificar('crecimientoMujeres')" class="modificarBtn">
@@ -599,14 +601,14 @@
                                     CANCELAR
                                 </span>
                             </div>
-                            <div class="valor">
-                                <h1>XD</h1>
+                            <div class="valor" id="kcald">
+                                <h1>{{selectedGrowthWomen.value}}kcal/d</h1>
                             </div>
                         </div> 
                         <div class="modificar">
                             <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="crecimientoMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal)" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyPregnancy('energy')">
+                            <input type="number" id="crecimientoMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (kcal/d)" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyGrowth('women')">
                                 <span>
                                     CONFIRMAR
                                 </span>

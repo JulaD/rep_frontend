@@ -560,6 +560,13 @@ section .acordeon .subcontenido #constantsGrid .valor {
   justify-content: center;
   margin-top: 40px;
 }
+section .acordeon .subcontenido #constantsGrid #kcald {
+  justify-content: center;
+  margin-top: 25px;
+}
+section .acordeon .subcontenido #constantsGrid #kcald h1 {
+  font-size: 100px;
+}
 section .acordeon .subcontenido #constantsGrid .valor h1 {
   font-size: 75px;
 }
@@ -635,6 +642,18 @@ section .acordeon .subcontenido .dropdown select {
   text-transform: uppercase;
 }
 #selectWeightsMen option {
+  text-transform: uppercase;
+}
+#selectGrowthMen {
+  text-transform: uppercase;
+}
+#selectGrowthMen option {
+  text-transform: uppercase;
+}
+#selectGrowthWomen {
+  text-transform: uppercase;
+}
+#selectGrowthWomen option {
   text-transform: uppercase;
 }
 #selectNafMinors {
