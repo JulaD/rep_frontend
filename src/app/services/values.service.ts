@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import DefaultExtraDataDTO from '../interfaces/DefaultExtraDataDTO';
 import DefaultWeightDTO from '../interfaces/DefaultWeightDTO';
 import EquationConstantDTO from '../interfaces/EquationConstantDTO';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,8 @@ export class ValuesService {
     private router: Router,
     private http: HttpClient,
   ) { }
+
+  private api: string = environment.usersApi;
 
   private options = () => {
     let token: string = '';
@@ -27,10 +30,10 @@ export class ValuesService {
   };
 
   getParameters() {
-    return this.http.get<any>('http://localhost:8000/parameters', this.options());
+    return this.http.get<any>(`${this.api}/parameters`, this.options());
   }
 
   modifyParameter(parameters: DefaultWeightDTO[] | DefaultExtraDataDTO[] | EquationConstantDTO[]) {
-    return this.http.put<any>('http://localhost:8000/parameters/parameterUpdate', { parameters }, this.options());
+    return this.http.put<any>(`${this.api}/parameters/parameterUpdate`, { parameters }, this.options());
   }
 }
