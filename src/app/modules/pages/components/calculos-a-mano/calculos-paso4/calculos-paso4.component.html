@@ -43,7 +43,16 @@
         </div>
         <!-- CHECKBOX -->
         <div class="step4-check-box-1 row gy-1">
-          <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,1)" color="primary" formControlName="primerFranjaDisabled">No tengo estos datos</mat-checkbox>
+          <div>
+            <mat-checkbox
+              matTooltip="Se calculará en base a la población total y la tasa de natalidad"
+              matTooltipPosition="above"
+              (change)="enableFields($event,1)"
+              color="primary"
+              formControlName="primerFranjaDisabled">
+              No tengo estos datos
+            </mat-checkbox>
+          </div>
           <div *ngIf="materYLactanciaForm.get('maternityPrimerFranja')?.errors?.step4MenorIgualPobTotal &&
             (materYLactanciaForm.get('maternityPrimerFranja')?.touched || materYLactanciaForm.get('maternityPrimerFranja')?.dirty)"
             class="mensaje-error">
@@ -130,7 +139,16 @@
         </div>
         <!-- CHECKBOX -->
         <div class="step4-check-box-2 row gy-1">
-          <mat-checkbox matTooltip="Se calculará en base a la población total y la tasa de natalidad" (change)="enableFields($event,2)" color="primary" formControlName="segundaFranjaDisabled">No tengo estos datos</mat-checkbox>
+          <div>
+            <mat-checkbox
+              matTooltip="Se calculará en base a la población total y la tasa de natalidad"
+              matTooltipPosition="above"
+              (change)="enableFields($event,2)"
+              color="primary"
+              formControlName="segundaFranjaDisabled">
+              No tengo estos datos
+            </mat-checkbox>
+          </div>
           <div *ngIf="materYLactanciaForm.get('maternitySegundaFranja')?.errors?.step4MenorIgualPobTotal &&
             (materYLactanciaForm.get('maternitySegundaFranja')?.touched || materYLactanciaForm.get('maternitySegundaFranja')?.dirty)"
             class="mensaje-error">
