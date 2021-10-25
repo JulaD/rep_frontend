@@ -15,6 +15,8 @@ export interface AgeGroupJSON {
 const { api } = environment;
 const endpoint = `${api}`;
 const serviceCalc = '/repCalculator';
+const serviceWeights = '/parameters/weights';
+const serviceExtraData = '/parameters/extraData';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +40,14 @@ export class RestService {
     return this.http.post(endpoint + serviceCalc, { groups, extraData }, this.options()).pipe(
       catchError(this.handleError),
     );
+  }
+
+  getDefaultWeights(): Observable<any> {
+    return this.http.get<any>(endpoint + serviceWeights);
+  }
+
+  getDefaultExtraData(): Observable<any> {
+    return this.http.get<any>(endpoint + serviceExtraData);
   }
 
   private handleError(error: HttpErrorResponse): any {
