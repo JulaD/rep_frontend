@@ -68,13 +68,29 @@ export class ConfiguracionValoresComponent implements OnInit {
 
   selectedGETWomenRange: string;
 
+  TMBWomen: EquationConstantDTO[] = [];
+
+  selectedTMBWomenEcuation: EquationConstantDTO[] = [];
+
+  selectedTMBWomenRange: string;
+
+  representativeTMBWomenEcuation18to29Y: EquationConstantDTO[] = [];
+
+  representativeTMBWomenEcuation30to59Y: EquationConstantDTO[] = [];
+
+  representativeTMBWomenEcuation60Y: EquationConstantDTO[] = [];
+
   TMBMen: EquationConstantDTO[] = [];
 
-  selectedTMBMen: EquationConstantDTO;
+  selectedTMBMenEcuation: EquationConstantDTO[] = [];
 
-  selectedTMBWomen: EquationConstantDTO;
+  selectedTMBMenRange: string;
 
-  TMBWomen: EquationConstantDTO[] = [];
+  representativeTMBMenEcuation18to29Y: EquationConstantDTO[] = [];
+
+  representativeTMBMenEcuation30to59Y: EquationConstantDTO[] = [];
+
+  representativeTMBMenEcuation60Y: EquationConstantDTO[] = [];
 
   growthMen: EquationConstantDTO[] = [];
 
@@ -90,15 +106,15 @@ export class ConfiguracionValoresComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.init('', '', '', '', '', '', '', '');
+    this.init('', '', '', '', '', '', '', '', '', '');
   }
 
   init(previousAgeRangeMen: string, previousAgeRangeWomen: string,
     previousNafMinorId: string, previousNafAdultId: string,
     previousPregnancyPopulationId: string, previousPregnancyEnergyId: string,
-    previousAgeRangeGETMen: string, previousAgeRangeGETWomen: string) {
+    previousAgeRangeGETMen: string, previousAgeRangeGETWomen: string,
+    previousAgeRangeTMBMen: string, previousAgeRangeTMBWomen: string) {
     /* ,
-    previousAgeRangeTMBMen: string, previousAgeRangeTMBWomen: string,
     previousAgeRangeGrowthMen: string, previousAgeRangeGrowthMen: string */
     this.valuesService.getParameters().subscribe(
       (res) => {
@@ -243,6 +259,40 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.selectedGETWomenRange = '0 A 5 MESES';
           }
         }
+        if (this.TMBMen.length !== 0) {
+          if (previousAgeRangeTMBMen !== '') {
+            if (previousAgeRangeTMBMen === '18 A 29 AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+            }
+            if (previousAgeRangeTMBMen === '30 A 59 AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation30to59Y;
+            }
+            if (previousAgeRangeTMBMen === '60+ AÑOS') {
+              this.selectedTMBMenEcuation = this.representativeTMBMenEcuation60Y;
+            }
+            this.selectedTMBMenRange = previousAgeRangeTMBMen;
+          } else {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+            this.selectedTMBMenRange = '18 A 29 AÑOS';
+          }
+        }
+        if (this.TMBWomen.length !== 0) {
+          if (previousAgeRangeTMBWomen !== '') {
+            if (previousAgeRangeTMBWomen === '18 A 29 AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+            }
+            if (previousAgeRangeTMBWomen === '30 A 59 AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation30to59Y;
+            }
+            if (previousAgeRangeTMBWomen === '60+ AÑOS') {
+              this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation60Y;
+            }
+            this.selectedTMBWomenRange = previousAgeRangeTMBWomen;
+          } else {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+            this.selectedTMBWomenRange = '18 A 29 AÑOS';
+          }
+        }
       },
       (err) => {
         console.log(err);
@@ -279,6 +329,71 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
       });
     }
+    // TMB Men
+    if (this.TMBMen.length > 0) {
+      this.TMBMen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '18-29 años') {
+          this.representativeTMBMenEcuation18to29Y.push(constant);
+        }
+        if (constant.ageRange === '30-59 años') {
+          this.representativeTMBMenEcuation30to59Y.push(constant);
+        }
+        if (constant.ageRange === '60+ años') {
+          this.representativeTMBMenEcuation60Y.push(constant);
+        }
+      });
+    }
+    // TMB Women
+    if (this.TMBWomen.length > 0) {
+      this.TMBWomen.forEach((constant: EquationConstantDTO) => {
+        if (constant.ageRange === '18-29 años') {
+          this.representativeTMBWomenEcuation18to29Y.push(constant);
+        }
+        if (constant.ageRange === '30-59 años') {
+          this.representativeTMBWomenEcuation30to59Y.push(constant);
+        }
+        if (constant.ageRange === '60+ años') {
+          this.representativeTMBWomenEcuation60Y.push(constant);
+        }
+      });
+    }
+    // ordenar por terminos
+    this.representativeGETMenEcuation0to5M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETMenEcuation6to11M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETMenEcuation1to17Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation0to5M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation6to11M.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeGETWomenEcuation1to17Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation18to29Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation30to59Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBMenEcuation60Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation18to29Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation30to59Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
+    this.representativeTMBWomenEcuation60Y.sort(
+      (a, b) => (a.order < b.order ? -1 : 1),
+    );
   }
 
   getMeasurement(age: string) {
@@ -412,6 +527,26 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.selectedGETWomenEcuation = this.representativeGETWomenEcuation1to17Y;
           }
           this.selectedGETWomenRange = selectedElement;
+        }
+      } else if (type === 'tmbMen' || type === 'tmbWomen') {
+        if ((type === 'tmbMen') && (selectedElement !== this.selectedTMBMenRange)) {
+          if (selectedElement === '18 A 29 AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation18to29Y;
+          } else if (selectedElement === '30 A 59 AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation30to59Y;
+          } else if (selectedElement === '60+ AÑOS') {
+            this.selectedTMBMenEcuation = this.representativeTMBMenEcuation60Y;
+          }
+          this.selectedTMBMenRange = selectedElement;
+        } else if ((type === 'tmbWomen') && (selectedElement !== this.selectedTMBWomenRange)) {
+          if (selectedElement === '18 A 29 AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation18to29Y;
+          } else if (selectedElement === '30 A 59 AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation30to59Y;
+          } else if (selectedElement === '60+ AÑOS') {
+            this.selectedTMBWomenEcuation = this.representativeTMBWomenEcuation60Y;
+          }
+          this.selectedTMBWomenRange = selectedElement;
         }
       }
     }
@@ -647,6 +782,14 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.representativeGETWomenEcuation0to5M = [];
             this.representativeGETWomenEcuation6to11M = [];
             this.representativeGETWomenEcuation1to17Y = [];
+            this.TMBMen = [];
+            this.TMBWomen = [];
+            this.representativeTMBMenEcuation18to29Y = [];
+            this.representativeTMBMenEcuation30to59Y = [];
+            this.representativeTMBMenEcuation60Y = [];
+            this.representativeTMBWomenEcuation18to29Y = [];
+            this.representativeTMBWomenEcuation30to59Y = [];
+            this.representativeTMBWomenEcuation60Y = [];
             inputElements.forEach((input) => {
               // eslint-disable-next-line no-param-reassign
               input.value = '';
@@ -654,7 +797,8 @@ export class ConfiguracionValoresComponent implements OnInit {
             this.init(this.selectedWeightMen.ageRange, this.selectedWeightWomen.ageRange,
               this.selectedNafMinor.id, this.selectedNafAdult.id,
               this.selectedPregnancyPopulation.id, this.selectedPregnancyEnergy.id,
-              this.selectedGETMenRange, this.selectedGETWomenRange);
+              this.selectedGETMenRange, this.selectedGETWomenRange,
+              this.selectedTMBMenRange, this.selectedTMBWomenRange);
             Swal.fire(
               '¡Éxito!',
               'Se ha modificado el valor.',
@@ -861,25 +1005,17 @@ export class ConfiguracionValoresComponent implements OnInit {
       }
     } else if (type === 'TMB') {
       if (sex === 'men') {
-        /* actualFirstValue = this.selectedGETMenEcuation[0];
-        actualSecondValue = this.selectedGETMenEcuation[1];
-        actualThirdValue = this.selectedGETMenEcuation[2];
-        firstValueInput =
-        <HTMLInputElement>document.getElementById('getHombresPrimerConstanteInput');
-        secondValueInput =
-        <HTMLInputElement>document.getElementById('getHombresSegundaConstanteInput');
-        thirdValueInput =
-        <HTMLInputElement>document.getElementById('getHombresTercerConstanteInput'); */
+        actualFirstValue = this.selectedTMBMenEcuation[0];
+        actualSecondValue = this.selectedTMBMenEcuation[1];
+        firstValueInput = <HTMLInputElement>document.getElementById('tmbHombresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('tmbHombresSegundaConstanteInput');
+        actualRange = this.selectedTMBMenRange;
       } else if (sex === 'women') {
-        /* actualFirstValue = this.selectedGETWomenEcuation[0];
-        actualSecondValue = this.selectedGETWomenEcuation[1];
-        actualThirdValue = this.selectedGETWomenEcuation[2];
-        firstValueInput =
-        <HTMLInputElement>document.getElementById('getHombresPrimerConstanteInput');
-        secondValueInput =
-        <HTMLInputElement>document.getElementById('getHombresSegundaConstanteInput');
-        thirdValueInput =
-        <HTMLInputElement>document.getElementById('getHombresTercerConstanteInput'); */
+        actualFirstValue = this.selectedTMBWomenEcuation[0];
+        actualSecondValue = this.selectedTMBWomenEcuation[1];
+        firstValueInput = <HTMLInputElement>document.getElementById('tmbMujeresPrimerConstanteInput');
+        secondValueInput = <HTMLInputElement>document.getElementById('tmbMujeresSegundaConstanteInput');
+        actualRange = this.selectedTMBWomenRange;
       }
     }
     if (firstValueInput) {
@@ -891,39 +1027,37 @@ export class ConfiguracionValoresComponent implements OnInit {
     if (thirdValueInput) {
       thirdValue = parseFloat(thirdValueInput!.value);
     }
-    if (type === 'GET') {
-      if (actualRange === '0 A 5 MESES' || actualRange === '6 A 11 MESES') {
-        // eslint-disable-next-line no-restricted-globals
-        if (isNaN(firstValue) as any || isNaN(secondValue) as any) {
-          NaNError = true;
-          swalText = 'Los valores deben ser números.';
-        } else {
-          firstValue = Math.round(firstValue * 1000) / 1000;
-          secondValue = Math.round(secondValue * 1000) / 1000;
-          if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value) {
-            sameValuesError = true;
-            swalText = 'Debe modificar por lo menos uno de los campos.';
-          }
-        }
-      } else if (actualRange === '1 A 17 AÑOS') {
-        // eslint-disable-next-line no-restricted-globals
-        if (isNaN(firstValue) as any || isNaN(secondValue) as any || isNaN(thirdValue) as any) {
-          NaNError = true;
-          swalText = 'Los valores deben ser números.';
-        } else {
-          // redonde 3 cifras significativas
-          firstValue = Math.round(firstValue * 1000) / 1000;
-          secondValue = Math.round(secondValue * 1000) / 1000;
-          thirdValue = Math.round(thirdValue * 1000) / 1000;
-          if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value
-            && thirdValue === actualThirdValue!.value) {
-            sameValuesError = true;
-            swalText = 'Debe modificar por lo menos uno de los campos.';
-          }
+    if (actualRange === '0 A 5 MESES' || actualRange === '6 A 11 MESES'
+      || actualRange === '18 A 29 AÑOS' || actualRange === '30 A 59 AÑOS'
+      || actualRange === '60+ AÑOS') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(firstValue) as any || isNaN(secondValue) as any) {
+        NaNError = true;
+        swalText = 'Los valores deben ser números.';
+      } else {
+        firstValue = Math.round(firstValue * 1000) / 1000;
+        secondValue = Math.round(secondValue * 1000) / 1000;
+        if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value) {
+          sameValuesError = true;
+          swalText = 'Debe modificar por lo menos uno de los campos.';
         }
       }
-    } else if (type === 'TMB') {
-      console.log('xd');
+    } else if (actualRange === '1 A 17 AÑOS') {
+      // eslint-disable-next-line no-restricted-globals
+      if (isNaN(firstValue) as any || isNaN(secondValue) as any || isNaN(thirdValue) as any) {
+        NaNError = true;
+        swalText = 'Los valores deben ser números.';
+      } else {
+        // redonde 3 cifras significativas
+        firstValue = Math.round(firstValue * 1000) / 1000;
+        secondValue = Math.round(secondValue * 1000) / 1000;
+        thirdValue = Math.round(thirdValue * 1000) / 1000;
+        if (firstValue === actualFirstValue!.value && secondValue === actualSecondValue!.value
+            && thirdValue === actualThirdValue!.value) {
+          sameValuesError = true;
+          swalText = 'Debe modificar por lo menos uno de los campos.';
+        }
+      }
     }
     if (NaNError || sameValuesError) {
       Swal.fire(

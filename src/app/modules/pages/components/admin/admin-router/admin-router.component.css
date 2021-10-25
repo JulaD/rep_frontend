@@ -262,6 +262,12 @@ body {
     height: 320px;
     margin: 8px 25px;
   }
+  .container .box::before {
+    left: 60px;
+  }
+  .container .box::after {
+    left: 60px;
+  }
   .container .box .content {
     padding: 15px 10px;
     width: 250px;
@@ -282,36 +288,42 @@ body {
     left: 35px;
   }
 }
-@media (max-width: 1230px) {
+@media (max-width: 1460px) {
   .container .box {
-    height: 250px;
-    margin: 6px 18px;
+    height: 280px;
+    margin: 6px 14px;
+  }
+  .container .box::before {
+    left: 50px;
+  }
+  .container .box::after {
+    left: 50px;
   }
   .container .box .content {
-    padding: 10px 5px;
-    width: 180px;
+    padding: 15px 10px;
+    width: 200px;
   }
   .container .box:hover .content {
-    padding: 20px 10px;
+    padding: 25px 15px;
     left: -5px;
   }
   .container .box .content h2 {
-    font-size: 1.2em;
+    font-size: 1.6em;
     letter-spacing: 2px;
   }
   .container .box:hover .content h2 {
-    font-size: 1.3em;
-    letter-spacing: 3px;
+    font-size: 1.7em;
+    letter-spacing: 2.5px;
   }
   .container .box:hover .content p {
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   .container .box:hover:before,
   .container .box:hover:after {
-    left: 40px;
+    left: 35px;
   }
 }
-@media (max-width: 880px) {
+@media (max-width: 1120px) {
   .container {
     flex-wrap: wrap;
     position: absolute;
@@ -319,7 +331,8 @@ body {
   }
   body {
     overflow: visible;
-    min-height: 1100px;
+    background: #ccfdff;
+    background-size: cover;
   }
   .container .box:nth-child(1):before,
   .container .box:nth-child(1):after {

@@ -434,10 +434,13 @@
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectTmbMen" tabindex="-1" (click)="changeValue('selectTmbMen', 'men')">
-                                    <option>18 A 29 AÑOS</option>
-                                    <option>30 A 59 AÑOS</option>
-                                    <option>60+ AÑOS</option>                                
+                                <select id="selectTmbMen" tabindex="-1" (click)="changeValue('selectTmbMen', 'tmbMen')">
+                                    <option *ngIf="selectedTMBMenRange === '18 A 29 AÑOS'" selected="selected">18 A 29 AÑOS</option>
+                                    <option *ngIf="selectedTMBMenRange !== '18 A 29 AÑOS'">18 A 29 AÑOS</option>
+                                    <option *ngIf="selectedTMBMenRange === '30 A 59 AÑOS'" selected="selected">30 A 59 AÑOS</option>
+                                    <option *ngIf="selectedTMBMenRange !== '30 A 59 AÑOS'">30 A 59 AÑOS</option>
+                                    <option *ngIf="selectedTMBMenRange === '60+ AÑOS'" selected="selected">60+ AÑOS</option>
+                                    <option *ngIf="selectedTMBMenRange !== '60+ AÑOS'">60+ AÑOS</option>                               
                                 </select>
                             </div>
                             <div (click)="toggleModificar('tmbHombres')" class="modificarBtn">
@@ -449,15 +452,26 @@
                                 </span>
                             </div>
                             <div class="valor">
-                                <h1>XD</h1>
+                                <h1 id="primerConst">{{selectedTMBMenEcuation[0].value}}</h1>
+                                <h1 *ngIf="selectedTMBMenEcuation[1].value >= 0">+</h1>
+                                <h1 id="segundaConst">{{selectedTMBMenEcuation[1].value}}</h1>
+                                <h1>MP</h1>
                             </div>
                         </div>
-                        <div class="modificar">
-                            <h1 *ngIf="selectedNafAdultMeasurement === '%'">MODIFICAR VALOR:</h1>
-                            <h1 *ngIf="selectedNafAdultMeasurement === ''">MODIFICAR COEF.:</h1>
-                            <input *ngIf="selectedNafAdultMeasurement === '%'" type="number" id="tmbHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <input *ngIf="selectedNafAdultMeasurement === ''" type="number" id="tmbHombresInput" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyNaf('adults')">
+                        <div class="modificar" id="constantsInputs">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="primerConst">PRIMER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="tmbHombresPrimerConstanteInput" value="{{selectedTMBMenEcuation[0].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="segundaConst">SEGUNDO</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="tmbHombresSegundaConstanteInput" value="{{selectedTMBMenEcuation[1].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyEcuationConstants('TMB', 'men')">
                                 <span>
                                     CONFIRMAR
                                 </span>
@@ -474,10 +488,13 @@
                                     <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                <select id="selectTmbWomen" tabindex="-1" (click)="changeValue('selectTmbWomen', 'women')">
-                                    <option>18 A 29 AÑOS</option>
-                                    <option>30 A 59 AÑOS</option>
-                                    <option>60+ AÑOS</option>
+                                <select id="selectTmbWomen" tabindex="-1" (click)="changeValue('selectTmbWomen', 'tmbWomen')">
+                                    <option *ngIf="selectedTMBWomenRange === '18 A 29 AÑOS'" selected="selected">18 A 29 AÑOS</option>
+                                    <option *ngIf="selectedTMBWomenRange !== '18 A 29 AÑOS'">18 A 29 AÑOS</option>
+                                    <option *ngIf="selectedTMBWomenRange === '30 A 59 AÑOS'" selected="selected">30 A 59 AÑOS</option>
+                                    <option *ngIf="selectedTMBWomenRange !== '30 A 59 AÑOS'">30 A 59 AÑOS</option>
+                                    <option *ngIf="selectedTMBWomenRange === '60+ AÑOS'" selected="selected">60+ AÑOS</option>
+                                    <option *ngIf="selectedTMBWomenRange !== '60+ AÑOS'">60+ AÑOS</option>                               
                                 </select>
                             </div>
                             <div (click)="toggleModificar('tmbMujeres')" class="modificarBtn">
@@ -489,13 +506,26 @@
                                 </span>
                             </div>
                             <div class="valor">
-                                <h1>XD</h1>
+                                <h1 id="primerConst">{{selectedTMBWomenEcuation[0].value}}</h1>
+                                <h1 *ngIf="selectedTMBWomenEcuation[1].value >= 0">+</h1>
+                                <h1 id="segundaConst">{{selectedTMBWomenEcuation[1].value}}</h1>
+                                <h1>MP</h1>
                             </div>
                         </div> 
-                        <div class="modificar">
-                            <h1>MODIFICAR VALOR:</h1>
-                            <input type="number" id="tmbMujeresInput" tabindex="-1" placeholder="Ingrese el nuevo valor (%)" autocomplete="off">
-                            <div class="confirmarBtn" (click)="modifyNaf('minors')">
+                        <div class="modificar" id="constantsInputs">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="primerConst">PRIMER</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="tmbMujeresPrimerConstanteInput" value="{{selectedTMBWomenEcuation[0].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="constantInputLabel">
+                                <h1>MODIFICAR</h1>
+                                <h1 id="segundaConst">SEGUNDO</h1>
+                                <h1>VALOR:</h1>
+                            </div>
+                            <input type="number" id="tmbMujeresSegundaConstanteInput" value="{{selectedTMBWomenEcuation[1].value}}" tabindex="-1" placeholder="Ingrese el nuevo valor" autocomplete="off">
+                            <div class="confirmarBtn" (click)="modifyEcuationConstants('TMB', 'women')">
                                 <span>
                                     CONFIRMAR
                                 </span>

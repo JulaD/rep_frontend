@@ -6,6 +6,7 @@
 section {
   position: relative;
   min-height: 1000px;
+  height: 100vh;
   background: #ccfdff;
   background-size: cover;
   display: flex;
