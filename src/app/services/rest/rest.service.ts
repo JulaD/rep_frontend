@@ -43,11 +43,15 @@ export class RestService {
   }
 
   getDefaultWeights(): Observable<any> {
-    return this.http.get<any>(endpoint + serviceWeights);
+    return this.http.get<any>(endpoint + serviceWeights, this.options()).pipe(
+      catchError(this.handleError),
+    );
   }
 
   getDefaultExtraData(): Observable<any> {
-    return this.http.get<any>(endpoint + serviceExtraData);
+    return this.http.get<any>(endpoint + serviceExtraData, this.options()).pipe(
+      catchError(this.handleError),
+    );
   }
 
   private handleError(error: HttpErrorResponse): any {

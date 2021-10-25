@@ -6,12 +6,12 @@ import FranjaEtaria from '../enums/FranjaEtaria';
 })
 export class AgeGroupService {
   edades: FranjaEtaria[] = [
-    FranjaEtaria.Meses_0,
-    FranjaEtaria.Meses_1,
-    FranjaEtaria.Meses_2,
-    FranjaEtaria.Meses_3,
-    FranjaEtaria.Meses_4,
-    FranjaEtaria.Meses_5,
+    // FranjaEtaria.Meses_0,
+    // FranjaEtaria.Meses_1,
+    // FranjaEtaria.Meses_2,
+    // FranjaEtaria.Meses_3,
+    // FranjaEtaria.Meses_4,
+    // FranjaEtaria.Meses_5,
     FranjaEtaria.Meses_6,
     FranjaEtaria.Meses_7,
     FranjaEtaria.Meses_8,
