@@ -1,0 +1,196 @@
+    table {
+        width: 100%;
+    }
+
+    .resultsTable {
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+  section {
+    position: relative;
+    min-height: 100vh;
+    background: #ccfdff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  section.active {
+    background: #82cacc;
+  }
+  section .color {
+    position: absolute;
+    filter: blur(100px);
+    border-radius: 50%;
+    transition: 0.3s;
+  }
+  section .color:nth-child(1) {
+    top: -160px;
+    right: 50px;
+    width: 450px;
+    height: 450px;
+    background: #78b1c7;
+  }
+  section.active .color:nth-child(1) {
+    background: #baf0f1;
+  }
+  section .color:nth-child(2) {
+    top: 50px;
+    left: -150px;
+    width: 600px;
+    height: 600px;
+    background: #5fced6;
+  }
+  section.active .color:nth-child(2) {
+    background: #bfebec;
+  }
+  section .color:nth-child(3) {
+    bottom: -120px;
+    right: 300px;
+    width: 500px;
+    height: 500px;
+    background: #64c4f0;
+  }
+  section.active .color:nth-child(3) {
+    background: #ccfdff;
+  }
+  section .fijo {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #3f51b5;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+    width: 90vw;
+    height: 140px;
+    max-width: 1000px;
+    top: 90px;
+  }
+  section .logs {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #3f51b5;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    width: 80vw;
+    max-width: 800px;
+    top: 285px;
+    transition: 0.6s;
+  }
+  section .fijo .titulo {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: -70px;
+  }
+  section .fijo .titulo h1:nth-child(1) {
+    position: relative;
+    top: 40px;
+    left: -120px;
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.3);
+  }
+  section .fijo .titulo h1:nth-child(2) {
+    font-size: 100px;
+    position: relative;
+    left: 0px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: #ccfdff;
+    transition: 0.5s;
+  }
+  section.active .fijo .titulo h1:nth-child(2) {
+    color: #82cacc;
+  }
+
+  section .resultadoBusqueda {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  section .resultadoBusqueda h1 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 420;
+    letter-spacing: 1px;
+  }
+
+  section .resultadoBusqueda {
+    color: #ccfdff;
+  }
+  section .vacio {
+    position: relative;
+    width: 80%;
+    top: -10px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  section .vacio h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 450;
+    letter-spacing: 2px;
+  }
+
+  section .vacio .logsVacio {
+    color: #c9fdff;
+  }
+  @media (max-width: 850px) {
+    section .fijo .titulo {
+      top: -54px;
+    }
+    section .fijo .titulo h1:nth-child(1) {
+      top: 21px;
+      left: -80px;
+      font-size: 45px;
+    }
+    section .fijo .titulo h1:nth-child(2) {
+      font-size: 58px;
+    }
+    section .fijo .botones {
+      top: -40px;
+    }
+  }
+  @media (max-width: 520px) {
+    section .fijo .titulo h1:nth-child(1) {
+      top: 15px;
+      left: -40px;
+      font-size: 30px;
+    }
+    section .fijo .titulo h1:nth-child(2) {
+      font-size: 35px;
+    }
+    section .fijo .botones {
+      top: -30px;
+    }
+  }
+
+  ::ng-deep snack-bar-container.error-snack-bar {
+    background: #FF5252;
+  }
+  
+  ::ng-deep .error-snack-bar .mat-simple-snackbar {
+    color: #ffffff;
+  }
+  
+  ::ng-deep .error-snack-bar .mat-simple-snackbar-action {
+    color: #ffffff !important;
+  }
+  
