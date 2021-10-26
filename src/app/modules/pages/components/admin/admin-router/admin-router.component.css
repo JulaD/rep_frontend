@@ -144,12 +144,12 @@ body {
 }
 .container .box:nth-child(4):before,
 .container .box:nth-child(4):after {
-  background: linear-gradient(315deg, #f7405e, #ffb6d8);
+  background: linear-gradient(315deg, #ee516b, #ee8ab8);
   animation: init-diagonal-bottom-up 0.65s ease-in;
 }
 .container .box:nth-child(5):before,
 .container .box:nth-child(5):after {
-  background: linear-gradient(315deg, #f2d4fc, #8808af);
+  background: linear-gradient(315deg, #e5bef1, #ad3df8);
   animation: init-diagonal-top-down 0.8s ease-in;
 }
 
@@ -223,12 +223,12 @@ body {
   background-clip: text;
 }
 .container .box:nth-child(4):hover .content h2 {
-  background: linear-gradient(90deg, #ffb6d8, #f7405e, #ffb6d8);
+  background: linear-gradient(90deg, #ee8ab8, #ee516b, #ee8ab8);
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .container .box:nth-child(5):hover .content h2 {
-  background: linear-gradient(90deg, #aa22d3, #e2b9f0, #aa22d3);
+  background: linear-gradient(90deg, #b755f8, #e2b9f0, #b05de7);
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
