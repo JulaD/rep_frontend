@@ -226,9 +226,9 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
         if (this.GETMen.length !== 0) {
           if (previousAgeRangeGETMen !== '') {
-            // if (previousAgeRangeGETMen === '0 A 5 MESES') {
-            //   this.selectedGETMenEcuation = this.representativeGETMenEcuation0to5M;
-            // }
+            if (previousAgeRangeGETMen === '0 A 5 MESES') {
+              this.selectedGETMenEcuation = this.representativeGETMenEcuation0to5M;
+            }
             if (previousAgeRangeGETMen === '6 A 11 MESES') {
               this.selectedGETMenEcuation = this.representativeGETMenEcuation6to11M;
             }
@@ -243,9 +243,9 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
         if (this.GETWomen.length !== 0) {
           if (previousAgeRangeGETWomen !== '') {
-            // if (previousAgeRangeGETWomen === '0 A 5 MESES') {
-            //   this.selectedGETWomenEcuation = this.representativeGETWomenEcuation0to5M;
-            // }
+            if (previousAgeRangeGETWomen === '0 A 5 MESES') {
+              this.selectedGETWomenEcuation = this.representativeGETWomenEcuation0to5M;
+            }
             if (previousAgeRangeGETWomen === '6 A 11 MESES') {
               this.selectedGETWomenEcuation = this.representativeGETWomenEcuation6to11M;
             }
@@ -325,9 +325,9 @@ export class ConfiguracionValoresComponent implements OnInit {
     // GET Men
     if (this.GETMen.length > 0) {
       this.GETMen.forEach((constant: EquationConstantDTO) => {
-        // if (constant.ageRange === '0 meses') {
-        //   this.representativeGETMenEcuation0to5M.push(constant);
-        // }
+        if (constant.ageRange === '0 meses') {
+          this.representativeGETMenEcuation0to5M.push(constant);
+        }
         if (constant.ageRange === '6 meses') {
           this.representativeGETMenEcuation6to11M.push(constant);
         }
@@ -339,9 +339,9 @@ export class ConfiguracionValoresComponent implements OnInit {
     // GET Women
     if (this.GETWomen.length > 0) {
       this.GETWomen.forEach((constant: EquationConstantDTO) => {
-        // if (constant.ageRange === '0 meses') {
-        //   this.representativeGETWomenEcuation0to5M.push(constant);
-        // }
+        if (constant.ageRange === '0 meses') {
+          this.representativeGETWomenEcuation0to5M.push(constant);
+        }
         if (constant.ageRange === '6 meses') {
           this.representativeGETWomenEcuation6to11M.push(constant);
         }

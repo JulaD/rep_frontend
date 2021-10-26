@@ -27,6 +27,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 
 // NgxModules
 import {
@@ -68,6 +69,7 @@ import {
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
   exports: [
     MatCardModule,
@@ -99,6 +101,7 @@ import {
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,
     MatSlideToggleModule,
+    MatMenuModule,
   ],
   providers: [
     MatDatepickerModule,

@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-shadow
 enum FranjaEtaria {
-  // Meses_0 = '0 meses',
-  // Meses_1 = '1 meses',
-  // Meses_2 = '2 meses',
-  // Meses_3 = '3 meses',
-  // Meses_4 = '4 meses',
-  // Meses_5 = '5 meses',
+  Meses_0 = '0 meses',
+  Meses_1 = '1 meses',
+  Meses_2 = '2 meses',
+  Meses_3 = '3 meses',
+  Meses_4 = '4 meses',
+  Meses_5 = '5 meses',
   Meses_6 = '6 meses',
   Meses_7 = '7 meses',
   Meses_8 = '8 meses',
