@@ -20,9 +20,9 @@ export class AuditoriaComponent implements OnInit {
   /**
    * Logs mostrados en la tabla.
    */
-  logs: Log[] = [
+  logs: Log[] = [];/* [
     new Log(2, '2', 2, '2', '2', '2'),
-    new Log(3, '3', 3, '3', '3', '3')] ;
+    new Log(3, '3', 3, '3', '3', '3')] ; */
 
   /**
    * Número total de logs encontrados para el/los filtros aplicados.
@@ -46,8 +46,8 @@ export class AuditoriaComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    // const auditorySearch : AuditorySearch = new AuditorySearch(this.totalPerPage, 1);
-    // this.getLogs(auditorySearch);
+    const auditorySearch : AuditorySearch = new AuditorySearch(this.totalPerPage, 1);
+    this.getLogs(auditorySearch);
   }
 
   /**
