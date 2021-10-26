@@ -19,6 +19,7 @@ import { UploadTemplateComponent } from './components/upload-template/upload-tem
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq-expansion-panel.component';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq
     StepperComponent,
     ByHandComponent,
     FaqExpansionPanelComponent,
+    UpdateUserComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,25 @@
+<section>
+  <div class="fijo">
+    <div class="titulo">
+      <h1>EDITANDO</h1>
+      <h1>PERFIL</h1>
+    </div>
+  </div>
+  <form [formGroup]="form">
+    <p>Usuario</p>
+    <input formControlName="name" type="text" placeholder="Usuario">
+    <p>Organización</p>
+    <input formControlName="organization" type="text" placeholder="Organización">
+
+    <p>Nueva contraseña</p>
+    <input formControlName="password" type="password" placeholder="Nueva Contraseña">
+    <small *ngIf="form.get('password')?.hasError('minlength') && form.value.password">Como mínimo 6 caracteres.</small>
+    <small *ngIf="form.get('password')?.hasError('maxlength') && form.value.password">Como máximo 50 caracteres.</small>
+    
+    <p>Repetir contraseña</p>
+    <input formControlName="repeat" type="password" placeholder="Repetir contraseña">
+    <small *ngIf="form.get('repeat')?.hasError('minlength') && form.value.repeat">Como mínimo 6 caracteres.</small>
+    <small *ngIf="form.get('repeat')?.hasError('maxlength') && form.value.repeat">Como máximo 50 caracteres.</small>
+    <input [disabled]="form.invalid" type="submit" value="Guardar" (click)="onConfirm()">
+  </form>
+</section>

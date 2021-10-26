@@ -27,7 +27,8 @@
           <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #userMenu="matMenu" xPosition="before">
-          <button mat-menu-item (click)="logout()" *ngIf="user">Cerrar sesión</button>
+          <button mat-menu-item routerLink="update-user">Editar perfil</button>
+          <button mat-menu-item (click)="logout()">Cerrar sesión</button>
         </mat-menu>
       </div>
       <div *ngIf="!user" class="user">

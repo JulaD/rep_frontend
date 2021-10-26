@@ -10,7 +10,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  
   loggedUser: User = {
     id: NaN,
     name: '',
@@ -63,10 +62,20 @@ export class AuthService {
       return {
         id: Number(localStorage.getItem('userId')),
         type: Number(localStorage.getItem('userType')),
-        name: String(localStorage.getItem('userName'))
-      }
+        name: String(localStorage.getItem('userName')),
+      };
     }
-    return;
+    return undefined;
+  }
+
+  getBackUser(userId: number | undefined): Observable<User> {
+    return this.http
+      .get<User>(`${this.api}/users/${userId}`, this.options());
+  }
+
+  updateUser(userId: number, user: User): Observable<User> {
+    return this.http
+      .put<User>(`${this.api}/users/${userId}`, user, this.options());
   }
 
   logout(): void {
@@ -76,8 +85,8 @@ export class AuthService {
   checkUser(): Observable<{userId: number, userType: number}> {
     return this.http
       .post<{userId: number, userType: number}>(
-        `${this.api}/users/check-user`, {}, this.options()
-      );
+      `${this.api}/users/check-user`, {}, this.options(),
+    );
   }
 
   //-------------------------------------------------------------------------

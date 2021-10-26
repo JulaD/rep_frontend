@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserGuard } from 'src/app/guards/user.guard';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ManualsComponent } from './components/manuals/manuals.component';
-import { TemplatesComponent } from './components/templates/templates.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { PagesComponent } from './pages.component';
 import { ResultComponent } from './components/result/result.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
-import { UserGuard } from 'src/app/guards/user.guard';
+import { UpdateUserComponent } from './components/update-user/update-user.component';
 
 const routes: Routes = [{
   path: '',
@@ -46,6 +46,10 @@ const routes: Routes = [{
   }, {
     path: 'stepper',
     component: StepperComponent,
+    canActivate: [UserGuard],
+  }, {
+    path: 'update-user',
+    component: UpdateUserComponent,
     canActivate: [UserGuard],
   }, {
     path: '',
