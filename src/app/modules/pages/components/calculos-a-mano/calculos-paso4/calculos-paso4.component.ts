@@ -26,7 +26,11 @@ export class CalculosPaso4Component implements OnInit {
 
   @Input() agesFemale30To59Present: boolean;
 
-  ngOnInit() { this.loadDefaultValues(); }
+  ngOnInit() {
+    console.log('Start Load Step4');
+    this.loadDefaultValues();
+    console.log('Finished Load Step4');
+  }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -132,6 +136,7 @@ export class CalculosPaso4Component implements OnInit {
   }
 
   loadDefaultValues() {
+    console.log('Loading Step4');
     if (this.defaultExtraDataAvailable) {
       this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
       this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
