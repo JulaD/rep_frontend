@@ -35,6 +35,13 @@
   font-weight: 500;
 }
 
+.calculation-button {
+  background-color: #314093;
+  padding: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .req-button {
   font-size: 1.1rem;
 }

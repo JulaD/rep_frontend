@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   background-color: white;
+  height: 100%;
 }
 
 .illustration {
@@ -41,8 +42,16 @@
   flex-direction: row;
 }
 
+::ng-deep.calculation-buttons > span {
+  font-size: 1.2rem !important;
+}
+
 .orange-icon {
   color: #fe5244;
+}
+
+::ng-deep .mat-tooltip {
+  font-size: 1rem !important;
 }
 
 button {

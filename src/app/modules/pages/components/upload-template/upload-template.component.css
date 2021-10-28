@@ -1,9 +1,11 @@
 .first-div {
     height: 100%;
+    display: grid;
+    align-content: center;
   }
   
 .illustration {
-    width: 528px;
+    width: 30%;
     display: block;
     margin-left: auto;
     margin-right: auto;
