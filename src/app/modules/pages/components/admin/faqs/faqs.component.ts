@@ -24,14 +24,21 @@ export class FaqsComponent implements OnInit {
     this.getFAQs();
   }
 
-  getFAQs(): void {
-    this.service
-      .getFAQs()
-      .subscribe((faqs: FAQ[]) => {
-        this.faqs = faqs;
-      }, (error: Error) => {
-        console.log(error);
-      });
+  getFAQs(): Promise<void> {
+    this.spinner.show();
+    return new Promise((resolve, reject) => {
+      this.service
+        .getFAQs()
+        .subscribe((faqs: FAQ[]) => {
+          this.faqs = faqs;
+          this.spinner.hide();
+          resolve();
+        }, (error: Error) => {
+          this.spinner.hide();
+          console.log(error);
+          reject();
+        });
+    });
   }
 
   upsertFaq(faq?: FAQ): void {
@@ -47,17 +54,17 @@ export class FaqsComponent implements OnInit {
     });
     modal
       .afterClosed()
-      .subscribe((result: {
+      .subscribe(async (result: {
         success: boolean,
         close: boolean
       }) => {
         if (result?.success) {
+          await this.getFAQs();
           if (faq) {
             Swal.fire('¡Éxito!', 'Pregunta frecuente actualizada.', 'success');
           } else {
             Swal.fire('¡Éxito!', 'Pregunta frecuente ingresada.', 'success');
           }
-          this.getFAQs();
         } else if (!result?.close && faq) {
           Swal.fire('¡Ups!', 'No se ha podido actualizar la pregunta.', 'error');
         } else if (!result?.close) {
