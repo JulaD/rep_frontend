@@ -68,12 +68,14 @@ export class CalculosPaso1Component implements AfterViewInit {
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngOnInit() {
+    console.log('Start Load Step1');
     const sheetData : GrupoEtario[] = this.parsedDataService.getData();
     if (sheetData?.length) {
       this.fromTemplate = true;
       this.initializeTable(sheetData);
     }
     this.processDefaultWeights();
+    console.log('Finished Load Step1');
   }
 
   ngAfterViewInit() {
@@ -272,6 +274,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     this.rest.getDefaultWeights()
       .subscribe(
         (data) => {
+          console.log('Loading Step1');
           this.defaultWeightsAvailable = true;
           this.defaultWeights = data;
           this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {

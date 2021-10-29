@@ -37,18 +37,20 @@
             </button>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let user of pendingUsers">
-                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
-                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
-                    <a>
-                        <span class="boton aceptar" (click)="approve(user.id, user.name)">
-                            ACEPTAR
-                        </span>
-                    </a>
-                </div>
-            </li>
+            <ng-container *ngFor="let user of pendingUsers"> 
+                <li>
+                    <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
+                    <div class="info">
+                        <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                        <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
+                        <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                            <span class="boton aceptar" (click)="approve(user.id, user.name)">
+                                ACEPTAR
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
         <div class="vacio" *ngIf="pendingUsersCount == 0">
             <h1 class="vacioPendientes">¡NO HAY USUARIOS PENDIENTES!</h1>
@@ -88,18 +90,20 @@
             </button>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let user of acceptedUsers">
-                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
-                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
-                    <a>
-                        <span class="boton cancelar" (click)="cancel(user.id, user.name)">
-                            CANCELAR
-                        </span>
-                    </a>
-                </div>
-            </li>
+            <ng-container *ngFor="let user of acceptedUsers"> 
+                <li>
+                    <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
+                    <div class="info">
+                        <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                        <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
+                        <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                            <span class="boton cancelar" (click)="cancel(user.id, user.name)">
+                                CANCELAR
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
         <div class="vacio" *ngIf="acceptedUsersCount == 0">
             <h1 class="vacioAceptados">¡NO HAY USUARIOS ACEPTADOS!</h1>

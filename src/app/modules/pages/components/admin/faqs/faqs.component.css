@@ -1,0 +1,331 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+section {
+  position: relative;
+  min-height: 1000px;
+  height: 100vh;
+  background: #ccfdff;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  overflow: hidden;
+}
+section .color {
+  position: absolute;
+  border-radius: 10px;
+  background: linear-gradient(315deg, #ee8ab8, #e06277);
+  transform: skewX(-20deg);
+  transition: 0.75s;
+}
+section .color:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #ee8ab8, #e06277);
+  filter: blur(20px);
+}
+section .color:nth-child(1) {
+  top: -140px;
+  right: 80px;
+  width: 150px;
+  height: 550px;
+  animation: init-color1 0.5s ease-in;
+}
+section .color:nth-child(2) {
+  top: 100px;
+  left: -20px;
+  width: 180px;
+  height: 900px;
+  animation: init-color2 0.75s ease-in;
+}
+section .color:nth-child(3) {
+  bottom: -120px;
+  left: 180px;
+  width: 150px;
+  height: 550px;
+  animation: init-color3 0.8s ease-in;
+}
+@keyframes init-color1 {
+  0% {
+    top: -290px;
+    right: 20px;
+    height: 450px;
+  }
+  100% {
+    top: -140px;
+    right: 80px;
+    height: 550px;
+  }
+}
+@keyframes init-color2 {
+  0% {
+    top: 300px;
+    left: -50px;
+    height: 600px;
+  }
+  100% {
+    top: 100px;
+    left: -20px;
+    height: 900px;
+  }
+}
+@keyframes init-color3 {
+  0% {
+    bottom: -195px;
+    left: 150px;
+    height: 550px;
+  }
+  100% {
+    bottom: -120px;
+    left: 180px;
+    height: 550px;
+  }
+}
+section .fijo {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #3f51b5;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  width: 90vw;
+  height: 140px;
+  max-width: 1000px;
+  top: 90px;
+  animation: init-title 0.35s ease-in;
+}
+@keyframes init-title {
+  0% {
+    transform: translateX(6vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+section .fijo .titulo {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: -78px;
+}
+section .fijo .titulo h1:nth-child(1) {
+  position: relative;
+  top: 42px;
+  left: -120px;
+  font-size: 80px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(315deg, #ee516b, #ee8ab8);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: 0.5s;
+  animation: init-text 0.5s ease-in;
+}
+@keyframes init-text {
+  0% {
+    transform: translateY(-15vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+section .fijo .titulo h1:nth-child(2) {
+  font-size: 105px;
+  position: relative;
+  left: 0px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  color: #ccfdff;
+  transition: 0.5s;
+}
+
+ul.faq-list {
+  position: relative;
+  width: 100%;
+  margin: 10px auto 0;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.faq-list li {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  width: 95%;
+  height: 50px;
+  background: #ccfdff;
+  padding: 10px 20px;
+  color: black;
+  margin: 5px 0;
+  overflow: hidden;
+  transition: width 0.15s 0.15s, height 0.25s 0s, background 0.15s 0.15s;
+}
+
+ul.faq-list li .faq-item {
+  font-size: 18px;
+  transition: 0.2s 0.1s;
+}
+
+ul.faq-list li:hover .faq-item {
+  font-size: 25px;
+}
+
+ul.faq-list li .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 0px;
+  margin-top: 0px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(150px);
+  transition: 0.6s;
+}
+
+ul.faq-list li:hover .info {
+  height: 30px;
+  margin-top: 25px;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+ul.faq-list li a {
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+ul.faq-list li a .boton {
+  padding: 6px;
+  border-radius: 10px;
+  color: black;
+  font-weight: 400;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+ul.faq-list li a .boton.aceptar {
+  background: rgb(166, 230, 106);
+}
+
+ul.faq-list li a .boton.cancelar {
+  background: rgb(241, 62, 62);
+  color: white;
+}
+
+ul.faq-list li a .boton.edit {
+  background: rgb(241, 163, 62);
+  color: white;
+  margin-left: 1rem;
+}
+
+section.active ul.faq-list li {
+  background: #82cacc;
+}
+
+ul.faq-list li:hover {
+  width: 100%;
+  height: 180px;
+  transition: width 0.2s 0s, height 0.35s 0.1s;
+}
+
+.new-faq-button {
+  margin-top: 1rem;
+  background: #d85e72;
+  padding: 10px 30px;
+  border-radius: 35px;
+  color: #ccfdff;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+.new-faq-button:hover {
+  letter-spacing: 4px;
+  padding: 10px 35px;
+  background: #fa3e5e;
+}
+ul {
+  padding: 0;
+}
+
+.faq-list-section {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #3f51b5;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 80vw;
+  max-width: 800px;
+  top: 260px;
+  transition: 0.5s;
+}
+@media (max-width: 1435px) {
+  section .color {
+    display: none;
+  }
+}
+@media (max-width: 800px) {
+  section .fijo {
+    height: 100px;
+    top: 70px;
+  }
+  .faq-list-section {
+    top: 200px;
+  }
+  section .fijo .titulo {
+    top: -50px;
+  }
+  section .fijo .titulo h1:nth-child(1) {
+    top: 25px;
+    left: -80px;
+    font-size: 45px;
+  }
+  section .fijo .titulo h1:nth-child(2) {
+    font-size: 70px;
+  }
+}
+
+@media (max-width: 560px) {
+  section .fijo {
+    height: 100px;
+    top: 70px;
+  }
+  .faq-list-section {
+    top: 200px;
+  }
+  section .fijo .titulo {
+    top: -57px;
+  }
+  section .fijo .titulo h1:nth-child(1) {
+    top: 16px;
+    left: 0px;
+    font-size: 35px;
+  }
+  section .fijo .titulo h1:nth-child(2) {
+    font-size: 35px;
+  }
+}

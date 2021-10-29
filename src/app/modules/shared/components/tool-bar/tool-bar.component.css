@@ -18,22 +18,36 @@
 }
 
 .req {
-  margin-left: 1rem;
   font-weight: 500;
 }
 
-.req-button {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
+.user {
+  display: flex;
+  align-items: center;
 }
 
 ::ng-deep .mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
   color: white;
   font-size: 1rem;
   font-weight: 500;
-  margin-left: 1rem;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
+}
+
+.req-button {
+  font-size: 1.1rem;
+}
+
+::ng-deep .mat-button.mat-primary.margin-left {
+  margin-left: 1rem;
+}
+
+.login {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  margin: 0;
 }

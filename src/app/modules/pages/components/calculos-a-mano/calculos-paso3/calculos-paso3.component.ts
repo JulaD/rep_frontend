@@ -25,7 +25,11 @@ export class CalculosPaso3Component implements OnInit {
 
   @Input() defaultExtraDataAvailable: boolean;
 
-  ngOnInit() { this.loadDefaultValues(); }
+  ngOnInit() {
+    console.log('Start Load Step3');
+    this.loadDefaultValues();
+    console.log('Finished Load Step3');
+  }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -79,6 +83,7 @@ export class CalculosPaso3Component implements OnInit {
   }
 
   loadDefaultValues() {
+    console.log('Loading Step3');
     if (this.defaultExtraDataAvailable) {
       this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
       this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);

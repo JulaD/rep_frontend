@@ -6,11 +6,14 @@ import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizac
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
+import { AdminGuard } from '../../../../guards/admin.guard';
+import { FaqsComponent } from './faqs/faqs.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
 
 const routes: Routes = [{
   path: '',
   component: AdminComponent,
+  canActivate: [AdminGuard],
   children: [{
     path: '',
     component: AdminRouterComponent,
@@ -23,6 +26,9 @@ const routes: Routes = [{
   }, {
     path: 'valores',
     component: ConfiguracionValoresComponent,
+  }, {
+    path: 'faqs',
+    component: FaqsComponent,
   }, {
     path: 'auditoria',
     component: AuditoriaComponent,

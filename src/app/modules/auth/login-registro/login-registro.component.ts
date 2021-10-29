@@ -48,7 +48,6 @@ export class LoginRegistroComponent implements OnInit {
   register() {
     // solo deja llamar a esta funcion en caso de que todos los campos sean validos
     const values: Register = this.registerForm.value;
-    console.log(values);
     if (values.password !== values.passwordConf) {
       this.message = 'Las contraseñas no coinciden';
       this.alertaSuccess = false;
@@ -58,12 +57,16 @@ export class LoginRegistroComponent implements OnInit {
         () => {
           // limpia los inputs
           this.registerForm.reset();
-          this.message = 'Usuario creado exitosamente! Su cuenta permanecera inactiva hasta que sea aceptado por un Administrador.';
+          this.message = '¡Usuario creado exitosamente! Su cuenta permanecera inactiva hasta que sea aceptado por un Administrador.';
           this.alertaSuccess = true;
           this.alertaError = false;
         },
         (err) => {
-          this.message = err.error.error;
+          if (err.message === 'email is taken') {
+            this.message = 'Este correo electrónico ya está en uso';
+          } else {
+            this.message = 'Hubo un problema';
+          }
           this.alertaError = true;
           this.alertaSuccess = false;
           console.log(err);
@@ -75,15 +78,19 @@ export class LoginRegistroComponent implements OnInit {
   login() {
     const values = this.loginForm.value;
     this.authService.login(values).subscribe(
-      (result) => {
+      () => {
         // limpia los inputs
         this.registerForm.reset();
-        // this.efectuarIngreso(res);
-        this.authService.loggedUser = result.user;
         this.router.navigate(['']);
       },
       (err) => {
-        this.message = 'Correo electrónico o contraseña incorrectos';
+        if (err.message === 'user not accepted') {
+          this.message = 'Su cuenta aún no ha sido autorizada por un Administrador';
+        } else if (err.message === 'user not found' || err.message === 'auth failed') {
+          this.message = 'Correo electrónico o contraseña incorrectas';
+        } else {
+          this.message = 'Hubo un problema';
+        }
         this.alertaError = true;
         this.alertaSuccess = false;
         console.log(err);
