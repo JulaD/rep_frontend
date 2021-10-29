@@ -13,7 +13,7 @@
             <h1 class="logsVacio">¡NO HAY CAMBIOS PARA AUDITAR!</h1>
         </div>
         <div class="resultadoBusqueda" *ngIf="logs.length">
-            <h1>RESULTADO DE LA BUSQUEDA: {{logs.length}}</h1>
+            <h1>RESULTADO DE LA BUSQUEDA: {{totalLogs}}</h1>
         </div>
         <div class="resultsTable" *ngIf="logs.length">
             <div class="mat-elevation-z8">
@@ -42,7 +42,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <mat-paginator [length]="logs.length"
+                <mat-paginator [length]="totalLogs"
                     [pageSize]="totalPerPage"
                     aria-label="Selecciona la página"
                     (page)="goToPage($event)">

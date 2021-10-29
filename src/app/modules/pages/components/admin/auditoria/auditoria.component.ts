@@ -72,7 +72,7 @@ export class AuditoriaComponent implements OnInit {
   /* eslint-disable no-param-reassign */
   /* eslint-disable no-plusplus */
   goToPage(event : PageEvent) {
-    const auditorySearch: AuditorySearch = new AuditorySearch(this.totalPerPage, event.pageIndex++);
+    const auditorySearch: AuditorySearch = new AuditorySearch(this.totalPerPage, ++event.pageIndex);
     this.getLogs(auditorySearch);
   }
 }
