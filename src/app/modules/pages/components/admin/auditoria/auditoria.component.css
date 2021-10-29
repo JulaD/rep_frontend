@@ -135,15 +135,6 @@ section .logs {
   max-width: 800px;
   top: 260px;
   transition: 0.5s;
-  animation: init-list 0.5s ease-in;
-}
-@keyframes init-list {
-  0% {
-    transform: translateY(3vw);
-  }
-  100% {
-    transform: translateX(0);
-  }
 }
 section .fijo .titulo {
   width: 100%;
