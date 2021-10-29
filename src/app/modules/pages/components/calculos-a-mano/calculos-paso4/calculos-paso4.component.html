@@ -15,7 +15,12 @@
           Mujeres de 18 a 29 años
         </div>
         <!-- DATOS ESPECÍFICOS DEL GRUPO -->
-        <div class="row gy-1 justify-content-end">
+        <div class="row gy-1 justify-content-end" formGroupName="maternityIndivPrimerFranja">
+          <div *ngIf="materYLactanciaForm.get('maternityIndivPrimerFranja')?.errors?.step4MenorIgualPobStep1 &&
+            (materYLactanciaForm.get('maternityIndivPrimerFranja')?.touched || materYLactanciaForm.get('maternityIndivPrimerFranja')?.dirty)"
+            class="mensaje-error col">
+            La suma de mujeres embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
+          </div>
           <div class="step4-num-embarazos col-4">
             <mat-form-field appearance="standard">
               <mat-label>Número de embarazos</mat-label>
@@ -23,7 +28,7 @@
               <mat-hint>
                 Ingrese el número de personas embarazadas para este rango
               </mat-hint>
-              <mat-error *ngIf="materYLactanciaForm.get('embsPrimerFranja')?.hasError('pattern')">
+              <mat-error *ngIf="materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.hasError('pattern')">
                 El número de personas embarazadas debe ser un número entero positivo
               </mat-error>
             </mat-form-field>
@@ -35,7 +40,7 @@
               <mat-hint>
                 Ingrese el número de personas amamantando para este rango
               </mat-hint>
-              <mat-error *ngIf="materYLactanciaForm.get('amamPrimerFranja')?.hasError('pattern')">
+              <mat-error *ngIf="materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.hasError('pattern')">
                 El número de personas amamantando debe ser un número entero positivo
               </mat-error>
             </mat-form-field>
@@ -56,7 +61,7 @@
           <div *ngIf="materYLactanciaForm.get('maternityPrimerFranja')?.errors?.step4MenorIgualPobTotal &&
             (materYLactanciaForm.get('maternityPrimerFranja')?.touched || materYLactanciaForm.get('maternityPrimerFranja')?.dirty)"
             class="mensaje-error">
-            La población de mujeres de este rango etario no puede ser mayor que la población total.
+            La población de mujeres de esta franja etaria no puede ser mayor que la población total.
           </div>
         </div>
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
@@ -111,7 +116,12 @@
           Mujeres de 30 a 59 años
         </div>
         <!-- DATOS ESPECÍFICOS DEL GRUPO -->
-        <div class="row gy-1 justify-content-end">
+        <div class="row gy-1 justify-content-end" formGroupName="maternityIndivSegundaFranja">
+          <div *ngIf="materYLactanciaForm.get('maternityIndivSegundaFranja')?.errors?.step4MenorIgualPobStep1 &&
+            (materYLactanciaForm.get('maternityIndivSegundaFranja')?.touched || materYLactanciaForm.get('maternityIndivSegundaFranja')?.dirty)"
+            class="mensaje-error col">
+            La suma de mujeres embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
+          </div>
           <div class="step4-num-embarazos-2 col-4">
             <mat-form-field appearance="standard">
               <mat-label>Número de embarazos</mat-label>
@@ -119,7 +129,7 @@
               <mat-hint>
                 Ingrese el número de personas embarazadas para este rango
               </mat-hint>
-              <mat-error *ngIf="materYLactanciaForm.get('embsSegundaFranja')?.hasError('pattern')">
+              <mat-error *ngIf="materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.hasError('pattern')">
                 El número de personas embarazadas debe ser un número entero positivo
               </mat-error>
             </mat-form-field>
@@ -131,7 +141,7 @@
               <mat-hint>
                 Ingrese el número de personas amamantando para este rango
               </mat-hint>
-              <mat-error *ngIf="materYLactanciaForm.get('amamSegundaFranja')?.hasError('pattern')">
+              <mat-error *ngIf="materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.hasError('pattern')">
                 El número de personas amamantando debe ser un número entero positivo
               </mat-error>
             </mat-form-field>
@@ -152,7 +162,7 @@
           <div *ngIf="materYLactanciaForm.get('maternitySegundaFranja')?.errors?.step4MenorIgualPobTotal &&
             (materYLactanciaForm.get('maternitySegundaFranja')?.touched || materYLactanciaForm.get('maternitySegundaFranja')?.dirty)"
             class="mensaje-error">
-            La población de mujeres de este rango etario no puede ser mayor que la población total.
+            La población de mujeres de esta franja etaria no puede ser mayor que la población total.
           </div>
         </div>
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
