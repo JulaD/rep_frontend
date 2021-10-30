@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { GroupEnergeticRequirement } from 'src/app/interfaces/GroupEnergeticRequirement';
 import { ResultsService } from 'src/app/services/results.service';
-import { GrupoEtario } from 'src/app/models/grupo-etario';
 import CalculatorResponse from 'src/app/interfaces/CalculatorResponseDTO';
+import { ResultPdf } from 'src/app/models/result-pdf.model';
+import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -24,6 +25,8 @@ export class ResultComponent implements OnInit {
 
   totalRequirement: number = 0;
 
+  totalPerCapitaRequirement: number = 0;
+
   totalPopulation: number = 0;
 
   displayedColumns: string[] = ['texto', 'femenino', 'masculino'];
@@ -40,6 +43,7 @@ export class ResultComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private resultsService: ResultsService,
+    private pdfService: PdfGeneratorService,
   ) {
     this.resultsService.result$
       .subscribe((result) => {
@@ -58,6 +62,10 @@ export class ResultComponent implements OnInit {
     if (result) {
       // eslint-disable-next-line no-bitwise
       this.totalRequirement = Math.round(
+        result?.totalRequirement?.total,
+      ) | 0;
+      // eslint-disable-next-line no-bitwise
+      this.totalPerCapitaRequirement = Math.round(
         result?.totalRequirement?.perCapita,
       ) | 0;
       // eslint-disable-next-line no-bitwise
@@ -72,6 +80,7 @@ export class ResultComponent implements OnInit {
         let femenineTotal: number = 0;
         let masculinePer: number = 0;
         let masculineTotal: number = 0;
+        // eslint-disable-next-line array-callback-return
         groupedByAge[key].map((value: GroupEnergeticRequirement) => {
           totalAmount += Number(value.group.population);
           if (value?.group?.sex === 'Femenino') {
@@ -106,8 +115,19 @@ export class ResultComponent implements OnInit {
   groupByAge(array: GroupEnergeticRequirement[]): {[attr: string]: GroupEnergeticRequirement[]} {
     return array.reduce((objectsByKeyValue: any, obj: GroupEnergeticRequirement) => {
       const value: string = obj.group.age;
+      // eslint-disable-next-line no-param-reassign
       objectsByKeyValue[value] = (objectsByKeyValue[value] || []).concat(obj);
       return objectsByKeyValue;
     }, {});
   }
+
+  generatePDF() {
+    let result : ResultPdf = new ResultPdf(this.totalPopulation, 
+      this.totalRequirement,
+      this.totalPerCapitaRequirement,
+      this.dataSources
+      );
+    this.pdfService.generateResults(result);
+  }
+
 }

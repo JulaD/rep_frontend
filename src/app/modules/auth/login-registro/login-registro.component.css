@@ -243,3 +243,9 @@ section .container.active .signinBx .imgBx {
     top: -100%;
   }
 }
+@media (max-height: 800px) {
+  section .tituloBx .titulo {
+    font-size: 150px;
+    margin-top: 36px;
+  }
+}

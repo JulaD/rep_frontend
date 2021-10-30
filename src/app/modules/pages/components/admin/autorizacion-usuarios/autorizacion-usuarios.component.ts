@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { UserService } from '../../../../../services';
+import { UserService, AuthService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
 
 @Component({
@@ -41,8 +41,11 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   errorAlert: boolean = false;
 
+  currentUser: Partial<User> | undefined = undefined;
+
   constructor(
     public userService: UserService,
+    public authService: AuthService,
     private router: Router,
   ) { }
 
@@ -51,6 +54,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
+    this.currentUser = this.authService.getUser();
     this.userService.getUsers('pending', 4, 0, busqueda).subscribe(
       (res) => {
         this.pendingUsersCount = res.count;
