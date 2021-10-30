@@ -51,7 +51,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
-    this.userService.getPendingUsers(4, 0, busqueda).subscribe(
+    this.userService.getUsers('pending', 4, 0, busqueda).subscribe(
       (res) => {
         this.pendingUsersCount = res.count;
         this.pendingUsers = res.rows;
@@ -64,7 +64,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
         console.log(err);
       },
     );
-    this.userService.getApprovedUsers(4, 0, busqueda).subscribe(
+    this.userService.getUsers('approved', 4, 0, busqueda).subscribe(
       (res) => {
         this.acceptedUsersCount = res.count;
         this.acceptedUsers = res.rows;
@@ -83,7 +83,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaPendientes');
     if (busquedaInput) {
       this.pendingUsersSearch = busquedaInput.value;
-      this.userService.getPendingUsers(4, 0, this.pendingUsersSearch).subscribe(
+      this.userService.getUsers('pending', 4, 0, this.pendingUsersSearch).subscribe(
         (res) => {
           this.message = '';
           this.successAlert = false;
@@ -111,7 +111,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaAceptados');
     if (busquedaInput) {
       this.acceptedUsersSearch = busquedaInput.value;
-      this.userService.getApprovedUsers(4, 0, this.acceptedUsersSearch).subscribe(
+      this.userService.getUsers('pending', 4, 0, this.acceptedUsersSearch).subscribe(
         (res) => {
           this.message = '';
           this.successAlert = false;
@@ -137,7 +137,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   goToPendingPage(page: number) {
     if (page >= 1 && page <= this.pendingUsersPageCount) {
-      this.userService.getPendingUsers(4, (page - 1) * 4, this.pendingUsersSearch).subscribe(
+      this.userService.getUsers('pending', 4, (page - 1) * 4, this.pendingUsersSearch).subscribe(
         (res) => {
           this.pendingUsersCurrentPage = page;
           this.pendingUsersCount = res.count;
@@ -163,7 +163,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
 
   goToAcceptedPage(page: number) {
     if (page >= 1 && page <= this.acceptedUsersPageCount) {
-      this.userService.getApprovedUsers(4, (page - 1) * 4, this.acceptedUsersSearch).subscribe(
+      this.userService.getUsers('approved', 4, (page - 1) * 4, this.acceptedUsersSearch).subscribe(
         (res) => {
           this.acceptedUsersCurrentPage = page;
           this.acceptedUsersCount = res.count;

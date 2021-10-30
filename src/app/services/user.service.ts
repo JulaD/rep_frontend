@@ -15,7 +15,7 @@ export class UserService {
     private http: HttpClient,
   ) { }
 
-  private api: string = environment.usersApi;
+  private api: string = environment.api;
 
   private options = () => {
     let token: string = '';
@@ -29,18 +29,8 @@ export class UserService {
     };
   };
 
-  getAllUsers(limit: number, offset: number, busqueda: string) {
-    return this.http.get<any>(`${this.api}/users?limit=${limit}&offset=${offset}&search=${busqueda}`,
-      this.options());
-  }
-
-  getPendingUsers(limit: number, offset: number, busqueda: string) {
-    return this.http.get<any>(`${this.api}/users/pending?limit=${limit}&offset=${offset}&search=${busqueda}`,
-      this.options());
-  }
-
-  getApprovedUsers(limit: number, offset: number, busqueda: string) {
-    return this.http.get<any>(`${this.api}/users/approved?limit=${limit}&offset=${offset}&search=${busqueda}`,
+  getUsers(type:string, limit: number, offset: number, busqueda: string) {
+    return this.http.get<any>(`${this.api}/users/?type=${type}&limit=${limit}&offset=${offset}&search=${busqueda}`,
       this.options());
   }
 
@@ -50,16 +40,6 @@ export class UserService {
 
   cancel(id: number) {
     return this.http.put<any>(`${this.api}/users/${id}/cancel`, undefined, this.options());
-  }
-
-  getUsers(limit: number, offset: number, busqueda: string) {
-    return this.http.get<any>(`${this.api}/users/clients?limit=${limit}&offset=${offset}&search=${busqueda}`,
-      this.options());
-  }
-
-  getAdmins(limit: number, offset: number, busqueda: string) {
-    return this.http.get<any>(`${this.api}/users/admins?limit=${limit}&offset=${offset}&search=${busqueda}`,
-      this.options());
   }
 
   giveAdminPermission(id: number) {

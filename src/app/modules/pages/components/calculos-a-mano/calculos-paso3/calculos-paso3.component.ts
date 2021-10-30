@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
@@ -12,15 +12,20 @@ import { step3UrbanSuman100Validator } from 'src/app/modules/shared/validators/s
 const percentageValidators: ValidatorFn[] = [
   numeroFloatValidator,
   Validators.min(0),
-  Validators.max(100)];
+  Validators.max(100),
+];
 
 @Component({
   selector: 'app-calculos-paso3',
   templateUrl: './calculos-paso3.component.html',
   styleUrls: ['./calculos-paso3.component.css'],
 })
-export class CalculosPaso3Component {
-  // constructor() {}
+export class CalculosPaso3Component implements OnInit {
+  @Input() defaultAdultPal: AdultPAL;
+
+  @Input() defaultExtraDataAvailable: boolean;
+
+  ngOnInit() { this.loadDefaultValues(); }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -71,5 +76,16 @@ export class CalculosPaso3Component {
     };
 
     return adultPALData;
+  }
+
+  loadDefaultValues() {
+    if (this.defaultExtraDataAvailable) {
+      this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
+      this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);
+      this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(this.defaultAdultPal.activeRuralPAL);
+      this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(this.defaultAdultPal.lowRuralPAL);
+      this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(this.defaultAdultPal.activeUrbanPAL);
+      this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(this.defaultAdultPal.lowUrbanPAL);
+    }
   }
 }

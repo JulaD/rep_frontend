@@ -48,7 +48,6 @@ export class LoginRegistroComponent implements OnInit {
   register() {
     // solo deja llamar a esta funcion en caso de que todos los campos sean validos
     const values: Register = this.registerForm.value;
-    console.log(values);
     if (values.password !== values.passwordConf) {
       this.message = 'Las contraseñas no coinciden';
       this.alertaSuccess = false;
@@ -79,7 +78,6 @@ export class LoginRegistroComponent implements OnInit {
         // limpia los inputs
         this.registerForm.reset();
         // this.efectuarIngreso(res);
-        this.authService.loggedUser = result.user;
         this.router.navigate(['']);
       },
       (err) => {

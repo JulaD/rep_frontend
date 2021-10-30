@@ -36,7 +36,7 @@ table {
 
 .botones-finales-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: left;
   margin-top: 15px;
 }
 
