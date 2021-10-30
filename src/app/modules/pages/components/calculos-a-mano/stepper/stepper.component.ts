@@ -31,6 +31,9 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   defaultExtraDataAvailable: boolean = false;
 
+  // Necesario para evitar cargar hijos antes de que termine esta accion
+  finishedProcessExtraData: boolean = false;
+
   defaultMinorPal: MinorPAL = {
     lowPALPrevalence: 0,
     moderatePALPrevalence: 0,
@@ -70,7 +73,11 @@ export class StepperComponent implements OnInit, OnDestroy {
   @ViewChild(CalculosPaso4Component)
   private step4Access: CalculosPaso4Component;
 
-  ngOnInit() { this.processExtraData(); }
+  ngOnInit() {
+    console.log('Start Load Stepper');
+    this.processExtraData();
+    console.log('Finished Load Stepper');
+  }
 
   ngOnDestroy() {
     // al salir del stepper, vacio las tablas
@@ -208,6 +215,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     this.rest.getDefaultExtraData()
       .subscribe(
         (data) => {
+          console.log('Loading Stepper');
           this.defaultExtraDataAvailable = true;
           this.defaultExtraData = data;
           this.defaultExtraData?.forEach((extraData: DefaultExtraDataDTO) => {
@@ -225,6 +233,7 @@ export class StepperComponent implements OnInit, OnDestroy {
                 break;
             }
           });
+          this.finishedProcessExtraData = true;
         },
         (error) => {
           console.log(error);
@@ -232,6 +241,7 @@ export class StepperComponent implements OnInit, OnDestroy {
           const errorMessage = 'Los valores por defecto no estan disponibles';
           const config : MatSnackBarConfig = new MatSnackBarConfig();
           config.verticalPosition = 'top';
+          this.finishedProcessExtraData = true;
           return this.errorSnackBar.open(errorMessage, 'Aceptar', config);
         },
       );

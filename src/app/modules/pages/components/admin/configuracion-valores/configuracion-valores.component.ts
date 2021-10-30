@@ -638,11 +638,11 @@ export class ConfiguracionValoresComponent implements OnInit {
     if (sex === 'men') {
       inputWeightElement = <HTMLInputElement>document.getElementById('pesosHombresInput');
       weightToModify = { ...this.selectedWeightMen };
-      sexSwal = 'hombres';
+      sexSwal = 'el sexo masculino';
     } else {
       inputWeightElement = <HTMLInputElement>document.getElementById('pesosMujeresInput');
       weightToModify = { ...this.selectedWeightWomen };
-      sexSwal = 'mujeres';
+      sexSwal = 'el sexo femenino';
     }
     if (inputWeightElement) {
       let newValue = parseFloat(inputWeightElement.value);

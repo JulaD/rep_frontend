@@ -27,7 +27,7 @@
     </mat-step>
     <mat-step [stepControl]="step2DOMAccess.minorPALForm"
       errorMessage="El paso contiene errores"
-      *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent">
+      *ngIf="finishedProcessExtraData && step1DOMAccess.stepperLogic.agesMinorPresent">
       <div class="container">
         <ng-template matStepLabel>Prevalencia nivel de actividad física</ng-template>
         <app-calculos-paso2
@@ -58,7 +58,7 @@
     </mat-step>
     <mat-step [stepControl]="step3DOMAccess.adultPALForm"
       errorMessage="El paso contiene errores"
-      *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent">
+      *ngIf="finishedProcessExtraData && step1DOMAccess.stepperLogic.agesAdultPresent">
       <div class="container"> 
         <ng-template matStepLabel>Estilo de vida por area</ng-template>
         <app-calculos-paso3
@@ -89,7 +89,7 @@
     <mat-step
       [stepControl]="step4Access.materYLactanciaForm"
       errorMessage="El paso contiene errores"
-      *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+      *ngIf="finishedProcessExtraData && step1DOMAccess.stepperLogic.agesFemale18To29Present ||
         step1DOMAccess.stepperLogic.agesFemale30To59Present">
       <div class="container">
         <ng-template matStepLabel>Maternidad y lactancia</ng-template>
