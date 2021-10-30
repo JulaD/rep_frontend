@@ -11,13 +11,13 @@
                 <img src="../../../../../assets/ilustrations/PDF.png">
             </div>
             <div class="col-md-3">
-                <a class="download-text" href="#">Descargar PDF</a>
+                <button class="download-text" mat-icon-button (click)="generatePDF()">Descargar PDF</button>
             </div>
             <div class="col-md-1">
                 <img src="../../../../../assets/ilustrations/XLS.png">
             </div>
             <div class="col-md-4">
-                <a class="download-text" href="#">Descargar XLS</a>
+                <button class="download-text" mat-icon-button>Descargar XLS</button>
             </div>
         </div>
     </div> 
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <p class="rep-result">{{ totalRequirement }}</p>
+                <p class="rep-result">{{ totalPerCapitaRequirement }}</p>
                 <p class="rep-result-subtitle">Kcal por día</p>
             </div>
         </div>
