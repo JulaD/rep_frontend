@@ -62,14 +62,14 @@ export class LoginRegistroComponent implements OnInit {
           this.alertaError = false;
         },
         (err) => {
-          if (err.message === 'email is taken') {
+          console.log(err.status);
+          if (err.status === 412) {
             this.message = 'Este correo electrónico ya está en uso';
           } else {
             this.message = 'Hubo un problema';
           }
           this.alertaError = true;
           this.alertaSuccess = false;
-          console.log(err);
         },
       );
     }
@@ -84,16 +84,16 @@ export class LoginRegistroComponent implements OnInit {
         this.router.navigate(['']);
       },
       (err) => {
-        if (err.message === 'user not accepted') {
+        if (err.status === 401) {
           this.message = 'Su cuenta aún no ha sido autorizada por un Administrador';
-        } else if (err.message === 'user not found' || err.message === 'auth failed') {
+        } else if (err.status === 400 || err.status === 404) {
           this.message = 'Correo electrónico o contraseña incorrectas';
         } else {
           this.message = 'Hubo un problema';
         }
         this.alertaError = true;
         this.alertaSuccess = false;
-        console.log(err);
+        console.log(err.status);
       },
     );
   }
