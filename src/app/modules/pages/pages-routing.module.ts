@@ -10,6 +10,7 @@ import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 const routes: Routes = [{
   path: '',
@@ -55,6 +56,9 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  }, {
+    path: 'about-us',
+    component: AboutUsComponent,
   }, {
     path: 'admin',
     loadChildren: () => import('./components/admin/admin.module').then((m) => m.AdminModule),

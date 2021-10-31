@@ -1,0 +1,28 @@
+<div class="row first-div">
+    <div class="header-background">
+      <p class="first-title">Sobre >nosotros</p>
+    </div>
+</div>
+<div class="content">
+    <div fxLayout="row wrap" fxLayoutGap="16px" grid>    
+        <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let info of information">
+            <mat-card class="info-card">
+                <mat-card-header>
+                <div mat-card-avatar class="info-header-image"></div>
+                <mat-card-title>{{info.apodo}}</mat-card-title>
+                <mat-card-subtitle>{{info.nombre}}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                <p>
+                    {{info.descripcion}}
+                </p>
+                </mat-card-content>
+                <mat-card-actions>
+                <button mat-button>LIKE</button>
+                <button mat-button>SHARE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
