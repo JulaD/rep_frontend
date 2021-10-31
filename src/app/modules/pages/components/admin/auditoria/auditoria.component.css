@@ -27,7 +27,7 @@ table {
 }
 section {
   position: relative;
-  min-height: 1000px;
+  min-height: 1500px;
   height: 100vh;
   background: #ccfdff;
   background-size: cover;
