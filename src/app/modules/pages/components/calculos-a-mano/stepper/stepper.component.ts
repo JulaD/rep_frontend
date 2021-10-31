@@ -9,7 +9,7 @@ import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
+import { RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
 import { CalculosPaso2Component } from '../calculos-paso2/calculos-paso2.component';
@@ -99,7 +99,7 @@ export class StepperComponent implements OnInit, OnDestroy {
       maternity30To59: undefined,
     };
 
-    const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
+    const { step1Data, fromTemplate } = this.step1Access.sendData();
 
     if (this.step1Access.stepperLogic.agesMinorPresent) {
       extraData.minorPAL = this.step2Access.sendData();
@@ -118,7 +118,7 @@ export class StepperComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.rest.addCalculation(step1Data, extraData)
+    this.rest.addCalculation(step1Data, extraData, fromTemplate)
       .subscribe((result) => {
         this.resultsService
           .setData(result);
