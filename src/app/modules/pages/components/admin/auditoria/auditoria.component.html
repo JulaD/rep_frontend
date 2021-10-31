@@ -25,22 +25,10 @@
                         <td mat-cell *matCellDef="let element"> {{element.date}} </td>
                     </ng-container>
                     
-                    <!-- ACCIÓN -->
-                    <ng-container matColumnDef="accion">
-                        <th mat-header-cell *matHeaderCellDef>Acción</th>
-                        <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                    </ng-container>
-                    
                     <!-- EMAIL -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef>Email</th>
                         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-                    </ng-container>
-
-                    <!-- NOMBRE -->
-                    <ng-container matColumnDef="nombre">
-                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
                     </ng-container>
 
                     <!-- ORGANIZACIÓN -->
@@ -49,9 +37,21 @@
                         <td mat-cell *matCellDef="let element"> {{element.organization_name}} </td>
                     </ng-container>
 
+                     <!-- NOMBRE -->
+                     <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+                    </ng-container>
+
+                    <!-- ACCIÓN -->
+                    <ng-container matColumnDef="accion">
+                        <th class='action-header' mat-header-cell *matHeaderCellDef>Acción</th>
+                        <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+                    </ng-container>
+
                     <!-- Descripción FECHA -->
                     <ng-container matColumnDef="fecha-description">
-                        <th mat-header-cell *matHeaderCellDef>Fecha en la que fue realizada la acción</th>
+                        <th mat-header-cell *matHeaderCellDef>Fecha de la acción</th>
                     </ng-container>
                 
                     <!-- Descripción ACCIÓN -->
@@ -83,7 +83,7 @@
                 
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <mat-paginator [length]="logs.length"
+                <mat-paginator [length]="totalLogs"
                     [pageSize]="totalPerPage"
                     [pageSizeOptions]='[10,20,50]'
                     aria-label="Selecciona la página"
