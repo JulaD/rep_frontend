@@ -9,13 +9,13 @@
         </div>
     </div>
     <div class="logs" id="log">
-        <div class="vacio" *ngIf="!logs.length">
+        <div class="vacio" *ngIf="totalLogs==0">
             <h1 class="logsVacio">¡NO HAY CAMBIOS PARA AUDITAR!</h1>
         </div>
-        <div class="resultadoBusqueda" *ngIf="logs.length">
-            <h1>RESULTADO DE LA BUSQUEDA: {{logs.length}}</h1>
+        <div class="resultadoBusqueda" *ngIf="totalLogs>0">
+            <h1>RESULTADO DE LA BUSQUEDA: {{totalLogs}}</h1>
         </div>
-        <div class="resultsTable" *ngIf="logs.length">
+        <div class="resultsTable" *ngIf="totalLogs>0">
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="logs">
 
