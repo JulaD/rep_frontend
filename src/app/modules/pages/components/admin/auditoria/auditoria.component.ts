@@ -5,6 +5,11 @@ import { Log } from 'src/app/models/log.model';
 import { AuditoryService } from 'src/app/services/auditory.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { PageEvent } from '@angular/material/paginator';
+import { DatePipe, registerLocaleData } from '@angular/common';
+
+import localeEsUy from '@angular/common/locales/es-UY';
+
+registerLocaleData(localeEsUy, 'esUY');
 
 @Component({
   selector: 'app-auditoria',
@@ -15,10 +20,9 @@ export class AuditoriaComponent implements OnInit {
   /**
    * Logs mostrados en la tabla.
    */
-  logs: Log[] = [];
-  /* [new Log(1,'1',1,'1','1','1'),
-  new Log(2,'2',2,'2','2','2'),
-  new Log(3,'3',3,'3','3','3')] */
+  logs: Log[] = [];/* [
+    new Log(2, '2', 2, '2', '2', '2'),
+    new Log(3, '3', 3, '3', '3', '3')] ; */
 
   /**
    * Número total de logs encontrados para el/los filtros aplicados.
@@ -26,7 +30,7 @@ export class AuditoriaComponent implements OnInit {
   totalLogs: number = 0;
 
   /**
-   * Total de logs a ser mostrados por página.
+   * Total de logs por defecto a ser mostrados por página.
    */
   totalPerPage: number = 10;
 
@@ -53,6 +57,20 @@ export class AuditoriaComponent implements OnInit {
     this.auditoryService.getLogs(search).subscribe(
       (res) => {
         this.logs = res.list;
+        /* eslint-disable no-param-reassign */
+        this.logs.forEach((log) => {
+          const datepipe: DatePipe = new DatePipe('esUY');
+          const formattedDate = datepipe.transform(log.date, 'MMM d, y, h:mm:ss a');
+          if (formattedDate) {
+            log.date = formattedDate;
+          } else {
+            const errorMessage = `Ocurrió un error al parsear la fecha ${log.date}`;
+            const config : MatSnackBarConfig = new MatSnackBarConfig();
+            config.panelClass = ['error-snack-bar'];
+            config.verticalPosition = 'top';
+            this.errorSnackBar.open(errorMessage, 'X', config);
+          }
+        });
         this.totalLogs = res.count;
       },
       (err) => {
@@ -70,9 +88,8 @@ export class AuditoriaComponent implements OnInit {
    * @param event evento disparado al cambiar de página en la tabla de resultados
    */
   /* eslint-disable no-param-reassign */
-  /* eslint-disable no-plusplus */
   goToPage(event : PageEvent) {
-    const auditorySearch: AuditorySearch = new AuditorySearch(this.totalPerPage, ++event.pageIndex);
+    const auditorySearch: AuditorySearch = new AuditorySearch(event.pageSize, event.pageIndex + 1);
     this.getLogs(auditorySearch);
   }
 }

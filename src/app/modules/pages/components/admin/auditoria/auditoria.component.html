@@ -9,41 +9,83 @@
         </div>
     </div>
     <div class="logs" id="log">
-        <div class="vacio" *ngIf="!logs.length">
+        <div class="vacio" *ngIf="totalLogs==0">
             <h1 class="logsVacio">¡NO HAY CAMBIOS PARA AUDITAR!</h1>
         </div>
-        <div class="resultadoBusqueda" *ngIf="logs.length">
+        <div class="resultadoBusqueda" *ngIf="totalLogs>0">
             <h1>RESULTADO DE LA BUSQUEDA: {{totalLogs}}</h1>
         </div>
-        <div class="resultsTable" *ngIf="logs.length">
+        <div class="resultsTable" *ngIf="totalLogs>0">
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="logs">
+
+                    <!-- FECHA -->
                     <ng-container matColumnDef="fecha">
                         <th mat-header-cell *matHeaderCellDef>Fecha</th>
                         <td mat-cell *matCellDef="let element"> {{element.date}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="accion">
-                        <th mat-header-cell *matHeaderCellDef>Action</th>
-                        <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                    </ng-container>
+                    
+                    <!-- EMAIL -->
                     <ng-container matColumnDef="email">
-                        <th mat-header-cell *matHeaderCellDef>Login</th>
+                        <th mat-header-cell *matHeaderCellDef>Email</th>
                         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
                     </ng-container>
-                    <ng-container matColumnDef="nombre">
-                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-                        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
-                    </ng-container>
+
+                    <!-- ORGANIZACIÓN -->
                     <ng-container matColumnDef="organizacion">
                         <th mat-header-cell *matHeaderCellDef>Organización</th>
                         <td mat-cell *matCellDef="let element"> {{element.organization_name}} </td>
                     </ng-container>
+
+                     <!-- NOMBRE -->
+                     <ng-container matColumnDef="nombre">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+                    </ng-container>
+
+                    <!-- ACCIÓN -->
+                    <ng-container matColumnDef="accion">
+                        <th class='action-header' mat-header-cell *matHeaderCellDef>Acción</th>
+                        <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+                    </ng-container>
+
+                    <!-- Descripción FECHA -->
+                    <ng-container matColumnDef="fecha-description">
+                        <th mat-header-cell *matHeaderCellDef>Fecha de la acción</th>
+                    </ng-container>
                 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <!-- Descripción ACCIÓN -->
+                    <ng-container matColumnDef="accion-description">
+                        <th mat-header-cell *matHeaderCellDef>Acción realizada</th>
+                    </ng-container>
+
+                    <!-- Descripción EMAIL -->
+                    <ng-container matColumnDef="email-description">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                    </ng-container>
+                
+                    <!-- Descripción NOMBRE -->
+                    <ng-container matColumnDef="nombre-description">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                    </ng-container>
+
+                    <!-- Descripción ORGANIZACIÓN -->
+                    <ng-container matColumnDef="org-description">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"
+                        class="header-row">
+                    </tr>
+                    <tr mat-header-row *matHeaderRowDef="['fecha-description', 'accion-description', 'email-description', 'nombre-description', 'org-description']"
+                        class="description-row">
+                    </tr>
+                
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
                 <mat-paginator [length]="totalLogs"
                     [pageSize]="totalPerPage"
+                    [pageSizeOptions]='[10,20,50]'
                     aria-label="Selecciona la página"
                     (page)="goToPage($event)">
                 </mat-paginator>

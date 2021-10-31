@@ -3,16 +3,31 @@
   padding: 0;
   box-sizing: border-box;
 }
+.header-row {
+  width: 90px;
+}
+.description-row {
+  font: italic;
+}
 table {
   width: 100%;
+}
+.resultadoBusqueda {
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+.resultadoBusqueda h1 {
+  font-family: 'Montserrat';
+  color: #c9fdff;
 }
 .resultsTable {
   margin-bottom: 20px;
   margin-top: 10px;
+  width: 95%;
 }
 section {
   position: relative;
-  min-height: 1000px;
+  min-height: 1500px;
   height: 100vh;
   background: #ccfdff;
   background-size: cover;
@@ -131,8 +146,8 @@ section .logs {
   background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  width: 80vw;
-  max-width: 800px;
+  width: 90vw;
+  max-width: 1200px;
   top: 260px;
   transition: 0.5s;
 }
