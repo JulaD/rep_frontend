@@ -8,7 +8,15 @@
     float: left;
 }
 
-.containerButtons {
+.container-buttons {
+    margin-bottom: 10px;
+}
+
+.container-stepper-buttons {
     display:flex;
     justify-content: flex-end;
+}
+
+.container-download-progress-button {
+    justify-content: flex-start;
 }
