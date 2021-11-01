@@ -99,11 +99,11 @@ export class ResultComponent implements OnInit {
           femenine: femenineAmount,
           masculine: masculineAmount,
           source: new MatTableDataSource<RequerimientoEnergetico>([{
-            texto: 'Requerimiento energético por persona',
+            texto: 'Requerimiento energético diario por persona',
             femenino: Math.round(femeninePer),
             masculino: Math.round(masculinePer),
           }, {
-            texto: 'Requerimiento energético del grupo',
+            texto: 'Requerimiento energético diario del grupo',
             femenino: Math.round(femenineTotal),
             masculino: Math.round(masculineTotal),
           }]),

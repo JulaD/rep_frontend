@@ -2,7 +2,7 @@ mat-sidenav-container {
   width: 100%;
   position: absolute;
   top: 4rem;
-  bottom: 6rem;
+  bottom: 3rem;
   overflow: unset;
 }
 

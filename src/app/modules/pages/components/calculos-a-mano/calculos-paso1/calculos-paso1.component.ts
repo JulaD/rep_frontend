@@ -36,6 +36,10 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   stepValid: boolean = false;
 
+  female18To29Pop = 0;
+
+  female30To59Pop = 0;
+
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
   defaultWeights: DefaultWeightDTO[] | undefined;
@@ -140,6 +144,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     femeninoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceF._updateChangeSubscription();
     this.stepValid = true;
+    this.updateFemale18to59Pop(grupo.edad, grupo.cantidad);
     this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
@@ -161,6 +166,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     if (indexF > -1) {
       femeninoData.splice(indexF, 1);
       this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
+      this.updateFemale18to59Pop(edadSel, 0);
       this.updateStepperLogicOnRemove(edadSel, Sexo.Femenino);
     }
     // Borro en la tabla femeninoData
@@ -259,6 +265,19 @@ export class CalculosPaso1Component implements AfterViewInit {
         || masculinoData.some((
           group: GrupoEtario,
         ) => compareFranjaEtaria(group.edad, FranjaEtaria.Anios_18_29) >= 0);
+    }
+  }
+
+  updateFemale18to59Pop(age: FranjaEtaria, population: number) {
+    switch (age) {
+      case FranjaEtaria.Anios_18_29:
+        this.female18To29Pop = population;
+        break;
+      case FranjaEtaria.Anios_30_59:
+        this.female30To59Pop = population;
+        break;
+      default:
+        break;
     }
   }
 
