@@ -34,9 +34,6 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
   @Input() agesFemale30To59Present: boolean;
 
   ngOnInit() {
-    console.log('Start Load Step4');
-    this.loadDefaultValues();
-    console.log('Finished Load Step4');
   }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
@@ -154,16 +151,17 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
     return maternity;
   }
 
-  loadDefaultValues() {
-    console.log('Loading Step4');
+  loadDefaultValues(rango: number) {
     if (this.defaultExtraDataAvailable) {
-      this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
-      this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
-      this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
-
-      this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.setValue(this.defaultMaternity30to59.countryWomenInAgeGroup);
-      this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.setValue(this.defaultMaternity30to59.countryPopulation);
-      this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.setValue(this.defaultMaternity30to59.countryBirthRate);
+      if (rango === 1) {
+        this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
+        this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
+        this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
+      } else {
+        this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.setValue(this.defaultMaternity30to59.countryWomenInAgeGroup);
+        this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.setValue(this.defaultMaternity30to59.countryPopulation);
+        this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.setValue(this.defaultMaternity30to59.countryBirthRate);
+      }
     }
   }
 }

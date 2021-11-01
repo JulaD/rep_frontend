@@ -66,6 +66,11 @@
         </div>
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
         <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value" formGroupName="maternityPrimerFranja">
+          <div class="button-autocomplete mb-2">
+            <button mat-stroked-button (click)="loadDefaultValues(1)">
+              Autocompletar
+            </button>
+          </div>
           <div class="row pb-3">
             <div class="step4-cant-mujeres col">
               <mat-form-field appearance="standard">
@@ -167,6 +172,11 @@
         </div>
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
         <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('segundaFranjaDisabled')?.value" formGroupName="maternitySegundaFranja">
+          <div class="button-autocomplete mb-2">
+            <button mat-stroked-button (click)="loadDefaultValues(2)">
+              Autocompletar
+            </button>
+          </div>
           <div class="row pb-3">
             <div class="step4-cant-mujeres col">
               <mat-form-field appearance="standard">

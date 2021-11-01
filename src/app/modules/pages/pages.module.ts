@@ -20,6 +20,8 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
 import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq-expansion-panel.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { OverwriteDialog } from './components/calculos-a-mano/calculos-paso1/overwrite-dialog/overwrite-dialog.component';
+import { DeleteRowDialog } from './components/calculos-a-mano/calculos-paso1/delete-row-dialog/delete-row-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { UpdateUserComponent } from './components/update-user/update-user.compon
     ByHandComponent,
     FaqExpansionPanelComponent,
     UpdateUserComponent,
+    OverwriteDialog,
+    DeleteRowDialog,
   ],
   imports: [
     CommonModule,
