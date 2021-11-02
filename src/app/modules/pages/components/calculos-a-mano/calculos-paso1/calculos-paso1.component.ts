@@ -93,7 +93,7 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   grupoEtarioForm = new FormGroup({
-    edad: new FormControl('', Validators.required),
+    edad: new FormControl(FranjaEtaria.Meses_0, Validators.required),
     cantFemenino: new FormControl('', numeroEnteroPositivoValidator),
     cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
@@ -129,9 +129,11 @@ export class CalculosPaso1Component implements AfterViewInit {
           && medianaMasculino === masculinoData[indexM].pesoMediano)
       )) {
         // presento mensaje de error
-        this.repetidoSnackBar.open(
-          'Atención: Ya agrego estos datos', 'Aceptar',
-        );
+        const errorMessage = 'Atención: Ya agrego estos datos';
+        const config : MatSnackBarConfig = new MatSnackBarConfig();
+        config.verticalPosition = 'bottom';
+        config.duration = 7000;
+        this.repetidoSnackBar.open(errorMessage, 'Aceptar', config);
       // si los datos son distintos
       } else {
         // preparo los datos para el cuadro de dialogo
@@ -403,8 +405,16 @@ export class CalculosPaso1Component implements AfterViewInit {
   toggleDefaultData(sex: String) {
     if (sex === 'F') {
       this.usingDefaultData.female = !this.usingDefaultData.female;
+      if (this.usingDefaultData.female) {
+        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+        this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+      }
     } else {
       this.usingDefaultData.male = !this.usingDefaultData.male;
+      if (this.usingDefaultData.male) {
+        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+        this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+      }
     }
   }
 

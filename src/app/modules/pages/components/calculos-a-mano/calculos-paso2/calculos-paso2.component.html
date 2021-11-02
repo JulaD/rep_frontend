@@ -14,7 +14,9 @@
   <div class="step2-subtitulo">
     Los porcentajes son sobre la población de entre 6 y 17 años
   </div>
-  <button class="button-autocomplete mt-2" mat-stroked-button (click)="loadDefaultValues()">
+  <button class="button-autocomplete mt-2" mat-stroked-button
+    (click)="loadDefaultValues()"
+    [disabled]="!defaultExtraDataAvailable">
     Autocompletar
   </button>
   <div class="container m-4">

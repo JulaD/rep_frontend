@@ -5,7 +5,8 @@
     </ng-template>
   </div>
   <div class="button-autocomplete mt-2">
-    <button mat-stroked-button (click)="loadDefaultValues()">
+    <button mat-stroked-button (click)="loadDefaultValues()"
+      [disabled]="!defaultExtraDataAvailable">
       Autocompletar
     </button>
   </div>

@@ -67,7 +67,8 @@
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
         <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value" formGroupName="maternityPrimerFranja">
           <div class="button-autocomplete mb-2">
-            <button mat-stroked-button (click)="loadDefaultValues()">
+            <button mat-stroked-button (click)="loadDefaultValues()"
+              [disabled]="!defaultExtraDataAvailable">
               Autocompletar
             </button>
           </div>
@@ -163,11 +164,6 @@
               formControlName="segundaFranjaDisabled">
               No tengo estos datos
             </mat-checkbox>
-          </div>
-          <div *ngIf="materYLactanciaForm.get('maternitySegundaFranja')?.errors?.step4MenorIgualPobTotal &&
-            (materYLactanciaForm.get('maternitySegundaFranja')?.touched || materYLactanciaForm.get('maternitySegundaFranja')?.dirty)"
-            class="mensaje-error">
-            La población de mujeres de esta franja etaria no puede ser mayor que la población total.
           </div>
         </div>
       </ng-template>

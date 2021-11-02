@@ -88,9 +88,11 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaFemenino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
-                <mat-button-toggle matSuffix (click)="toggleDefaultData('F')">
-                  Autocompletar
-                </mat-button-toggle>
+                <mat-slide-toggle matSuffix
+                  (click)="toggleDefaultData('F')"
+                  [disabled]="!defaultWeightsAvailable">
+                  Auto
+                </mat-slide-toggle>
               </mat-form-field>
             </div>
             <div class="step1-mediana-masculino row gy-1">
@@ -104,9 +106,11 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaMasculino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
-                <mat-button-toggle matSuffix (click)="toggleDefaultData('M')">
-                  Autocompletar
-                </mat-button-toggle>
+                <mat-slide-toggle matSuffix
+                  (click)="toggleDefaultData('M')"
+                  [disabled]="!defaultWeightsAvailable">
+                  Auto
+                </mat-slide-toggle>
               </mat-form-field>
             </div>
           </div>
