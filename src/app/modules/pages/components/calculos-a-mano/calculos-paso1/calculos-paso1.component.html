@@ -32,7 +32,7 @@
             <div *ngIf="grupoEtarioForm.get('edad')?.dirty" class="div-boton-borrar">
               <button class="boton-borrar"
                 type="button"
-                (click)="borrarEdad()"
+                (click)="borrarEdad('Both', this.grupoEtarioForm.get('edad')?.value)"
                 mat-stroked-button color="warn"
                 matTooltip="Borra los datos en la tabla asociados a esta edad."
                 matTooltipPosition="below">
@@ -88,6 +88,9 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaFemenino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
+                <mat-button-toggle matSuffix (click)="toggleDefaultData('F')">
+                  Autocompletar
+                </mat-button-toggle>
               </mat-form-field>
             </div>
             <div class="step1-mediana-masculino row gy-1">
@@ -101,6 +104,9 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaMasculino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
+                <mat-button-toggle matSuffix (click)="toggleDefaultData('M')">
+                  Autocompletar
+                </mat-button-toggle>
               </mat-form-field>
             </div>
           </div>
@@ -157,6 +163,18 @@
           <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
           <td mat-cell *matCellDef="let element"> {{element.pesoMediano}} </td>
         </ng-container>
+
+        <!-- Deletion Column -->
+        <ng-container matColumnDef="borrar">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="deleteTableRow('Femenino', element.edad)"
+              matTooltip="Borrar fila"
+              matTooltipPosition="right">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -191,6 +209,18 @@
           <th mat-header-cell *matHeaderCellDef> Mediana (Kg) </th>
           <td mat-cell *matCellDef="let element"> {{element.pesoMediano}} </td>
         </ng-container>
+
+        <!-- Deletion Column -->
+        <ng-container matColumnDef="borrar">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="deleteTableRow('Masculino', element.edad)"
+              matTooltip="Borrar fila"
+              matTooltipPosition="right">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -204,5 +234,4 @@
     </div>
   </div>
 </div>
-
 
