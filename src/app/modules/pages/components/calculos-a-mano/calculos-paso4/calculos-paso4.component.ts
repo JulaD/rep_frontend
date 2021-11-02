@@ -120,7 +120,7 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
 
   sendData(): Maternity {
     let maternity18to29 : IndividualMaternity | PopulationMaternity;
-    let maternity30to59 : IndividualMaternity | PopulationMaternity;
+    let maternity30to59 : IndividualMaternity | undefined;
     // Primer franja etaria
     if (!this.materYLactanciaForm.get('primerFranjaDisabled')?.value) {
       maternity18to29 = {
@@ -141,11 +141,7 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         lactatingWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.value),
       };
     } else {
-      maternity30to59 = {
-        countryWomenInAgeGroup: NumberForForms(this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.value),
-        countryBirthRate: NumberForForms(this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.value),
-        countryPopulation: NumberForForms(this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.value),
-      };
+      maternity30to59 = undefined;
     }
     const maternity: Maternity = {
       maternity18to29,
@@ -160,10 +156,6 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
       this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
       this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
       this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
-
-      this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.setValue(this.defaultMaternity30to59.countryWomenInAgeGroup);
-      this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.setValue(this.defaultMaternity30to59.countryPopulation);
-      this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.setValue(this.defaultMaternity30to59.countryBirthRate);
     }
   }
 }

@@ -142,7 +142,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     const fileName : string = `ProgresoCalculoREP_${
       date.getDate()}_${
       date.getMonth() + 1}_${
-      date.getFullYear()}.pdf`;
+      date.getFullYear()}.json`;
 
     const csv: string = `data:text/json;charset=utf-8,${JSON.stringify(progress)}`;
     const data = encodeURI(csv);
