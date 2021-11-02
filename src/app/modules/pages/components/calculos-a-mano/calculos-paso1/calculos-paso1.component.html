@@ -90,7 +90,9 @@
                 </mat-error>
                 <mat-slide-toggle matSuffix
                   (click)="toggleDefaultData('F')"
-                  [disabled]="!defaultWeightsAvailable">
+                  [disabled]="!defaultWeightsAvailable"
+                  matTooltip="Habilita el uso de dato por defecto de mediana femenina."
+                  matTooltipPosition="above">
                   Auto
                 </mat-slide-toggle>
               </mat-form-field>
@@ -108,7 +110,9 @@
                 </mat-error>
                 <mat-slide-toggle matSuffix
                   (click)="toggleDefaultData('M')"
-                  [disabled]="!defaultWeightsAvailable">
+                  [disabled]="!defaultWeightsAvailable"
+                  matTooltip="Habilita el uso de dato por defecto de mediana masculina."
+                  matTooltipPosition="above">
                   Auto
                 </mat-slide-toggle>
               </mat-form-field>
@@ -140,7 +144,7 @@
     <div *ngIf="grupoEtarioForm.errors?.step1CantidadesEnCero &&
       (grupoEtarioForm.touched || grupoEtarioForm.dirty)"
       class="mensaje-error">
-      El ingresar ambas cantidades en cero no modificara las tablas
+      El ingresar solo cantidades en cero no modificara las tablas
     </div>
   </div>
 </form>

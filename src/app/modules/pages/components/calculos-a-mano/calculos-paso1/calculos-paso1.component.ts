@@ -439,8 +439,13 @@ export class CalculosPaso1Component implements AfterViewInit {
       console.log('The dialog was closed');
       if (response) {
         this.borrarEdad('Both', grupoFemeninoActual.edad);
-        this.addFem(grupoFemeninoNuevo);
-        this.addMasc(grupoMasculinoNuevo);
+        if (grupoFemeninoNuevo.cantidad !== 0) {
+          this.addFem(grupoFemeninoNuevo);
+        }
+        if (grupoMasculinoNuevo.cantidad !== 0) {
+          this.addMasc(grupoMasculinoNuevo);
+        }
+        this.clearInputFields();
       }
     });
   }
