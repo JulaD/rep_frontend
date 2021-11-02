@@ -11,6 +11,11 @@
             (click)="saveProgress()">
               Guardar progreso
             </button>
+            <button class="second-button"
+            mat-flat-button color="primary" mat-button
+            (click)="loadProgress()">
+              Cargar progreso
+            </button>
           </div>
           <div class="container-stepper-buttons col">
             <div *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent ||

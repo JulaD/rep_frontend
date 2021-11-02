@@ -127,7 +127,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     this.rest.addCalculation(step1Data, extraData, fromTemplate)
       .subscribe((result) => {
         this.resultsService
-          .setData(result);
+          .setData(result, step1Data, extraData);
         this.router
           .navigate(['/result']);
       }, (err) => {
@@ -153,6 +153,10 @@ export class StepperComponent implements OnInit, OnDestroy {
     link.setAttribute('href', data);
     link.setAttribute('download', fileName);
     link.click();
+  }
+
+  loadProgress() {
+    return 0;
   }
 
   isStepperValid(): boolean {

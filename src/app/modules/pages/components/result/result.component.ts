@@ -7,6 +7,8 @@ import { ResultsService } from 'src/app/services/results.service';
 import CalculatorResponse from 'src/app/interfaces/CalculatorResponseDTO';
 import { ResultPdf } from 'src/app/models/result-pdf.model';
 import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
+import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
+import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -21,7 +23,11 @@ export interface RequerimientoEnergetico {
 })
 
 export class ResultComponent implements OnInit {
-  parsedObtainedResult: CalculatorResponse;
+  parsedObtainedResult: {
+    resp: CalculatorResponse,
+    popData: AgeGroupJSON[],
+    extraData: ExtraData
+  };
 
   totalRequirement: number = 0;
 
@@ -39,6 +45,10 @@ export class ResultComponent implements OnInit {
     source: MatTableDataSource<RequerimientoEnergetico>
   }[];
 
+  extraData: ExtraData;
+
+  populationData: AgeGroupJSON[];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -46,9 +56,9 @@ export class ResultComponent implements OnInit {
     private pdfService: PdfGeneratorService,
   ) {
     this.resultsService.result$
-      .subscribe((result) => {
-        this.parsedObtainedResult = result;
-        this.setValues(result);
+      .subscribe((response) => {
+        this.parsedObtainedResult = response;
+        this.setValues(response.resp, response.popData, response.extraData);
       });
   }
 
@@ -58,7 +68,13 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  setValues(result: CalculatorResponse): void {
+  setValues(result: CalculatorResponse, popData: AgeGroupJSON[], extraData: ExtraData): void {
+    if (popData) {
+      this.populationData = popData;
+    }
+    if (extraData) {
+      this.extraData = extraData;
+    }
     if (result) {
       // eslint-disable-next-line no-bitwise
       this.totalRequirement = Math.round(
@@ -122,12 +138,30 @@ export class ResultComponent implements OnInit {
   }
 
   generatePDF() {
-    let result : ResultPdf = new ResultPdf(this.totalPopulation, 
+    const result : ResultPdf = new ResultPdf(
+      this.totalPopulation,
       this.totalRequirement,
       this.totalPerCapitaRequirement,
-      this.dataSources
-      );
+      this.dataSources,
+    );
     this.pdfService.generateResults(result);
   }
 
+  saveProgress() {
+    const progress = { step1Data: this.populationData, extraData: this.extraData };
+
+    const date = new Date();
+    const fileName : string = `ProgresoCalculoREP_${
+      date.getDate()}_${
+      date.getMonth() + 1}_${
+      date.getFullYear()}.json`;
+
+    const csv: string = `data:text/json;charset=utf-8,${JSON.stringify(progress)}`;
+    const data = encodeURI(csv);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', fileName);
+    link.click();
+  }
 }
