@@ -147,17 +147,11 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
     return maternity;
   }
 
-  loadDefaultValues(rango: number) {
+  loadDefaultValues() {
     if (this.defaultExtraDataAvailable) {
-      if (rango === 1) {
-        this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
-        this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
-        this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
-      } else {
-        this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.setValue(this.defaultMaternity30to59.countryWomenInAgeGroup);
-        this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.setValue(this.defaultMaternity30to59.countryPopulation);
-        this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.setValue(this.defaultMaternity30to59.countryBirthRate);
-      }
+      this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(this.defaultMaternity18to29.countryWomenInAgeGroup);
+      this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(this.defaultMaternity18to29.countryPopulation);
+      this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(this.defaultMaternity18to29.countryBirthRate);
     }
   }
 }

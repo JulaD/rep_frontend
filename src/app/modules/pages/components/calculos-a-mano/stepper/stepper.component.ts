@@ -118,11 +118,11 @@ export class StepperComponent implements OnInit, OnDestroy {
       }
     }
 
-    return { step1Data, extraData };
+    return { step1Data, extraData, fromTemplate };
   }
 
   onSubmit(): void {
-    const { step1Data, extraData } = this.prepareData();
+    const { step1Data, extraData, fromTemplate } = this.prepareData();
 
     this.rest.addCalculation(step1Data, extraData, fromTemplate)
       .subscribe((result) => {
@@ -136,7 +136,9 @@ export class StepperComponent implements OnInit, OnDestroy {
   }
 
   saveProgress() {
-    const progress = this.prepareData();
+    const { step1Data, extraData } = this.prepareData();
+
+    const progress = { step1Data, extraData };
 
     const date = new Date();
     const fileName : string = `ProgresoCalculoREP_${
