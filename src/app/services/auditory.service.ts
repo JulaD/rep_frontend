@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { AuditorySearch } from '../models/auditory-search.model';
+import { LogsSearch } from '../models/logs-search.model';
+import { StatisticsSearch } from '../models/statistics-search.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +24,19 @@ export class AuditoryService {
     };
   };
 
-  getLogs(search: AuditorySearch) {
+  getLogs(search: LogsSearch) {
     const endpoint: string = `${this.api}/auditory?cant=${search.cant}&page=${search.page}`;
+    return this.http.get<any>(endpoint, this.options());
+  }
+
+  getStatistics(search: StatisticsSearch) {
+    const endpoint: string = `${this.api}/statistics?users=${search.usersIds}`;
+    // if (search.from) {
+    //   endpoint += `&from=${search.from}`;
+    // }
+    // if (search.to) {
+    //   endpoint += `&to=${search.to}`;
+    // }
     return this.http.get<any>(endpoint, this.options());
   }
 }

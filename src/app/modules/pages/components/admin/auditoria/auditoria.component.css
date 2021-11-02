@@ -3,31 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-.header-row {
-  width: 90px;
-}
-.description-row {
-  font: italic;
-}
-table {
-  width: 100%;
-}
-.resultadoBusqueda {
-  margin-bottom: 5px;
-  margin-top: 20px;
-}
-.resultadoBusqueda h1 {
-  font-family: 'Montserrat';
-  color: #c9fdff;
-}
-.resultsTable {
-  margin-bottom: 20px;
-  margin-top: 10px;
-  width: 95%;
-}
 section {
   position: relative;
-  min-height: 1500px;
+  min-height: 1000px;
   height: 100vh;
   background: #ccfdff;
   background-size: cover;
@@ -55,7 +33,7 @@ section .color:after {
   background: #fff;
   border-radius: 8px;
   transition: 0.5s;
-  background: linear-gradient(315deg, #e5bef1, #bd68f5);
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
   filter: blur(20px);
 }
 section .color:nth-child(1) {
@@ -65,6 +43,11 @@ section .color:nth-child(1) {
   height: 550px;
   animation: init-color1 0.5s ease-in;
 }
+section.active .color:nth-child(1) {
+  top: 160px;
+  right: 200px;
+  height: 850px;
+}
 section .color:nth-child(2) {
   top: 100px;
   left: -20px;
@@ -72,12 +55,22 @@ section .color:nth-child(2) {
   height: 900px;
   animation: init-color2 0.75s ease-in;
 }
+section.active .color:nth-child(2) {
+  top: -100px;
+  left: 170px;
+  height: 400px;
+}
 section .color:nth-child(3) {
   bottom: -120px;
   left: 180px;
   width: 150px;
   height: 550px;
   animation: init-color3 0.8s ease-in;
+}
+section.active .color:nth-child(3) {
+  bottom: -20px;
+  left: 220px;
+  height: 550px;
 }
 @keyframes init-color1 {
   0% {
@@ -124,7 +117,7 @@ section .fijo {
   background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   width: 90vw;
-  height: 140px;
+  height: 180px;
   max-width: 1000px;
   top: 90px;
   animation: init-title 0.35s ease-in;
@@ -137,7 +130,7 @@ section .fijo {
     transform: translateX(0);
   }
 }
-section .logs {
+section .data {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -146,22 +139,31 @@ section .logs {
   background: #3f51b5;
   box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  width: 90vw;
+  width: 80vw;
   max-width: 1200px;
-  top: 260px;
+  top: 285px;
   transition: 0.5s;
+}
+section.active .data.logs {
+  transform: translateX(-100vw);
+}
+section .data.statistics {
+  transform: translateX(100vw);
+}
+section.active .data.statistics {
+  transform: translateX(0vw);
 }
 section .fijo .titulo {
   width: 100%;
   text-align: center;
   position: relative;
-  top: -72px;
+  top: -60px;
 }
 section .fijo .titulo h1:nth-child(1) {
   position: relative;
-  top: 45px;
+  top: 25px;
   left: -120px;
-  font-size: 80px;
+  font-size: 90px;
   font-weight: 700;
   color: rgba(0, 0, 0, 0.4);
   background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
@@ -178,8 +180,11 @@ section .fijo .titulo h1:nth-child(1) {
     transform: translateX(0);
   }
 }
+section.active .fijo .titulo h1:nth-child(1) {
+  left: 120px;
+}
 section .fijo .titulo h1:nth-child(2) {
-  font-size: 120px;
+  font-size: 80px;
   position: relative;
   left: 0px;
   font-weight: 900;
@@ -187,12 +192,253 @@ section .fijo .titulo h1:nth-child(2) {
   color: #ccfdff;
   transition: 0.5s;
 }
+section .data .busqueda {
+  margin: 20px;
+  position: relative;
+  top: 0;
+  width: 80%;
+  display: flex;
+  align-items: center;
+}
+section .data .busqueda .filters {
+  width: 80%;
+  height: 80px;
+  border-radius: 20px;
+  background: #fff;
+  border: 2px solid #fff;
+  align-items: center;
+  margin-right: 10px;
+}
+/* section .data .busqueda:hover .filters {
+  width: 100%;
+}
+section .data .busqueda .filters:focus {
+  width: 100%
+} */
+
+section .data .busqueda .filter {
+  width: 50%;
+  height: 40px;
+  transition: 1s;
+}
+
+::ng-deep.mat-form-field-underline {
+  background-color: #ae5ae6;
+}
+
+.color-icon {
+  color: #ae5ae6;
+}
+
+.mat-white {
+  background-color: #f5f5f5;
+}
+
+/* section .data .busqueda:hover .filter {
+  display: block;
+  width: 40%;
+}
+section .data .busqueda .filter:focus {
+  display: block;
+  width: 40%;
+} */
+
+section .resultadoBusqueda {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+  margin-top: 25px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+section .resultadoBusqueda h1 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 420;
+  letter-spacing: 1px;
+  font-family: 'Montserrat';
+  color: #c9fdff;
+}
+section .resultadoBusqueda .cancelarBusqueda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 5px;
+  border: none;
+  background: rgb(224, 52, 52);
+  color: #fff;
+  height: 25px;
+  width: 25px;
+  pointer-events: initial;
+  border-radius: 50%;
+  transition: 0.35s;
+}
+section .resultadoBusqueda .cancelarBusqueda:hover {
+  transform: scale(115%);
+}
+section .resultadoBusqueda .cancelarBusqueda svg {
+  position: absolute;
+  left: 3.35px;
+}
+section .resultadoBusqueda .resultadoBusquedaPendientes {
+  color: #ccfdff;
+}
+section .resultadoBusqueda .resultadoBusquedaAceptados {
+  color: #ccfdff;
+}
+section .fijo .botones {
+  position: relative;
+  top: -70px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+section .fijo .botones a.btnStatistics {
+  position: relative;
+  width: 150px;
+  height: 55px;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #cbfbfd;
+  color: #3f51b5;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+}
+section.active .fijo .botones a.btnStatistics {
+  width: 170px;
+  height: 60px;
+  border-radius: 40px;
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnStatistics::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnAuditory::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 40px;
+  transition: 0.5s;
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
+  filter: blur(20px);
+  transition: 0.5s;
+}
+section .fijo .botones a.btnAuditory::after {
+  display: none;
+}
+section .fijo .botones a.btnAuditory {
+  position: relative;
+  text-align: center;
+  line-height: 55px;
+  margin: 10px;
+  background: #cbfbfd;
+  color: #3f51b5;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 40px;
+  text-decoration: none;
+  letter-spacing: 2px;
+  overflow: hidden;
+  width: 170px;
+  height: 60px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.479);
+}
+section.active .fijo .botones a.btnAuditory {
+  width: 150px;
+  height: 55px;
+  border-radius: 40px;
+  box-shadow: none;
+}
+section .fijo .botones a span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transition: 0s;
+}
+section .fijo .botones a:hover span {
+  transition: 0.4s;
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnStatistics span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a.btnAuditory span {
+  transform: translateY(-100%);
+}
+section.active .fijo .botones a.btnAuditory span {
+  transform: translateY(0%);
+}
+section.active .fijo .botones a.btnAuditory:hover span {
+  transform: translateY(-100%);
+}
+section .fijo .botones a:before {
+  content: "";
+  position: absolute;
+  bottom: -250px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+section .fijo .botones a.btnStatistics:before {
+  background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
+}
+
+section .fijo .botones a:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnStatistics:before {
+  bottom: -150px;
+}
+section .fijo .botones a.btnAuditory:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnAuditory:hover:before {
+  bottom: -150px;
+}
+section.active .fijo .botones a.btnAuditory:before {
+  bottom: -250px;
+}
 section .vacio {
   position: relative;
   width: 80%;
   top: -10px;
-  margin-top: 30px;
   margin-bottom: 15px;
+  margin-top: 25px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -204,9 +450,10 @@ section .vacio h1 {
   font-size: 28px;
   font-weight: 450;
   letter-spacing: 2px;
+  color: #c9fdff;
 }
 
-section .vacio .logsVacio {
+section .vacio .statisticsVacio {
   color: #c9fdff;
 }
 @media (max-width: 1435px) {
@@ -215,43 +462,38 @@ section .vacio .logsVacio {
   }
 }
 @media (max-width: 850px) {
-  section .fijo {
-    height: 100px;
-    top: 70px;
-  }
-  section .logs {
-    top: 200px;
-  }
   section .fijo .titulo {
-    top: -50px;
+    top: -54px;
   }
   section .fijo .titulo h1:nth-child(1) {
-    top: 25px;
+    top: 21px;
     left: -80px;
     font-size: 45px;
   }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 80px;
+  }
   section .fijo .titulo h1:nth-child(2) {
-    font-size: 70px;
+    font-size: 58px;
+  }
+  section .fijo .botones {
+    top: -40px;
   }
 }
-@media (max-width: 500px) {
-  section .fijo {
-    height: 100px;
-    top: 70px;
-  }
-  section .logs {
-    top: 200px;
-  }
-  section .fijo .titulo {
-    top: -51px;
-  }
+@media (max-width: 520px) {
   section .fijo .titulo h1:nth-child(1) {
-    top: 18px;
-    left: 0px;
-    font-size: 35px;
+    top: 15px;
+    left: -40px;
+    font-size: 30px;
+  }
+  section.active .fijo .titulo h1:nth-child(1) {
+    left: 40px;
   }
   section .fijo .titulo h1:nth-child(2) {
-    font-size: 50px;
+    font-size: 35px;
+  }
+  section .fijo .botones {
+    top: -30px;
   }
 }
 
@@ -265,4 +507,44 @@ section .vacio .logsVacio {
 
 ::ng-deep .error-snack-bar .mat-simple-snackbar-action {
   color: #ffffff !important;
+}
+
+/*------------ GRÁFICA ------------*/
+
+.charts-bar-vertical {
+  margin-top: 25px;
+  margin-bottom: 55px;
+  width: 90%;
+  min-height: 500px;
+}
+
+::ng-deep .ngx-charts text {
+  font-family: 'Montserrat';
+  font-size: 25px;
+  fill: #fff !important; 
+}
+
+::ng-deep .ngx-charts .tick text {
+  font-family: 'Montserrat';
+  font-size: 15px !important;
+  fill: #fff !important; 
+}
+
+/*------------ AUDITORÍA ------------*/
+.header-row {
+  width: 90px;
+}
+
+.description-row {
+  font: italic;
+}
+
+table {
+  width: 100%;
+}
+
+.resultsTable {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  width: 95%;
 }
