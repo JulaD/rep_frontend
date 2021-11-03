@@ -1,26 +1,26 @@
-<div class="content">
-  <div class="illustration">
+<div class="column first-div">
+  <div>
     <img class="first-illustration" src="../../../../../assets/ilustrations/illustration_calculos.png">
   </div>
   <p class="first-title">¿Cómo desea ingresar los datos <br> para el cálculo?</p>
-  <div class="buttons-div">
-    <div class="first-button">
-      <button class="calculation-buttons" mat-raised-button color="primary" routerLink="/upload-template">
-        Tengo la plantilla con los pesos
-      </button>
-      <a href="/calculos" (click)="downloadFile()">¿Qué plantilla?</a>  
-    </div>
-    <div class="second-button">
-      <div class="col-sm">
-        <button class="calculation-buttons" mat-raised-button color="primary" routerLink="/stepper">
-          Quiero subir los datos a mano
+  <div class="row">
+    <div class="col-sm">
+      <div class="row justify-content-center">
+        <button mat-raised-button color="primary" routerLink="/upload-template">
+          Tengo la plantilla con los pesos
         </button>
       </div>
-      <div class="col-sm">
-        <mat-icon class= "orange-icon" matTooltip="¡Si no cuenta con algún dato se le brindarán datos por defecto!">
-          info
-        </mat-icon>
+      <div class="row">
+        <a href="/calculos" (click)="downloadFile()">¿Qué plantilla?</a>  
       </div>
+    </div>
+    <div class="col-sm second-button">
+      <button mat-raised-button color="primary" routerLink="/stepper">
+        Quiero subir los datos a mano
+      </button>
+      <mat-icon class= "orange-icon" matTooltip="¡Si no cuenta con algún dato se le brindarán datos por defecto!">
+        info
+      </mat-icon>
     </div>
   </div>
 </div>

@@ -1,3 +1,17 @@
+.navigation-buttons {
+	height: fit-content;
+  background: #ccfdff;
+  background-size: cover;
+  border: 20px solid #ccfdff;
+}
+
+.navigation-buttons > * {
+  margin-right: 20px;
+}
+
+.navigation-buttons .mat-tooltip {
+  font-size: 20px;
+}
 * {
   margin: 0;
   padding: 0;
