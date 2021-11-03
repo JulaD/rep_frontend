@@ -64,7 +64,7 @@ export class AuditoriaComponent implements OnInit {
   usersList: User[];
 
   // Datos a graficar
-  statistics: any[] = [{ name: 'test1', value: 20 }, { name: 'test2', value: 30 }];
+  statistics: any[];
 
   // Opciones de la gráfica de barras
   showXAxis = true;
