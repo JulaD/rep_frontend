@@ -177,7 +177,7 @@ export class AuditoriaComponent implements OnInit {
     const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
     this.auditoryService.getStatistics(statisticsSearch).subscribe(
       (res) => {
-        res.array.forEach((data: any) => {
+        res.forEach((data: any) => {
           let name = '';
           /* eslint-disable default-case */
           switch (data.extra.code) {
