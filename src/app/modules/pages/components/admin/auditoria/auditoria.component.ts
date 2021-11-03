@@ -165,6 +165,7 @@ export class AuditoriaComponent implements OnInit {
    * Obtiene las estadísticas para los parámetros de búsqueda.
    */
   getStatistics() {
+    this.statistics = [];
     const usersIds: number[] = this.users.value ? this.users.value : [];
     let dateFrom: string = '';
     let dateTo: string = '';
