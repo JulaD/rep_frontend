@@ -1,7 +1,7 @@
 export class StatisticsSearch {
   constructor(
     public usersIds: number[],
-    public from: Date,
-    public to: Date,
+    public dateFrom: string,
+    public dateTo: string,
   ) {}
 }
