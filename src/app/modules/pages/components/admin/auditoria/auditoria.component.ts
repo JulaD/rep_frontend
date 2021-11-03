@@ -13,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { StatisticsSearch } from 'src/app/models/statistics-search.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services';
+import { Subject } from 'rxjs/internal/Subject';
 
 registerLocaleData(localeEsUy, 'esUY');
 
@@ -48,6 +49,9 @@ export class AuditoriaComponent implements OnInit {
 
   // --------------------- ESTADÍSTICAS ---------------------
 
+  // Observable para update de los datos de la gráfica
+  update$: Subject<any> = new Subject();
+
   // Filtros de búsqueda
   users = new FormControl();
 
@@ -60,7 +64,7 @@ export class AuditoriaComponent implements OnInit {
   usersList: User[];
 
   // Datos a graficar
-  statistics: any[];
+  statistics: any[] = [{ name: 'test1', value: 20 }, { name: 'test2', value: 30 }];
 
   // Opciones de la gráfica de barras
   showXAxis = true;
@@ -194,6 +198,7 @@ export class AuditoriaComponent implements OnInit {
             value: data.value,
           });
         });
+        this.update$.next(true);
       },
       (err) => {
         const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener las estadísticas, intente de nuevo más tarde.';
