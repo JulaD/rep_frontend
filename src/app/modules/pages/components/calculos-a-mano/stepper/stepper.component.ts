@@ -9,7 +9,7 @@ import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
+import { RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
 import { CalculosPaso2Component } from '../calculos-paso2/calculos-paso2.component';
@@ -91,7 +91,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     private errorSnackBar: MatSnackBar,
   ) {}
 
-  onSubmit(): void {
+  prepareData() {
     const extraData: ExtraData = {
       minorPAL: undefined,
       adultPAL: undefined,
@@ -99,7 +99,7 @@ export class StepperComponent implements OnInit, OnDestroy {
       maternity30To59: undefined,
     };
 
-    const step1Data: AgeGroupJSON[] = this.step1Access.sendData();
+    const { step1Data, fromTemplate } = this.step1Access.sendData();
 
     if (this.step1Access.stepperLogic.agesMinorPresent) {
       extraData.minorPAL = this.step2Access.sendData();
@@ -118,7 +118,13 @@ export class StepperComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.rest.addCalculation(step1Data, extraData)
+    return { step1Data, extraData, fromTemplate };
+  }
+
+  onSubmit(): void {
+    const { step1Data, extraData, fromTemplate } = this.prepareData();
+
+    this.rest.addCalculation(step1Data, extraData, fromTemplate)
       .subscribe((result) => {
         this.resultsService
           .setData(result);
@@ -127,6 +133,26 @@ export class StepperComponent implements OnInit, OnDestroy {
       }, (err) => {
         console.log(err);
       });
+  }
+
+  saveProgress() {
+    const { step1Data, extraData } = this.prepareData();
+
+    const progress = { step1Data, extraData };
+
+    const date = new Date();
+    const fileName : string = `ProgresoCalculoREP_${
+      date.getDate()}_${
+      date.getMonth() + 1}_${
+      date.getFullYear()}.json`;
+
+    const csv: string = `data:text/json;charset=utf-8,${JSON.stringify(progress)}`;
+    const data = encodeURI(csv);
+
+    const link = document.createElement('a');
+    link.setAttribute('href', data);
+    link.setAttribute('download', fileName);
+    link.click();
   }
 
   isStepperValid(): boolean {

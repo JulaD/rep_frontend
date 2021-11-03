@@ -4,24 +4,33 @@
       <div class="container">
         <ng-template matStepLabel>Edad y cantidad de personas por sexo</ng-template>
         <app-calculos-paso1 #step1DOMAccess class="mb-4"></app-calculos-paso1>
-        <div class="containerButtons">
-          <div *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent ||
-            step1DOMAccess.stepperLogic.agesAdultPresent ||
-            step1DOMAccess.stepperLogic.agesFemale18To29Present ||
-            step1DOMAccess.stepperLogic.agesFemale30To59Present;
-            then thenBlockStep1 else elseBlockStep1">
-          </div>
-          <ng-template #thenBlockStep1>
-            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
-          </ng-template>
-          <ng-template #elseBlockStep1>
+        <div class="container-buttons row">
+          <div class="container-download-progress-button col">
             <button
-              mat-flat-button color="primary" mat-button
-              [disabled]="!step1DOMAccess.stepValid"
-              (click)="onSubmit()">
-              Confirmar
-          </button>
-          </ng-template>
+            mat-flat-button color="primary" mat-button
+            (click)="saveProgress()">
+              Guardar progreso
+            </button>
+          </div>
+          <div class="container-stepper-buttons col">
+            <div *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent ||
+              step1DOMAccess.stepperLogic.agesAdultPresent ||
+              step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+              step1DOMAccess.stepperLogic.agesFemale30To59Present;
+              then thenBlockStep1 else elseBlockStep1">
+            </div>
+            <ng-template #thenBlockStep1>
+              <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+            </ng-template>
+            <ng-template #elseBlockStep1>
+              <button
+                mat-flat-button color="primary" mat-button
+                [disabled]="!step1DOMAccess.stepValid"
+                (click)="onSubmit()">
+                Confirmar
+              </button>
+            </ng-template>
+          </div>
         </div>
       </div>
     </mat-step>
@@ -35,24 +44,33 @@
           [defaultExtraDataAvailable]="this.defaultExtraDataAvailable"
           [defaultMinorPal]="this.defaultMinorPal">
         </app-calculos-paso2>
-        <div class="containerButtons">
-          <button mat-button matStepperPrevious>Volver</button>
-          <div *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent ||
-            step1DOMAccess.stepperLogic.agesFemale18To29Present ||
-            step1DOMAccess.stepperLogic.agesFemale30To59Present;
-            then thenBlockStep2 else elseBlockStep2">
-          </div>
-          <ng-template #thenBlockStep2>
-            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
-          </ng-template>
-          <ng-template #elseBlockStep2>
+        <div class="container-download-progress-button row">
+          <div class="col">
             <button
-              mat-flat-button color="primary" mat-button
-              [disabled]="!isStepperValid()"
-              (click)="onSubmit()">
-              Confirmar
-          </button>
-          </ng-template>
+            mat-flat-button color="primary" mat-button
+            (click)="saveProgress()">
+              Guardar progreso
+            </button>
+          </div>
+          <div class="container-stepper-buttons col">
+            <button mat-button matStepperPrevious>Volver</button>
+            <div *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent ||
+              step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+              step1DOMAccess.stepperLogic.agesFemale30To59Present;
+              then thenBlockStep2 else elseBlockStep2">
+            </div>
+            <ng-template #thenBlockStep2>
+              <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+            </ng-template>
+            <ng-template #elseBlockStep2>
+              <button
+                mat-flat-button color="primary" mat-button
+                [disabled]="!isStepperValid()"
+                (click)="onSubmit()">
+                Confirmar
+            </button>
+            </ng-template>
+          </div>
         </div>
       </div>
     </mat-step>
@@ -66,23 +84,32 @@
           [defaultExtraDataAvailable]="defaultExtraDataAvailable"
           [defaultAdultPal]="defaultAdultPal">
         </app-calculos-paso3>
-        <div class="containerButtons">
-          <button mat-button matStepperPrevious>Volver</button>
-          <div *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
-            step1DOMAccess.stepperLogic.agesFemale30To59Present;
-            then thenBlockStep3 else elseBlockStep3">
-          </div>
-          <ng-template #thenBlockStep3>
-            <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
-          </ng-template>
-          <ng-template #elseBlockStep3>
+        <div class="container-buttons row">
+          <div class="container-download-progress-button col">
             <button
-              mat-flat-button color="primary" mat-button
-              [disabled]="!isStepperValid()"
-              (click)="onSubmit()">
-              Confirmar
-          </button>
-          </ng-template>
+            mat-flat-button color="primary" mat-button
+            (click)="saveProgress()">
+              Guardar progreso
+            </button>
+          </div>
+          <div class="container-stepper-buttons col">
+            <button mat-button matStepperPrevious>Volver</button>
+            <div *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
+              step1DOMAccess.stepperLogic.agesFemale30To59Present;
+              then thenBlockStep3 else elseBlockStep3">
+            </div>
+            <ng-template #thenBlockStep3>
+              <button mat-flat-button color="primary" mat-button matStepperNext>Siguiente</button>
+            </ng-template>
+            <ng-template #elseBlockStep3>
+              <button
+                mat-flat-button color="primary" mat-button
+                [disabled]="!isStepperValid()"
+                (click)="onSubmit()">
+                Confirmar
+            </button>
+            </ng-template>
+          </div>
         </div>
       </div>
     </mat-step>
@@ -103,14 +130,23 @@
           [female18To29Pop]="step1DOMAccess.female18To29Pop"
           [female30To59Pop]="step1DOMAccess.female30To59Pop">
         </app-calculos-paso4>
-        <div class="containerButtons">
-          <button mat-button matStepperPrevious>Volver</button>
-          <button
+        <div class="container-buttons row">
+          <div class="container-download-progress-button col">
+            <button
             mat-flat-button color="primary" mat-button
-            [disabled]="!isStepperValid()"
-            (click)="onSubmit()">
-            Confirmar
-          </button>
+            (click)="saveProgress()">
+              Guardar progreso
+            </button>
+          </div>
+          <div class="container-stepper-buttons col">
+            <button mat-button matStepperPrevious>Volver</button>
+            <button
+              mat-flat-button color="primary" mat-button
+              [disabled]="!isStepperValid()"
+              (click)="onSubmit()">
+              Confirmar
+            </button>
+          </div>
         </div>
       </div>
     </mat-step>

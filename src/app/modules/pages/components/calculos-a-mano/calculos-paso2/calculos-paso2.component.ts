@@ -23,9 +23,6 @@ export class CalculosPaso2Component implements OnInit {
   @Input() defaultExtraDataAvailable: boolean;
 
   ngOnInit() {
-    console.log('Start Load Step2');
-    this.loadDefaultValues();
-    console.log('Finished Load Step2');
   }
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
@@ -51,7 +48,6 @@ export class CalculosPaso2Component implements OnInit {
   }
 
   loadDefaultValues() {
-    console.log('Loading Step2');
     if (this.defaultExtraDataAvailable) {
       this.minorPALForm.get('lowPAL')?.setValue(this.defaultMinorPal.lowPALPrevalence);
       this.minorPALForm.get('moderatePAL')?.setValue(this.defaultMinorPal.moderatePALPrevalence);

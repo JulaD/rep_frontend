@@ -2,6 +2,7 @@
 // import { Breakpoints } from '@angular/cdk/layout';
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,6 +18,8 @@ import { step1CantidadesEnCeroValidator } from 'src/app/modules/shared/validator
 import { step1TodoVacioValidator } from 'src/app/modules/shared/validators/step1-todo-vacio.directive';
 import { ParsedDataService } from 'src/app/services/parsed-data.service';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
+import { DeleteRowDialog } from './delete-row-dialog/delete-row-dialog.component';
+import { OverwriteDialog } from './overwrite-dialog/overwrite-dialog.component';
 
 const femeninoData: GrupoEtario[] = [];
 const masculinoData: GrupoEtario[] = [];
@@ -50,6 +53,8 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   defaultWeightsAvailable: boolean = false;
 
+  usingDefaultData = { female: false, male: false };
+
   edades: FranjaEtaria[] = Object.values(FranjaEtaria);
 
   constructor(
@@ -57,9 +62,11 @@ export class CalculosPaso1Component implements AfterViewInit {
     private repetidoSnackBar: MatSnackBar,
     private parsedDataService : ParsedDataService,
     public rest: RestService,
+    public overwriteDialog: MatDialog,
+    public deleteRowDialog: MatDialog,
   ) {}
 
-  displayedColumns: string[] = ['edad', 'cantidad', 'mediana'];
+  displayedColumns: string[] = ['edad', 'cantidad', 'mediana', 'borrar'];
 
   dataSourceF = new MatTableDataSource<GrupoEtario>(femeninoData);
 
@@ -72,14 +79,12 @@ export class CalculosPaso1Component implements AfterViewInit {
   @ViewChild('TablePaginatorM') paginatorM: MatPaginator;
 
   ngOnInit() {
-    console.log('Start Load Step1');
     const sheetData : GrupoEtario[] = this.parsedDataService.getData();
     if (sheetData?.length) {
       this.fromTemplate = true;
       this.initializeTable(sheetData);
     }
     this.processDefaultWeights();
-    console.log('Finished Load Step1');
   }
 
   ngAfterViewInit() {
@@ -88,7 +93,7 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   grupoEtarioForm = new FormGroup({
-    edad: new FormControl('', Validators.required),
+    edad: new FormControl(FranjaEtaria.Meses_0, Validators.required),
     cantFemenino: new FormControl('', numeroEnteroPositivoValidator),
     cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
@@ -100,42 +105,88 @@ export class CalculosPaso1Component implements AfterViewInit {
   });
 
   onSubmit() {
-    // Revisar si la la franja etaria ya tiene datos en la tabla
-    let repetido: Boolean = false;
-    const franja: string = this.grupoEtarioForm.get('edad')?.value;
+    const franja: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+    const cantFemenino: number = Number(this.grupoEtarioForm.get('cantFemenino')?.value);
+    const cantMasculino: number = NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value);
+    const medianaFemenino: number = NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value);
+    const medianaMasculino: number = NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value);
 
-    repetido = masculinoData.some((group: GrupoEtario) => group.edad === franja);
-    if (!repetido) {
-      repetido = femeninoData.some((group: GrupoEtario) => group.edad === franja);
-    }
-    if (repetido) {
-      // presento mensaje de error
-      this.repetidoSnackBar.open(
-        'ERROR: Ya existen datos ingresados para esta franja etaria', 'Aceptar',
-      );
+    // Reviso si la la franja etaria ya tiene datos en la tabla
+    const indexF = femeninoData.findIndex((element: GrupoEtario) => element.edad === franja);
+    const indexM = masculinoData.findIndex((element: GrupoEtario) => element.edad === franja);
+    if (indexF > -1 || indexM > -1) { // Si la franja ya esta en la tabla
+      // evaluo si los nuevos datos no afectarian la tabla al sobrescribir
+      if ((
+        (cantFemenino === 0)
+        || (indexF > -1
+          && cantFemenino === femeninoData[indexF].cantidad
+          && medianaFemenino === femeninoData[indexF].pesoMediano)
+      )
+      && (
+        (cantMasculino === 0)
+        || (indexM > -1
+          && cantMasculino === masculinoData[indexM].cantidad
+          && medianaMasculino === masculinoData[indexM].pesoMediano)
+      )) {
+        // presento mensaje de error
+        const errorMessage = 'Atención: Ya agrego estos datos';
+        const config : MatSnackBarConfig = new MatSnackBarConfig();
+        config.verticalPosition = 'bottom';
+        config.duration = 7000;
+        this.repetidoSnackBar.open(errorMessage, 'Aceptar', config);
+      // si los datos son distintos
+      } else {
+        // preparo los datos para el cuadro de dialogo
+        const grupoFemeninoActual: GrupoEtario = {
+          edad: franja,
+          sexo: Sexo.Femenino,
+          pesoMediano: (indexF > -1 ? femeninoData[indexF].pesoMediano : 0),
+          cantidad: (indexF > -1 ? femeninoData[indexF].cantidad : 0),
+        };
+        const grupoMasculinoActual: GrupoEtario = {
+          edad: franja,
+          sexo: Sexo.Masculino,
+          pesoMediano: (indexM > -1 ? masculinoData[indexM].pesoMediano : 0),
+          cantidad: (indexM > -1 ? masculinoData[indexM].cantidad : 0),
+        };
+        const grupoFemeninoNuevo: GrupoEtario = {
+          edad: franja,
+          sexo: Sexo.Femenino,
+          pesoMediano: cantFemenino !== 0 ? medianaFemenino : grupoFemeninoActual.pesoMediano,
+          cantidad: cantFemenino !== 0 ? cantFemenino : grupoFemeninoActual.cantidad,
+        };
+        const grupoMasculinoNuevo: GrupoEtario = {
+          edad: franja,
+          sexo: Sexo.Masculino,
+          pesoMediano: cantMasculino !== 0 ? medianaMasculino : grupoMasculinoActual.pesoMediano,
+          cantidad: cantMasculino !== 0 ? cantMasculino : grupoMasculinoActual.cantidad,
+        };
+        // abro el dialogo, y si recibo una respuesta afirmativa, sobrescribo el valor actual
+        this.openOverwriteDialog(grupoFemeninoActual, grupoMasculinoActual,
+          grupoFemeninoNuevo, grupoMasculinoNuevo);
+      }
     } else {
       // Datos Femenino (ignoro datos con cantidad = 0 o vacio)
-      const cantFemenino: number = NumberForForms(this.grupoEtarioForm.get('cantFemenino')?.value);
-      if (this.grupoEtarioForm.get('medianaFemenino')?.value !== '' && cantFemenino !== 0) { // hay datos para agregar a Femenino
+      if (medianaFemenino !== 0 && cantFemenino !== 0) { // hay datos para agregar a Femenino
         const grupoFem : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Femenino,
-          NumberForForms(this.grupoEtarioForm.get('medianaFemenino')?.value),
+          medianaFemenino,
           cantFemenino,
         );
         this.addFem(grupoFem);
       }
       // Datos Masculino (ignoro datos con cantidad = 0 o vacio)
-      const cantMasculino: number = NumberForForms(this.grupoEtarioForm.get('cantMasculino')?.value);
-      if (this.grupoEtarioForm.get('medianaMasculino')?.value !== '' && cantMasculino !== 0) { // hay datos para agregar a Masculino
+      if (medianaMasculino !== 0 && cantMasculino !== 0) { // hay datos para agregar a Masculino
         const grupoMasc : GrupoEtario = new GrupoEtario(
           this.grupoEtarioForm.get('edad')?.value,
           Sexo.Masculino,
-          NumberForForms(this.grupoEtarioForm.get('medianaMasculino')?.value),
+          medianaMasculino,
           cantMasculino,
         );
         this.addMasc(grupoMasc);
       }
+      this.clearInputFields();
     }
   } // onSubmit
 
@@ -156,28 +207,51 @@ export class CalculosPaso1Component implements AfterViewInit {
     this.updateStepperLogicOnInsert(grupo.edad, grupo.sexo);
   }
 
-  // Boton de borrar datos asociados a FranjaEtaria
-  borrarEdad() {
-    // la edad actualmente seleccionada en grupoEtarioForm
-    const edadSel: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+  clearInputFields() {
+    this.grupoEtarioForm.reset({
+      // si quiero tambien limpiar el campo edad, poner edad: null
+      edad: this.grupoEtarioForm.get('edad')?.value, cantFemenino: '', cantMasculino: '', medianaFemenino: '', medianaMasculino: '',
+    });
+    this.grupoEtarioForm.get('edad')?.markAsDirty();
+  }
 
-    // Borro en la tabla femeninoData
-    const indexF = femeninoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
-    if (indexF > -1) {
-      femeninoData.splice(indexF, 1);
-      this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
-      this.updateFemale18to59Pop(edadSel, 0);
-      this.updateStepperLogicOnRemove(edadSel, Sexo.Femenino);
+  // Boton de borrar datos asociados a FranjaEtaria
+  borrarEdad(sexo: string, edadSel: FranjaEtaria) {
+    if (sexo === 'Femenino' || sexo === 'Both') {
+      // Borro en la tabla femeninoData
+      const indexF = femeninoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
+      if (indexF > -1) {
+        femeninoData.splice(indexF, 1);
+        this.dataSourceF._updateChangeSubscription(); // actualizo la tabla
+        this.updateFemale18to59Pop(edadSel, 0);
+        this.updateStepperLogicOnRemove(edadSel, Sexo.Femenino);
+      }
     }
-    // Borro en la tabla femeninoData
-    const indexM = masculinoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
-    if (indexM > -1) {
-      masculinoData.splice(indexM, 1);
-      this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
-      this.updateStepperLogicOnRemove(edadSel, Sexo.Masculino);
+    if (sexo === 'Masculino' || sexo === 'Both') {
+      // Borro en la tabla masculinoData
+      const indexM = masculinoData.findIndex((element: GrupoEtario) => element.edad === edadSel);
+      if (indexM > -1) {
+        masculinoData.splice(indexM, 1);
+        this.dataSourceM._updateChangeSubscription(); // actualizo la tabla
+        this.updateStepperLogicOnRemove(edadSel, Sexo.Masculino);
+      }
     }
     this.stepValid = femeninoData.length > 0 || masculinoData.length > 0;
   } // borrarEdad
+
+  deleteTableRow(sex: string, range: FranjaEtaria) {
+    const dialogRef = this.deleteRowDialog.open(DeleteRowDialog, {
+      width: 'auto',
+      data: { franja: range, sexo: sex },
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log('The dialog was closed');
+      if (response) {
+        this.borrarEdad(sex, range);
+      }
+    });
+  }
 
   // Envio de datos al backend
   prepareData(dataFem:GrupoEtario[], dataMasc :GrupoEtario[]): AgeGroupJSON[] {
@@ -206,8 +280,11 @@ export class CalculosPaso1Component implements AfterViewInit {
     return res;
   }
 
-  sendData(): AgeGroupJSON[] {
-    return this.prepareData(femeninoData, masculinoData);
+  sendData(): {step1Data: AgeGroupJSON[], fromTemplate: boolean} {
+    return {
+      step1Data: this.prepareData(femeninoData, masculinoData),
+      fromTemplate: this.fromTemplate,
+    };
   }
 
   // Inicaliza la tabla de resultados
@@ -293,7 +370,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     this.rest.getDefaultWeights()
       .subscribe(
         (data) => {
-          console.log('Loading Step1');
           this.defaultWeightsAvailable = true;
           this.defaultWeights = data;
           this.defaultWeights?.forEach((weight: DefaultWeightDTO) => {
@@ -317,8 +393,60 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   ageSelected(age: FranjaEtaria) {
     if (this.defaultWeightsAvailable) {
-      this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
-      this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+      if (this.usingDefaultData.female) {
+        this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+      }
+      if (this.usingDefaultData.male) {
+        this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+      }
     }
+  }
+
+  toggleDefaultData(sex: String) {
+    if (sex === 'F') {
+      this.usingDefaultData.female = !this.usingDefaultData.female;
+      if (this.usingDefaultData.female) {
+        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+        this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
+      }
+    } else {
+      this.usingDefaultData.male = !this.usingDefaultData.male;
+      if (this.usingDefaultData.male) {
+        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
+        this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
+      }
+    }
+  }
+
+  openOverwriteDialog(grupoFemeninoActual: GrupoEtario, grupoMasculinoActual: GrupoEtario,
+    grupoFemeninoNuevo: GrupoEtario, grupoMasculinoNuevo: GrupoEtario) {
+    const dialogRef = this.overwriteDialog.open(OverwriteDialog, {
+      width: 'auto',
+      data: {
+        franja: grupoFemeninoActual.edad,
+        cantFemeninoActual: grupoFemeninoActual.cantidad === 0 ? 'vacio' : grupoFemeninoActual.cantidad,
+        medFemeninoActual: grupoFemeninoActual.pesoMediano === 0 ? 'vacio' : grupoFemeninoActual.pesoMediano,
+        cantMasculinoActual: grupoMasculinoActual.cantidad === 0 ? 'vacio' : grupoMasculinoActual.cantidad,
+        medMasculinoActual: grupoMasculinoActual.pesoMediano === 0 ? 'vacio' : grupoMasculinoActual.pesoMediano,
+        cantFemeninoNuevo: grupoFemeninoNuevo.cantidad === 0 ? 'vacio' : grupoFemeninoNuevo.cantidad,
+        medFemeninoNuevo: grupoFemeninoNuevo.pesoMediano === 0 ? 'vacio' : grupoFemeninoNuevo.pesoMediano,
+        cantMasculinoNuevo: grupoMasculinoNuevo.cantidad === 0 ? 'vacio' : grupoMasculinoNuevo.cantidad,
+        medMasculinoNuevo: grupoMasculinoNuevo.pesoMediano === 0 ? 'vacio' : grupoMasculinoNuevo.pesoMediano,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((response) => {
+      console.log('The dialog was closed');
+      if (response) {
+        this.borrarEdad('Both', grupoFemeninoActual.edad);
+        if (grupoFemeninoNuevo.cantidad !== 0) {
+          this.addFem(grupoFemeninoNuevo);
+        }
+        if (grupoMasculinoNuevo.cantidad !== 0) {
+          this.addMasc(grupoMasculinoNuevo);
+        }
+        this.clearInputFields();
+      }
+    });
   }
 } // component class
