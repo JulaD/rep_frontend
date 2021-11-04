@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component, Input, OnInit, SimpleChanges,
+} from '@angular/core';
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
@@ -20,6 +22,8 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso2Component implements OnInit {
   @Input() defaultMinorPal: MinorPAL;
 
+  @Input() loadedMinorPal: MinorPAL;
+
   @Input() defaultExtraDataAvailable: boolean;
 
   ngOnInit() {
@@ -32,6 +36,24 @@ export class CalculosPaso2Component implements OnInit {
     moderatePAL: new FormControl('', percentageValidators),
     intensePAL: new FormControl('', percentageValidators),
   }, { validators: groupSuman100Validator(3) });
+
+  ngOnChanges(changes: SimpleChanges) {
+    const keys: string[] = Object.keys(changes);
+    keys.forEach((key: string) => {
+      switch (key) {
+        case 'loadedMinorPal':
+          if (changes[key].currentValue !== undefined) {
+            console.log('Cargue prevalencia actividad fisica menores');
+            this.minorPALForm.get('lowPAL')?.setValue(changes.loadedMinorPal.currentValue.lowPALPrevalence);
+            this.minorPALForm.get('moderatePAL')?.setValue(changes.loadedMinorPal.currentValue.moderatePALPrevalence);
+            this.minorPALForm.get('intensePAL')?.setValue(changes.loadedMinorPal.currentValue.intensePALPrevalence);
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
   sendData(): MinorPAL {
     const lowPAL: number = NumberForForms(this.minorPALForm.get('lowPAL')?.value);

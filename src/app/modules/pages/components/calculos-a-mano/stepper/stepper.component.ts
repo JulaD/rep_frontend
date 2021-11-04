@@ -1,15 +1,19 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import {
-  Component, OnDestroy, OnInit, ViewChild,
+  Component, Input, OnDestroy, OnInit, ViewChild,
 } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import FranjaEtaria from 'src/app/enums/FranjaEtaria';
+import Sexo from 'src/app/enums/Sexo';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import DefaultExtraDataDTO from 'src/app/interfaces/DefaultExtraDataDTO';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
+import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
-import { RestService } from 'src/app/services/rest/rest.service';
+import { GrupoEtario } from 'src/app/models/grupo-etario';
+import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
 import { CalculosPaso2Component } from '../calculos-paso2/calculos-paso2.component';
@@ -34,11 +38,15 @@ export class StepperComponent implements OnInit, OnDestroy {
   // Necesario para evitar cargar hijos antes de que termine esta accion
   finishedProcessExtraData: boolean = false;
 
+  loadedMinorPal: MinorPAL;
+
   defaultMinorPal: MinorPAL = {
     lowPALPrevalence: 0,
     moderatePALPrevalence: 0,
     intensePALPrevalence: 0,
   };
+
+  loadedAdultPal: AdultPAL;
 
   defaultAdultPal: AdultPAL = {
     urbanPercentage: 0,
@@ -49,17 +57,21 @@ export class StepperComponent implements OnInit, OnDestroy {
     activeUrbanPAL: 0,
   };
 
+  loadedIndivMaternity18to29: IndividualMaternity;
+
+  loadedPopMaternity18to29: PopulationMaternity;
+
   defaultMaternity18to29: PopulationMaternity = {
     countryBirthRate: 0,
     countryPopulation: 0,
     countryWomenInAgeGroup: 0,
   };
 
-  defaultMaternity30to59: PopulationMaternity = {
-    countryBirthRate: 0,
-    countryPopulation: 0,
-    countryWomenInAgeGroup: 0,
-  };
+  loadedIndivMaternity30to59: IndividualMaternity;
+
+  texto: string = '';
+
+  checkedButton: boolean;
 
   @ViewChild(CalculosPaso1Component)
   private step1Access: CalculosPaso1Component;
@@ -72,6 +84,11 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   @ViewChild(CalculosPaso4Component)
   private step4Access: CalculosPaso4Component;
+
+  // Carga de progreso
+
+  @Input()
+  requiredFileType: string = '.json';
 
   ngOnInit() {
     console.log('Start Load Stepper');
@@ -155,8 +172,83 @@ export class StepperComponent implements OnInit, OnDestroy {
     link.click();
   }
 
-  loadProgress() {
-    return 0;
+  loadExtraData(extraData: ExtraData, women30to59: boolean) {
+    if (extraData.minorPAL) {
+      this.loadedMinorPal = {
+        lowPALPrevalence: extraData.minorPAL.lowPALPrevalence,
+        moderatePALPrevalence: extraData.minorPAL.moderatePALPrevalence,
+        intensePALPrevalence: extraData.minorPAL.intensePALPrevalence,
+      };
+    }
+    if (extraData.adultPAL) {
+      this.loadedAdultPal = {
+        ruralPercentage: extraData.adultPAL.ruralPercentage,
+        urbanPercentage: extraData.adultPAL.urbanPercentage,
+        activeRuralPAL: extraData.adultPAL.activeRuralPAL,
+        lowRuralPAL: extraData.adultPAL.lowRuralPAL,
+        activeUrbanPAL: extraData.adultPAL.activeUrbanPAL,
+        lowUrbanPAL: extraData.adultPAL.lowUrbanPAL,
+      };
+    }
+    if (extraData.maternity18To29) {
+      const maternityKeys = Object.keys(extraData.maternity18To29);
+      if (maternityKeys.includes('pregnantWomen')) {
+        const maternityData: IndividualMaternity = extraData.maternity18To29 as IndividualMaternity;
+        this.loadedIndivMaternity18to29 = {
+          pregnantWomen: maternityData.pregnantWomen,
+          lactatingWomen: maternityData.lactatingWomen,
+        };
+      } else if (maternityKeys.includes('countryBirthRate')) {
+        const maternityData: PopulationMaternity = extraData.maternity18To29 as PopulationMaternity;
+        this.loadedPopMaternity18to29 = {
+          countryBirthRate: maternityData.countryBirthRate,
+          countryPopulation: maternityData.countryPopulation,
+          countryWomenInAgeGroup: maternityData.countryWomenInAgeGroup,
+        };
+      }
+    }
+    if (extraData.maternity30To59) {
+      const maternityData: IndividualMaternity = extraData.maternity30To59 as IndividualMaternity;
+      this.loadedIndivMaternity30to59 = {
+        pregnantWomen: maternityData.pregnantWomen,
+        lactatingWomen: maternityData.lactatingWomen,
+      };
+    } else if (women30to59) {
+      this.checkedButton = true;
+    } else {
+      this.checkedButton = false;
+    }
+  }
+
+  loadPopulationData(popData: AgeGroupJSON[]): boolean {
+    const grupos: GrupoEtario[] = [];
+    let women30to59: boolean = false;
+    popData.forEach((group: AgeGroupJSON) => {
+      if (group.age === '30-59 años') {
+        women30to59 = true;
+      }
+      const grupo: GrupoEtario = {
+        edad: group.age as FranjaEtaria,
+        sexo: group.sex as Sexo,
+        pesoMediano: group.medianWeight,
+        cantidad: group.population,
+      };
+      grupos.push(grupo);
+    });
+    this.step1Access.clearTables();
+    this.step1Access.initializeTable(grupos);
+    return women30to59;
+  }
+
+  async onFileSelected(event: Event) {
+    const element = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
+    if (fileList) {
+      const ulFile = await fileList[0].text();
+      const { step1Data, extraData } = JSON.parse(ulFile);
+      const women30to59 = this.loadPopulationData(step1Data);
+      this.loadExtraData(extraData, women30to59);
+    }
   }
 
   isStepperValid(): boolean {
@@ -225,16 +317,11 @@ export class StepperComponent implements OnInit, OnDestroy {
       case '18to29FemaleCountryPopulation':
         this.defaultMaternity18to29.countryWomenInAgeGroup = extraData.value;
         break;
-      case '30to59FemaleCountryPopulation':
-        this.defaultMaternity30to59.countryWomenInAgeGroup = extraData.value;
-        break;
       case 'birthRate':
         this.defaultMaternity18to29.countryBirthRate = extraData.value;
-        this.defaultMaternity30to59.countryBirthRate = extraData.value;
         break;
       case 'countryPopulation':
         this.defaultMaternity18to29.countryPopulation = extraData.value;
-        this.defaultMaternity30to59.countryPopulation = extraData.value;
         break;
       default:
         break;
