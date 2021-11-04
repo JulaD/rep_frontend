@@ -43,8 +43,8 @@
         </div>
         <div class="row secondary-result" *ngFor="let data of dataSources">
             <div class="col-md-2">
-                <p class="age-group">{{data.title}}</p>
-                <p class="age-group-quantity">{{data.subtitle}} personas</p>
+                <p class="age-group">{{mostrarFranja(data.title)}}</p>
+                <p class="age-group-quantity">{{data.subtitle}} {{mostrarPersonas(data.subtitle)}}</p>
             </div>
             <div class="col-md-9"> 
                 <table mat-table [dataSource]="data.source" class="mat-elevation-z8">
@@ -55,12 +55,12 @@
                     </ng-container>
                   
                     <ng-container matColumnDef="femenino">
-                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>{{data.femenine}} personas</strong></th>
+                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>{{data.femenine}} {{mostrarPersonas(data.femenine)}}</strong></th>
                       <td mat-cell *matCellDef="let element"> {{element.femenino}} </td>
                     </ng-container>
                   
                     <ng-container matColumnDef="masculino">
-                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>{{data.masculine}} personas</strong></th>
+                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>{{data.masculine}} {{mostrarPersonas(data.masculine)}}</strong></th>
                       <td mat-cell *matCellDef="let element"> {{element.masculino}} </td>
                     </ng-container>
                   
