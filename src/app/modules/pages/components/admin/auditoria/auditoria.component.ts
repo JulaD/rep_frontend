@@ -13,6 +13,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { StatisticsSearch } from 'src/app/models/statistics-search.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services';
+import { Subject } from 'rxjs/internal/Subject';
 
 registerLocaleData(localeEsUy, 'esUY');
 
@@ -47,6 +48,9 @@ export class AuditoriaComponent implements OnInit {
   displayedColumns: string[] = ['fecha', 'email', 'organizacion', 'nombre', 'accion'];
 
   // --------------------- ESTADÍSTICAS ---------------------
+
+  // Observable para update de los datos de la gráfica
+  update$: Subject<any> = new Subject();
 
   // Filtros de búsqueda
   users = new FormControl();
@@ -145,11 +149,8 @@ export class AuditoriaComponent implements OnInit {
         this.totalLogs = res.count;
       },
       (err) => {
-        const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al realizar la auditoría, intente de nuevo más tarde.';
-        const config : MatSnackBarConfig = new MatSnackBarConfig();
-        config.panelClass = ['error-snack-bar'];
-        config.verticalPosition = 'top';
-        this.errorSnackBar.open(errorMessage, 'X', config);
+        const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener los logs, intente de nuevo más tarde.';
+        this.showError(errorMessage);
       },
     );
   }
@@ -164,36 +165,44 @@ export class AuditoriaComponent implements OnInit {
     this.getLogs(auditorySearch);
   }
 
-  onSelect(event: Event) {
-    console.log(event);
-  }
-
   /**
    * Obtiene las estadísticas para los parámetros de búsqueda.
    */
   getStatistics() {
+    this.statistics = [];
     const usersIds: number[] = this.users.value ? this.users.value : [];
-    const { from } = this.dateRange.value;
-    const to: Date = this.dateRange.value.from;
-    const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, from, to);
+    let dateFrom: string = '';
+    let dateTo: string = '';
+    if (this.dateRange.value.from) {
+      dateFrom = this.dateRange.value.from.toString();
+    }
+    if (this.dateRange.value.to) {
+      dateTo = this.dateRange.value.to.toString();
+    }
+    const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
     this.auditoryService.getStatistics(statisticsSearch).subscribe(
       (res) => {
-        this.statistics = [{
-          name: this.byHandLabel,
-          value: res.byHand,
-        },
-        {
-          name: this.templateLabel,
-          value: res.template,
-        },
-        ];
+        res.forEach((data: any) => {
+          let name = '';
+          /* eslint-disable default-case */
+          switch (data.extra.code) {
+            case 'cam':
+              name = this.byHandLabel;
+              break;
+            case 'cup':
+              name = this.templateLabel;
+              break;
+          }
+          this.statistics.push({
+            name,
+            value: data.value,
+          });
+        });
+        this.update$.next(true);
       },
       (err) => {
-        const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al realizar la auditoría, intente de nuevo más tarde.';
-        const config : MatSnackBarConfig = new MatSnackBarConfig();
-        config.panelClass = ['error-snack-bar'];
-        config.verticalPosition = 'top';
-        this.errorSnackBar.open(errorMessage, 'X', config);
+        const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener las estadísticas, intente de nuevo más tarde.';
+        this.showError(errorMessage);
       },
     );
   }
@@ -215,9 +224,16 @@ export class AuditoriaComponent implements OnInit {
       (res) => {
         this.usersList = res.rows;
       },
-      (err) => {
-        console.log(err);
-      },
     );
+  }
+
+  /**
+   * Despliega mensaje de error
+   */
+  showError(errMessage: string) {
+    const config : MatSnackBarConfig = new MatSnackBarConfig();
+    config.panelClass = ['error-snack-bar'];
+    config.verticalPosition = 'top';
+    this.errorSnackBar.open(errMessage, 'X', config);
   }
 }

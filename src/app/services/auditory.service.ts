@@ -30,13 +30,7 @@ export class AuditoryService {
   }
 
   getStatistics(search: StatisticsSearch) {
-    const endpoint: string = `${this.api}/statistics?users=${search.usersIds}`;
-    // if (search.from) {
-    //   endpoint += `&from=${search.from}`;
-    // }
-    // if (search.to) {
-    //   endpoint += `&to=${search.to}`;
-    // }
-    return this.http.get<any>(endpoint, this.options());
+    const endpoint: string = `${this.api}/auditory/calculations`;
+    return this.http.post<any>(endpoint, search, this.options());
   }
 }

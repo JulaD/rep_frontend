@@ -380,6 +380,7 @@ export class StepperComponent implements OnInit, OnDestroy {
           this.defaultExtraDataAvailable = false;
           const errorMessage = 'Los valores por defecto no estan disponibles';
           const config : MatSnackBarConfig = new MatSnackBarConfig();
+          config.panelClass = ['error-snack-bar'];
           config.verticalPosition = 'top';
           this.finishedProcessExtraData = true;
           return this.errorSnackBar.open(errorMessage, 'Aceptar', config);
