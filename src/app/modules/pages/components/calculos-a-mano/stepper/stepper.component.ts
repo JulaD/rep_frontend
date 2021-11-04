@@ -227,16 +227,21 @@ export class StepperComponent implements OnInit, OnDestroy {
     const grupos: GrupoEtario[] = [];
     let women30to59: boolean = false;
     popData.forEach((group: AgeGroupJSON) => {
-      if (group.age === '30-59 años') {
-        women30to59 = true;
+      if (Object.values(FranjaEtaria).includes(group.age as FranjaEtaria)
+      && Object.values(Sexo).includes(group.sex as Sexo)) {
+        if (group.age === FranjaEtaria.Anios_30_59) {
+          women30to59 = true;
+        }
+        const grupo: GrupoEtario = {
+          edad: group.age as FranjaEtaria,
+          sexo: group.sex as Sexo,
+          pesoMediano: group.medianWeight,
+          cantidad: group.population,
+        };
+        grupos.push(grupo);
+      } else {
+        throw new Error();
       }
-      const grupo: GrupoEtario = {
-        edad: group.age as FranjaEtaria,
-        sexo: group.sex as Sexo,
-        pesoMediano: group.medianWeight,
-        cantidad: group.population,
-      };
-      grupos.push(grupo);
     });
     this.step1Access.clearTables();
     this.step1Access.initializeTable(grupos);
@@ -244,24 +249,28 @@ export class StepperComponent implements OnInit, OnDestroy {
   }
 
   async onFileSelected(event: Event) {
-    const element = event.currentTarget as HTMLInputElement;
-    const fileList: FileList | null = element.files;
-    if (fileList) {
-      const ulFile = await fileList[0].text();
-      const progress = JSON.parse(ulFile);
-      const validator: ValidateFunction<{
-        step1Data: AgeGroupJSON[],
-        extraData: ExtraData,
-      }> = this.ajv.compile(progressSchema);
-      if (validator(progress)) {
-        const women30to59 = this.loadPopulationData(progress.step1Data);
-        this.loadExtraData(progress.extraData, women30to59);
-      } else {
-        const errorMessage = 'El archivo subido no tiene el formato correcto';
-        const config : MatSnackBarConfig = new MatSnackBarConfig();
-        config.verticalPosition = 'top';
-        this.errorSnackBar.open(errorMessage, 'Aceptar', config);
+    try {
+      const element = event.currentTarget as HTMLInputElement;
+      const fileList: FileList | null = element.files;
+      if (fileList) {
+        const ulFile = await fileList[0].text();
+        const progress = JSON.parse(ulFile);
+        const validator: ValidateFunction<{
+          step1Data: AgeGroupJSON[],
+          extraData: ExtraData,
+        }> = this.ajv.compile(progressSchema);
+        if (validator(progress)) {
+          const women30to59 = this.loadPopulationData(progress.step1Data);
+          this.loadExtraData(progress.extraData, women30to59);
+        } else {
+          throw new Error();
+        }
       }
+    } catch (error) {
+      const errorMessage = 'El archivo subido no tiene el formato correcto';
+      const config : MatSnackBarConfig = new MatSnackBarConfig();
+      config.verticalPosition = 'top';
+      this.errorSnackBar.open(errorMessage, 'Aceptar', config);
     }
   }
 
