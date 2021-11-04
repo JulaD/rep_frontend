@@ -255,11 +255,9 @@ export class StepperComponent implements OnInit, OnDestroy {
       if (fileList) {
         const ulFile = await fileList[0].text();
         const progress = JSON.parse(ulFile);
-        const validator: ValidateFunction<{
-          step1Data: AgeGroupJSON[],
-          extraData: ExtraData,
-        }> = this.ajv.compile(progressSchema);
-        if (validator(progress)) {
+        const validateProgress = progress;
+        const validator: ValidateFunction<unknown> = this.ajv.compile(progressSchema);
+        if (validator(validateProgress)) {
           const women30to59 = this.loadPopulationData(progress.step1Data);
           this.loadExtraData(progress.extraData, women30to59);
         } else {
