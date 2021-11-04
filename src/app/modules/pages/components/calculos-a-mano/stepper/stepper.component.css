@@ -37,6 +37,14 @@
     justify-content: flex-start;
 }
 
+.upload-button {
+    margin-left: 15px;
+}
+
+.file-input {
+    display: none;
+}
+
 ::ng-deep snack-bar-container.error-snack-bar {
     background: #FF5252;
 }
@@ -47,5 +55,9 @@
 
 ::ng-deep .error-snack-bar .mat-simple-snackbar-action {
   color: #ffffff !important;
+}
+
+::ng-deep .mat-tooltip {
+  font-size: 1rem !important;
 }
   

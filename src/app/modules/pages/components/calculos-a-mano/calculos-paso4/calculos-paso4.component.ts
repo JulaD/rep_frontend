@@ -3,6 +3,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { delay } from 'rxjs/operators';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
@@ -21,7 +22,13 @@ import { step4MenorIgualPobTotalValidator } from 'src/app/modules/shared/validat
 export class CalculosPaso4Component implements OnInit, OnChanges {
   @Input() defaultMaternity18to29: PopulationMaternity;
 
-  @Input() defaultMaternity30to59: PopulationMaternity;
+  @Input() loadedPopMaternity18to29: PopulationMaternity;
+
+  @Input() loadedIndivMaternity18to29: IndividualMaternity;
+
+  @Input() loadedIndivMaternity30to59: IndividualMaternity;
+
+  @Input() checkedButton: boolean;
 
   @Input() defaultExtraDataAvailable: boolean;
 
@@ -54,26 +61,72 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
       embsSegundaFranja: new FormControl({ value: '', disabled: false }, numeroEnteroPositivoValidator),
       amamSegundaFranja: new FormControl({ value: '', disabled: false }, numeroEnteroPositivoValidator),
     }),
-    maternitySegundaFranja: new FormGroup({
-      cantSegundaFranja: new FormControl({ value: '', disabled: true }, numeroEnteroPositivoValidator),
-      pobTotSegundaFranja: new FormControl({ value: '', disabled: true }, numeroEnteroPositivoValidator),
-      natSegundaFranja: new FormControl({ value: '', disabled: true }, numeroFloatValidator),
-    }, { validators: step4MenorIgualPobTotalValidator(2) }),
     // Checkbox
     primerFranjaDisabled: new FormControl(false),
     segundaFranjaDisabled: new FormControl(false),
   });
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.female18To29Pop && changes.female18To29Pop.currentValue) {
-      this.materYLactanciaForm.get('maternityIndivPrimerFranja')?.setValidators(
-        step4MenorIgualPobStep1Validator(1, this.female18To29Pop),
-      );
-    } else if (changes.female30To59Pop && changes.female30To59Pop.currentValue) {
-      this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.setValidators(
-        step4MenorIgualPobStep1Validator(2, this.female30To59Pop),
-      );
-    }
+    delay(0);
+    const keys: string[] = Object.keys(changes);
+    const event: MatCheckboxChange = new MatCheckboxChange();
+    keys.forEach((key: string) => {
+      switch (key) {
+        case 'female18To29Pop':
+          this.materYLactanciaForm.get('maternityIndivPrimerFranja')?.setValidators(
+            step4MenorIgualPobStep1Validator(1, this.female18To29Pop),
+          );
+          break;
+        case 'female30to59':
+          this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.setValidators(
+            step4MenorIgualPobStep1Validator(2, this.female30To59Pop),
+          );
+          break;
+        case 'loadedIndivMaternity18to29':
+          if (changes[key].currentValue !== undefined
+              && changes[key].currentValue !== changes[key].previousValue) {
+            console.log('Cargue datos maternidad 18 a 29 años');
+            this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.setValue(changes.loadedIndivMaternity18to29.currentValue.pregnantWomen);
+            this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.setValue(changes.loadedIndivMaternity18to29.currentValue.lactatingWomen);
+            this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(false);
+            event.checked = false;
+            this.enableFields(event, 1);
+          }
+          break;
+        case 'loadedPopMaternity18to29':
+          if (changes[key].currentValue !== undefined
+              && changes[key].currentValue !== changes[key].previousValue) {
+            console.log('Cargue datos maternidad 18 a 29 años');
+            this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryWomenInAgeGroup);
+            this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryPopulation);
+            this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryBirthRate);
+            this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(true);
+            event.checked = true;
+            this.enableFields(event, 1);
+          }
+          break;
+        case 'loadedIndivMaternity30to59':
+          if (changes[key].currentValue !== undefined
+              && changes[key].currentValue !== changes[key].previousValue) {
+            console.log('Cargue datos maternidad 30 a 59 años');
+            this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.setValue(changes.loadedIndivMaternity30to59.currentValue.pregnantWomen);
+            this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.setValue(changes.loadedIndivMaternity30to59.currentValue.lactatingWomen);
+            this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
+            event.checked = false;
+            this.enableFields(event, 2);
+          }
+          break;
+        case 'checkedButton':
+          if (changes[key].currentValue !== undefined
+            && changes.loadedIndivMaternity30to59.currentValue === undefined) {
+            this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(this.checkedButton);
+            event.checked = this.checkedButton;
+            this.enableFields(event, 2);
+          }
+          break;
+        default: break;
+      }
+    });
   }
 
   onSubmit() {}
@@ -97,15 +150,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         break;
       case 2:
         if (event.checked) {
-          this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.enable();
-          this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.enable();
-          this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.disable();
         } else {
-          this.materYLactanciaForm.get('maternitySegundaFranja.cantSegundaFranja')?.disable();
-          this.materYLactanciaForm.get('maternitySegundaFranja.pobTotSegundaFranja')?.disable();
-          this.materYLactanciaForm.get('maternitySegundaFranja.natSegundaFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.enable();
         }

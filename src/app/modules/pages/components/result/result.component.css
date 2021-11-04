@@ -13,6 +13,22 @@
   .download-title{
     font-family: Montserrat;
     font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 24px;
+    
+    /* or 156% */
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    text-transform: uppercase;
+    
+    color: #3F51B5;
+  }
+
+  .download-text{
+    font-family: Montserrat;
+    font-style: normal;
     font-weight: 300;
     font-size: 18px;
     line-height: 18px;
@@ -26,17 +42,19 @@
     color: #3F51B5;
   }
 
-  .download-text {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 48px;
-    
+  .download-button {
+    font-family: Montserrat;
+    font-style: bold;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 18px;
+    margin-left: 4px;
+
     /* or 117% */
     display: flex;
     align-items: center;
     letter-spacing: 0.15px;
+    text-transform: uppercase;
     text-decoration-line: underline;
     
     color: #3F51B5;
@@ -56,6 +74,16 @@
   .primary-result {
     margin-top: 98px;
     margin-bottom: 90px;
+  }
+  
+  .primary-result-text {
+    min-width: 60%;
+  }
+
+  .primary-result-number {
+    justify-content: center;
+    display: flex;
+    min-width: 40%;
   }
   
   .secondary-result {
@@ -118,7 +146,7 @@
     
     /* or 40% */
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     letter-spacing: 1.25px;
     
     color: #FE5244;
@@ -130,10 +158,10 @@
     font-weight: 300;
     font-size: 33.25px;
     line-height: 64px;
-    justify-content: center;
+    /* justify-content: center; */
     /* or 160% */
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     letter-spacing: 2.09494px;
 
     color: #FE5244;
