@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import Ajv, { ValidateFunction } from 'ajv';
 import FranjaEtaria from 'src/app/enums/FranjaEtaria';
 import Sexo from 'src/app/enums/Sexo';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
@@ -13,6 +14,7 @@ import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
 import { GrupoEtario } from 'src/app/models/grupo-etario';
+import { progressSchema } from 'src/app/schemas/progressSchema';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
@@ -69,8 +71,6 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   loadedIndivMaternity30to59: IndividualMaternity;
 
-  texto: string = '';
-
   checkedButton: boolean;
 
   @ViewChild(CalculosPaso1Component)
@@ -90,7 +90,10 @@ export class StepperComponent implements OnInit, OnDestroy {
   @Input()
   requiredFileType: string = '.json';
 
+  ajv: Ajv;
+
   ngOnInit() {
+    this.ajv = new Ajv();
     console.log('Start Load Stepper');
     this.processExtraData();
     console.log('Finished Load Stepper');
@@ -245,9 +248,20 @@ export class StepperComponent implements OnInit, OnDestroy {
     const fileList: FileList | null = element.files;
     if (fileList) {
       const ulFile = await fileList[0].text();
-      const { step1Data, extraData } = JSON.parse(ulFile);
-      const women30to59 = this.loadPopulationData(step1Data);
-      this.loadExtraData(extraData, women30to59);
+      const progress = JSON.parse(ulFile);
+      const validator: ValidateFunction<{
+        step1Data: AgeGroupJSON[],
+        extraData: ExtraData,
+      }> = this.ajv.compile(progressSchema);
+      if (validator(progress)) {
+        const women30to59 = this.loadPopulationData(progress.step1Data);
+        this.loadExtraData(progress.extraData, women30to59);
+      } else {
+        const errorMessage = 'El archivo subido no tiene el formato correcto';
+        const config : MatSnackBarConfig = new MatSnackBarConfig();
+        config.verticalPosition = 'top';
+        this.errorSnackBar.open(errorMessage, 'Aceptar', config);
+      }
     }
   }
 

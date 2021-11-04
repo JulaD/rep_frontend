@@ -4,6 +4,7 @@ import {
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
+import { delay } from 'rxjs/operators';
 import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
@@ -38,6 +39,7 @@ export class CalculosPaso2Component implements OnInit {
   }, { validators: groupSuman100Validator(3) });
 
   ngOnChanges(changes: SimpleChanges) {
+    delay(0);
     const keys: string[] = Object.keys(changes);
     keys.forEach((key: string) => {
       switch (key) {

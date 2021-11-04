@@ -5,7 +5,6 @@ import {
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
-import { delay } from 'rxjs/operators';
 import AdultPAL from 'src/app/interfaces/AdultPALDTO';
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import { groupSuman100Validator } from 'src/app/modules/shared/validators/group-suman-100.directive';
@@ -59,16 +58,17 @@ export class CalculosPaso3Component implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     // delay(0) helps avoid an error
-    delay(0);
-    if (changes.loadedAdultPal.currentValue !== undefined) {
-      console.log('Cargue nivel actividad fisica adultos');
-      this.adultPALForm.get('population.ruralPercentage')?.setValue(changes.loadedAdultPal.currentValue.ruralPercentage);
-      this.adultPALForm.get('population.urbanPercentage')?.setValue(changes.loadedAdultPal.currentValue.urbanPercentage);
-      this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.activeRuralPAL);
-      this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.lowRuralPAL);
-      this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.activeUrbanPAL);
-      this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.lowUrbanPAL);
-    }
+    setTimeout(() => {
+      if (changes.loadedAdultPal.currentValue !== undefined) {
+        console.log('Cargue nivel actividad fisica adultos');
+        this.adultPALForm.get('population.ruralPercentage')?.setValue(changes.loadedAdultPal.currentValue.ruralPercentage);
+        this.adultPALForm.get('population.urbanPercentage')?.setValue(changes.loadedAdultPal.currentValue.urbanPercentage);
+        this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.activeRuralPAL);
+        this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.lowRuralPAL);
+        this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.activeUrbanPAL);
+        this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.lowUrbanPAL);
+      }
+    });
   }
 
   sendData(): AdultPAL {
