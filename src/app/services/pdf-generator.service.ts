@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { jsPDF, TextOptionsLight } from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import FranjaEtaria from '../enums/FranjaEtaria';
 import { ResultPdf } from '../models/result-pdf.model';
 
 /**
@@ -58,7 +59,7 @@ export class PdfGeneratorService {
     doc.text('Escuela de Nutrición UdelaR', 10, 45);
 
     doc.setFontSize(12);
-    doc.text(`Para la población ingresada de ${res.totalPopulation} personas, el requerimiento energético diario total es de ${res.totalRequirement} Kcal/día (${res.totalPerCapitaRequirement} Kcal/día per capita).`, 10, 70, opts);
+    doc.text(`Para la población ingresada de ${res.totalPopulation} ${this.mostrarPersonas(res.totalPopulation)}, el requerimiento energético diario promedio es de ${res.totalRequirement} Kcal/día (${res.totalPerCapitaRequirement} Kcal/día per capita).`, 10, 70, opts);
     let rows: (string | number)[][] = [];
     let offset: number = 80;
     let nroTablas: number = 0;
@@ -73,7 +74,11 @@ export class PdfGeneratorService {
       });
       // Generación de las tabla con los resultados
       autoTable(doc, {
-        head: [[`${data.title} (${data.subtitle} personas)`, `Femenino (${data.femenine} personas)`, `Masculino (${data.masculine} personas)`]],
+        head: [[
+          `${this.mostrarFranja(data.title)} (${data.subtitle} ${this.mostrarPersonas(data.subtitle)})`,
+          `Femenino (${data.femenine} ${this.mostrarPersonas(data.femenine)})`,
+          `Masculino (${data.masculine} ${this.mostrarPersonas(data.masculine)})`,
+        ]],
         body: rows,
         startY: offset,
       });
@@ -87,5 +92,25 @@ export class PdfGeneratorService {
       date.getMonth() + 1}_${
       date.getFullYear()}.pdf`;
     doc.save(fileName);
+  }
+
+  mostrarFranja(franja: string) {
+    if (franja === FranjaEtaria.Meses_1 as string) {
+      return '1 mes';
+    }
+
+    if (franja === FranjaEtaria.Anios_1 as string) {
+      return '1 año';
+    }
+
+    return franja;
+  }
+
+  mostrarPersonas(cantidad: number) {
+    if (cantidad === 1) {
+      return 'persona';
+    }
+
+    return 'personas';
   }
 }

@@ -191,6 +191,8 @@ export class CalculosPaso1Component implements AfterViewInit {
   } // onSubmit
 
   addFem(grupo: GrupoEtario) {
+    // eslint-disable-next-line no-param-reassign
+    grupo.pesoMediano = parseFloat(grupo.pesoMediano.toFixed(1));
     femeninoData.push(grupo);
     femeninoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceF._updateChangeSubscription();
@@ -200,6 +202,8 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   addMasc(grupo: GrupoEtario) {
+    // eslint-disable-next-line no-param-reassign
+    grupo.pesoMediano = parseFloat(grupo.pesoMediano.toFixed(1));
     masculinoData.push(grupo);
     masculinoData.sort((a, b) => compareFranjaEtaria(a.edad, b.edad));
     this.dataSourceM._updateChangeSubscription();
@@ -242,7 +246,7 @@ export class CalculosPaso1Component implements AfterViewInit {
   deleteTableRow(sex: string, range: FranjaEtaria) {
     const dialogRef = this.deleteRowDialog.open(DeleteRowDialog, {
       width: 'auto',
-      data: { franja: range, sexo: sex },
+      data: { franja: this.mostrarFranja(range), sexo: sex },
     });
 
     dialogRef.afterClosed().subscribe((response) => {
@@ -423,7 +427,7 @@ export class CalculosPaso1Component implements AfterViewInit {
     const dialogRef = this.overwriteDialog.open(OverwriteDialog, {
       width: 'auto',
       data: {
-        franja: grupoFemeninoActual.edad,
+        franja: this.mostrarFranja(grupoFemeninoActual.edad),
         cantFemeninoActual: grupoFemeninoActual.cantidad === 0 ? 'vacio' : grupoFemeninoActual.cantidad,
         medFemeninoActual: grupoFemeninoActual.pesoMediano === 0 ? 'vacio' : grupoFemeninoActual.pesoMediano,
         cantMasculinoActual: grupoMasculinoActual.cantidad === 0 ? 'vacio' : grupoMasculinoActual.cantidad,
@@ -448,5 +452,17 @@ export class CalculosPaso1Component implements AfterViewInit {
         this.clearInputFields();
       }
     });
+  }
+
+  mostrarFranja(franja: FranjaEtaria) {
+    if (franja === FranjaEtaria.Meses_1) {
+      return '1 mes';
+    }
+
+    if (franja === FranjaEtaria.Anios_1) {
+      return '1 año';
+    }
+
+    return franja as string;
   }
 } // component class

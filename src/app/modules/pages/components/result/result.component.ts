@@ -9,6 +9,7 @@ import { ResultPdf } from 'src/app/models/result-pdf.model';
 import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
+import FranjaEtaria, { compareFranjaEtariaWithString } from 'src/app/enums/FranjaEtaria';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -87,7 +88,7 @@ export class ResultComponent implements OnInit {
       // eslint-disable-next-line no-bitwise
       this.totalPopulation = result?.totalRequirement!.totalPopulation | 0;
       const groupedByAge = this.groupByAge(result?.groupsRequirements);
-      const keys = Object.keys(groupedByAge);
+      const keys = Object.keys(groupedByAge).sort(compareFranjaEtariaWithString);
       this.dataSources = keys.map((key: string) => {
         let femenineAmount: number = 0;
         let masculineAmount: number = 0;
@@ -163,5 +164,25 @@ export class ResultComponent implements OnInit {
     link.setAttribute('href', data);
     link.setAttribute('download', fileName);
     link.click();
+  }
+
+  mostrarFranja(franja: string) {
+    if (franja === FranjaEtaria.Meses_1 as string) {
+      return '1 mes';
+    }
+
+    if (franja === FranjaEtaria.Anios_1 as string) {
+      return '1 año';
+    }
+
+    return franja as string;
+  }
+
+  mostrarPersonas(cantidad: number) {
+    if (cantidad === 1) {
+      return 'persona';
+    }
+
+    return 'personas';
   }
 }
