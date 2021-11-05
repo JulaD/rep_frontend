@@ -250,7 +250,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log('The dialog was closed');
       if (response) {
         this.borrarEdad(sex, range);
       }
@@ -385,7 +384,7 @@ export class CalculosPaso1Component implements AfterViewInit {
           });
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           this.defaultWeightsAvailable = false;
           const errorMessage = 'Los valores por defecto no estan disponibles';
           const config : MatSnackBarConfig = new MatSnackBarConfig();
@@ -440,7 +439,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log('The dialog was closed');
       if (response) {
         this.borrarEdad('Both', grupoFemeninoActual.edad);
         if (grupoFemeninoNuevo.cantidad !== 0) {

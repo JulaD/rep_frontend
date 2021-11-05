@@ -85,9 +85,10 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         case 'loadedIndivMaternity18to29':
           if (changes[key].currentValue !== undefined
               && changes[key].currentValue !== changes[key].previousValue) {
-            console.log('Cargue datos maternidad 18 a 29 años');
             this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.setValue(changes.loadedIndivMaternity18to29.currentValue.pregnantWomen);
+            this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.setValue(changes.loadedIndivMaternity18to29.currentValue.lactatingWomen);
+            this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(false);
             event.checked = false;
             this.enableFields(event, 1);
@@ -96,10 +97,12 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         case 'loadedPopMaternity18to29':
           if (changes[key].currentValue !== undefined
               && changes[key].currentValue !== changes[key].previousValue) {
-            console.log('Cargue datos maternidad 18 a 29 años');
             this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryWomenInAgeGroup);
+            this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryPopulation);
+            this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryBirthRate);
+            this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(true);
             event.checked = true;
             this.enableFields(event, 1);
@@ -108,9 +111,10 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         case 'loadedIndivMaternity30to59':
           if (changes[key].currentValue !== undefined
               && changes[key].currentValue !== changes[key].previousValue) {
-            console.log('Cargue datos maternidad 30 a 59 años');
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.setValue(changes.loadedIndivMaternity30to59.currentValue.pregnantWomen);
+            this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.setValue(changes.loadedIndivMaternity30to59.currentValue.lactatingWomen);
+            this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.markAsDirty();
             this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
             event.checked = false;
             this.enableFields(event, 2);

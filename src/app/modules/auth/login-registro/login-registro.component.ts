@@ -62,7 +62,7 @@ export class LoginRegistroComponent implements OnInit {
           this.alertaError = false;
         },
         (err) => {
-          console.log(err.status);
+          console.error(err);
           if (err.status === 412) {
             this.message = 'Este correo electrónico ya está en uso';
           } else {
@@ -93,7 +93,7 @@ export class LoginRegistroComponent implements OnInit {
         }
         this.alertaError = true;
         this.alertaSuccess = false;
-        console.log(err.status);
+        console.error(err);
       },
     );
   }

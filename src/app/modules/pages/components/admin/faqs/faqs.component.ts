@@ -30,7 +30,7 @@ export class FaqsComponent implements OnInit {
       .subscribe((faqs: FAQ[]) => {
         this.faqs = faqs;
       }, (error: Error) => {
-        console.log(error);
+        console.error(error);
       });
   }
 
