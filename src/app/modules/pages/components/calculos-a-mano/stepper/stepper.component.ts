@@ -92,6 +92,8 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   ajv: Ajv;
 
+  fromTemplate: boolean;
+
   ngOnInit() {
     this.ajv = new Ajv();
     console.log('Start Load Stepper');

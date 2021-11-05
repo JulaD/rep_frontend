@@ -12,14 +12,14 @@
       <div *ngIf="agesFemale18To29Present; then thenBlock18to29"></div>
       <ng-template #thenBlock18to29>
         <div class="step4-label-1 row gy-1">
-          Mujeres de 18 a 29 años
+          18 a 29 años
         </div>
         <!-- DATOS ESPECÍFICOS DEL GRUPO -->
         <div class="row gy-1 justify-content-end" formGroupName="maternityIndivPrimerFranja">
           <div *ngIf="materYLactanciaForm.get('maternityIndivPrimerFranja')?.errors?.step4MenorIgualPobStep1 &&
             (materYLactanciaForm.get('maternityIndivPrimerFranja')?.touched || materYLactanciaForm.get('maternityIndivPrimerFranja')?.dirty)"
             class="mensaje-error col">
-            La suma de mujeres embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
+            La suma de personas embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
           </div>
           <div class="step4-num-embarazos col-4">
             <mat-form-field appearance="standard">
@@ -61,7 +61,7 @@
           <div *ngIf="materYLactanciaForm.get('maternityPrimerFranja')?.errors?.step4MenorIgualPobTotal &&
             (materYLactanciaForm.get('maternityPrimerFranja')?.touched || materYLactanciaForm.get('maternityPrimerFranja')?.dirty)"
             class="mensaje-error">
-            La población de mujeres de esta franja etaria no puede ser mayor que la población total.
+            La población femenina de esta franja etaria no puede ser mayor que la población total.
           </div>
         </div>
         <!-- DATOS A PARTIR DE LA NATALIDAD -->
@@ -75,10 +75,10 @@
           <div class="row pb-3">
             <div class="step4-cant-mujeres col">
               <mat-form-field appearance="standard">
-                <mat-label>Mujeres entre 18 y 29 años</mat-label>
+                <mat-label>Población femenina de 18 y 29 años</mat-label>
                 <input matInput formControlName="cantPrimerFranja" [errorStateMatcher]="matcher">
                 <mat-hint>
-                  Ingrese la población de mujeres del país para este rango etario
+                  Ingrese la población femenina del país para este rango etario
                 </mat-hint>
                 <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.hasError('pattern')">
                   La población debe ser un número entero positivo
@@ -119,14 +119,14 @@
       <ng-template #thenBlock30to59>
         <hr class="m-3"><!--Separador-->
         <div class="step4-label-2 row gy-3">
-          Mujeres de 30 a 59 años
+          30 a 59 años
         </div>
         <!-- DATOS ESPECÍFICOS DEL GRUPO -->
         <div class="row gy-1 justify-content-end" formGroupName="maternityIndivSegundaFranja">
           <div *ngIf="materYLactanciaForm.get('maternityIndivSegundaFranja')?.errors?.step4MenorIgualPobStep1 &&
             (materYLactanciaForm.get('maternityIndivSegundaFranja')?.touched || materYLactanciaForm.get('maternityIndivSegundaFranja')?.dirty)"
             class="mensaje-error col">
-            La suma de mujeres embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
+            La suma de personas embarazadas y amamantando no puede ser mayor a la ingresada en el paso 1.
           </div>
           <div class="step4-num-embarazos-2 col-4">
             <mat-form-field appearance="standard">

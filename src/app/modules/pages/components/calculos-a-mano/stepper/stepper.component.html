@@ -1,4 +1,7 @@
 <div class="navigation-buttons">
+  <input type="file" class="file-input"
+  [accept]="requiredFileType"
+  (change)="onFileSelected($event)" #fileUpload>
   <button mat-fab color="primary" aria-label="Página princial" matTooltip="Página principal"  routerLink="/dashboard">
       <mat-icon>home</mat-icon>
   </button>
@@ -14,19 +17,18 @@
         <app-calculos-paso1 #step1DOMAccess class="mb-4"></app-calculos-paso1>
         <div class="container-buttons row">
           <div class="container-download-progress-button col">
-            <button
-            mat-flat-button color="primary" mat-button
-            (click)="saveProgress()">
-              Guardar progreso
-            </button>
-            <input type="file" class="file-input"
-            [accept]="requiredFileType"
-            (change)="onFileSelected($event)" #fileUpload>
-            <button class="upload-button"
-            mat-flat-button color="primary" mat-button
-            (click)="fileUpload.click()">
-              Cargar progreso
-            </button>
+            <ng-container *ngIf="!step1DOMAccess.fromTemplate">
+              <button
+              mat-flat-button color="primary" mat-button
+              (click)="saveProgress()">
+                Guardar progreso
+              </button>
+              <button class="upload-button"
+              mat-flat-button color="primary" mat-button
+              (click)="fileUpload.click()">
+                Cargar progreso
+              </button>
+            </ng-container>
           </div>
           <div class="container-stepper-buttons col">
             <div *ngIf="step1DOMAccess.stepperLogic.agesMinorPresent ||
@@ -63,19 +65,26 @@
         </app-calculos-paso2>
         <div class="container-download-progress-button row">
           <div class="col">
-            <button
-            mat-flat-button color="primary" mat-button
-            (click)="saveProgress()">
-              Guardar progreso
-            </button>
-            <button class="upload-button"
-            mat-flat-button color="primary" mat-button
-            (click)="fileUpload.click()">
-              Cargar progreso
-            </button>
+            <ng-container *ngIf="!step1DOMAccess.fromTemplate">
+              <button
+              mat-flat-button color="primary" mat-button
+              (click)="saveProgress()">
+                Guardar progreso
+              </button>
+              <button class="upload-button"
+              mat-flat-button color="primary" mat-button
+              (click)="fileUpload.click()">
+                Cargar progreso
+              </button>
+            </ng-container>
           </div>
           <div class="container-stepper-buttons col">
-            <button mat-button matStepperPrevious>Volver</button>
+            <button class="stepper-btn" mat-stroked-button
+              (click)="step2DOMAccess.loadDefaultValues()"
+              [disabled]="!defaultExtraDataAvailable">
+              Autocompletar
+            </button>
+            <button mat-button matStepperPrevious class="stepper-btn">Volver</button>
             <div *ngIf="step1DOMAccess.stepperLogic.agesAdultPresent ||
               step1DOMAccess.stepperLogic.agesFemale18To29Present ||
               step1DOMAccess.stepperLogic.agesFemale30To59Present;
@@ -109,19 +118,26 @@
         </app-calculos-paso3>
         <div class="container-buttons row">
           <div class="container-download-progress-button col">
-            <button
-            mat-flat-button color="primary" mat-button
-            (click)="saveProgress()">
-              Guardar progreso
-            </button>
-            <button class="upload-button"
-            mat-flat-button color="primary" mat-button
-            (click)="fileUpload.click()">
-              Cargar progreso
-            </button>
+            <ng-container *ngIf="!step1DOMAccess.fromTemplate">
+              <button
+              mat-flat-button color="primary" mat-button
+              (click)="saveProgress()">
+                Guardar progreso
+              </button>
+              <button class="upload-button"
+              mat-flat-button color="primary" mat-button
+              (click)="fileUpload.click()">
+                Cargar progreso
+              </button>
+            </ng-container>
           </div>
           <div class="container-stepper-buttons col">
-            <button mat-button matStepperPrevious>Volver</button>
+            <button mat-stroked-button (click)="step3DOMAccess.loadDefaultValues()"
+              [disabled]="!defaultExtraDataAvailable"
+              class="stepper-btn">
+              Autocompletar
+            </button>
+            <button mat-button matStepperPrevious class="stepper-btn">Volver</button>
             <div *ngIf="step1DOMAccess.stepperLogic.agesFemale18To29Present ||
               step1DOMAccess.stepperLogic.agesFemale30To59Present;
               then thenBlockStep3 else elseBlockStep3">
@@ -163,19 +179,21 @@
         </app-calculos-paso4>
         <div class="container-buttons row">
           <div class="container-download-progress-button col">
-            <button
-            mat-flat-button color="primary" mat-button
-            (click)="saveProgress()">
-              Guardar progreso
-            </button>
-            <button class="upload-button"
-            mat-flat-button color="primary" mat-button
-            (click)="fileUpload.click()">
-              Cargar progreso
-            </button>
+            <ng-container *ngIf="!step1DOMAccess.fromTemplate">
+              <button
+              mat-flat-button color="primary" mat-button
+              (click)="saveProgress()">
+                Guardar progreso
+              </button>
+              <button class="upload-button"
+              mat-flat-button color="primary" mat-button
+              (click)="fileUpload.click()">
+                Cargar progreso
+              </button>
+            </ng-container>
           </div>
           <div class="container-stepper-buttons col">
-            <button mat-button matStepperPrevious>Volver</button>
+            <button mat-button matStepperPrevious class="stepper-btn">Volver</button>
             <button
               mat-flat-button color="primary" mat-button
               [disabled]="!isStepperValid()"
