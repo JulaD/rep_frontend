@@ -1,73 +1,143 @@
 .first-div {
-    height: 75%;
+    height: 80%;
+}  
+
+.orange {
+    background-color: #fe5244;
 }
 
-.first-title {
+.col-md-6.orange {
+    min-width: 65vh;
+    max-height: 100%;
+}
+
+.first-illustration {
+    height: 90%;
+    margin: 20px
+}
+
+.project-pretitle {
     font-family: Montserrat;
     font-style: normal;
-    font-weight: bold;
-    font-size: 8rem;
-    height: 8rem;
+    font-size: 3rem;
     display: flex;
-    align-items: center;  
     color: #FFFFFF;
+    margin-left: 5rem;
+    margin-bottom: -4rem;
 }
 
-.left-column {
+.project-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 10rem;
+    display: flex;
+    color: #FFFFFF;
+    margin-left: 4rem;
+}
+
+.project-description {
+    font-family: Montserrat;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+    margin-left: 4rem;
+    margin-bottom: 5%;
+}
+
+.right-column-header {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-  
-.right-column {
+
+.left-column-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
 }
 
-.second-title {
+.img-column {
+    width: 40%;
+}
+
+.text-column {
+    width: 60%;
+    margin-top: 3rem;
+}
+
+.page-content {
+    margin: 2rem 10rem;
+}
+
+.mat-divider {
+    margin: 3rem 5rem 3rem 5rem;
+}
+
+/*-------------- SOBRE NOSOTROS --------------*/
+
+.content { 
+    margin-top: 2rem;
+}
+
+.about-title {
     font-family: Montserrat;
     font-style: normal;
-    font-weight: 500;
-    font-size: 5rem;
-    height: 5rem;
+    font-weight: bolder;
+    font-size: 2rem;
     display: flex;
-    align-items: center;
-    color: #3F51B5;
-    margin-bottom: 3rem;
 }
 
-.header-background {
-    background-color: #3FB1B5;
+.about-description {
+    font-family: Montserrat;
+    font-weight: bolder;
+    font-size: 1rem;
 }
 
-.col-md-6.header-background {
-    min-width: 65vh;
-    max-height: 100%;
+.source {
+    font-family: Montserrat;
+    font-size: 1rem;
+    text-align: right;
 }
 
-.second-div {
-    margin: 2rem 0 0 3rem;
+
+.pis-font {
+    color: #fe5244;
 }
 
-.left-column-2 {
-    margin: 3rem 0 0 3rem;
+.client-font {
+    color: #3fb1b5;
 }
 
-.content {
-    padding: 16px;
+.director-font {
+    color: #9a3b82;
 }
 
-.content > mat-card {
-    width: 200px;
+.about-us-font {
+    color: #66b0f0;
 }
 
-.info-card {
-    max-width: 400px;
+.second-illustration {
+   width: 100%;
 }
-  
-.info-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
+
+.mat-card-title {
+    font-family: Montserrat;
+    font-size: 1.9rem 
+}
+
+.mat-card-subtitle {
+    font-family: Montserrat;
+    font-style: italic;
+    font-size: 1rem 
+}
+
+.mat-card-content {
+    font-family: Montserrat;
+    font-size: 1rem 
+}
+
+.institution {
+    font-family: Montserrat;
+    font-size: 0.8rem
 }

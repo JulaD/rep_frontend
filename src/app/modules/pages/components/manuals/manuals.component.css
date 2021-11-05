@@ -1,21 +1,29 @@
 .first-div {
-  height: 75%;
+  height: 80%;
 }
 
 .first-illustration {
-  height: 100%;
-  width: 80%;
+  height: 90%;
+  margin: 20px
 }
 
 .first-title {
   font-family: Montserrat;
   font-style: normal;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: 8rem;
-  height: 8rem;
   display: flex;
-  align-items: center;  
   color: #FFFFFF;
+}
+
+.second-title {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 3.5rem;
+  display: flex;
+  color: #9a3b82;
+  margin-top: -60px;
 }
 
 .left-column {
@@ -29,18 +37,6 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
-}
-
-.second-title {
-  font-family: Montserrat;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 5rem;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  color: #3F51B5;
-  margin-bottom: 3rem;
 }
 
 .yellow {

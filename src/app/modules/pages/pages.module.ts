@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../../material/angular-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
@@ -22,6 +21,9 @@ import { PagesComponent } from './pages.component';
 import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq-expansion-panel.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
+import { OverwriteDialog } from './components/calculos-a-mano/calculos-paso1/overwrite-dialog/overwrite-dialog.component';
+import { DeleteRowDialog } from './components/calculos-a-mano/calculos-paso1/delete-row-dialog/delete-row-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
     FaqExpansionPanelComponent,
     UpdateUserComponent,
     AboutUsComponent,
+    OverwriteDialog,
+    DeleteRowDialog,
   ],
   imports: [
     CommonModule,

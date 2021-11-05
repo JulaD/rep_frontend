@@ -3,42 +3,48 @@
         <div class="row">
             <img class="first-illustration" src="../../../../../assets/ilustrations/resultImg1.svg">
         </div>
-        <div class="row download-row">
-            <p class="download-title">Descargar resultados</p>
-        </div>
-        <div class="row download-row">
-            <div class="col-md-1">
-                <img src="../../../../../assets/ilustrations/PDF.png">
+        <div class="col">
+            <div class="row download-row">
+                <p class="download-title">Descargas:</p>
             </div>
-            <div class="col-md-3">
-                <button class="download-text" mat-icon-button (click)="generatePDF()">Descargar PDF</button>
+            <div class="row download-row">
+                <div class="col">
+                    <p class="download-text">
+                        Descargue sus resultados
+                        <button class="download-button" mat-icon-button (click)="generatePDF()">aqui</button>
+                    </p>
+                </div>
             </div>
-            <div class="col-md-1">
-                <img src="../../../../../assets/ilustrations/XLS.png">
-            </div>
-            <div class="col-md-4">
-                <button class="download-text" mat-icon-button>Descargar XLS</button>
+            <div class="row download-row">
+                <div class="col">
+                    <p class="download-text">
+                        Descargue los datos usados para el cálculo
+                        <button class="download-button" mat-icon-button (click)="saveProgress()">aqui</button>
+                    </p>
+                </div>
             </div>
         </div>
     </div> 
     <div class="col-md-6">
         <div class="row primary-result">
-            <div class="col-md-6">
-                <p class="rep-title">Requerimiento energético per cápita</p>
+            <div class="col primary-result-text">
+                <p class="rep-title">Requerimiento energético per cápita diario</p>
                 <div class="display-flex">
                     <p class="rep-subtitle">Población total ingresada</p>
                     <p class="rep-subtitle-quantity">{{ totalPopulation }}</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <p class="rep-result">{{ totalPerCapitaRequirement }}</p>
-                <p class="rep-result-subtitle">Kcal por día</p>
+            <div class="col primary-result-number">
+                <div>
+                    <p class="rep-result">{{ totalPerCapitaRequirement }}</p>
+                    <p class="rep-result-subtitle">Kcal por día</p>
+                </div>
             </div>
         </div>
         <div class="row secondary-result" *ngFor="let data of dataSources">
             <div class="col-md-2">
-                <p class="age-group">{{data.title}}</p>
-                <p class="age-group-quantity">{{data.subtitle}} personas</p>
+                <p class="age-group">{{mostrarFranja(data.title)}}</p>
+                <p class="age-group-quantity">{{data.subtitle}} {{mostrarPersonas(data.subtitle)}}</p>
             </div>
             <div class="col-md-9"> 
                 <table mat-table [dataSource]="data.source" class="mat-elevation-z8">
@@ -49,12 +55,12 @@
                     </ng-container>
                   
                     <ng-container matColumnDef="femenino">
-                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>{{data.femenine}} personas</strong></th>
+                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>{{data.femenine}} {{mostrarPersonas(data.femenine)}}</strong></th>
                       <td mat-cell *matCellDef="let element"> {{element.femenino}} </td>
                     </ng-container>
                   
                     <ng-container matColumnDef="masculino">
-                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>{{data.masculine}} personas</strong></th>
+                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>{{data.masculine}} {{mostrarPersonas(data.masculine)}}</strong></th>
                       <td mat-cell *matCellDef="let element"> {{element.masculino}} </td>
                     </ng-container>
                   
@@ -63,34 +69,6 @@
                 </table>
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col-md-2">
-                <p class="age-group">5 años</p>
-                <p class="age-group-quantity">48 personas</p>
-            </div>
-            <div class="col-md-9"> 
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-                    <ng-container matColumnDef="texto">
-                      <th mat-header-cell *matHeaderCellDef> </th>
-                      <td mat-cell *matCellDef="let element"> {{element.texto}} </td>
-                    </ng-container>
-                  
-                    <ng-container matColumnDef="femenino">
-                      <th mat-header-cell *matHeaderCellDef> Femenino <strong>27 personas</strong></th>
-                      <td mat-cell *matCellDef="let element"> {{element.femenino}} </td>
-                    </ng-container>
-                  
-                    <ng-container matColumnDef="masculino">
-                      <th mat-header-cell *matHeaderCellDef> Masculino <strong>21 personas</strong></th>
-                      <td mat-cell *matCellDef="let element"> {{element.masculino}} </td>
-                    </ng-container>
-                  
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>              
-            </div>
-        </div> -->
     </div>
 </div>
   

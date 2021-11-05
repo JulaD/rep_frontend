@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component, Input, OnInit, SimpleChanges,
+} from '@angular/core';
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
@@ -23,13 +26,14 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso3Component implements OnInit {
   @Input() defaultAdultPal: AdultPAL;
 
+  @Input() loadedAdultPal: AdultPAL;
+
   @Input() defaultExtraDataAvailable: boolean;
 
   ngOnInit() {
-    console.log('Start Load Step3');
-    this.loadDefaultValues();
-    console.log('Finished Load Step3');
   }
+
+  constructor(private cdRef:ChangeDetectorRef) {}
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -51,6 +55,21 @@ export class CalculosPaso3Component implements OnInit {
       [step3RuralSuman100Validator, step3UrbanSuman100Validator],
     ),
   });
+
+  ngOnChanges(changes: SimpleChanges) {
+    // delay(0) helps avoid an error
+    setTimeout(() => {
+      if (changes.loadedAdultPal.currentValue !== undefined) {
+        console.log('Cargue nivel actividad fisica adultos');
+        this.adultPALForm.get('population.ruralPercentage')?.setValue(changes.loadedAdultPal.currentValue.ruralPercentage);
+        this.adultPALForm.get('population.urbanPercentage')?.setValue(changes.loadedAdultPal.currentValue.urbanPercentage);
+        this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.activeRuralPAL);
+        this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.lowRuralPAL);
+        this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.activeUrbanPAL);
+        this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.lowUrbanPAL);
+      }
+    });
+  }
 
   sendData(): AdultPAL {
     const ruralPercentage: number = NumberForForms(this.adultPALForm.get('population.ruralPercentage')?.value);
@@ -83,7 +102,6 @@ export class CalculosPaso3Component implements OnInit {
   }
 
   loadDefaultValues() {
-    console.log('Loading Step3');
     if (this.defaultExtraDataAvailable) {
       this.adultPALForm.get('population.ruralPercentage')?.setValue(this.defaultAdultPal.ruralPercentage);
       this.adultPALForm.get('population.urbanPercentage')?.setValue(this.defaultAdultPal.urbanPercentage);

@@ -1,4 +1,12 @@
 <section>
+    <div class="navigation-buttons">
+        <button mat-fab color="primary" aria-label="Página princial" matTooltip="Página principal"  routerLink="/dashboard">
+            <mat-icon>home</mat-icon>
+        </button>
+        <button mat-fab color="primary" aria-label="Volver" matTooltip="Volver" routerLink="/admin"> 
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+    </div>
     <div class="color"></div>
     <div class="color"></div>
     <div class="color"></div>
@@ -165,7 +173,7 @@
                                 </select>
                             </div>
                             <div class="valor">
-                                <h1>{{selectedNafMinor.value}}{{selectedNafMinorMeasurement}}</h1>
+                                <h1>{{selectedNafMinor.value}}%</h1>
                             </div>
                             <div (click)="toggleModificar('nafMenores')" class="modificarBtn">
                                 <span id="modBtn">

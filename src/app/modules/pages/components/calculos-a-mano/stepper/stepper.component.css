@@ -1,3 +1,18 @@
+.navigation-buttons {
+    width: fit-content;
+    height: 60px;
+    border-radius: 50px;
+    margin: 20px;
+}
+
+.navigation-buttons > * {
+  margin-right: 20px;
+}
+
+.navigation-buttons .mat-tooltip {
+  font-size: 20px;
+}
+
 .card {
     margin: 1rem;
 }
@@ -8,7 +23,41 @@
     float: left;
 }
 
-.containerButtons {
+.container-buttons {
+    margin-bottom: 10px;
+}
+
+.container-stepper-buttons {
     display:flex;
     justify-content: flex-end;
 }
+
+.container-download-progress-button {
+    display:flex;
+    justify-content: flex-start;
+}
+
+.upload-button {
+    margin-left: 15px;
+}
+
+.file-input {
+    display: none;
+}
+
+::ng-deep snack-bar-container.error-snack-bar {
+    background: #FF5252;
+}
+
+::ng-deep .error-snack-bar .mat-simple-snackbar {
+  color: #ffffff;
+}
+
+::ng-deep .error-snack-bar .mat-simple-snackbar-action {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-tooltip {
+  font-size: 1rem !important;
+}
+  

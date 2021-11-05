@@ -1,7 +1,8 @@
+import { Rol } from "../enums/rol";
+
 export class AboutUsInfo {
-  public apodo: string;
-
-  public nombre: string;
-
-  public descripcion: string;
+    nombre: string;
+    rol: Rol;
+    descripcion: string;
+    img: string
 }

@@ -16,6 +16,21 @@ section {
   transition: 0.5s;
   overflow: hidden;
 }
+.navigation-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: fit-content;
+  background: #ccfdff;
+  background-size: cover;
+  border: 20px solid #ccfdff;
+}
+.navigation-buttons > * {
+  margin-right: 20px;
+}
+.navigation-buttons .mat-tooltip {
+  font-size: 20px;
+}
 section .color {
   position: absolute;
   border-radius: 10px;
@@ -36,38 +51,38 @@ section .color:after {
   background: linear-gradient(315deg, #65fdd7, #3cd17f);
   filter: blur(20px);
 }
-section .color:nth-child(1) {
+section .color:nth-child(2) {
   top: -140px;
   right: 80px;
   width: 150px;
   height: 550px;
   animation: init-color1 0.5s ease-in;
 }
-section.active .color:nth-child(1) {
+section.active .color:nth-child(2) {
   top: 160px;
   right: 200px;
   height: 850px;
 }
-section .color:nth-child(2) {
+section .color:nth-child(3) {
   top: 100px;
   left: -20px;
   width: 180px;
   height: 900px;
   animation: init-color2 0.75s ease-in;
 }
-section.active .color:nth-child(2) {
+section.active .color:nth-child(3) {
   top: -100px;
   left: 170px;
   height: 400px;
 }
-section .color:nth-child(3) {
+section .color:nth-child(4) {
   bottom: -120px;
   left: 180px;
   width: 150px;
   height: 550px;
   animation: init-color3 0.8s ease-in;
 }
-section.active .color:nth-child(3) {
+section.active .color:nth-child(4) {
   bottom: -20px;
   left: 220px;
   height: 550px;

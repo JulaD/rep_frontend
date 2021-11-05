@@ -1,12 +1,30 @@
+.navigation-buttons {
+  width: fit-content;
+  height: 60px;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.navigation-buttons > * {
+margin-right: 20px;
+}
+
+.navigation-buttons .mat-tooltip {
+font-size: 20px;
+}
+
 .first-div {
-    height: 100%;
-  }
+  height: 100%;
+  display: grid;
+  align-content: center;
+}
   
 .illustration {
-    width: 528px;
+    width: 30%;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: -200px;
 }
 
 .upload-div {
