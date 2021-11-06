@@ -65,7 +65,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
     this.userService.getUsers('approved', 4, 0, busqueda).subscribe(
@@ -78,7 +78,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
   }
@@ -105,7 +105,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -133,7 +133,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -159,7 +159,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -185,7 +185,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -267,7 +267,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
@@ -309,7 +309,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }

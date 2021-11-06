@@ -96,9 +96,7 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.ajv = new Ajv();
-    console.log('Start Load Stepper');
     this.processExtraData();
-    console.log('Finished Load Stepper');
   }
 
   ngOnDestroy() {
@@ -153,7 +151,7 @@ export class StepperComponent implements OnInit, OnDestroy {
         this.router
           .navigate(['/result']);
       }, (err) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -355,7 +353,6 @@ export class StepperComponent implements OnInit, OnDestroy {
     this.rest.getDefaultExtraData()
       .subscribe(
         (data) => {
-          console.log('Loading Stepper');
           this.defaultExtraDataAvailable = true;
           this.defaultExtraData = data;
           this.defaultExtraData?.forEach((extraData: DefaultExtraDataDTO) => {
@@ -376,7 +373,7 @@ export class StepperComponent implements OnInit, OnDestroy {
           this.finishedProcessExtraData = true;
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           this.defaultExtraDataAvailable = false;
           const errorMessage = 'Los valores por defecto no estan disponibles';
           const config : MatSnackBarConfig = new MatSnackBarConfig();

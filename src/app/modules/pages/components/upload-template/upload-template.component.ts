@@ -91,8 +91,6 @@ export class UploadTemplateComponent implements OnInit {
   };
 
   uploadFile(): Observable<HttpEvent<any>> {
-    console.log('uploadFile, sending req');
-
     const endpoint = `${this.api}/sheetParser`;
 
     const req = new HttpRequest('POST', endpoint, this.fileToUpload, this.options());

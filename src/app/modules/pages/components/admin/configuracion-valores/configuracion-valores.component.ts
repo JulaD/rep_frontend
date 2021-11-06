@@ -117,7 +117,6 @@ export class ConfiguracionValoresComponent implements OnInit {
     previousAgeRangeGrowthMen: string, previousAgeRangeGrowthWomen: string) {
     this.valuesService.getParameters().subscribe(
       (res) => {
-        console.log(res);
         res.defaultWeights.forEach((weight: DefaultWeightDTO) => {
           if (weight.sex === 'Masculino') {
             this.weightsMen.push(weight);
@@ -316,7 +315,7 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
   }
@@ -915,7 +914,7 @@ export class ConfiguracionValoresComponent implements OnInit {
               '¡Error!',
               'Hubo un problema.',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
