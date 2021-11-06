@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 section {
   position: relative;
   min-height: 1000px;
@@ -14,7 +15,6 @@ section {
   justify-content: center;
   align-items: center;
   transition: 0.5s;
-  overflow: hidden;
 }
 .navigation-buttons {
   position: absolute;
@@ -548,10 +548,11 @@ section .vacio .statisticsVacio {
 /*------------ AUDITORÍA ------------*/
 .header-row {
   width: 90px;
+  border-bottom: none;
 }
 
 .description-row {
-  font: italic;
+  font-style: italic;
 }
 
 table {
@@ -562,4 +563,12 @@ table {
   margin-bottom: 20px;
   margin-top: 10px;
   width: 95%;
+  height: 400px;
+  overflow: auto;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
 }

@@ -33,7 +33,7 @@
         <div class="resultadoBusqueda" *ngIf="totalLogs > 0">
             <h1>RESULTADO DE LA BUSQUEDA: {{totalLogs}}</h1>
         </div>
-        <div class="resultsTable" *ngIf="totalLogs > 0">
+        <div class="resultsTable" *ngIf="totalLogs > 0"> 
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="logs">
                     <!-- FECHA -->
@@ -91,7 +91,7 @@
                         <th mat-header-cell *matHeaderCellDef></th>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
                         class="header-row">
                     </tr>
                     <tr mat-header-row *matHeaderRowDef="['fecha-description', 'accion-description', 'email-description', 'nombre-description', 'org-description']"
@@ -100,7 +100,7 @@
                 
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
-                <mat-paginator [length]="totalLogs"
+                <mat-paginator class="mat-paginator-sticky" [length]="totalLogs"
                     [pageSize]="totalPerPage"
                     [pageSizeOptions]='[10,20,50]'
                     aria-label="Selecciona la página"
