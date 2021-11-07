@@ -9,7 +9,7 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 
 import localeEsUy from '@angular/common/locales/es-UY';
 import { ScaleType } from '@swimlane/ngx-charts';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { StatisticsSearch } from 'src/app/models/statistics-search.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services';
@@ -55,10 +55,9 @@ export class AuditoriaComponent implements OnInit {
   // Filtros de búsqueda
   users = new FormControl();
 
-  dateRange = new FormGroup({
-    from: new FormControl(),
-    to: new FormControl(),
-  });
+  fromDate = new FormControl();
+
+  toDate = new FormControl();
 
   // ComboBox usuarios
   usersList: User[];
@@ -173,43 +172,47 @@ export class AuditoriaComponent implements OnInit {
     const usersIds: number[] = this.users.value ? this.users.value : [];
     let dateFrom: string = '';
     let dateTo: string = '';
-    if (this.dateRange.value.from) {
-      dateFrom = this.dateRange.value.from.toString();
+    if (this.fromDate.value) {
+      dateFrom = this.fromDate.value;
     }
-    if (this.dateRange.value.to) {
-      dateTo = this.dateRange.value.to.toString();
+    if (this.toDate.value) {
+      dateTo = this.toDate.value;
     }
-    const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
-    this.auditoryService.getStatistics(statisticsSearch).subscribe(
-      (res) => {
-        const dataList: any[] = [];
-        res.forEach((data: any) => {
-          let name = '';
-          switch (data.extra.code) {
-            case 'cam':
-              name = this.byHandLabel;
-              break;
-            case 'cup':
-              name = this.templateLabel;
-              break;
-            default:
-              break;
-          }
-          if (name !== '') {
-            dataList.push({
-              name,
-              value: data.value,
-            });
-          }
-        });
-        this.statistics = dataList;
-        this.update$.next(true);
-      },
-      (err) => {
-        const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener las estadísticas, intente de nuevo más tarde.';
-        this.showError(errorMessage);
-      },
-    );
+    if (dateFrom && dateTo && (dateFrom > dateTo)) {
+      this.showError('La fecha DESDE debe ser menor o igual a la fecha HASTA.');
+    } else {
+      const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
+      this.auditoryService.getStatistics(statisticsSearch).subscribe(
+        (res) => {
+          const dataList: any[] = [];
+          res.forEach((data: any) => {
+            let name = '';
+            switch (data.extra.code) {
+              case 'cam':
+                name = this.byHandLabel;
+                break;
+              case 'cup':
+                name = this.templateLabel;
+                break;
+              default:
+                break;
+            }
+            if (name !== '') {
+              dataList.push({
+                name,
+                value: data.value,
+              });
+            }
+          });
+          this.statistics = dataList;
+          this.update$.next(true);
+        },
+        (err) => {
+          const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener las estadísticas, intente de nuevo más tarde.';
+          this.showError(errorMessage);
+        },
+      );
+    }
   }
 
   /**
@@ -217,7 +220,8 @@ export class AuditoriaComponent implements OnInit {
    */
   resetStatistics() {
     this.users.reset();
-    this.dateRange.reset();
+    this.fromDate.reset();
+    this.toDate.reset();
     this.getStatistics();
   }
 

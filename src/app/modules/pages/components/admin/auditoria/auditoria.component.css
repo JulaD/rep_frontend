@@ -232,7 +232,7 @@ section .data .busqueda .filters:focus {
 } */
 
 section .data .busqueda .filter {
-  width: 50%;
+  width: 33%;
   height: 40px;
   transition: 1s;
 }

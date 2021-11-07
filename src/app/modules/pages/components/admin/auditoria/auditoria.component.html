@@ -119,6 +119,18 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="filter" appearance="fill">
+                    <mat-label>Desde</mat-label>
+                    <input matInput [matDatepicker]="picker1" [formControl]="fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                 <mat-form-field class="filter" appearance="fill">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput [matDatepicker]="picker2" [formControl]="toDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-form-field class="filter" appearance="fill">
                     <mat-label>Rango de fechas</mat-label>
                     <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
                         <input matStartDate formControlName="from" placeholder="Desde">
@@ -129,12 +141,12 @@
                 
                     <mat-error *ngIf="dateRange.controls.from.hasError('matStartDateInvalid')">La fecha <em>desde</em> es inválida</mat-error>
                     <mat-error *ngIf="dateRange.controls.to.hasError('matEndDateInvalid')">La fecha <em>hasta</em> es inválida</mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
             </div>
             <button mat-fab color="white" matTooltip="Buscar" aria-label="Buscar" (click)="getStatistics()">
                 <mat-icon class="color-icon">search</mat-icon>
             </button>
-            <button [disabled]="!(users.value || dateRange.value.from || dateRange.value.to)" mat-fab color="white" matTooltip="Quitar filtros" aria-label="Quitar filtros" (click)="resetStatistics()">
+            <button [disabled]="!(users.value || fromDate.value || toDate.value)" mat-fab color="white" matTooltip="Quitar filtros" aria-label="Quitar filtros" (click)="resetStatistics()">
                 <mat-icon class="color-icon">filter_alt_off</mat-icon>
             </button>
         </div>
