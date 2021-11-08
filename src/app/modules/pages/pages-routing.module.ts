@@ -10,6 +10,10 @@ import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
 import { ByHandComponent } from './components/by-hand/by-hand.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import { ResendVerificationEmailComponent } from './components/resend-verification-email/resend-verification-email.component';
 
 const routes: Routes = [{
   path: '',
@@ -51,6 +55,18 @@ const routes: Routes = [{
     path: 'update-user',
     component: UpdateUserComponent,
     canActivate: [UserGuard],
+  }, {
+    path: 'verify-email',
+    component: VerifyEmailComponent,
+  }, {
+    path: 'update-password',
+    component: UpdatePasswordComponent,
+  }, {
+    path: 'recover-password',
+    component: RecoverPasswordComponent,
+  }, {
+    path: 'resend-verification-email',
+    component: ResendVerificationEmailComponent,
   }, {
     path: '',
     redirectTo: 'dashboard',

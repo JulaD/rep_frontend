@@ -122,4 +122,8 @@ export class LoginRegistroComponent implements OnInit {
       section.classList.toggle('active');
     }
   }
+
+  forgotPassword(): void {
+    this.router.navigate(['/recover-password']);
+  }
 }

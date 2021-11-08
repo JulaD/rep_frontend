@@ -22,6 +22,10 @@ import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { OverwriteDialog } from './components/calculos-a-mano/calculos-paso1/overwrite-dialog/overwrite-dialog.component';
 import { DeleteRowDialog } from './components/calculos-a-mano/calculos-paso1/delete-row-dialog/delete-row-dialog.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
+import { ResendVerificationEmailComponent } from './components/resend-verification-email/resend-verification-email.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import { DeleteRowDialog } from './components/calculos-a-mano/calculos-paso1/del
     UpdateUserComponent,
     OverwriteDialog,
     DeleteRowDialog,
+    VerifyEmailComponent,
+    UpdatePasswordComponent,
+    RecoverPasswordComponent,
+    ResendVerificationEmailComponent,
   ],
   imports: [
     CommonModule,
