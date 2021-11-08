@@ -96,4 +96,11 @@ export class UploadTemplateComponent implements OnInit {
     const req = new HttpRequest('POST', endpoint, this.fileToUpload, this.options());
     return this.http.request(req);
   }
+
+  downloadFile(): void {
+    const link = document.createElement('a');
+    link.download = 'PlantillaEstandar.xlsx';
+    link.href = 'assets/files/planillaEstandar.xlsx';
+    link.click();
+  }
 }
