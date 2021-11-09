@@ -182,9 +182,9 @@ export class AuditoriaComponent implements OnInit {
     const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
     this.auditoryService.getStatistics(statisticsSearch).subscribe(
       (res) => {
+        const dataList: any[] = [];
         res.forEach((data: any) => {
           let name = '';
-          /* eslint-disable default-case */
           switch (data.extra.code) {
             case 'cam':
               name = this.byHandLabel;
@@ -192,12 +192,17 @@ export class AuditoriaComponent implements OnInit {
             case 'cup':
               name = this.templateLabel;
               break;
+            default:
+              break;
           }
-          this.statistics.push({
-            name,
-            value: data.value,
-          });
+          if (name !== '') {
+            dataList.push({
+              name,
+              value: data.value,
+            });
+          }
         });
+        this.statistics = dataList;
         this.update$.next(true);
       },
       (err) => {

@@ -1,0 +1,119 @@
+<!-- HEADER -->
+<div class="row first-div">
+    <div class="orange col-md-6 left-column-header">
+        <p class="project-pretitle">Cómo surge</p> 
+        <p class="project-title">REP!</p>
+        <p class="project-description" [innerHTML]="projectDescription"></p>
+      </div>
+    <div class="orange col-md-6 right-column-header">
+        <img class="first-illustration" src="../../../../../assets/ilustrations/about-us-header.png">
+    </div>
+</div>
+
+<!-- CONTENIDO -->
+
+<div class="page-content">
+
+    <!-- SOBRE PIS -->
+    <div class="row justify-content-center">
+        <div class="col-md-6 img-column">
+            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+        </div>
+        <div class="col-md-4 text-column">
+            <p class="about-title pis-font">Proyecto de Ingeniería de Software (P.I.S.)</p>
+            <p class="about-description pis-font" [innerHTML]="pisDescription"></p>
+            <p class="source pis-font" [innerHTML]="pisDescriptionSource"></p>
+        </div>     
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- CLIENTES -->
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-column">
+            <p class="about-title client-font">Clientes</p>
+            <p class="about-description client-font" [innerHTML]="clientsDescription"></p>
+        </div>
+        <div class="col-md-4 img-column">
+            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+        </div>
+    </div>
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">    
+            <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let info of clients">
+                <mat-card class="info-card">
+                    <mat-card-header>
+                    <img mat-card-avatar src="{{info.img}}">
+                    <mat-card-title class="mat-card-title client-font">{{info.nombre}}</mat-card-title>
+                    <mat-card-subtitle class="mat-card-subtitle client-font">{{info.profesion}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <!-- <img mat-card-image src="{{info.img}}" alt="Foto de {{info.nombre}}"> -->
+                    <mat-card-content>
+                    <p class="institution">{{info.institucion}}</p>
+                    <p>
+                        {{info.descripcion}}
+                    </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- DIRECTORA -->
+    <div class="row justify-content-center">
+        <div class="col-md-4 img-column">
+            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+        </div>
+        <div class="col-md-4 text-column">
+            <p class="about-title director-font">Directora del Proyecto</p>
+            <p class="about-description director-font">{{directorDescription}}</p>
+        </div>
+        <div class="content">
+            <mat-card class="director-card">
+                <mat-card-header>
+                <img mat-card-avatar src="{{director.img}}">
+                <mat-card-title class="mat-card-title director-font">{{director.nombre}}</mat-card-title>
+                <mat-card-subtitle class="mat-card-subtitle director-font">{{director.profesion}}</mat-card-subtitle>
+                </mat-card-header>
+                <!-- <img mat-card-image src="{{director.img}}" alt="Foto de {{director.nombre}}"> -->
+                <mat-card-content>
+                <p class="institution">{{director.institucion}}</p>
+                <p>
+                    {{director.descripcion}}
+                </p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+
+    <!-- SOBRE NOSOTROS -->
+    <div class="row justify-content-center">
+        <div class="col-md-4 text-column">
+            <p class="about-title about-us-font">Sobre nosotros</p>
+            <p class="about-description about-us-font">{{aboutUsDescription}}</p>
+        </div>
+        <div class="col-md-4 img-column">
+            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+        </div>
+    </div>
+    <div class="content">
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">    
+            <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="50%" *ngFor="let info of information">
+                <mat-card class="info-card">
+                    <mat-card-header>
+                    <img mat-card-avatar src="{{info.img}}">
+                    <mat-card-title class="mat-card-title about-us-font">{{info.nombre}}</mat-card-title>
+                    <mat-card-subtitle class="mat-card-subtitle about-us-font">{{info.rol}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <!-- <img mat-card-image src="{{info.img}}" alt="Foto de {{info.nombre}}"> -->
+                    <mat-card-content>
+                    <p>
+                        {{info.descripcion}}
+                    </p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

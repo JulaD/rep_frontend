@@ -89,6 +89,33 @@ export class AuthService {
     );
   }
 
+  verifyEmail(token: string): Observable<void> {
+    return this.http.put<void>(`${this.api}/users/verify-email`, {}, {
+      params: {
+        token,
+      },
+    });
+  }
+
+  recoverPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.api}/users/recover-password`, {
+      email,
+    });
+  }
+
+  updatePassword(body: { password: string, repeat: string }, token: string): Observable<void> {
+    return this.http.put<void>(`${this.api}/users/password`, {
+      ...body,
+      token,
+    });
+  }
+
+  resendVerification(email: string): Observable<void> {
+    return this.http.post<void>(`${this.api}/users/resend-verification/`, {
+      email,
+    }, this.options());
+  }
+
   //-------------------------------------------------------------------------
   // private url: string = environment.api;
 

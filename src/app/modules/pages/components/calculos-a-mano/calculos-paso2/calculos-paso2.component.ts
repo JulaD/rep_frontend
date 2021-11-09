@@ -45,10 +45,12 @@ export class CalculosPaso2Component implements OnInit {
       switch (key) {
         case 'loadedMinorPal':
           if (changes[key].currentValue !== undefined) {
-            console.log('Cargue prevalencia actividad fisica menores');
             this.minorPALForm.get('lowPAL')?.setValue(changes.loadedMinorPal.currentValue.lowPALPrevalence);
+            this.minorPALForm.get('lowPAL')?.markAsDirty();
             this.minorPALForm.get('moderatePAL')?.setValue(changes.loadedMinorPal.currentValue.moderatePALPrevalence);
+            this.minorPALForm.get('moderatePAL')?.markAsDirty();
             this.minorPALForm.get('intensePAL')?.setValue(changes.loadedMinorPal.currentValue.intensePALPrevalence);
+            this.minorPALForm.get('intensePAL')?.markAsDirty();
           }
           break;
         default:

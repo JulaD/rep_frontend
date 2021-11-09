@@ -55,10 +55,8 @@ export class PermisosUsuariosComponent implements OnInit {
 
   init(busqueda: string) {
     this.currentUser = this.authService.getUser();
-    console.log(this.currentUser);
     this.userService.getUsers('clients', 4, 0, busqueda).subscribe(
       (res) => {
-        console.log(res.rows);
         this.usersCount = res.count;
         this.users = res.rows;
         this.usersPageCount = Math.ceil(this.usersCount / 4);
@@ -67,7 +65,7 @@ export class PermisosUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
     this.userService.getUsers('admins', 4, 0, busqueda).subscribe(
@@ -80,7 +78,7 @@ export class PermisosUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
   }
@@ -105,7 +103,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -131,7 +129,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -196,7 +194,7 @@ export class PermisosUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
@@ -238,7 +236,7 @@ export class PermisosUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
@@ -287,7 +285,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -315,7 +313,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }

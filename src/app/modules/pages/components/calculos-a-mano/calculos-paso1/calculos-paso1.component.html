@@ -29,16 +29,6 @@
                 Debe seleccionar una franja etaria
               </mat-error>
             </mat-form-field>
-            <div *ngIf="grupoEtarioForm.get('edad')?.dirty" class="div-boton-borrar">
-              <button class="boton-borrar"
-                type="button"
-                (click)="borrarEdad('Both', this.grupoEtarioForm.get('edad')?.value)"
-                mat-stroked-button color="warn"
-                matTooltip="Borra los datos en la tabla asociados a esta edad."
-                matTooltipPosition="below">
-                Borrar Edad
-              </button>
-            </div>
           </div> <!--end step1-edad-select-->
         </div>
         <div class="col-5">
