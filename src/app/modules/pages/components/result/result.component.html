@@ -4,23 +4,23 @@
             <img class="first-illustration" src="../../../../../assets/ilustrations/resultImg1.svg">
         </div>
         <div class="col">
-            <div class="row download-row">
-                <p class="download-title">Descargas:</p>
-            </div>
-            <div class="row download-row">
-                <div class="col">
-                    <p class="download-text">
-                        Descargue sus resultados
-                        <button class="download-button" mat-icon-button (click)="generatePDF()">aqui</button>
-                    </p>
+            <div class="download-container">
+                <div class="download-col">
+                    <p class="download-title">Descargas:</p>
                 </div>
-            </div>
-            <div class="row download-row">
-                <div class="col">
-                    <p class="download-text">
-                        Descargue los datos usados para el cálculo
-                        <button class="download-button" mat-icon-button (click)="saveProgress()">aqui</button>
-                    </p>
+                <div class="download-col">
+                    <div class="col">
+                        <p class="download-text">
+                            <button color="primary" mat-flat-button mat-button (click)="generatePDF()">Resultados del cálculo</button>
+                        </p>
+                    </div>
+                </div>
+                <div class="download-col">
+                    <div class="col">
+                        <p class="download-text">
+                            <button color="primary" mat-flat-button mat-button (click)="saveProgress()">Datos de la población</button>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

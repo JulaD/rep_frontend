@@ -1,8 +1,11 @@
-import { Rol } from "../enums/rol";
+import { Rol } from '../enums/rol';
 
 export class AboutUsInfo {
-    nombre: string;
-    rol: Rol;
-    descripcion: string;
-    img: string
+  nombre: string;
+
+  rol: Rol;
+
+  descripcion: string;
+
+  img: string;
 }

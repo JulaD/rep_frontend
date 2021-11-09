@@ -24,14 +24,11 @@ export class FaqsComponent implements OnInit {
     this.getFAQs();
   }
 
-  getFAQs(): void {
-    this.service
-      .getFAQs()
-      .subscribe((faqs: FAQ[]) => {
-        this.faqs = faqs;
-      }, (error: Error) => {
-        console.error(error);
-      });
+  toggleQuestion(id: number) {
+    const question = document.getElementById(id.toString());
+    if (question) {
+      question.classList.toggle('active');
+    }
   }
 
   upsertFaq(faq?: FAQ): void {
@@ -89,8 +86,18 @@ export class FaqsComponent implements OnInit {
             Swal.fire('¡Ups!', 'No se ha podido eliminar la pregunta.', 'error');
           }
         }, () => {
-          // Error
+        // Error
         });
     }
+  }
+
+  getFAQs(): void {
+    this.service
+      .getFAQs()
+      .subscribe((faqs: FAQ[]) => {
+        this.faqs = faqs;
+      }, (error: Error) => {
+        console.log(error);
+      });
   }
 }

@@ -20,22 +20,23 @@
     <span class="new-faq-button" (click)="upsertFaq()">
       AGREGAR
     </span>
-    <ul class="faq-list">
-      <li *ngFor="let faq of faqs">
-        <span class="faq-item">{{faq.question}}</span>
-        <div class="info">
-          <span>Respuesta: {{faq.answer}}</span>
-          <span>Posición: {{faq.position}}</span>
-          <a>
-            <span class="boton cancelar" (click)="deleteFaq(faq)">
-              ELIMINAR
-            </span>
-            <span class="boton edit" (click)="upsertFaq(faq)">
-              EDITAR
-            </span>
-          </a>
+    <div class="faq-list">
+      <ng-container *ngFor="let faq of faqs">
+        <div id="{{faq.position}}" class="content">
+          <div class="question" (click)="toggleQuestion(faq.position)">{{faq.question}}</div>
+          <div class="answer">
+            <span>{{faq.answer}}</span>
+            <span>Posición: {{faq.position}}</span>
+            <a>
+              <span class="boton eliminar" (click)="deleteFaq(faq)">ELIMINAR</span>
+              <span class="boton edit" (click)="upsertFaq(faq)">EDITAR</span>
+            </a>
+          </div>
         </div>
-      </li>
-    </ul>  
+      </ng-container>
+    </div>
+    <div class="vacio" *ngIf="faqs.length == 0">
+      <h1 class="vacioPendientes">¡NO HAY PREGUNTAS FRECUENTES!</h1>
+    </div>
   </div>
 </section>

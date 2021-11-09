@@ -1,5 +1,3 @@
-import additionalProperties from 'ajv/dist/vocabularies/applicator/additionalProperties';
-
 export const progressSchema = {
   $id: '/progressSchema',
   type: 'object',
