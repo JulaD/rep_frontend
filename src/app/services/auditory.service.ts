@@ -25,8 +25,8 @@ export class AuditoryService {
   };
 
   getLogs(search: LogsSearch) {
-    const endpoint: string = `${this.api}/auditory?cant=${search.cant}&page=${search.page}&filters=${search.filters}`;
-    return this.http.get<any>(endpoint, this.options());
+    const endpoint: string = `${this.api}/auditory`;
+    return this.http.post<any>(endpoint, search, this.options());
   }
 
   getStatistics(search: StatisticsSearch) {
