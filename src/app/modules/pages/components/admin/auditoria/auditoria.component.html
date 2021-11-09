@@ -93,10 +93,10 @@
                     <ng-container matColumnDef="fecha-description">
                         <th mat-header-cell *matHeaderCellDef>Fecha de la acción</th>
                     </ng-container>
-                
-                    <!-- Descripción ACCIÓN -->
-                    <ng-container matColumnDef="accion-description">
-                        <th mat-header-cell *matHeaderCellDef>Acción realizada</th>
+
+                    <!-- Descripción ORGANIZACIÓN -->
+                    <ng-container matColumnDef="org-description">
+                        <th mat-header-cell *matHeaderCellDef></th>
                     </ng-container>
 
                     <!-- Descripción EMAIL -->
@@ -109,15 +109,15 @@
                         <th mat-header-cell *matHeaderCellDef></th>
                     </ng-container>
 
-                    <!-- Descripción ORGANIZACIÓN -->
-                    <ng-container matColumnDef="org-description">
-                        <th mat-header-cell *matHeaderCellDef></th>
+                    <!-- Descripción ACCIÓN -->
+                    <ng-container matColumnDef="accion-description">
+                        <th mat-header-cell *matHeaderCellDef>Acción realizada</th>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"
                         class="header-row">
                     </tr>
-                    <tr mat-header-row *matHeaderRowDef="['fecha-description', 'accion-description', 'email-description', 'nombre-description', 'org-description']"
+                    <tr mat-header-row *matHeaderRowDef="['fecha-description', 'email-description', 'org-description', 'nombre-description', 'accion-description']"
                         class="description-row">
                     </tr>
                 
