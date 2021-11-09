@@ -7,7 +7,7 @@
 section {
   position: relative;
   min-height: 1000px;
-  height: 100vh;
+  height: 1100px;
   background: #ccfdff;
   background-size: cover;
   display: flex;
@@ -76,7 +76,7 @@ section.active .color:nth-child(3) {
   height: 400px;
 }
 section .color:nth-child(4) {
-  bottom: -120px;
+  bottom: 0px;
   left: 180px;
   width: 150px;
   height: 550px;
