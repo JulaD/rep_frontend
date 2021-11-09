@@ -57,16 +57,20 @@ export class CalculosPaso3Component implements OnInit {
   });
 
   ngOnChanges(changes: SimpleChanges) {
-    // delay(0) helps avoid an error
     setTimeout(() => {
       if (changes.loadedAdultPal.currentValue !== undefined) {
-        console.log('Cargue nivel actividad fisica adultos');
         this.adultPALForm.get('population.ruralPercentage')?.setValue(changes.loadedAdultPal.currentValue.ruralPercentage);
+        this.adultPALForm.get('population.ruralPercentage')?.markAsDirty();
         this.adultPALForm.get('population.urbanPercentage')?.setValue(changes.loadedAdultPal.currentValue.urbanPercentage);
+        this.adultPALForm.get('population.urbanPercentage')?.markAsDirty();
         this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.activeRuralPAL);
+        this.adultPALForm.get('ruralPAL.activeRuralPAL')?.markAsDirty();
         this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.lowRuralPAL);
+        this.adultPALForm.get('ruralPAL.lowRuralPAL')?.markAsDirty();
         this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.activeUrbanPAL);
+        this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.markAsDirty();
         this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.lowUrbanPAL);
+        this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.markAsDirty();
       }
     });
   }

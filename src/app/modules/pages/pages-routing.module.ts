@@ -14,6 +14,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { ResendVerificationEmailComponent } from './components/resend-verification-email/resend-verification-email.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
 
 const routes: Routes = [{
   path: '',
@@ -71,6 +72,9 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  }, {
+    path: 'about-us',
+    component: AboutUsComponent,
   }, {
     path: 'admin',
     loadChildren: () => import('./components/admin/admin.module').then((m) => m.AdminModule),

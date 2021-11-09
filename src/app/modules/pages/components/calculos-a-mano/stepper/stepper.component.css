@@ -32,6 +32,10 @@
     justify-content: flex-end;
 }
 
+.stepper-btn {
+    margin-right: 15px;
+}
+
 .container-download-progress-button {
     display:flex;
     justify-content: flex-start;

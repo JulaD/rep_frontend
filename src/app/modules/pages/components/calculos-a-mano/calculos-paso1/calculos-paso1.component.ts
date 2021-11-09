@@ -117,13 +117,15 @@ export class CalculosPaso1Component implements AfterViewInit {
     if (indexF > -1 || indexM > -1) { // Si la franja ya esta en la tabla
       // evaluo si los nuevos datos no afectarian la tabla al sobrescribir
       if ((
-        (cantFemenino === 0)
+        (cantFemenino === 0 && medianaFemenino === 0) // el campo femenino esta vacio
+        || (cantFemenino === 0 && indexF === -1)
         || (indexF > -1
           && cantFemenino === femeninoData[indexF].cantidad
           && medianaFemenino === femeninoData[indexF].pesoMediano)
       )
       && (
-        (cantMasculino === 0)
+        (cantMasculino === 0 && medianaMasculino === 0) // el campo masculino esta vacio
+        || (cantMasculino === 0 && indexM === -1) // Cantidad en cero pero no estaba en la tabla
         || (indexM > -1
           && cantMasculino === masculinoData[indexM].cantidad
           && medianaMasculino === masculinoData[indexM].pesoMediano)
@@ -152,15 +154,21 @@ export class CalculosPaso1Component implements AfterViewInit {
         const grupoFemeninoNuevo: GrupoEtario = {
           edad: franja,
           sexo: Sexo.Femenino,
-          pesoMediano: cantFemenino !== 0 ? medianaFemenino : grupoFemeninoActual.pesoMediano,
-          cantidad: cantFemenino !== 0 ? cantFemenino : grupoFemeninoActual.cantidad,
+          pesoMediano: medianaFemenino !== 0 ? medianaFemenino : grupoFemeninoActual.pesoMediano,
+          cantidad: medianaFemenino !== 0 ? cantFemenino : grupoFemeninoActual.cantidad,
         };
+        if (cantFemenino === 0 && medianaFemenino !== 0) {
+          grupoFemeninoNuevo.pesoMediano = 0;
+        }
         const grupoMasculinoNuevo: GrupoEtario = {
           edad: franja,
           sexo: Sexo.Masculino,
-          pesoMediano: cantMasculino !== 0 ? medianaMasculino : grupoMasculinoActual.pesoMediano,
-          cantidad: cantMasculino !== 0 ? cantMasculino : grupoMasculinoActual.cantidad,
+          pesoMediano: medianaMasculino !== 0 ? medianaMasculino : grupoMasculinoActual.pesoMediano,
+          cantidad: medianaMasculino !== 0 ? cantMasculino : grupoMasculinoActual.cantidad,
         };
+        if (cantMasculino === 0 && medianaMasculino !== 0) {
+          grupoMasculinoNuevo.pesoMediano = 0;
+        }
         // abro el dialogo, y si recibo una respuesta afirmativa, sobrescribo el valor actual
         this.openOverwriteDialog(grupoFemeninoActual, grupoMasculinoActual,
           grupoFemeninoNuevo, grupoMasculinoNuevo);
@@ -250,7 +258,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log('The dialog was closed');
       if (response) {
         this.borrarEdad(sex, range);
       }
@@ -385,7 +392,7 @@ export class CalculosPaso1Component implements AfterViewInit {
           });
         },
         (error) => {
-          console.log(error);
+          console.error(error);
           this.defaultWeightsAvailable = false;
           const errorMessage = 'Los valores por defecto no estan disponibles';
           const config : MatSnackBarConfig = new MatSnackBarConfig();
@@ -440,7 +447,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((response) => {
-      console.log('The dialog was closed');
       if (response) {
         this.borrarEdad('Both', grupoFemeninoActual.edad);
         if (grupoFemeninoNuevo.cantidad !== 0) {

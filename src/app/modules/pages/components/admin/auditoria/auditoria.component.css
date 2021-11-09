@@ -1,23 +1,9 @@
-.navigation-buttons {
-	height: fit-content;
-  background: #ccfdff;
-  background-size: cover;
-  border: 20px solid #ccfdff;
-}
-
-.navigation-buttons > * {
-  margin-right: 20px;
-}
-
-.navigation-buttons .mat-tooltip {
-  font-size: 20px;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 section {
   position: relative;
   min-height: 1000px;
@@ -29,7 +15,21 @@ section {
   justify-content: center;
   align-items: center;
   transition: 0.5s;
-  overflow: hidden;
+}
+.navigation-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: fit-content;
+  background: #ccfdff;
+  background-size: cover;
+  border: 20px solid #ccfdff;
+}
+.navigation-buttons > * {
+  margin-right: 20px;
+}
+.navigation-buttons .mat-tooltip {
+  font-size: 20px;
 }
 section .color {
   position: absolute;
@@ -51,38 +51,38 @@ section .color:after {
   background: linear-gradient(315deg, #f4dbfc, #ae5ae6);
   filter: blur(20px);
 }
-section .color:nth-child(1) {
+section .color:nth-child(2) {
   top: -140px;
   right: 80px;
   width: 150px;
   height: 550px;
   animation: init-color1 0.5s ease-in;
 }
-section.active .color:nth-child(1) {
+section.active .color:nth-child(2) {
   top: 160px;
   right: 200px;
   height: 850px;
 }
-section .color:nth-child(2) {
+section .color:nth-child(3) {
   top: 100px;
   left: -20px;
   width: 180px;
   height: 900px;
   animation: init-color2 0.75s ease-in;
 }
-section.active .color:nth-child(2) {
+section.active .color:nth-child(3) {
   top: -100px;
   left: 170px;
   height: 400px;
 }
-section .color:nth-child(3) {
+section .color:nth-child(4) {
   bottom: -120px;
   left: 180px;
   width: 150px;
   height: 550px;
   animation: init-color3 0.8s ease-in;
 }
-section.active .color:nth-child(3) {
+section.active .color:nth-child(4) {
   bottom: -20px;
   left: 220px;
   height: 550px;
@@ -274,7 +274,7 @@ section .resultadoBusqueda h1 {
   font-size: 20px;
   font-weight: 420;
   letter-spacing: 1px;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   color: #c9fdff;
 }
 section .resultadoBusqueda .cancelarBusqueda {
@@ -534,24 +534,29 @@ section .vacio .statisticsVacio {
 }
 
 ::ng-deep .ngx-charts text {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 25px;
-  fill: #fff !important; 
+  fill: #fff !important;
 }
 
 ::ng-deep .ngx-charts .tick text {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   font-size: 15px !important;
-  fill: #fff !important; 
+  fill: #fff !important;
 }
 
 /*------------ AUDITORÍA ------------*/
-.header-row {
+
+.header-row th {
+  font-family: Montserrat;
+  font-size: 1.2rem;
+  color: #3f51b5;
   width: 90px;
+  border-bottom: none;
 }
 
-.description-row {
-  font: italic;
+.description-row th {
+  font-style: italic;
 }
 
 table {
@@ -562,4 +567,13 @@ table {
   margin-bottom: 20px;
   margin-top: 10px;
   width: 95%;
+  height: fit-content;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.mat-paginator-sticky {
+  bottom: 0px;
+  position: sticky;
+  z-index: 10;
 }
