@@ -1,4 +1,12 @@
 <section>
+  <div class="navigation-buttons">
+    <button mat-fab color="primary" aria-label="Página princial" matTooltip="Página principal"  routerLink="/dashboard">
+        <mat-icon>home</mat-icon>
+    </button>
+    <button mat-fab color="primary" aria-label="Volver" matTooltip="Volver" routerLink="/admin"> 
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
   <div class="color"></div>
   <div class="color"></div>
   <div class="color"></div>
@@ -12,22 +20,23 @@
     <span class="new-faq-button" (click)="upsertFaq()">
       AGREGAR
     </span>
-    <ul class="faq-list">
-      <li *ngFor="let faq of faqs">
-        <span class="faq-item" style="font-size: 1.5rem; margin-bottom: 0.5rem;">{{faq.question}}</span>
-        <div class="info" style="width: 100%; word-break: break-all;">
-          <span style="font-size: 1.5rem;">Respuesta: {{faq.answer}}</span>
-          <span style="font-size: 1.5rem;">Posición: {{faq.position}}</span>
+    <div class="faq-list">
+      <ng-container *ngFor="let faq of faqs">
+        <div id="{{faq.position}}" class="content">
+          <div class="question" (click)="toggleQuestion(faq.position)">{{faq.question}}</div>
+          <div class="answer">
+            <span>{{faq.answer}}</span>
+            <span>Posición: {{faq.position}}</span>
+            <a>
+              <span class="boton eliminar" (click)="deleteFaq(faq)">ELIMINAR</span>
+              <span class="boton edit" (click)="upsertFaq(faq)">EDITAR</span>
+            </a>
+          </div>
         </div>
-        <a>
-          <span class="boton cancelar" (click)="deleteFaq(faq)">
-            ELIMINAR
-          </span>
-          <span class="boton edit" (click)="upsertFaq(faq)">
-            EDITAR
-          </span>
-        </a>
-      </li>
-    </ul>  
+      </ng-container>
+    </div>
+    <div class="vacio" *ngIf="faqs.length == 0">
+      <h1 class="vacioPendientes">¡NO HAY PREGUNTAS FRECUENTES!</h1>
+    </div>
   </div>
 </section>

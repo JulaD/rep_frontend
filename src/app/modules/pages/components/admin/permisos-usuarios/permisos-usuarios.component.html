@@ -1,4 +1,12 @@
 <section>
+    <div class="navigation-buttons">
+        <button mat-fab color="primary" aria-label="Página princial" matTooltip="Página principal"  routerLink="/dashboard">
+            <mat-icon>home</mat-icon>
+        </button>
+        <button mat-fab color="primary" aria-label="Volver" matTooltip="Volver" routerLink="/admin"> 
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+    </div>
     <div class="color"></div>
     <div class="color"></div>
     <div class="color"></div>
@@ -37,18 +45,20 @@
             </button>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let user of users">
-                <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: {{user.organization}}</span>
-                    <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
-                    <a>
-                        <span class="boton aceptar" (click)="giveAdminPermission(user.id, user.name)">
-                            DAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
+            <ng-container *ngFor="let user of users"> 
+                <li>
+                    <span class="UsuarioEmail">{{user.name}} - {{user.email}}</span>
+                    <div class="info">
+                        <span class="Organizacion">Organizacion: {{user.organization}}</span>
+                        <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
+                        <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                            <span class="boton aceptar" (click)="giveAdminPermission(user.id, user.name)">
+                                DAR PERMISOS DE ADMINISTRADOR
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
         <div class="vacio" *ngIf="usersCount == 0">
             <h1 class="vacioUsuarios">¡NO HAY USUARIOS!</h1>
@@ -88,18 +98,20 @@
             </button>
         </div>
         <ul class="listaUsuarios">
-            <li *ngFor="let admin of admins">
-                <span class="UsuarioEmail">{{admin.name}} - {{admin.email}}</span>
-                <div class="info">
-                    <span class="Organizacion">Organizacion: {{admin.organization}}</span>
-                    <span class="Fecha">Fecha de registro: {{admin.createdAt}}</span>
-                    <a>
-                        <span class="boton cancelar" (click)="removeAdminPermission(admin.id, admin.name)">
-                            QUITAR PERMISOS DE ADMINISTRADOR
-                        </span>
-                    </a>
-                </div>
-            </li>
+            <ng-container *ngFor="let admin of admins"> 
+                <li>
+                    <span class="UsuarioEmail">{{admin.name}} - {{admin.email}}</span>
+                    <div class="info">
+                        <span class="Organizacion">Organizacion: {{admin.organization}}</span>
+                        <span class="Fecha">Fecha de registro: {{admin.createdAt}}</span>
+                        <a *ngIf="currentUser !== undefined && admin.id !== currentUser.id">
+                            <span class="boton cancelar" (click)="removeAdminPermission(admin.id, admin.name)">
+                                QUITAR PERMISOS DE ADMINISTRADOR
+                            </span>
+                        </a>
+                    </div>
+                </li>
+            </ng-container>
         </ul>
         <div class="vacio" *ngIf="adminsCount == 0">
             <h1 class="vacioAdministradores">¡NO HAY ADMINISTRADORES!</h1>

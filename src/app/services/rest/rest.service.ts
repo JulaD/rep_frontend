@@ -36,8 +36,11 @@ export class RestService {
     };
   };
 
-  addCalculation(groups: AgeGroupJSON[], extraData: ExtraData): Observable<any> {
-    return this.http.post(endpoint + serviceCalc, { groups, extraData }, this.options()).pipe(
+  addCalculation(groups: AgeGroupJSON[], extraData: ExtraData, fromTemplate: boolean):
+  Observable<any> {
+    return this.http.post(
+      endpoint + serviceCalc, { groups, extraData, fromTemplate }, this.options(),
+    ).pipe(
       catchError(this.handleError),
     );
   }

@@ -76,7 +76,7 @@ section .alertas .cerrarAlerta {
   border-radius: 50%;
 }
 section .alertas .alertaSuccess {
-  background: rgb(132, 196, 132);
+  background: rgb(100, 184, 100);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.25);
   padding: 15px;
   border-radius: 10px;
@@ -241,5 +241,11 @@ section .container.active .signinBx .imgBx {
   }
   section .container.active .signinBx .formBx {
     top: -100%;
+  }
+}
+@media (max-height: 800px) {
+  section .tituloBx .titulo {
+    font-size: 150px;
+    margin-top: 36px;
   }
 }

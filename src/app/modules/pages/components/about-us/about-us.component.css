@@ -1,0 +1,143 @@
+.first-div {
+    height: 80%;
+}  
+
+.orange {
+    background-color: #fe5244;
+}
+
+.col-md-6.orange {
+    min-width: 65vh;
+    max-height: 100%;
+}
+
+.first-illustration {
+    height: 90%;
+    margin: 20px
+}
+
+.project-pretitle {
+    font-family: Montserrat;
+    font-style: normal;
+    font-size: 3rem;
+    display: flex;
+    color: #FFFFFF;
+    margin-left: 5rem;
+    margin-bottom: -4rem;
+}
+
+.project-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 10rem;
+    display: flex;
+    color: #FFFFFF;
+    margin-left: 4rem;
+}
+
+.project-description {
+    font-family: Montserrat;
+    font-size: 0.95rem;
+    color: #FFFFFF;
+    margin-left: 4rem;
+    margin-bottom: 5%;
+}
+
+.right-column-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.left-column-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.img-column {
+    width: 40%;
+}
+
+.text-column {
+    width: 60%;
+    margin-top: 3rem;
+}
+
+.page-content {
+    margin: 2rem 10rem;
+}
+
+.mat-divider {
+    margin: 3rem 5rem 3rem 5rem;
+}
+
+/*-------------- SOBRE NOSOTROS --------------*/
+
+.content { 
+    margin-top: 2rem;
+}
+
+.about-title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 2rem;
+    display: flex;
+}
+
+.about-description {
+    font-family: Montserrat;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+
+.source {
+    font-family: Montserrat;
+    font-size: 1rem;
+    text-align: right;
+}
+
+
+.pis-font {
+    color: #fe5244;
+}
+
+.client-font {
+    color: #3fb1b5;
+}
+
+.director-font {
+    color: #9a3b82;
+}
+
+.about-us-font {
+    color: #66b0f0;
+}
+
+.second-illustration {
+   width: 100%;
+}
+
+.mat-card-title {
+    font-family: Montserrat;
+    font-size: 1.9rem 
+}
+
+.mat-card-subtitle {
+    font-family: Montserrat;
+    font-style: italic;
+    font-size: 1rem 
+}
+
+.mat-card-content {
+    font-family: Montserrat;
+    font-size: 1rem 
+}
+
+.institution {
+    font-family: Montserrat;
+    font-size: 0.8rem
+}

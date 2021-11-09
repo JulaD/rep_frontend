@@ -1,0 +1,27 @@
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+interface DialogData {
+  franja: string,
+  sexo: string,
+}
+
+@Component({
+  selector: 'delete-row-dialog',
+  templateUrl: './delete-row-dialog.component.html',
+})
+export class DeleteRowDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteRowDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { UserService } from '../../../../../services';
+import { UserService, AuthService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
 
 @Component({
@@ -41,8 +41,11 @@ export class PermisosUsuariosComponent implements OnInit {
 
   errorAlert: boolean = false;
 
+  currentUser: Partial<User> | undefined = undefined;
+
   constructor(
     public userService: UserService,
+    public authService: AuthService,
     private router: Router,
   ) { }
 
@@ -51,9 +54,9 @@ export class PermisosUsuariosComponent implements OnInit {
   }
 
   init(busqueda: string) {
+    this.currentUser = this.authService.getUser();
     this.userService.getUsers('clients', 4, 0, busqueda).subscribe(
       (res) => {
-        console.log(res.rows);
         this.usersCount = res.count;
         this.users = res.rows;
         this.usersPageCount = Math.ceil(this.usersCount / 4);
@@ -62,7 +65,7 @@ export class PermisosUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
     this.userService.getUsers('admins', 4, 0, busqueda).subscribe(
@@ -75,7 +78,7 @@ export class PermisosUsuariosComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        console.error(err);
       },
     );
   }
@@ -100,7 +103,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -126,7 +129,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -191,7 +194,7 @@ export class PermisosUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
@@ -233,7 +236,7 @@ export class PermisosUsuariosComponent implements OnInit {
               '¡Error!',
               'Hubo un problema',
             );
-            console.log(err);
+            console.error(err);
           },
         );
       }
@@ -282,7 +285,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }
@@ -310,7 +313,7 @@ export class PermisosUsuariosComponent implements OnInit {
           }
         },
         (err) => {
-          console.log(err);
+          console.error(err);
         },
       );
     }

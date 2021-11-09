@@ -41,6 +41,13 @@ export class FaqsComponent implements OnInit {
     });
   }
 
+  toggleQuestion(id: number) {
+    const question = document.getElementById(id.toString());
+    if (question) {
+      question.classList.toggle('active');
+    }
+  }
+
   upsertFaq(faq?: FAQ): void {
     const modal = this.dialog.open(FaqFormComponent, {
       height: 'auto',
@@ -96,7 +103,7 @@ export class FaqsComponent implements OnInit {
             Swal.fire('¡Ups!', 'No se ha podido eliminar la pregunta.', 'error');
           }
         }, () => {
-          // Error
+        // Error
         });
     }
   }
