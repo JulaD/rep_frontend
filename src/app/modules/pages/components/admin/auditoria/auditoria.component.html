@@ -27,6 +27,29 @@
         </div>
     </div>
     <div class="data logs" id="logs">
+        <div class="row justify-content-center busqueda">
+            <div class="filters">
+                <mat-form-field class="logFilter" appearance="fill">
+                    <mat-label>Tipo de acción</mat-label>
+                    <mat-select [disabled]="totalLogs==0" [formControl]="logsFilters" multiple>
+                        <mat-select-trigger>
+                        {{logsFilters.value ? logsFilters.value[0] : ''}}
+                        <span *ngIf="logsFilters.value?.length > 1" class="example-additional-selection">
+                            (+{{logsFilters.value.length - 1}})
+                        </span>
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let logFilter of logsFiltersList" [value]="logFilter">{{logFilter}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button [disabled]="!logsFilters.value" mat-fab color="white" matTooltip="Buscar" aria-label="Buscar" (click)="getFilteredLogs()">
+                <mat-icon class="color-icon">search</mat-icon>
+            </button>
+            <button [disabled]="!logsFilters.value" mat-fab color="white" matTooltip="Quitar filtros" aria-label="Quitar filtros" (click)="resetLogs()">
+                <mat-icon class="color-icon">filter_alt_off</mat-icon>
+            </button>
+        </div>
+        
         <div class="vacio" *ngIf="totalLogs==0">
             <h1>¡NO HAY CAMBIOS PARA AUDITAR!</h1>
         </div>
@@ -130,34 +153,14 @@
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
-                <!-- <mat-form-field class="filter" appearance="fill">
-                    <mat-label>Rango de fechas</mat-label>
-                    <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
-                        <input matStartDate formControlName="from" placeholder="Desde">
-                        <input matEndDate formControlName="to" placeholder="Hasta">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                
-                    <mat-error *ngIf="dateRange.controls.from.hasError('matStartDateInvalid')">La fecha <em>desde</em> es inválida</mat-error>
-                    <mat-error *ngIf="dateRange.controls.to.hasError('matEndDateInvalid')">La fecha <em>hasta</em> es inválida</mat-error>
-                </mat-form-field> -->
             </div>
-            <button mat-fab color="white" matTooltip="Buscar" aria-label="Buscar" (click)="getStatistics()">
+            <button [disabled]="!(users.value || fromDate.value || toDate.value)" mat-fab color="white" matTooltip="Buscar" aria-label="Buscar" (click)="getStatistics()">
                 <mat-icon class="color-icon">search</mat-icon>
             </button>
             <button [disabled]="!(users.value || fromDate.value || toDate.value)" mat-fab color="white" matTooltip="Quitar filtros" aria-label="Quitar filtros" (click)="resetStatistics()">
                 <mat-icon class="color-icon">filter_alt_off</mat-icon>
             </button>
         </div>
-        <!--<div class="resultadoBusqueda" *ngIf="acceptedUsersSearch != ''">
-            <h1 class="resultadoBusquedaAceptados">RESULTADOD DE LA BUSQUEDA: "{{acceptedUsersSearch}}"</h1>
-            <button type="button" (click)="resetAcceptedSearch()" class="cancelarBusqueda">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z"/>
-                </svg>
-            </button>
-        </div>-->
          <!-- ESTADÍSTICAS -->
         <div class="charts-bar-vertical">
             <ngx-charts-bar-vertical

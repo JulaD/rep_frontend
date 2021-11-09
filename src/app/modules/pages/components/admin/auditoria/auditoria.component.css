@@ -237,6 +237,12 @@ section .data .busqueda .filter {
   transition: 1s;
 }
 
+section .data .busqueda .logFilter {
+  width: 100%;
+  height: 40px;
+  transition: 1s;
+}
+
 ::ng-deep.mat-form-field-underline {
   background-color: #ae5ae6;
 }

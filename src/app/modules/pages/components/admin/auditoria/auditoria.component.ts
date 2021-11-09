@@ -14,6 +14,7 @@ import { StatisticsSearch } from 'src/app/models/statistics-search.model';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services';
 import { Subject } from 'rxjs/internal/Subject';
+import { LogFilter } from 'src/app/enums/log-filter';
 
 registerLocaleData(localeEsUy, 'esUY');
 
@@ -28,9 +29,7 @@ export class AuditoriaComponent implements OnInit {
   /**
    * Logs mostrados en la tabla.
    */
-  logs: Log[] = []; /* [
-    new Log(2, '2', 2, '2', '2', '2'),
-    new Log(3, '3', 3, '3', '3', '3')] ; */
+  logs: Log[] = [];
 
   /**
    * Número total de logs encontrados para el/los filtros aplicados.
@@ -46,6 +45,16 @@ export class AuditoriaComponent implements OnInit {
    * Columnas que se despliegan en la tabla de resultados.
    */
   displayedColumns: string[] = ['fecha', 'email', 'organizacion', 'nombre', 'accion'];
+
+  /**
+   * FormControl de los filtros seleccionados para la búsqueda de logs.
+   */
+  logsFilters = new FormControl();
+
+  /**
+   * Filtros de búsqueda.
+   */
+  logsFiltersList: string[] = Object.values(LogFilter);
 
   // --------------------- ESTADÍSTICAS ---------------------
 
@@ -104,7 +113,7 @@ export class AuditoriaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1);
+    const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, []);
     this.getLogs(logsSearch);
     this.getUsers();
     this.getStatistics();
@@ -160,7 +169,14 @@ export class AuditoriaComponent implements OnInit {
    */
   /* eslint-disable no-param-reassign */
   goToPage(event : PageEvent) {
-    const auditorySearch: LogsSearch = new LogsSearch(event.pageSize, event.pageIndex + 1);
+    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
+    const auditorySearch: LogsSearch = new LogsSearch(event.pageSize, event.pageIndex + 1, filter);
+    this.getLogs(auditorySearch);
+  }
+
+  getFilteredLogs() {
+    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
+    const auditorySearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, filter);
     this.getLogs(auditorySearch);
   }
 
@@ -223,6 +239,15 @@ export class AuditoriaComponent implements OnInit {
     this.fromDate.reset();
     this.toDate.reset();
     this.getStatistics();
+  }
+
+  /**
+   * Restablece los parámetros de búsqueda para los logs.
+   */
+  resetLogs() {
+    this.logsFilters.reset();
+    const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, []);
+    this.getLogs(logsSearch);
   }
 
   /**
