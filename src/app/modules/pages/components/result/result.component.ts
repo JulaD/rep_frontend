@@ -10,6 +10,7 @@ import { PdfGeneratorService } from 'src/app/services/pdf-generator.service';
 import { AgeGroupJSON } from 'src/app/services/rest/rest.service';
 import ExtraData from 'src/app/interfaces/ExtraDataDTO';
 import FranjaEtaria, { compareFranjaEtariaWithString } from 'src/app/enums/FranjaEtaria';
+import { ParsedDataService } from 'src/app/services/parsed-data.service';
 
 export interface RequerimientoEnergetico {
   texto: string,
@@ -55,6 +56,7 @@ export class ResultComponent implements OnInit {
     private router: Router,
     private resultsService: ResultsService,
     private pdfService: PdfGeneratorService,
+    private dataService : ParsedDataService,
   ) {
     this.resultsService.result$
       .subscribe((response) => {
@@ -164,6 +166,13 @@ export class ResultComponent implements OnInit {
     link.setAttribute('href', data);
     link.setAttribute('download', fileName);
     link.click();
+  }
+
+  returnToCalculation() {
+    this.dataService.parseAllStepsData({
+      step1Data: this.populationData,
+      extraData: this.extraData,
+    });
   }
 
   mostrarFranja(franja: string) {

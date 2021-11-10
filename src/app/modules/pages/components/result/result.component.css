@@ -1,5 +1,24 @@
+.navigation-buttons {
+  width: fit-content;
+  height: 60px;
+  border-radius: 50px;
+  margin: 20px;
+}
+
+.navigation-buttons > * {
+margin-right: 20px;
+}
+
+.navigation-buttons .mat-tooltip {
+font-size: 20px;
+}
+
 .first-div {
   height: 100%;
+}
+
+.white {
+  background-color: #ffffff;
 }
 
 .first-illustration {
@@ -204,7 +223,6 @@
 }
 
 .col-md-6 {
-  background-color: #ffffff;
   min-width: 65vh;
 }
 
