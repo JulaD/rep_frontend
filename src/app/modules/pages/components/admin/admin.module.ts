@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AngularMaterialModule } from '../../../../material/angular-material.module';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
 import { AdminRoutingModule } from './admin-routing.module';
@@ -35,6 +36,7 @@ import { AuditoriaComponent } from './auditoria/auditoria.component';
     AdminRoutingModule,
     AngularMaterialModule,
     ReactiveFormsModule,
+    NgxChartsModule,
   ],
 })
 export class AdminModule { }

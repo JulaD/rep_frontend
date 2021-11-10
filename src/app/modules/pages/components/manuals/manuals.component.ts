@@ -9,12 +9,11 @@ import { FAQService } from 'src/app/services/faq.service';
   styleUrls: ['./manuals.component.css'],
 })
 export class ManualsComponent implements OnInit {
-
   faqs: FAQ[] = [];
 
   constructor(
     private service: FAQService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
   ) {}
 
   ngOnInit(): void {
@@ -31,5 +30,12 @@ export class ManualsComponent implements OnInit {
       }, (error: Error) => {
         this.spinner.hide();
       });
+  }
+
+  downloadFile(): void {
+    const link = document.createElement('a');
+    link.download = 'PlantillaEstandar.xlsx';
+    link.href = 'assets/files/planillaEstandar.xlsx';
+    link.click();
   }
 }

@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Ya existen datos para la franja {{data.franja}}</h1>
+<div mat-dialog-content>
+  <p>¿Desea sobrescribir los datos?</p>
+  <p>Datos actuales:</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Sexo</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Mediana (Kg)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Femenino</td>
+        <td>{{data.cantFemeninoActual}}</td>
+        <td>{{data.medFemeninoActual}}</td>
+      </tr>
+      <tr>
+        <td>Masculino</td>
+        <td>{{data.cantMasculinoActual}}</td>
+        <td>{{data.medMasculinoActual}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Resultado de sobrescribir:</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Sexo</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Mediana (Kg)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Femenino</td>
+        <td>{{data.cantFemeninoNuevo}}</td>
+        <td>{{data.medFemeninoNuevo}}</td>
+      </tr>
+      <tr>
+        <td>Masculino</td>
+        <td>{{data.cantMasculinoNuevo}}</td>
+        <td>{{data.medMasculinoNuevo}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onYesClick()" cdkFocusInitial>Sobrescribir</button>
+</div>

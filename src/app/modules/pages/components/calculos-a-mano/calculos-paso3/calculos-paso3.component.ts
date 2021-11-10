@@ -1,4 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component, Input, OnInit, SimpleChanges,
+} from '@angular/core';
 import {
   FormControl, FormGroup, ValidatorFn, Validators,
 } from '@angular/forms';
@@ -23,9 +26,14 @@ const percentageValidators: ValidatorFn[] = [
 export class CalculosPaso3Component implements OnInit {
   @Input() defaultAdultPal: AdultPAL;
 
+  @Input() loadedAdultPal: AdultPAL;
+
   @Input() defaultExtraDataAvailable: boolean;
 
-  ngOnInit() { this.loadDefaultValues(); }
+  ngOnInit() {
+  }
+
+  constructor(private cdRef:ChangeDetectorRef) {}
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -47,6 +55,25 @@ export class CalculosPaso3Component implements OnInit {
       [step3RuralSuman100Validator, step3UrbanSuman100Validator],
     ),
   });
+
+  ngOnChanges(changes: SimpleChanges) {
+    setTimeout(() => {
+      if (changes.loadedAdultPal.currentValue !== undefined) {
+        this.adultPALForm.get('population.ruralPercentage')?.setValue(changes.loadedAdultPal.currentValue.ruralPercentage);
+        this.adultPALForm.get('population.ruralPercentage')?.markAsDirty();
+        this.adultPALForm.get('population.urbanPercentage')?.setValue(changes.loadedAdultPal.currentValue.urbanPercentage);
+        this.adultPALForm.get('population.urbanPercentage')?.markAsDirty();
+        this.adultPALForm.get('ruralPAL.activeRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.activeRuralPAL);
+        this.adultPALForm.get('ruralPAL.activeRuralPAL')?.markAsDirty();
+        this.adultPALForm.get('ruralPAL.lowRuralPAL')?.setValue(changes.loadedAdultPal.currentValue.lowRuralPAL);
+        this.adultPALForm.get('ruralPAL.lowRuralPAL')?.markAsDirty();
+        this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.activeUrbanPAL);
+        this.adultPALForm.get('urbanPAL.activeUrbanPAL')?.markAsDirty();
+        this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.setValue(changes.loadedAdultPal.currentValue.lowUrbanPAL);
+        this.adultPALForm.get('urbanPAL.lowUrbanPAL')?.markAsDirty();
+      }
+    });
+  }
 
   sendData(): AdultPAL {
     const ruralPercentage: number = NumberForForms(this.adultPALForm.get('population.ruralPercentage')?.value);

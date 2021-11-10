@@ -32,6 +32,7 @@
                         <p></p>
                         <input (click)="login()" [disabled]="loginForm.invalid" type="submit" value="Ingresar" tabindex="-1">
                         <p class="signup">No tienes una cuenta? <a id="registrarse" (click)="toggleForm()">Registrese</a></p>
+                        <p class="signup">¿Has olvidado tu contraseña? <a (click)="forgotPassword()">Recuperar</a></p>
                         <p class="signup">IR A LA <a id="inicio" (click)="dashboard()">PÁGINA PRINCIPAL</a></p>            
                     </form>
                 </div>
@@ -63,7 +64,8 @@
                         <small *ngIf="registerForm.get('passwordConf')?.hasError('required') && registerForm.get('passwordConf')?.touched">La confirmacion de constraseña es requerida</small>
 
                         <input (click)="register()" [disabled]="registerForm.invalid" type="submit" value="Registrarse" tabindex="-1">
-                        <p class="signup">Ya tienes cuenta? <a id="ingresar" (click)="toggleForm()">Ingresar</a></p>              
+                        <p class="signup">¿Ya tienes cuenta? <a id="ingresar" (click)="toggleForm()">Ingresar</a></p>              
+                        <p class="signup">¿No has recibido tu email de verificación? <a id="ingresar" routerLink="/resend-verification-email">Click aquí para reenviar</a></p>                  
                     </form>
                 </div>
                 <div class="imgBx">

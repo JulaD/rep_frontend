@@ -1,34 +1,30 @@
 <div class="row first-div">
-  <div class="yellow col-md-6 left-column">
+  <div class="col-md-6 left-column">
     <img class="first-illustration" src="../../../../../assets/ilustrations/illustration_manual.png">
   </div>
-  <div class="yellow col-md-6 right-column">
-    <p class="first-title">Manual</p><br>
-    <p class="first-title">& FAQ</p><br>
+  <div class="col-md-6 top-right-column">
+    <p class="first-title">Manual</p>
+    <p class="second-title">& Preguntas Frecuentes</p>
   </div>
 </div>
-<div class="row second-div" style="margin-bottom: 2rem;">
-  <div class="col-md-6 left-column-2">
-    <p class="second-title">Manual & FAQ</p>
-    <div class="under-title">
-      <p class="third-title">Manual</p>
-      <div class="download">
-        <p class="download-title">Descargar manual<mat-icon>download</mat-icon></p>
-      </div>        
+<div class="row second-div">
+  <div class="col-md-6">
+    <div class="manual-container">
+      <p class="subtitle">Manual</p>
+      <button class="download-btn" (click)="downloadFile()" mat-flat-button color="primary"
+      matTooltip="Descargue el manual de usuario en formato PDF">
+        Descargar manual<mat-icon>download</mat-icon>
+      </button>
     </div>
-    <div class="under-title" style="margin-top: 2rem">
+    <div class="faq-container">
+      <p class="subtitle">Preguntas Frecuentes</p>
       <div class="faq" *ngFor="let faq of faqs">
         <app-faq-expansion-panel [question]="faq.question" [answer]="faq.answer">
         </app-faq-expansion-panel>  
       </div>
-      <!-- <p class="question-title">¿Qué es el RE?</p>
-      <p class="question-info">
-        Respuesta a la pregunta, respuesta a la pregunta, 
-        respuesta a la pregunta, respuesta a la pregunta.
-      </p>   -->
     </div>
   </div>
-  <div class="col-md-4 second-column-right">
+  <div class="col-md-6 bottom-right-column">
     <img class="second-illustration" src="../../../../../assets/ilustrations/illustration_manual2.png">
   </div>
 </div>

@@ -43,3 +43,8 @@ const franjaEtariaOrder = Object.values(FranjaEtaria);
 export function compareFranjaEtaria(a: FranjaEtaria, b: FranjaEtaria) {
   return franjaEtariaOrder.indexOf(a) - franjaEtariaOrder.indexOf(b);
 }
+
+export function compareFranjaEtariaWithString(a: string, b: string) {
+  return franjaEtariaOrder
+    .indexOf(a as FranjaEtaria) - franjaEtariaOrder.indexOf(b as FranjaEtaria);
+}

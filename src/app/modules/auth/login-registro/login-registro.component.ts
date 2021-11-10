@@ -57,15 +57,19 @@ export class LoginRegistroComponent implements OnInit {
         () => {
           // limpia los inputs
           this.registerForm.reset();
-          this.message = 'Usuario creado exitosamente! Su cuenta permanecera inactiva hasta que sea aceptado por un Administrador.';
+          this.message = '¡Usuario creado exitosamente! Su cuenta permanecera inactiva hasta que sea aceptado por un Administrador.';
           this.alertaSuccess = true;
           this.alertaError = false;
         },
         (err) => {
-          this.message = err.error.error;
+          console.error(err);
+          if (err.status === 412) {
+            this.message = 'Este correo electrónico ya está en uso';
+          } else {
+            this.message = 'Hubo un problema';
+          }
           this.alertaError = true;
           this.alertaSuccess = false;
-          console.log(err);
         },
       );
     }
@@ -74,17 +78,22 @@ export class LoginRegistroComponent implements OnInit {
   login() {
     const values = this.loginForm.value;
     this.authService.login(values).subscribe(
-      (result) => {
+      () => {
         // limpia los inputs
         this.registerForm.reset();
-        // this.efectuarIngreso(res);
         this.router.navigate(['']);
       },
       (err) => {
-        this.message = 'Correo electrónico o contraseña incorrectos';
+        if (err.status === 401) {
+          this.message = 'Su cuenta aún no ha sido autorizada por un Administrador';
+        } else if (err.status === 400 || err.status === 404) {
+          this.message = 'Correo electrónico o contraseña incorrectas';
+        } else {
+          this.message = 'Hubo un problema';
+        }
         this.alertaError = true;
         this.alertaSuccess = false;
-        console.log(err);
+        console.error(err);
       },
     );
   }
@@ -112,5 +121,9 @@ export class LoginRegistroComponent implements OnInit {
       container.classList.toggle('active');
       section.classList.toggle('active');
     }
+  }
+
+  forgotPassword(): void {
+    this.router.navigate(['/recover-password']);
   }
 }
