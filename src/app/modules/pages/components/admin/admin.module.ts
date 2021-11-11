@@ -3,6 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DateAdapter } from '@angular/material/core';
 import { AngularMaterialModule } from '../../../../material/angular-material.module';
 import { AdminRouterComponent } from './admin-router/admin-router.component';
 import { AdminRoutingModule } from './admin-routing.module';
@@ -39,4 +40,8 @@ import { AuditoriaComponent } from './auditoria/auditoria.component';
     NgxChartsModule,
   ],
 })
-export class AdminModule { }
+export class AdminModule {
+  constructor(private dateAdapter: DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+}
