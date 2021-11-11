@@ -1,9 +1,10 @@
 .first-div {
   background-color: #FFCF2D;
+  height: 80%;
 }
 
 .first-illustration {
-  height: 90%;
+  height: 80%;
   margin: 20px
 }
 
@@ -24,6 +25,7 @@
   display: flex;
   color: #9a3b82;
   margin-top: -60px;
+  margin-bottom: 7rem;
 }
 
 .left-column {
