@@ -82,7 +82,6 @@ export class CalculosPaso1Component implements AfterViewInit {
     const groupData : GrupoEtario[] = this.parsedDataService.getGroupData();
     if (groupData?.length) {
       this.fromTemplate = this.parsedDataService.isFromTemplate();
-      this.initializeTable(sheetData);
       this.initializeTable(groupData);
     }
     this.processDefaultWeights();

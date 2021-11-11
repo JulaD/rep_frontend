@@ -635,3 +635,7 @@ section .vacio .vacioPendientes {
     top: -30px;
   }
 }
+
+::ng-deep .mat-tooltip {
+  font-size: 20px;
+}
