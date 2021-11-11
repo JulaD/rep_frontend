@@ -515,18 +515,31 @@ ul.listaUsuarios li a {
   text-decoration: none;
   margin-top: 10px;
 }
-ul.listaUsuarios li a .boton {
+ul.listaUsuarios li .btnBox {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 2px;
+}
+ul.listaUsuarios li .btnBox a .boton {
   padding: 6px;
   border-radius: 10px;
   color: black;
   font-weight: 400;
   letter-spacing: 1px;
+  margin: 5px;
   cursor: pointer;
 }
-ul.listaUsuarios li a .boton.aceptar {
+ul.listaUsuarios li .btnBox a .boton.aceptar {
   background: rgb(166, 230, 106);
 }
-ul.listaUsuarios li a .boton.cancelar {
+ul.listaUsuarios li .btnBox a .boton.rechazar {
+  background: rgb(241, 62, 62);
+  color: white;
+}
+ul.listaUsuarios li .btnBox a .boton.cancelar {
   background: rgb(241, 62, 62);
   color: white;
 }

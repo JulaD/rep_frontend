@@ -49,11 +49,18 @@
                     <div class="info">
                         <span class="Organizacion">Organizacion: {{user.organization}}</span>
                         <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
-                        <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
-                            <span class="boton aceptar" (click)="approve(user.id, user.name)">
-                                ACEPTAR
-                            </span>
-                        </a>
+                        <div class="btnBox">
+                            <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                                <span class="boton aceptar" (click)="approve(user.id, user.name)">
+                                    ACEPTAR
+                                </span>
+                            </a>
+                            <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                                <span class="boton rechazar" (click)="reject(user.id, user.name)">
+                                    RECHAZAR
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </li>
             </ng-container>
@@ -100,11 +107,13 @@
                     <div class="info">
                         <span class="Organizacion">Organizacion: {{user.organization}}</span>
                         <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
-                        <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
-                            <span class="boton cancelar" (click)="cancel(user.id, user.name)">
-                                CANCELAR
-                            </span>
-                        </a>
+                        <div class="btnBox">
+                            <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                                <span class="boton cancelar" (click)="cancel(user.id, user.name)">
+                                    CANCELAR
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </li>
             </ng-container>
