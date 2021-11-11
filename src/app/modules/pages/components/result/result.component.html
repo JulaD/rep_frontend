@@ -1,5 +1,13 @@
 <div class="row first-div">
-    <div class="col-md-6">
+    <div class="col-md-6 white">
+        <div class="row navigation-buttons">
+            <button mat-fab color="primary" aria-label="Página princial" matTooltip="Página principal"  routerLink="/dashboard">
+                <mat-icon>home</mat-icon>
+            </button>
+            <button mat-fab color="primary" aria-label="Volver al cálculo" matTooltip="Volver al cálculo" (click)="returnToCalculation()"> 
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
         <div class="row">
             <img class="first-illustration" src="../../../../../assets/ilustrations/resultImg1.svg">
         </div>
@@ -11,21 +19,27 @@
                 <div class="download-col">
                     <div class="col">
                         <p class="download-text">
-                            <button color="primary" mat-flat-button mat-button (click)="generatePDF()">Resultados del cálculo</button>
+                            <button color="primary" mat-flat-button mat-button (click)="generatePDF()"
+                            matTooltip="Descargue los resultados del cálculo en formato PDF">
+                                Resultados del cálculo
+                            </button>
                         </p>
                     </div>
                 </div>
                 <div class="download-col">
                     <div class="col">
                         <p class="download-text">
-                            <button color="primary" mat-flat-button mat-button (click)="saveProgress()">Datos de la población</button>
+                            <button color="primary" mat-flat-button mat-button (click)="saveProgress()"
+                            matTooltip="Descargue los datos de la población que ingresó para el cálculo en formato JSON">
+                                Datos de la población
+                            </button>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div> 
-    <div class="col-md-6">
+    <div class="col-md-6 white">
         <div class="row primary-result">
             <div class="col primary-result-text">
                 <p class="rep-title">Requerimiento energético per cápita diario</p>

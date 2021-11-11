@@ -5,17 +5,16 @@ import { RequerimientoEnergetico } from '../modules/pages/components/result/resu
  * Contiene los datos a ser desplegados en el pdf de descarga de los resultados.
  */
 export class ResultPdf {
-
-    constructor(
-        public totalPopulation : number, 
-        public totalRequirement : number,
-        public totalPerCapitaRequirement : number,
-        public dataSources : {
-            title: string,
-            subtitle: number,
-            femenine: number,
-            masculine: number,
-            source: MatTableDataSource<RequerimientoEnergetico>
-        }[]
-    ) { }
+  constructor(
+    public totalPopulation : number,
+    public totalRequirement : number,
+    public totalPerCapitaRequirement : number,
+    public dataSources : {
+      title: string,
+      subtitle: number,
+      femenine: number,
+      masculine: number,
+      source: MatTableDataSource<RequerimientoEnergetico>
+    }[],
+  ) { }
 }

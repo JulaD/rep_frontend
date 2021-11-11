@@ -1,5 +1,5 @@
 .first-div {
-  height: 80%;
+  background-color: #FFCF2D;
 }
 
 .first-illustration {
@@ -32,103 +32,64 @@
   align-items: center;
 }
 
-.right-column {
+.top-right-column {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-end;
+  padding-left: 1rem;
 }
 
-.yellow {
-  background-color: #FFCF2D;
-}
-
-.col-md-6.yellow {
+/* .col-md-6.yellow {
   min-width: 65vh;
   max-height: 100%;
-}
+} */
 
 .second-div {
-  margin: 2rem 0 0 3rem;
+  margin-top: 2rem;
 }
 
-.left-column-2 {
-  margin: 3rem 0 0 3rem;
-}
-
-.under-title {
-  margin-left: 0.5rem;
-}
-
-.third-title {
+.subtitle {
   color: #3F51B5;
   font-size: 2.2rem;
   height: 2.2rem;
-  display: flex;
-  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
-.question-title {
-  color: #3F51B5;
-  font-size: 1.8rem;
-  height: 1.8rem;
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-  padding-top: 1rem;
+.manual-container {
+  margin-left: 1rem;
 }
 
-.manual-info {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 1.2rem;
-  letter-spacing: 0.5px;
-  color: #000000;
-}
-
-.download {
-  width: fit-content;
+.download-btn {
   height: 3rem;
-  background: #C4C4C4;
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
+  width: fit-content;
+  /* background: #C4C4C4;
+  color: #3F51B5; */
+  font-size: 1.2rem;
 }
 
-.download-title {
-  color: #3F51B5;
-  font-size: 1.2rem;
-  height: 1.2rem;
-  padding: 0;
-  margin: 0 1rem 0 1rem;
-  display: flex;
-  align-items: center;
+.faq-container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 2rem;
 }
 
-.download-info {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: grey;
+.faq {
+  margin-bottom: 1rem;
 }
 
-.question-info {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  font-size: 1.2rem;
+::ng-deep .mat-tooltip {
+  font-size: 1rem !important;
 }
 
 .mat-icon {
   margin-left: 0.5rem;
 }
 
-.second-column-right {
+.bottom-right-column {
   display: flex;
   align-items: center;
-}
-
-.faq {
-  margin-bottom: 1rem;
+  flex-direction: column;
 }
 
 @media (max-width: 1325px) {
