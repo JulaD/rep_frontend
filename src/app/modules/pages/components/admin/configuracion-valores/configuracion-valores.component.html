@@ -125,9 +125,9 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectNafAdults" tabindex="-1" (click)="changeValue('selectNafAdults', 'adults')">
-                                    <ng-container *ngFor="let naf of nafAdults"> 
-                                        <option *ngIf="selectedNafAdult.id === naf.id" selected="selected">{{naf.id}}</option>
-                                        <option *ngIf="selectedNafAdult.id !== naf.id">{{naf.id}}</option>
+                                    <ng-container *ngFor="let nafLabel of nafAdultsLabel | keyvalue"> 
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafAdult.id === nafLabel['key']" selected="selected">{{nafLabel['value']}}</option>
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafAdult.id !== nafLabel['key']">{{nafLabel['value']}}</option>
                                     </ng-container>                                 
                                 </select>
                             </div>
