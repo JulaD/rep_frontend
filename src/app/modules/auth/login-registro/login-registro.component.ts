@@ -114,12 +114,41 @@ export class LoginRegistroComponent implements OnInit {
     this.alertaError = false;
   }
 
-  toggleForm() {
+  toggleForm(id: string) {
+    console.log(id);
     const container = document.querySelector('.container');
     const section = document.querySelector('section');
-    if (container != null && section != null) {
-      container.classList.toggle('active');
-      section.classList.toggle('active');
+    const loginEmail = document.getElementById('loginEmailInput');
+    const loginPass = document.getElementById('loginPassInput');
+    const registerEmail = document.getElementById('registerEmailInput');
+    const registerPass = document.getElementById('registerPassInput');
+    const registerUser = document.getElementById('registerUserInput');
+    const registerOrg = document.getElementById('registerOrgInput');
+    const registerRePass = document.getElementById('registerRePassInput');
+    if (section != null && container != null && loginEmail != null
+      && loginPass != null && registerRePass != null && registerOrg != null
+      && registerUser != null && registerPass != null && registerEmail != null) {
+      if (id === 'register') {
+        section.classList.add('active');
+        container.classList.add('active');
+        loginEmail.tabIndex = -1;
+        loginPass.tabIndex = -1;
+        registerEmail.tabIndex = 0;
+        registerPass.tabIndex = 0;
+        registerUser.tabIndex = 0;
+        registerOrg.tabIndex = 0;
+        registerRePass.tabIndex = 0;
+      } else if (id === 'login') {
+        section.classList.remove('active');
+        container.classList.remove('active');
+        loginEmail.tabIndex = 0;
+        loginPass.tabIndex = 0;
+        registerEmail.tabIndex = -1;
+        registerPass.tabIndex = -1;
+        registerUser.tabIndex = -1;
+        registerOrg.tabIndex = -1;
+        registerRePass.tabIndex = -1;
+      }
     }
   }
 
