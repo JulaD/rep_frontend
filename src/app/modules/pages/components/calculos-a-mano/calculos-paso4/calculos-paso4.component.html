@@ -52,7 +52,7 @@
             <mat-checkbox
               matTooltip="Se calculará en base a la población total y la tasa de natalidad"
               matTooltipPosition="above"
-              (change)="enableFields($event,1)"
+              (change)="enableFields($event,1);enableFields($event,2)"
               color="primary"
               formControlName="primerFranjaDisabled">
               No tengo estos datos
@@ -68,7 +68,9 @@
         <mat-card class="datos-natalidad gy-1" [hidden]="!materYLactanciaForm.get('primerFranjaDisabled')?.value" formGroupName="maternityPrimerFranja">
           <div class="button-autocomplete mb-2">
             <button mat-stroked-button (click)="loadDefaultValues()"
-              [disabled]="!defaultExtraDataAvailable">
+              [disabled]="!defaultExtraDataAvailable"
+              matTooltip="Autocompleta los campos con los valores por defecto"
+              matTooltipPosition="above">
               Autocompletar
             </button>
           </div>
@@ -103,7 +105,7 @@
                 <mat-label>Tasa de natalidad</mat-label>
                 <input matInput formControlName="natPrimerFranja" [errorStateMatcher]="matcher">
                 <mat-hint>
-                  Ingrese la tasa de natalidad.
+                  Ingrese la tasa de natalidad del país.
                   Por defecto se tomará la tasa de natalidad de Uruguay
                 </mat-hint>
                 <mat-error *ngIf="materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.hasError('pattern')">

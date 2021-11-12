@@ -81,7 +81,9 @@
           <div class="container-stepper-buttons col">
             <button class="stepper-btn" mat-stroked-button
               (click)="step2DOMAccess.loadDefaultValues()"
-              [disabled]="!defaultExtraDataAvailable">
+              [disabled]="!defaultExtraDataAvailable"
+              matTooltip="Autocompleta los campos con los valores por defecto"
+              matTooltipPosition="above">
               Autocompletar
             </button>
             <button mat-button matStepperPrevious class="stepper-btn">Volver</button>
@@ -134,7 +136,9 @@
           <div class="container-stepper-buttons col">
             <button mat-stroked-button (click)="step3DOMAccess.loadDefaultValues()"
               [disabled]="!defaultExtraDataAvailable"
-              class="stepper-btn">
+              class="stepper-btn"
+              matTooltip="Autocompleta los campos con los valores por defecto"
+              matTooltipPosition="above">
               Autocompletar
             </button>
             <button mat-button matStepperPrevious class="stepper-btn">Volver</button>

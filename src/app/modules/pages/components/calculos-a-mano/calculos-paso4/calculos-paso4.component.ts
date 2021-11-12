@@ -77,7 +77,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             step4MenorIgualPobStep1Validator(1, this.female18To29Pop),
           );
           break;
-        case 'female30to59':
+        case 'female30To59Pop':
+          // Revisar que este caso se ejecute
+          // console.log('Se cambio el valor de female30to59Pop en el paso 4');
           this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.setValidators(
             step4MenorIgualPobStep1Validator(2, this.female30To59Pop),
           );
@@ -144,12 +146,16 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
           this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.disable();
+          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
+          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(true);
         } else {
           this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.enable();
+          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
+          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
         }
         break;
       case 2:

@@ -93,7 +93,7 @@ export class CalculosPaso1Component implements AfterViewInit {
   }
 
   grupoEtarioForm = new FormGroup({
-    edad: new FormControl(FranjaEtaria.Meses_0, Validators.required),
+    edad: new FormControl('', Validators.required),
     cantFemenino: new FormControl('', numeroEnteroPositivoValidator),
     cantMasculino: new FormControl('', numeroEnteroPositivoValidator),
     medianaFemenino: new FormControl('', numeroFloatMayorCeroValidator),
@@ -195,6 +195,7 @@ export class CalculosPaso1Component implements AfterViewInit {
         this.addMasc(grupoMasc);
       }
       this.clearInputFields();
+      this.grupoEtarioForm.markAsPristine();
     }
   } // onSubmit
 
@@ -222,7 +223,7 @@ export class CalculosPaso1Component implements AfterViewInit {
   clearInputFields() {
     this.grupoEtarioForm.reset({
       // si quiero tambien limpiar el campo edad, poner edad: null
-      edad: this.grupoEtarioForm.get('edad')?.value, cantFemenino: '', cantMasculino: '', medianaFemenino: '', medianaMasculino: '',
+      edad: '', cantFemenino: '', cantMasculino: '', medianaFemenino: '', medianaMasculino: '',
     });
     this.grupoEtarioForm.get('edad')?.markAsDirty();
   }
@@ -402,30 +403,12 @@ export class CalculosPaso1Component implements AfterViewInit {
       );
   }
 
-  ageSelected(age: FranjaEtaria) {
-    if (this.defaultWeightsAvailable) {
-      if (this.usingDefaultData.female) {
-        this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
-      }
-      if (this.usingDefaultData.male) {
-        this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
-      }
-    }
-  }
-
-  toggleDefaultData(sex: String) {
+  loadDefaultWeight(sex: String) {
+    const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
     if (sex === 'F') {
-      this.usingDefaultData.female = !this.usingDefaultData.female;
-      if (this.usingDefaultData.female) {
-        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
-        this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
-      }
+      this.grupoEtarioForm.get('medianaFemenino')?.setValue(this.defaultWeightsF.get(age));
     } else {
-      this.usingDefaultData.male = !this.usingDefaultData.male;
-      if (this.usingDefaultData.male) {
-        const age: FranjaEtaria = this.grupoEtarioForm.get('edad')?.value;
-        this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
-      }
+      this.grupoEtarioForm.get('medianaMasculino')?.setValue(this.defaultWeightsM.get(age));
     }
   }
 

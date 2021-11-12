@@ -19,7 +19,7 @@
             <mat-form-field appearance="standard">
               <mat-label>Edad</mat-label>
               <mat-select formControlName="edad" [errorStateMatcher]="matcher">
-                <mat-option *ngFor="let edad of edades" [value]="edad" (click)="ageSelected(edad)">
+                <mat-option *ngFor="let edad of edades" [value]="edad">
                   {{mostrarFranja(edad)}}
                 </mat-option>
               </mat-select>
@@ -78,13 +78,15 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaFemenino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
-                <mat-slide-toggle matSuffix
-                  (click)="toggleDefaultData('F')"
-                  [disabled]="!defaultWeightsAvailable"
-                  matTooltip="Habilita el uso de dato por defecto de mediana femenina."
+                <button class="boton-auto" matSuffix
+                  type="button"
+                  (click)="loadDefaultWeight('F')"
+                  [disabled]="!defaultWeightsAvailable || grupoEtarioForm.get('edad')?.value === ''"
+                  mat-stroked-button
+                  matTooltip="Autocompleta el campo con el valor por defecto de mediana femenina."
                   matTooltipPosition="above">
-                  Auto
-                </mat-slide-toggle>
+                  Autocompletar
+                </button>
               </mat-form-field>
             </div>
             <div class="step1-mediana-masculino row gy-1">
@@ -98,13 +100,15 @@
                 <mat-error *ngIf="grupoEtarioForm.get('medianaMasculino')?.hasError('pattern')">
                   La mediana debe ser un decimal mayor a cero
                 </mat-error>
-                <mat-slide-toggle matSuffix
-                  (click)="toggleDefaultData('M')"
-                  [disabled]="!defaultWeightsAvailable"
-                  matTooltip="Habilita el uso de dato por defecto de mediana masculina."
+                <button class="boton-auto" matSuffix
+                  type="button"
+                  (click)="loadDefaultWeight('M')"
+                  [disabled]="!defaultWeightsAvailable || grupoEtarioForm.get('edad')?.value === ''"
+                  mat-stroked-button
+                  matTooltip="Autocompleta el campo con el valor por defecto de mediana masculina."
                   matTooltipPosition="above">
-                  Auto
-                </mat-slide-toggle>
+                  Autocompletar
+                </button>
               </mat-form-field>
             </div>
           </div>
