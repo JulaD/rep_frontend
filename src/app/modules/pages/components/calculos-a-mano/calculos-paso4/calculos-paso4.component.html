@@ -52,7 +52,7 @@
             <mat-checkbox
               matTooltip="Se calculará en base a la población total y la tasa de natalidad"
               matTooltipPosition="above"
-              (change)="enableFields($event,1)"
+              (change)="enableFields($event,1);enableFields($event,2)"
               color="primary"
               formControlName="primerFranjaDisabled">
               No tengo estos datos

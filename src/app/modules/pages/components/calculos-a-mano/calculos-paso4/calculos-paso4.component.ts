@@ -146,12 +146,16 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
           this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.disable();
+          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
+          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(true);
         } else {
           this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.disable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.enable();
           this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.enable();
+          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
+          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
         }
         break;
       case 2:
