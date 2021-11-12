@@ -50,7 +50,7 @@
                         <span class="Organizacion">Organizacion: {{user.organization}}</span>
                         <span class="Fecha">Fecha de registro: {{user.createdAt}}</span>
                         <div class="btnBox">
-                            <a *ngIf="currentUser !== undefined && user.id !== currentUser.id">
+                            <a *ngIf="currentUser !== undefined && user.id !== currentUser.id && user.active">
                                 <span class="boton aceptar" (click)="approve(user.id, user.name)">
                                     ACEPTAR
                                 </span>
@@ -95,7 +95,7 @@
             </a>
         </div>
         <div class="resultadoBusqueda" *ngIf="acceptedUsersSearch != ''">
-            <h1 class="resultadoBusquedaAceptados">RESULTADOD DE LA BUSQUEDA: "{{acceptedUsersSearch}}"</h1>
+            <h1 class="resultadoBusquedaAceptados">RESULTADO DE LA BUSQUEDA: "{{acceptedUsersSearch}}"</h1>
             <button mat-fab color="warn" matTooltip="Quitar filtro" aria-label="Quitar filtro" (click)="resetAcceptedSearch()">
                 <mat-icon class="color-icon">filter_alt_off</mat-icon>
             </button>

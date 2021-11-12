@@ -7,11 +7,11 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 // import ExtraDataDTO from 'src/app/interfaces/ExtraDataDTO';
 // import swal from 'sweetalert';
-import { ValuesService } from '../../../../../services/values.service';
 import { NafAdultsLabel } from 'src/app/enums/naf-adults-label';
 import { NafMinorsLabel } from 'src/app/enums/naf-minors-label';
 import { PregnancyPopulationLabel } from 'src/app/enums/pregnancy-population-label';
 import { PregnancyEnergyLabel } from 'src/app/enums/pregnancy-energy-label';
+import { ValuesService } from '../../../../../services/values.service';
 
 @Component({
   selector: 'app-configuracion-valores',
@@ -29,9 +29,11 @@ export class ConfiguracionValoresComponent implements OnInit {
   selectedWeightWomen: DefaultWeightDTO;
 
   nafMinors: DefaultExtraDataDTO[] = [];
+
   nafMinorsLabel = NafMinorsLabel;
 
   nafAdults: DefaultExtraDataDTO[] = [];
+
   nafAdultsLabel = NafAdultsLabel;
 
   selectedNafMinor: DefaultExtraDataDTO;
@@ -43,9 +45,11 @@ export class ConfiguracionValoresComponent implements OnInit {
   selectedNafAdultMeasurement: string;
 
   pregnancyPopulation: DefaultExtraDataDTO[] = [];
+
   pregnancyPopulationLabel = PregnancyPopulationLabel;
 
   pregnancyEnergy: DefaultExtraDataDTO[] = [];
+
   pregnancyEnergyLabel = PregnancyEnergyLabel;
 
   selectedPregnancyPopulation: DefaultExtraDataDTO;
@@ -125,6 +129,7 @@ export class ConfiguracionValoresComponent implements OnInit {
     previousAgeRangeGrowthMen: string, previousAgeRangeGrowthWomen: string) {
     this.valuesService.getParameters().subscribe(
       (res) => {
+        console.log(res);
         res.defaultWeights.forEach((weight: DefaultWeightDTO) => {
           if (weight.sex === 'Masculino') {
             this.weightsMen.push(weight);
@@ -530,8 +535,8 @@ export class ConfiguracionValoresComponent implements OnInit {
         }
       } else if (type === 'energy' || type === 'population') {
         let dataAux: DefaultExtraDataDTO | undefined;
-        if (selectedElement.startsWith("_")) {
-          let idAux = selectedElement.substring(1, selectedElement.length);
+        if (selectedElement.startsWith('_')) {
+          const idAux = selectedElement.substring(1, selectedElement.length);
           dataAux = this.getPregnancyById(idAux, type);
         } else {
           dataAux = this.getPregnancyById(selectedElement, type);
@@ -632,9 +637,9 @@ export class ConfiguracionValoresComponent implements OnInit {
 
   getGrowthByAgeRange(ageRange: string, sex: string): EquationConstantDTO | undefined {
     let growths: EquationConstantDTO[] = [];
-    if (sex === 'growthMen') {
+    if (sex === 'men') {
       growths = this.growthMen;
-    } else if (sex === 'growthWomen') {
+    } else if (sex === 'women') {
       growths = this.growthWomen;
     }
     const res: EquationConstantDTO | undefined = growths
@@ -1193,6 +1198,8 @@ export class ConfiguracionValoresComponent implements OnInit {
         constantsToModify.push(firstConstantToModify);
         swalText += `El primer término cambiará su valor de ${actualFirstValue!.value}
         a ${firstConstantToModify.value}. `;
+      } else {
+        constantsToModify.push(actualFirstValue!);
       }
       if (actualSecondValue && secondValue !== actualSecondValue!.value) {
         const secondConstantToModify: EquationConstantDTO = { ...actualSecondValue };
@@ -1200,6 +1207,8 @@ export class ConfiguracionValoresComponent implements OnInit {
         constantsToModify.push(secondConstantToModify);
         swalText += `El segundo término cambiará su valor de ${actualSecondValue!.value}
         a ${secondConstantToModify.value}. `;
+      } else {
+        constantsToModify.push(actualSecondValue!);
       }
       if (actualThirdValue && thirdValue !== actualThirdValue!.value) {
         const thirdConstantToModify: EquationConstantDTO = { ...actualThirdValue };
@@ -1207,6 +1216,8 @@ export class ConfiguracionValoresComponent implements OnInit {
         constantsToModify.push(thirdConstantToModify);
         swalText += `El tercer término cambiará su valor de ${actualThirdValue!.value}
         a ${thirdConstantToModify.value}. `;
+      } else if (actualThirdValue) {
+        constantsToModify.push(actualThirdValue);
       }
       if (swalText === '') {
         Swal.fire(
