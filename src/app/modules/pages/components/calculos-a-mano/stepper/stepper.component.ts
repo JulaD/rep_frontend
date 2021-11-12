@@ -15,6 +15,7 @@ import MinorPAL from 'src/app/interfaces/MinorPALDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
 import { GrupoEtario } from 'src/app/models/grupo-etario';
 import { progressSchema } from 'src/app/schemas/progressSchema';
+import { ParsedDataService } from 'src/app/services/parsed-data.service';
 import { AgeGroupJSON, RestService } from 'src/app/services/rest/rest.service';
 import { ResultsService } from 'src/app/services/results.service';
 import { CalculosPaso1Component } from '../calculos-paso1/calculos-paso1.component';
@@ -94,22 +95,28 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   fromTemplate: boolean;
 
+  constructor(
+    public rest: RestService,
+    private resultsService: ResultsService,
+    private router: Router,
+    private errorSnackBar: MatSnackBar,
+    private parsedDataService : ParsedDataService,
+  ) {}
+
   ngOnInit() {
     this.ajv = new Ajv();
     this.processExtraData();
+    const extraData: ExtraData | null = this.parsedDataService.getExtraData();
+    if (extraData !== null) {
+      const maternity30To59: boolean = extraData.maternity30To59 === undefined;
+      this.loadExtraData(extraData, maternity30To59);
+    }
   }
 
   ngOnDestroy() {
     // al salir del stepper, vacio las tablas
     this.step1Access.clearTables();
   }
-
-  constructor(
-    public rest: RestService,
-    private resultsService: ResultsService,
-    private router: Router,
-    private errorSnackBar: MatSnackBar,
-  ) {}
 
   prepareData() {
     const extraData: ExtraData = {

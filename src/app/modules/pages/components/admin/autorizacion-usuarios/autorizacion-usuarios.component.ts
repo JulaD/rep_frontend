@@ -274,6 +274,48 @@ export class AutorizacionUsuariosComponent implements OnInit {
     });
   }
 
+  reject(id: number, name: string) {
+    Swal.fire({
+      title: 'Confirmar',
+      text: `Rechazar a ${name}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.cancel(id).subscribe(
+          () => {
+            Swal.fire(
+              '¡Éxito!',
+              `Se ha rechazdo a ${name} a utilizar la aplicación.`,
+            );
+            this.pendingUsers = [];
+            this.acceptedUsers = [];
+            this.pendingUsersCount = 0;
+            this.acceptedUsersCount = 0;
+            this.pendingUsersPageCount = 0;
+            this.acceptedUsersPageCount = 0;
+            this.pendingUsersCurrentPage = 0;
+            this.acceptedUsersCurrentPage = 0;
+            this.pendingUsersCurrentPages = [];
+            this.acceptedUsersCurrentPages = [];
+            this.pendingUsersSearch = '';
+            this.acceptedUsersSearch = '';
+            this.init('');
+          },
+          (err) => {
+            Swal.fire(
+              '¡Error!',
+              'Hubo un problema',
+            );
+            console.error(err);
+          },
+        );
+      }
+    });
+  }
+
   cancel(id: number, name: string) {
     Swal.fire({
       title: 'Confirmar',

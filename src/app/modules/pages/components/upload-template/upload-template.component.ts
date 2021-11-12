@@ -61,7 +61,7 @@ export class UploadTemplateComponent implements OnInit {
         (event) => {
           if (event.type === HttpEventType.Response) {
             this.uploading = false;
-            this.dataService.parseData(event.body);
+            this.dataService.parseSheetData(event.body);
           }
         },
         (error) => {

@@ -59,7 +59,7 @@ export class PdfGeneratorService {
     doc.text('Escuela de Nutrición UdelaR', 10, 45);
 
     doc.setFontSize(12);
-    doc.text(`Para la población ingresada de ${res.totalPopulation} ${this.mostrarPersonas(res.totalPopulation)}, el requerimiento energético diario promedio es de ${res.totalRequirement} Kcal/día (${res.totalPerCapitaRequirement} Kcal/día per capita).`, 10, 70, opts);
+    doc.text(`Para la población ingresada de ${res.totalPopulation} ${this.mostrarPersonas(res.totalPopulation)}, el requerimiento energético diario promedio per capita es de ${res.totalPerCapitaRequirement} Kcal/día.`, 10, 70, opts);
     let rows: (string | number)[][] = [];
     let offset: number = 80;
     let nroTablas: number = 0;

@@ -63,9 +63,7 @@ export class AuditoriaComponent implements OnInit {
 
   // Filtros de búsqueda
   users = new FormControl();
-
   fromDate = new FormControl();
-
   toDate = new FormControl();
 
   // ComboBox usuarios
@@ -75,29 +73,22 @@ export class AuditoriaComponent implements OnInit {
   statistics: any[];
 
   // Opciones de la gráfica de barras
-  showXAxis = true;
-
-  showYAxis = true;
-
-  gradient = true;
-
-  showLegend = true;
-
+  showXAxis   = true;
+  showYAxis   = true;
+  gradient    = true;
+  showLegend  = true;
   legendTitle = '';
 
   showXAxisLabel = true;
-
-  xAxisLabel = 'MÉTODO DE CARGA DE LOS DATOS';
-
+  xAxisLabel     = 'MÉTODO DE CARGA DE LOS DATOS';
+  
   showYAxisLabel = true;
+  yAxisLabel     = 'NÚMERO DE USOS';
 
-  yAxisLabel = 'NÚMERO DE USOS';
-
-  byHandLabel: string = 'A mano';
-
+  byHandLabel: string   = 'A mano';
   templateLabel: string = 'Plantilla';
 
-  // Esquema de colores
+  // Esquema de colores de la gráfica
   colorScheme = {
     name: 'verticalBarChartColors',
     selectable: false,
@@ -111,7 +102,7 @@ export class AuditoriaComponent implements OnInit {
     private router: Router,
     public userService: UserService,
   ) { }
-
+  
   ngOnInit(): void {
     const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, []);
     this.getLogs(logsSearch);
@@ -119,6 +110,11 @@ export class AuditoriaComponent implements OnInit {
     this.getStatistics();
   }
 
+  // ---------------- LOGS ----------------
+
+  /**
+   * Navegación hacia la tab de logs.
+   */
   goToLogs() {
     const section = document.querySelector('section');
     if (section != null) {
@@ -126,11 +122,24 @@ export class AuditoriaComponent implements OnInit {
     }
   }
 
-  goToStatistics() {
-    const section = document.querySelector('section');
-    if (section != null) {
-      section.classList.add('active');
-    }
+  /**
+  * Carga los parámetros de búsqueda de logs ingresados y dispara la misma.
+  */
+  getFilteredLogs() {
+    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
+    const auditorySearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, filter);
+    this.getLogs(auditorySearch);
+  }
+
+  /**
+   * Carga los parámetros actuales de búsqueda de logs y dispara la misma luego de un cambio de página.
+   * @param event evento disparado al cambiar de página en la tabla de resultados
+   */
+  /* eslint-disable no-param-reassign */
+  goToPage(event : PageEvent) {
+    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
+    const auditorySearch: LogsSearch = new LogsSearch(event.pageSize, event.pageIndex + 1, filter);
+    this.getLogs(auditorySearch);
   }
 
   /**
@@ -164,20 +173,24 @@ export class AuditoriaComponent implements OnInit {
   }
 
   /**
-   * Carga los parámetros de búsqueda y dispara la misma.
-   * @param event evento disparado al cambiar de página en la tabla de resultados
-   */
-  /* eslint-disable no-param-reassign */
-  goToPage(event : PageEvent) {
-    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
-    const auditorySearch: LogsSearch = new LogsSearch(event.pageSize, event.pageIndex + 1, filter);
-    this.getLogs(auditorySearch);
+  * Restablece los parámetros de búsqueda para los logs.
+  */
+  resetLogs() {
+    this.logsFilters.reset();
+    const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, []);
+    this.getLogs(logsSearch);
   }
 
-  getFilteredLogs() {
-    const filter: string[] = this.logsFilters.value ? this.logsFilters.value : [];
-    const auditorySearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, filter);
-    this.getLogs(auditorySearch);
+  // ---------------- ESTADÍSTICAS ----------------
+
+  /**
+  * Navegación hacia la tab de estadísticas.
+  */
+  goToStatistics() {
+    const section = document.querySelector('section');
+    if (section != null) {
+      section.classList.add('active');
+    }
   }
 
   /**
@@ -194,8 +207,11 @@ export class AuditoriaComponent implements OnInit {
     if (this.toDate.value) {
       dateTo = this.toDate.value;
     }
+    const today = new Date();
     if (dateFrom && dateTo && (dateFrom > dateTo)) {
       this.showError('La fecha DESDE debe ser menor o igual a la fecha HASTA.');
+    } else if (dateFrom && ((new Date(dateFrom)) > today)) {
+      this.showError('La fecha DESDE debe ser menor o igual al día de hoy.');
     } else {
       const statisticsSearch: StatisticsSearch = new StatisticsSearch(usersIds, dateFrom, dateTo);
       this.auditoryService.getStatistics(statisticsSearch).subscribe(
@@ -221,7 +237,7 @@ export class AuditoriaComponent implements OnInit {
             }
           });
           this.statistics = dataList;
-          this.update$.next(true);
+          this.update$.next(true); //Actualiza los datos de la gráfica
         },
         (err) => {
           const errorMessage = err.error.error ? err.error.error : 'Ocurrió un error al obtener las estadísticas, intente de nuevo más tarde.';
@@ -242,15 +258,6 @@ export class AuditoriaComponent implements OnInit {
   }
 
   /**
-   * Restablece los parámetros de búsqueda para los logs.
-   */
-  resetLogs() {
-    this.logsFilters.reset();
-    const logsSearch: LogsSearch = new LogsSearch(this.totalPerPage, 1, []);
-    this.getLogs(logsSearch);
-  }
-
-  /**
    * Obtiene el listado de usuarios para el comboBox.
    */
   getUsers() {
@@ -260,6 +267,8 @@ export class AuditoriaComponent implements OnInit {
       },
     );
   }
+
+  // MÉTODOS COMÚNES A AMBAS TABS
 
   /**
    * Despliega mensaje de error
