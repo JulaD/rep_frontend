@@ -8,6 +8,10 @@ import { Router } from '@angular/router';
 // import ExtraDataDTO from 'src/app/interfaces/ExtraDataDTO';
 // import swal from 'sweetalert';
 import { ValuesService } from '../../../../../services/values.service';
+import { NafAdultsLabel } from 'src/app/enums/naf-adults-label';
+import { NafMinorsLabel } from 'src/app/enums/naf-minors-label';
+import { PregnancyPopulationLabel } from 'src/app/enums/pregnancy-population-label';
+import { PregnancyEnergyLabel } from 'src/app/enums/pregnancy-energy-label';
 
 @Component({
   selector: 'app-configuracion-valores',
@@ -25,8 +29,10 @@ export class ConfiguracionValoresComponent implements OnInit {
   selectedWeightWomen: DefaultWeightDTO;
 
   nafMinors: DefaultExtraDataDTO[] = [];
+  nafMinorsLabel = NafMinorsLabel;
 
   nafAdults: DefaultExtraDataDTO[] = [];
+  nafAdultsLabel = NafAdultsLabel;
 
   selectedNafMinor: DefaultExtraDataDTO;
 
@@ -37,8 +43,10 @@ export class ConfiguracionValoresComponent implements OnInit {
   selectedNafAdultMeasurement: string;
 
   pregnancyPopulation: DefaultExtraDataDTO[] = [];
+  pregnancyPopulationLabel = PregnancyPopulationLabel;
 
   pregnancyEnergy: DefaultExtraDataDTO[] = [];
+  pregnancyEnergyLabel = PregnancyEnergyLabel;
 
   selectedPregnancyPopulation: DefaultExtraDataDTO;
 
@@ -521,8 +529,14 @@ export class ConfiguracionValoresComponent implements OnInit {
           this.selectedNafAdultMeasurement = this.getMeasurement('adult');
         }
       } else if (type === 'energy' || type === 'population') {
-        const data: DefaultExtraDataDTO | undefined = this
-          .getPregnancyById(selectedElement, type);
+        let dataAux: DefaultExtraDataDTO | undefined;
+        if (selectedElement.startsWith("_")) {
+          let idAux = selectedElement.substring(1, selectedElement.length);
+          dataAux = this.getPregnancyById(idAux, type);
+        } else {
+          dataAux = this.getPregnancyById(selectedElement, type);
+        }
+        const data: DefaultExtraDataDTO | undefined = dataAux;
         if ((type === 'energy') && (selectedElement !== this.selectedPregnancyEnergy.id) && (data !== undefined)) {
           this.selectedPregnancyEnergy = data;
         } else if ((type === 'population') && (selectedElement !== this.selectedPregnancyPopulation.id) && (data !== undefined)) {
