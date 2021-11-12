@@ -307,7 +307,7 @@ export class ConfiguracionValoresComponent implements OnInit {
         if (this.growthMen.length !== 0) {
           this.growthMen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeGrowthMen !== '') {
-            const previousGrowthMen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthMen, 'men');
+            const previousGrowthMen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthMen, 'growthMen');
             if (previousGrowthMen !== undefined) {
               this.selectedGrowthMen = previousGrowthMen;
             }
@@ -318,7 +318,7 @@ export class ConfiguracionValoresComponent implements OnInit {
         if (this.growthWomen.length !== 0) {
           this.growthWomen.sort((a, b) => compareFranjaEtaria(a.ageRange, b.ageRange));
           if (previousAgeRangeGrowthWomen !== '') {
-            const previousGrowthWomen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthWomen, 'women');
+            const previousGrowthWomen: EquationConstantDTO | undefined = this.getGrowthByAgeRange(previousAgeRangeGrowthWomen, 'growthWomen');
             if (previousGrowthWomen !== undefined) {
               this.selectedGrowthWomen = previousGrowthWomen;
             }
@@ -637,9 +637,9 @@ export class ConfiguracionValoresComponent implements OnInit {
 
   getGrowthByAgeRange(ageRange: string, sex: string): EquationConstantDTO | undefined {
     let growths: EquationConstantDTO[] = [];
-    if (sex === 'men') {
+    if (sex === 'growthMen') {
       growths = this.growthMen;
-    } else if (sex === 'women') {
+    } else if (sex === 'growthWomen') {
       growths = this.growthWomen;
     }
     const res: EquationConstantDTO | undefined = growths
