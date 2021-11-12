@@ -77,7 +77,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             step4MenorIgualPobStep1Validator(1, this.female18To29Pop),
           );
           break;
-        case 'female30to59':
+        case 'female30To59Pop':
+          // Revisar que este caso se ejecute
+          // console.log('Se cambio el valor de female30to59Pop en el paso 4');
           this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.setValidators(
             step4MenorIgualPobStep1Validator(2, this.female30To59Pop),
           );
