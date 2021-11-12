@@ -43,8 +43,8 @@
                                 </svg>
                                 <select id="selectWeightsMen" tabindex="-1" (click)="changeValue('selectWeightsMen', 'men')">
                                     <ng-container *ngFor="let weight of weightsMen"> 
-                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" [value] = weight.ageRange selected="selected">{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange" [value] = weight.ageRange>{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange}}</option>
                                     </ng-container>
                                 </select>
                             </div>
@@ -82,8 +82,8 @@
                                 </svg>
                                 <select id="selectWeightsWomen" tabindex="-1" (click)="changeValue('selectWeightsWomen', 'women')">
                                     <ng-container *ngFor="let weight of weightsWomen"> 
-                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" [value]=weight.ageRange selected="selected">{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange }}</option>
+                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange" [value]=weight.ageRange>{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange }}</option>
                                     </ng-container>
                                 </select>
                             </div>
