@@ -34,8 +34,8 @@ export class ManualsComponent implements OnInit {
 
   downloadFile(): void {
     const link = document.createElement('a');
-    link.download = 'PlantillaEstandar.xlsx';
-    link.href = 'assets/files/planillaEstandar.xlsx';
+    link.download = 'manualDeUsuarioREP.pdf';
+    link.href = 'assets/files/manualDeUsuarioREP.pdf';
     link.click();
   }
 }
