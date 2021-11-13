@@ -29,6 +29,8 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
 
   @Input() loadedIndivMaternity30to59: IndividualMaternity;
 
+  @Input() checkedButton: boolean;
+
   @Input() defaultExtraDataAvailable: boolean;
 
   @Input() female18To29Pop: number;
@@ -130,6 +132,14 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityIndivDisabled')?.setValue(false);
             event.checked = false;
+            this.enableFields(event);
+          }
+          break;
+        case 'checkedButton':
+          if (changes[key].currentValue !== undefined
+            && changes.loadedIndivMaternity30to59.currentValue === undefined) {
+            this.materYLactanciaForm.get('maternityIndivDisabled')?.setValue(this.checkedButton);
+            event.checked = this.checkedButton;
             this.enableFields(event);
           }
           break;

@@ -72,6 +72,8 @@ export class StepperComponent implements OnInit, OnDestroy {
 
   loadedIndivMaternity30to59: IndividualMaternity;
 
+  checkedButton: boolean;
+
   @ViewChild(CalculosPaso1Component)
   private step1Access: CalculosPaso1Component;
 
@@ -106,7 +108,8 @@ export class StepperComponent implements OnInit, OnDestroy {
     this.processExtraData();
     const extraData: ExtraData | null = this.parsedDataService.getExtraData();
     if (extraData !== null) {
-      this.loadExtraData(extraData);
+      const maternity30To59: boolean = extraData.maternity30To59 === undefined;
+      this.loadExtraData(extraData, maternity30To59);
     }
   }
 
@@ -179,7 +182,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     link.click();
   }
 
-  loadExtraData(extraData: ExtraData) {
+  loadExtraData(extraData: ExtraData, women30to59: boolean) {
     if (extraData.minorPAL) {
       this.loadedMinorPal = {
         lowPALPrevalence: extraData.minorPAL.lowPALPrevalence,
@@ -220,14 +223,22 @@ export class StepperComponent implements OnInit, OnDestroy {
         pregnantWomen: maternityData.pregnantWomen,
         lactatingWomen: maternityData.lactatingWomen,
       };
+    } else if (women30to59) {
+      this.checkedButton = true;
+    } else {
+      this.checkedButton = false;
     }
   }
 
-  loadPopulationData(popData: AgeGroupJSON[]) {
+  loadPopulationData(popData: AgeGroupJSON[]): boolean {
     const grupos: GrupoEtario[] = [];
+    let women30to59: boolean = false;
     popData.forEach((group: AgeGroupJSON) => {
       if (Object.values(FranjaEtaria).includes(group.age as FranjaEtaria)
       && Object.values(Sexo).includes(group.sex as Sexo)) {
+        if (group.age === FranjaEtaria.Anios_30_59) {
+          women30to59 = true;
+        }
         const grupo: GrupoEtario = {
           edad: group.age as FranjaEtaria,
           sexo: group.sex as Sexo,
@@ -241,6 +252,7 @@ export class StepperComponent implements OnInit, OnDestroy {
     });
     this.step1Access.clearTables();
     this.step1Access.initializeTable(grupos);
+    return women30to59;
   }
 
   async onFileSelected(event: Event) {
@@ -253,8 +265,8 @@ export class StepperComponent implements OnInit, OnDestroy {
         const validateProgress = progress;
         const validator: ValidateFunction<unknown> = this.ajv.compile(progressSchema);
         if (validator(validateProgress)) {
-          this.loadPopulationData(progress.step1Data);
-          this.loadExtraData(progress.extraData);
+          const women30to59 = this.loadPopulationData(progress.step1Data);
+          this.loadExtraData(progress.extraData, women30to59);
         } else {
           throw new Error();
         }
