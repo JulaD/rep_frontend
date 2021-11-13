@@ -1,7 +1,7 @@
 import {
   Component, Input, OnChanges, OnInit, SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { delay } from 'rxjs/operators';
 import IndividualMaternity from 'src/app/interfaces/IndividualMaternityDTO';
@@ -9,7 +9,8 @@ import Maternity from 'src/app/interfaces/MaternityDTO';
 import PopulationMaternity from 'src/app/interfaces/PopulationMaternityDTO';
 import { ShowOnDirtyOrTouchedErrorStateMatcher } from 'src/app/modules/shared/dirty-or-touched-error-state-matcher';
 import {
-  NumberForForms, numeroEnteroPositivoValidator, numeroFloatValidator,
+  NumberForForms, numeroEnteroMayorCeroValidator,
+  numeroEnteroPositivoValidator, numeroFloatValidator,
 } from 'src/app/modules/shared/validators/numbers-validation';
 import { step4MenorIgualPobStep1Validator } from 'src/app/modules/shared/validators/step4-menor-igual-pob-step1.directive';
 import { step4MenorIgualPobTotalValidator } from 'src/app/modules/shared/validators/step4-menor-igual-pob-total.directive';
@@ -28,8 +29,6 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
 
   @Input() loadedIndivMaternity30to59: IndividualMaternity;
 
-  @Input() checkedButton: boolean;
-
   @Input() defaultExtraDataAvailable: boolean;
 
   @Input() female18To29Pop: number;
@@ -40,8 +39,7 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
 
   @Input() agesFemale30To59Present: boolean;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   matcher = new ShowOnDirtyOrTouchedErrorStateMatcher();
 
@@ -52,8 +50,12 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
       amamPrimerFranja: new FormControl({ value: '', disabled: false }, numeroEnteroPositivoValidator),
     }),
     maternityPrimerFranja: new FormGroup({
-      cantPrimerFranja: new FormControl({ value: '', disabled: true }, numeroEnteroPositivoValidator),
-      pobTotPrimerFranja: new FormControl({ value: '', disabled: true }, numeroEnteroPositivoValidator),
+      cantPrimerFranja: new FormControl(
+        { value: '', disabled: true }, [numeroEnteroMayorCeroValidator, Validators.required],
+      ),
+      pobTotPrimerFranja: new FormControl(
+        { value: '', disabled: true }, [numeroEnteroMayorCeroValidator, Validators.required],
+      ),
       natPrimerFranja: new FormControl({ value: '', disabled: true }, numeroFloatValidator),
     }, { validators: step4MenorIgualPobTotalValidator(1) }),
     // Segunda franja
@@ -62,8 +64,7 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
       amamSegundaFranja: new FormControl({ value: '', disabled: false }, numeroEnteroPositivoValidator),
     }),
     // Checkbox
-    primerFranjaDisabled: new FormControl(false),
-    segundaFranjaDisabled: new FormControl(false),
+    maternityIndivDisabled: new FormControl(false),
   });
 
   ngOnChanges(changes: SimpleChanges) {
@@ -76,6 +77,16 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
           this.materYLactanciaForm.get('maternityIndivPrimerFranja')?.setValidators(
             step4MenorIgualPobStep1Validator(1, this.female18To29Pop),
           );
+          // Cuando no hay poblacion femenina 18-29, el checkbox no actua sobre los campos
+          // de maternityPrimerFranja, por tanto, al agregar o remover se debe revisar el
+          // estado del checkbox y activar o desactivar los campos segun corresponda.
+          if (this.materYLactanciaForm.get('maternityIndivDisabled')?.value) {
+            if (this.female18To29Pop > 0) {
+              this.materYLactanciaForm.get('maternityPrimerFranja')?.enable();
+            } else {
+              this.materYLactanciaForm.get('maternityPrimerFranja')?.disable();
+            }
+          }
           break;
         case 'female30To59Pop':
           // Revisar que este caso se ejecute
@@ -91,9 +102,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.setValue(changes.loadedIndivMaternity18to29.currentValue.lactatingWomen);
             this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.markAsDirty();
-            this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(false);
+            this.materYLactanciaForm.get('maternityIndivDisabled')?.setValue(false);
             event.checked = false;
-            this.enableFields(event, 1);
+            this.enableFields(event);
           }
           break;
         case 'loadedPopMaternity18to29':
@@ -105,9 +116,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.setValue(changes.loadedPopMaternity18to29.currentValue.countryBirthRate);
             this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.markAsDirty();
-            this.materYLactanciaForm.get('primerFranjaDisabled')?.setValue(true);
+            this.materYLactanciaForm.get('maternityIndivDisabled')?.setValue(true);
             event.checked = true;
-            this.enableFields(event, 1);
+            this.enableFields(event);
           }
           break;
         case 'loadedIndivMaternity30to59':
@@ -117,17 +128,9 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.markAsDirty();
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.setValue(changes.loadedIndivMaternity30to59.currentValue.lactatingWomen);
             this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.markAsDirty();
-            this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
+            this.materYLactanciaForm.get('maternityIndivDisabled')?.setValue(false);
             event.checked = false;
-            this.enableFields(event, 2);
-          }
-          break;
-        case 'checkedButton':
-          if (changes[key].currentValue !== undefined
-            && changes.loadedIndivMaternity30to59.currentValue === undefined) {
-            this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(this.checkedButton);
-            event.checked = this.checkedButton;
-            this.enableFields(event, 2);
+            this.enableFields(event);
           }
           break;
         default: break;
@@ -137,49 +140,38 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
 
   onSubmit() {}
 
-  enableFields(event: MatCheckboxChange, fields: number) {
-    switch (fields) {
-      case 1:
-        if (event.checked) {
-          this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.enable();
-          this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.enable();
-          this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.enable();
-          this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.disable();
-          this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.disable();
-          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
-          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(true);
-        } else {
-          this.materYLactanciaForm.get('maternityPrimerFranja.cantPrimerFranja')?.disable();
-          this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.disable();
-          this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.disable();
-          this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.enable();
-          this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.enable();
-          // arreglar esto despues, hace que el checkbox 1 active tambien el checkbox 2
-          this.materYLactanciaForm.get('segundaFranjaDisabled')?.setValue(false);
-        }
-        break;
-      case 2:
-        if (event.checked) {
-          this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.disable();
-          this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.disable();
-        } else {
-          this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.enable();
-          this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.enable();
-        }
-        break;
-      default:
-        break;
+  enableFields(event: MatCheckboxChange) {
+    if (event.checked) {
+      // Solo se afectan los campos de maternityPrimerFranja si hay poblacion femenina 18-29
+      if (this.agesFemale18To29Present) {
+        this.materYLactanciaForm.get('maternityPrimerFranja')?.enable();
+      }
+      this.materYLactanciaForm.get('maternityIndivPrimerFranja')?.disable();
+      // campos de franja 30-59
+      this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.disable();
+    } else {
+      // Solo se afectan los campos de maternityPrimerFranja si hay poblacion femenina 18-29
+      if (this.agesFemale18To29Present) {
+        this.materYLactanciaForm.get('maternityPrimerFranja')?.disable();
+      }
+      this.materYLactanciaForm.get('maternityIndivPrimerFranja')?.enable();
+      // campos de franja 30-59
+      this.materYLactanciaForm.get('maternityIndivSegundaFranja')?.enable();
     }
   }
 
   sendData(): Maternity {
     let maternity18to29 : IndividualMaternity | PopulationMaternity;
     let maternity30to59 : IndividualMaternity | undefined;
-    // Primer franja etaria
-    if (!this.materYLactanciaForm.get('primerFranjaDisabled')?.value) {
+
+    if (!this.materYLactanciaForm.get('maternityIndivDisabled')?.value) {
       maternity18to29 = {
         pregnantWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivPrimerFranja.embsPrimerFranja')?.value),
         lactatingWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivPrimerFranja.amamPrimerFranja')?.value),
+      };
+      maternity30to59 = {
+        pregnantWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.value),
+        lactatingWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.value),
       };
     } else {
       maternity18to29 = {
@@ -187,14 +179,6 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
         countryBirthRate: NumberForForms(this.materYLactanciaForm.get('maternityPrimerFranja.natPrimerFranja')?.value),
         countryPopulation: NumberForForms(this.materYLactanciaForm.get('maternityPrimerFranja.pobTotPrimerFranja')?.value),
       };
-    }
-    // Segunda franja etaria
-    if (!this.materYLactanciaForm.get('segundaFranjaDisabled')?.value) {
-      maternity30to59 = {
-        pregnantWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivSegundaFranja.embsSegundaFranja')?.value),
-        lactatingWomen: NumberForForms(this.materYLactanciaForm.get('maternityIndivSegundaFranja.amamSegundaFranja')?.value),
-      };
-    } else {
       maternity30to59 = undefined;
     }
     const maternity: Maternity = {

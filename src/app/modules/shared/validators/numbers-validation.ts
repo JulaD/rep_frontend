@@ -6,6 +6,11 @@ import { ValidatorFn, Validators } from '@angular/forms';
 export const numeroEnteroPositivoValidator: ValidatorFn = Validators.pattern(/^\+?[0-9]+$/);
 
 /*
+ Acepta un numero entero > 0 con un + opcional
+ */
+export const numeroEnteroMayorCeroValidator: ValidatorFn = Validators.pattern(/^\+?0*[1-9][0-9]*$/);
+
+/*
  El regex es un real positivo con parte decimal opcional
  Acepta
 */
