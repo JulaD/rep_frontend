@@ -222,10 +222,8 @@ export class CalculosPaso1Component implements AfterViewInit {
 
   clearInputFields() {
     this.grupoEtarioForm.reset({
-      // si quiero tambien limpiar el campo edad, poner edad: null
       edad: '', cantFemenino: '', cantMasculino: '', medianaFemenino: '', medianaMasculino: '',
     });
-    this.grupoEtarioForm.get('edad')?.markAsDirty();
   }
 
   // Boton de borrar datos asociados a FranjaEtaria
