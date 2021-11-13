@@ -115,7 +115,7 @@ export class AutorizacionUsuariosComponent implements OnInit {
     const busquedaInput: any = document.getElementById('busquedaAceptados');
     if (busquedaInput) {
       this.acceptedUsersSearch = busquedaInput.value;
-      this.userService.getUsers('pending', 4, 0, this.acceptedUsersSearch).subscribe(
+      this.userService.getUsers('approved', 4, 0, this.acceptedUsersSearch).subscribe(
         (res) => {
           this.message = '';
           this.successAlert = false;

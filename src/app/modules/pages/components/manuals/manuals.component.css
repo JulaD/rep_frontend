@@ -1,4 +1,8 @@
 .first-div {
+  height: 80%;
+}
+
+.yellow {
   background-color: #FFCF2D;
 }
 
@@ -26,24 +30,23 @@
   margin-top: -60px;
 }
 
+.top-right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
 .left-column {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.top-right-column {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding-left: 1rem;
-}
-
-/* .col-md-6.yellow {
+.col-md-6.yellow {
   min-width: 65vh;
   max-height: 100%;
-} */
+} 
 
 .second-div {
   margin-top: 2rem;

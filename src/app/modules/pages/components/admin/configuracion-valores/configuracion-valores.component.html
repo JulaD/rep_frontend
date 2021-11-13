@@ -43,8 +43,8 @@
                                 </svg>
                                 <select id="selectWeightsMen" tabindex="-1" (click)="changeValue('selectWeightsMen', 'men')">
                                     <ng-container *ngFor="let weight of weightsMen"> 
-                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightMen.ageRange === weight.ageRange" [value] = weight.ageRange selected="selected">{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightMen.ageRange !== weight.ageRange" [value] = weight.ageRange>{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange}}</option>
                                     </ng-container>
                                 </select>
                             </div>
@@ -82,8 +82,8 @@
                                 </svg>
                                 <select id="selectWeightsWomen" tabindex="-1" (click)="changeValue('selectWeightsWomen', 'women')">
                                     <ng-container *ngFor="let weight of weightsWomen"> 
-                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" selected="selected">{{weight.ageRange}}</option>
-                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange">{{weight.ageRange}}</option>
+                                        <option *ngIf="selectedWeightWomen.ageRange === weight.ageRange" [value]=weight.ageRange selected="selected">{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange }}</option>
+                                        <option *ngIf="selectedWeightWomen.ageRange !== weight.ageRange" [value]=weight.ageRange>{{weight.ageRange.startsWith("1 mes")? "1 mes" : weight.ageRange.startsWith("1 año")? "1 año": weight.ageRange }}</option>
                                     </ng-container>
                                 </select>
                             </div>
@@ -125,9 +125,9 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectNafAdults" tabindex="-1" (click)="changeValue('selectNafAdults', 'adults')">
-                                    <ng-container *ngFor="let naf of nafAdults"> 
-                                        <option *ngIf="selectedNafAdult.id === naf.id" selected="selected">{{naf.id}}</option>
-                                        <option *ngIf="selectedNafAdult.id !== naf.id">{{naf.id}}</option>
+                                    <ng-container *ngFor="let nafLabel of nafAdultsLabel | keyvalue"> 
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafAdult.id === nafLabel['key']" selected="selected">{{nafLabel['value']}}</option>
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafAdult.id !== nafLabel['key']">{{nafLabel['value']}}</option>
                                     </ng-container>                                 
                                 </select>
                             </div>
@@ -166,10 +166,10 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectNafMinors" tabindex="-1" (click)="changeValue('selectNafMinors', 'minors')">
-                                    <ng-container *ngFor="let naf of nafMinors"> 
-                                        <option *ngIf="selectedNafMinor.id === naf.id" selected="selected">{{naf.id}}</option>
-                                        <option *ngIf="selectedNafMinor.id !== naf.id">{{naf.id}}</option>
-                                    </ng-container> 
+                                    <ng-container *ngFor="let nafLabel of nafMinorsLabel | keyvalue"> 
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafMinor.id === nafLabel['key']" selected="selected">{{nafLabel['value']}}</option>
+                                        <option [value]="nafLabel['key']" *ngIf="selectedNafMinor.id !== nafLabel['key']">{{nafLabel['value']}}</option>
+                                    </ng-container>  
                                 </select>
                             </div>
                             <div class="valor">
@@ -224,9 +224,9 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectPregnancyPopulation" tabindex="-1" (click)="changeValue('selectPregnancyPopulation', 'population')">
-                                    <ng-container *ngFor="let pregnancy of pregnancyPopulation"> 
-                                        <option *ngIf="selectedPregnancyPopulation.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
-                                        <option *ngIf="selectedPregnancyPopulation.id !== pregnancy.id">{{pregnancy.id}}</option>
+                                    <ng-container *ngFor="let pregnancy of pregnancyPopulationLabel | keyvalue"> 
+                                        <option [value]="pregnancy['key']" *ngIf="selectedPregnancyPopulation.id === pregnancy['key'] || (selectedPregnancyPopulation.id.startsWith('1') && pregnancy['key'].startsWith('_'))" selected="selected">{{pregnancy['value']}}</option>
+                                        <option [value]="pregnancy['key']" *ngIf="selectedPregnancyPopulation.id !== pregnancy['key'] && !(selectedPregnancyPopulation.id.startsWith('1') && pregnancy['key'].startsWith('_'))">{{pregnancy['value']}}</option> 
                                     </ng-container>                                   
                                 </select>
                             </div>
@@ -266,9 +266,9 @@
                                     <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                                 <select id="selectPregnancyEnergy" tabindex="-1"(click)="changeValue('selectPregnancyEnergy', 'energy')">
-                                    <ng-container *ngFor="let pregnancy of pregnancyEnergy"> 
-                                        <option *ngIf="selectedPregnancyEnergy.id === pregnancy.id" selected="selected">{{pregnancy.id}}</option>
-                                        <option *ngIf="selectedPregnancyEnergy.id !== pregnancy.id">{{pregnancy.id}}</option>
+                                    <ng-container *ngFor="let pregnancy of pregnancyEnergyLabel | keyvalue"> 
+                                        <option [value]="pregnancy['key']" *ngIf="selectedPregnancyEnergy.id === pregnancy['key']" selected="selected">{{pregnancy['value']}}</option>
+                                        <option [value]="pregnancy['key']" *ngIf="selectedPregnancyEnergy.id !== pregnancy['key']">{{pregnancy['value']}}</option> 
                                     </ng-container>    
                                 </select>
                             </div>
