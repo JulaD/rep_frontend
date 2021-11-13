@@ -1,4 +1,4 @@
-<form [formGroup]="materYLactanciaForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="materYLactanciaForm" autocomplete="off">
   <div class="step4-titulo">
     <ng-template matStepLabel>
       Maternidad y lactancia
@@ -124,6 +124,7 @@
         formGroupName="maternityPrimerFranja">
         <div class="button-autocomplete mb-2">
           <button mat-stroked-button (click)="loadDefaultValues()"
+            type="button"
             [disabled]="!defaultExtraDataAvailable"
             matTooltip="Autocompleta los campos con los valores por defecto"
             matTooltipPosition="above">

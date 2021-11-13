@@ -138,8 +138,6 @@ export class CalculosPaso4Component implements OnInit, OnChanges {
     });
   }
 
-  onSubmit() {}
-
   enableFields(event: MatCheckboxChange) {
     if (event.checked) {
       // Solo se afectan los campos de maternityPrimerFranja si hay poblacion femenina 18-29
