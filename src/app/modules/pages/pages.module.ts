@@ -5,7 +5,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AngularMaterialModule } from '../../material/angular-material.module';
 import { SharedModule } from '../shared/shared.module';
-import { ByHandComponent } from './components/by-hand/by-hand.component';
 import { CalculosPaso1Component } from './components/calculos-a-mano/calculos-paso1/calculos-paso1.component';
 import { CalculosPaso2Component } from './components/calculos-a-mano/calculos-paso2/calculos-paso2.component';
 import { CalculosPaso3Component } from './components/calculos-a-mano/calculos-paso3/calculos-paso3.component';
@@ -43,7 +42,6 @@ import { FaqExpansionPanelComponent } from './components/manuals/faq-expansion-p
     UploadTemplateComponent,
     CalculosComponent,
     StepperComponent,
-    ByHandComponent,
     FaqExpansionPanelComponent,
     UpdateUserComponent,
     AboutUsComponent,

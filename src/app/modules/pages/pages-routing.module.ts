@@ -8,7 +8,6 @@ import { PagesComponent } from './pages.component';
 import { ResultComponent } from './components/result/result.component';
 import { CalculosComponent } from './components/calculos/calculos.component';
 import { StepperComponent } from './components/calculos-a-mano/stepper/stepper.component';
-import { ByHandComponent } from './components/by-hand/by-hand.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
@@ -22,10 +21,6 @@ const routes: Routes = [{
   children: [{
     path: 'dashboard',
     component: DashboardComponent,
-  }, {
-    path: 'by-hand',
-    component: ByHandComponent,
-    canActivate: [UserGuard],
   }, {
     path: 'with-template',
     component: StepperComponent,
