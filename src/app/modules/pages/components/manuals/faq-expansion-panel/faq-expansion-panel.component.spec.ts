@@ -8,9 +8,9 @@ describe('FaqExpansionPanelComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FaqExpansionPanelComponent ]
+      declarations: [FaqExpansionPanelComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

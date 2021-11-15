@@ -19,7 +19,6 @@ import { TemplatesComponent } from './components/templates/templates.component';
 import { UploadTemplateComponent } from './components/upload-template/upload-template.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
-import { FaqExpansionPanelComponent } from './components/faq-expansion-panel/faq-expansion-panel.component';
 import { UpdateUserComponent } from './components/update-user/update-user.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { OverwriteDialog } from './components/calculos-a-mano/calculos-paso1/overwrite-dialog/overwrite-dialog.component';
@@ -28,6 +27,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { ResendVerificationEmailComponent } from './components/resend-verification-email/resend-verification-email.component';
+import { FaqExpansionPanelComponent } from './components/manuals/faq-expansion-panel/faq-expansion-panel.component';
 
 @NgModule({
   declarations: [

@@ -4,7 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FAQ } from 'src/app/models/faq.model';
 import { FAQService } from 'src/app/services/faq.service';
 import Swal from 'sweetalert2';
-import { FaqFormComponent } from '../faq-form/faq-form.component';
+import { FaqFormComponent } from './faq-form/faq-form.component';
 
 @Component({
   selector: 'app-faqs',

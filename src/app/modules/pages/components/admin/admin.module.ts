@@ -11,10 +11,10 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { AutorizacionUsuariosComponent } from './autorizacion-usuarios/autorizacion-usuarios.component';
 import { ConfiguracionValoresComponent } from './configuracion-valores/configuracion-valores.component';
-import { FaqFormComponent } from './faq-form/faq-form.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { PermisosUsuariosComponent } from './permisos-usuarios/permisos-usuarios.component';
 import { AuditoriaComponent } from './auditoria/auditoria.component';
+import { FaqFormComponent } from './faqs/faq-form/faq-form.component';
 
 @NgModule({
   schemas: [
