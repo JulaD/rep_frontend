@@ -26,7 +26,7 @@ export class User implements IUser {
 
   active: boolean;
 
-  createdAt: Date;
+  createdAt: Date | string;
 }
 
 export class Register implements IRegister {

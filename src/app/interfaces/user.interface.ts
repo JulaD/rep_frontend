@@ -11,7 +11,7 @@ export interface IUser {
   type: number;
   status: number;
   active: boolean;
-  createdAt: Date;
+  createdAt: Date | string;
 }
 
 export interface IRegister {

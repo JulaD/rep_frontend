@@ -291,8 +291,8 @@ section .resultadoBusqueda .cancelarBusqueda {
   border: none;
   background: rgb(224, 52, 52);
   color: #fff;
-  height: 25px;
-  width: 25px;
+  height: 40px;
+  width: 40px;
   pointer-events: initial;
   border-radius: 50%;
   transition: 0.35s;
