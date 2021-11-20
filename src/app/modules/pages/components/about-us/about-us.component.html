@@ -17,7 +17,7 @@
     <!-- SOBRE PIS -->
     <div class="row justify-content-center">
         <div class="col-md-6 img-column">
-            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+            <img class="logo-fing" src="../../../../../assets/ilustrations/logofing.png">
         </div>
         <div class="col-md-4 text-column">
             <p class="about-title pis-font">Proyecto de Ingeniería de Software (P.I.S.)</p>
@@ -34,7 +34,7 @@
             <p class="about-description client-font" [innerHTML]="clientsDescription"></p>
         </div>
         <div class="col-md-4 img-column">
-            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+            <img class="logo-enut" src="../../../../../assets/ilustrations/logoenut2.png">
         </div>
     </div>
     <div class="content">
@@ -62,11 +62,11 @@
     <!-- DIRECTORA -->
     <div class="row justify-content-center">
         <div class="col-md-4 img-column">
-            <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
+            <img class="logo-fing" src="../../../../../assets/ilustrations/logofing.png">
         </div>
         <div class="col-md-4 text-column">
             <p class="about-title director-font">Directora del Proyecto</p>
-            <p class="about-description director-font">{{directorDescription}}</p>
+            <p class="about-description director-font" [innerHTML]="directorDescription"></p>
         </div>
         <div class="content">
             <mat-card class="director-card">
@@ -90,8 +90,7 @@
     <!-- SOBRE NOSOTROS -->
     <div class="row justify-content-center">
         <div class="col-md-4 text-column">
-            <p class="about-title about-us-font">Sobre nosotros</p>
-            <p class="about-description about-us-font">{{aboutUsDescription}}</p>
+            <p class="about-us-font">Equipo de desarrollo</p>
         </div>
         <div class="col-md-4 img-column">
             <img class="second-illustration" src="../../../../../assets/ilustrations/about-us.png">
@@ -104,14 +103,14 @@
                     <mat-card-header>
                     <img mat-card-avatar src="{{info.img}}">
                     <mat-card-title class="mat-card-title about-us-font">{{info.nombre}}</mat-card-title>
-                    <mat-card-subtitle class="mat-card-subtitle about-us-font">{{info.rol}}</mat-card-subtitle>
+                    <mat-card-subtitle *ngFor="let rol of info.rol" class="mat-card-subtitle about-us-font">{{rol}}</mat-card-subtitle>
                     </mat-card-header>
                     <!-- <img mat-card-image src="{{info.img}}" alt="Foto de {{info.nombre}}"> -->
                     <mat-card-content>
-                    <p>
-                        {{info.descripcion}}
-                    </p>
                     </mat-card-content>
+                    <mat-card-actions align="end">
+                        <a [disabled]="info.linkedin.length == 0" mat-flat-button color="primary" href="{{info.linkedin}}">LinkedIn</a>
+                    </mat-card-actions>
                 </mat-card>
             </div>
         </div>

@@ -114,12 +114,25 @@
 }
 
 .about-us-font {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 4rem;
+    display: flex;
     color: #66b0f0;
 }
 
-.second-illustration {
+.logo-fing {
+    width: 70%;
+ }
+
+.logo-enut {
    width: 100%;
 }
+
+.second-illustration {
+    width: 80%;
+ }
 
 .mat-card-title {
     font-family: Montserrat;
@@ -137,7 +150,14 @@
     font-size: 1rem 
 }
 
+.mat-card-avatar {
+    height: 100px;
+    width: 100px;
+}
+
 .institution {
+    margin-top: 10px !important;
     font-family: Montserrat;
-    font-size: 0.8rem
+    font-size: 0.8rem;
+    color: #9b9b9b
 }
