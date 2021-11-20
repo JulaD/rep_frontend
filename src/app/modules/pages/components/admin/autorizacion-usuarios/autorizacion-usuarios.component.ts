@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { UserService, AuthService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
 
@@ -58,7 +60,16 @@ export class AutorizacionUsuariosComponent implements OnInit {
     this.userService.getUsers('pending', 4, 0, busqueda).subscribe(
       (res) => {
         this.pendingUsersCount = res.count;
-        this.pendingUsers = res.rows;
+        res.rows.forEach((user: User) => {
+          const datepipe: DatePipe = new DatePipe('esUY');
+          const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+          if (formattedDate) {
+            user.createdAt = formattedDate;
+          } else {
+            user.createdAt = '?';
+          }
+          this.pendingUsers.push(user);
+        });
         this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
         if (this.pendingUsersPageCount > 0) {
           this.goToPendingPage(1);
@@ -71,7 +82,17 @@ export class AutorizacionUsuariosComponent implements OnInit {
     this.userService.getUsers('approved', 4, 0, busqueda).subscribe(
       (res) => {
         this.acceptedUsersCount = res.count;
-        this.acceptedUsers = res.rows;
+        this.acceptedUsers = [];
+        res.rows.forEach((user: User) => {
+          const datepipe: DatePipe = new DatePipe('esUY');
+          const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+          if (formattedDate) {
+            user.createdAt = formattedDate;
+          } else {
+            user.createdAt = '?';
+          }
+          this.acceptedUsers.push(user);
+        });
         this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
         if (this.acceptedUsersPageCount > 0) {
           this.goToAcceptedPage(1);
@@ -145,7 +166,17 @@ export class AutorizacionUsuariosComponent implements OnInit {
         (res) => {
           this.pendingUsersCurrentPage = page;
           this.pendingUsersCount = res.count;
-          this.pendingUsers = res.rows;
+          this.pendingUsers = [];
+          res.rows.forEach((user: User) => {
+            const datepipe: DatePipe = new DatePipe('esUY');
+            const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+            if (formattedDate) {
+              user.createdAt = formattedDate;
+            } else {
+              user.createdAt = '?';
+            }
+            this.pendingUsers.push(user);
+          });
           this.pendingUsersPageCount = Math.ceil(this.pendingUsersCount / 4);
           if (page === 1) {
             this.pendingUsersCurrentPages = Array(Math.min((page + 2),
@@ -171,7 +202,17 @@ export class AutorizacionUsuariosComponent implements OnInit {
         (res) => {
           this.acceptedUsersCurrentPage = page;
           this.acceptedUsersCount = res.count;
-          this.acceptedUsers = res.rows;
+          this.acceptedUsers = [];
+          res.rows.forEach((user: User) => {
+            const datepipe: DatePipe = new DatePipe('esUY');
+            const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+            if (formattedDate) {
+              user.createdAt = formattedDate;
+            } else {
+              user.createdAt = '?';
+            }
+            this.acceptedUsers.push(user);
+          });
           this.acceptedUsersPageCount = Math.ceil(this.acceptedUsersCount / 4);
           if (page === 1) {
             this.acceptedUsersCurrentPages = Array(Math.min((page + 2),

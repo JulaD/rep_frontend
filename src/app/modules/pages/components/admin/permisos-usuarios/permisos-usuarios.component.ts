@@ -1,6 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { DatePipe } from '@angular/common';
 import { UserService, AuthService } from '../../../../../services';
 import { User } from '../../../../../models/user.model';
 
@@ -58,7 +60,16 @@ export class PermisosUsuariosComponent implements OnInit {
     this.userService.getUsers('clients', 4, 0, busqueda).subscribe(
       (res) => {
         this.usersCount = res.count;
-        this.users = res.rows;
+        res.rows.forEach((user: User) => {
+          const datepipe: DatePipe = new DatePipe('esUY');
+          const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+          if (formattedDate) {
+            user.createdAt = formattedDate;
+          } else {
+            user.createdAt = '?';
+          }
+          this.users.push(user);
+        });
         this.usersPageCount = Math.ceil(this.usersCount / 4);
         if (this.usersPageCount > 0) {
           this.goToUserPage(1);
@@ -71,7 +82,16 @@ export class PermisosUsuariosComponent implements OnInit {
     this.userService.getUsers('admins', 4, 0, busqueda).subscribe(
       (res) => {
         this.adminsCount = res.count;
-        this.admins = res.rows;
+        res.rows.forEach((user: User) => {
+          const datepipe: DatePipe = new DatePipe('esUY');
+          const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+          if (formattedDate) {
+            user.createdAt = formattedDate;
+          } else {
+            user.createdAt = '?';
+          }
+          this.admins.push(user);
+        });
         this.adminsPageCount = Math.ceil(this.adminsCount / 4);
         if (this.adminsPageCount > 0) {
           this.goToAdminPage(1);
@@ -89,7 +109,17 @@ export class PermisosUsuariosComponent implements OnInit {
         (res) => {
           this.usersCurrentPage = page;
           this.usersCount = res.count;
-          this.users = res.rows;
+          this.users = [];
+          res.rows.forEach((user: User) => {
+            const datepipe: DatePipe = new DatePipe('esUY');
+            const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+            if (formattedDate) {
+              user.createdAt = formattedDate;
+            } else {
+              user.createdAt = '?';
+            }
+            this.users.push(user);
+          });
           this.usersPageCount = Math.ceil(this.usersCount / 4);
           if (page === 1) {
             this.usersCurrentPages = Array(Math.min((page + 2),
@@ -115,7 +145,17 @@ export class PermisosUsuariosComponent implements OnInit {
         (res) => {
           this.adminsCurrentPage = page;
           this.adminsCount = res.count;
-          this.admins = res.rows;
+          this.admins = [];
+          res.rows.forEach((user: User) => {
+            const datepipe: DatePipe = new DatePipe('esUY');
+            const formattedDate = datepipe.transform(user.createdAt, 'MMM d, y, h:mm:ss a');
+            if (formattedDate) {
+              user.createdAt = formattedDate;
+            } else {
+              user.createdAt = '?';
+            }
+            this.admins.push(user);
+          });
           this.adminsPageCount = Math.ceil(this.adminsCount / 4);
           if (page === 1) {
             this.adminsCurrentPages = Array(Math.min((page + 2),
