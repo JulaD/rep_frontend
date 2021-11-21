@@ -17,7 +17,7 @@ export class AboutUsComponent implements OnInit {
 
   pisDescription: string = 'El Proyecto de Ingeniería de Software pertenece a las unidades curriculares de la carrera de Ingeniero en Computación de la Facultad de Ingeniería, UdelaR.<br><br>'
     + 'Busca afirmar y profundizar los conocimientos de Ingeniería de Software, contrastarlos con su aplicación práctica e integrarlos con conocimientos de otras unidades curriculares.<br><br>'
-    + 'Es un proyecto guiado y controlado sometido a diversos tipos de restriciccions análogas a las que son comunes en la industria, para posibilitar una reflexión sobre los conocimientos teóricos a la luz de su aplicación práctica.<br><br>';
+    + 'Es un proyecto guiado y controlado sometido a diversos tipos de restricciones análogas a las que son comunes en la industria, para posibilitar una reflexión sobre los conocimientos teóricos a la luz de su aplicación práctica.<br><br>';
 
   pisDescriptionSource: string = 'Fuente: Programa de PROYECTO DE INGENIERÍA DE SOFTWARE';
 
