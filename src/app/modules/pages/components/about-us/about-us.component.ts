@@ -17,7 +17,7 @@ export class AboutUsComponent implements OnInit {
 
   pisDescription: string = 'El Proyecto de Ingeniería de Software pertenece a las unidades curriculares de la carrera de Ingeniero en Computación de la Facultad de Ingeniería, UdelaR.<br><br>'
     + 'Busca afirmar y profundizar los conocimientos de Ingeniería de Software, contrastarlos con su aplicación práctica e integrarlos con conocimientos de otras unidades curriculares.<br><br>'
-    + 'Es un proyecto guiado y controlado sometido a diversos tipos de restriciccions análogas a las que son comunes en la industria, para posibilitar una reflexión sobre los conocimientos teóricos a la luz de su aplicación práctica.<br><br>';
+    + 'Es un proyecto guiado y controlado sometido a diversos tipos de restricciones análogas a las que son comunes en la industria, para posibilitar una reflexión sobre los conocimientos teóricos a la luz de su aplicación práctica.<br><br>';
 
   pisDescriptionSource: string = 'Fuente: Programa de PROYECTO DE INGENIERÍA DE SOFTWARE';
 
@@ -71,7 +71,7 @@ export class AboutUsComponent implements OnInit {
       nombre: 'Julieta Dubra',
       rol: [Rol.SCM, Rol.Desarrollador, Rol.EspecialistaTecnico],
       img: '../../../../../assets/developersImages/Jula.jfif',
-      linkedin: '',
+      linkedin: 'https://uy.linkedin.com/in/julieta-dubra-927743205',
     }, {
       nombre: 'Renzo Beux',
       rol: [Rol.Desarrollador, Rol.EspecialistaTecnico],
@@ -79,7 +79,7 @@ export class AboutUsComponent implements OnInit {
       linkedin: 'https://www.linkedin.com/in/renzo-beux/',
     }, {
       nombre: 'Agustín Tornaria',
-      rol: [Rol.Administrador, Rol.ResponsableComunicacion],
+      rol: [Rol.Administrador, Rol.ResponsableComunicacion, Rol.AsistenteVerificacion],
       img: '../../../../../assets/developersImages/AgustínT.jfif',
       linkedin: 'https://www.linkedin.com/in/agust%C3%ADn-tornar%C3%ADa/',
     }, {
