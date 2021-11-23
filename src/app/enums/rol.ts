@@ -9,7 +9,7 @@ export enum Rol {
   Verificacion = 'Responsable de verificación',
   AsistenteVerificacion = 'Asistente de verificación',
   AsistenteArquitecto = 'Asistente de arquitecto',
-  CoordinadorDesarrollo = 'Coordinar de desarrollo',
+  CoordinadorDesarrollo = 'Coordinador de desarrollo',
   EspecialistaTecnico = 'Especialista técnico',
   DocumentadorUsuario = 'Documentador de usuario',
   ResponsableComunicacion = 'Responsable de la comunicación',
