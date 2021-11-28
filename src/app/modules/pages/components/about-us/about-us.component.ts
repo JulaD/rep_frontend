@@ -33,19 +33,19 @@ export class AboutUsComponent implements OnInit {
       profesion: 'Lic. en Nutrición',
       institucion: 'Escuela de Nutrición, Dpto. de Nutrición Poblacional',
       descripcion: '',
-      img: '../../../../../assets/developersImages/defaultProfile.jpg',
+      img: '../../../../../assets/clientImages/Ana.jfif',
     }, {
       nombre: 'Gabriela Fajardo',
       profesion: 'Lic. en Nutrición',
       institucion: 'Escuela de Nutrición, Dpto. de Nutrición Poblacional',
       descripcion: '',
-      img: '../../../../../assets/developersImages/defaultProfile.jpg',
+      img: '../../../../../assets/clientImages/Gabriela.jfif',
     }, {
       nombre: 'Víctor Viana',
       profesion: '',
       institucion: 'Facultad de Ingeniería, CENUR Noreste',
       descripcion: '',
-      img: '../../../../../assets/developersImages/defaultProfile.jpg',
+      img: '../../../../../assets/clientImages/Victor.jfif',
     },
   ];
 
@@ -136,7 +136,7 @@ export class AboutUsComponent implements OnInit {
       nombre: 'Belén Echechury',
       rol: [Rol.InterfazDeUsuario, Rol.Analista, Rol.Desarrollador],
       img: '../../../../../assets/developersImages/Belen.jfif',
-      linkedin: '',
+      linkedin: 'https://www.linkedin.com/in/bel%C3%A9n-echechury-6b0ba8226/',
     },
   ];
 
