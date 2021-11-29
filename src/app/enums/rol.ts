@@ -14,5 +14,5 @@ export enum Rol {
   DocumentadorUsuario = 'Documentador de usuario',
   ResponsableComunicacion = 'Responsable de la comunicación',
   Administrador = 'Administrador',
-  AsistenteSQA = 'Asistende de SQA'
+  AsistenteSQA = 'Asistente de SQA'
 }
