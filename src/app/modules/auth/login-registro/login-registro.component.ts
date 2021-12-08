@@ -57,7 +57,7 @@ export class LoginRegistroComponent implements OnInit {
         () => {
           // limpia los inputs
           this.registerForm.reset();
-          this.message = '¡Usuario creado exitosamente! Su cuenta permanecera inactiva hasta que sea aceptado por un Administrador.';
+          this.message = '¡Usuario creado exitosamente! Recibirá un correo electrónico con instrucciones para activar su cuenta.';
           this.alertaSuccess = true;
           this.alertaError = false;
         },
